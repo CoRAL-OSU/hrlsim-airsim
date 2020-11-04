@@ -1,0 +1,21 @@
+<launch>
+
+<arg name="autorepeat_rate" default="100" />
+<arg name="scale_linear" default="10" />
+<arg name="scale_angular" default="3.14" />
+<arg name="deadzone" default="0.15" />
+
+
+<node name="joy" pkg="joy" type="joy_node" >
+    <param name="autorepeat_rate" value="$(arg autorepeat_rate)" />
+    <param name="deadzone" value="$(arg deadzone)" />
+</node>
+
+<node name="teleop" pkg="teleop_twist_joy" type="teleop_node" >
+    <param name="scale_linear" value="$(arg scale_linear)" />
+    <param name="scale_angular" value="$(arg scale_angular)" />
+</node>
+<node name="remap" pkg="topic_tools" type="transform" args="/cmd_vel /airsim_node/Drone0/vel_cmd_body_frame airsim_ros_pkgs/VelCmd 'geometry_msgs.msg.Twist(linear=geometry_msgs.msg.Vector3(x=m.linear.x, y=-m.linear.y, z=-m.linear.z), angular=geometry_msgs.msg.Vector3(x=m.angular.x, y=m.angular.y, z=-m.angular.z))' --import geometry_msgs" />
+
+
+</launch>

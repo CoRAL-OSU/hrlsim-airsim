@@ -1,0 +1,27 @@
+<launch> 
+
+<arg name="autorepeat_rate" default="100" />
+<arg name="scale_linear" default="10" />
+<arg name="scale_angular" default="3.14" />
+<arg name="deadzone" default="0.15" />
+<arg name="rviz" default="false" />
+<arg name="joy" default="true" />
+
+
+<!-- AirSim ROS Wrapper -->
+	<include file="$(find airsim_ros_pkgs)/launch/airsim_node.launch" >
+        <!--arg name="output" value="screen" /-->
+    </include>
+
+    <include file="$(find airsim_ros_pkgs)/launch/rviz.launch" if="$(arg rviz)" />
+
+    <group if="$(arg joy)" >
+        <include file="$(find airsim_ros_cntrl)/launch/joy.launch" >
+            <arg name="autorepeat_rate" value="$(arg autorepeat_rate)" />
+            <arg name="scale_linear" value="$(arg scale_linear)" />
+            <arg name="scale_angular" value="$(arg scale_angular)" />
+            <arg name="deadzone" value="$(arg deadzone)" />
+        </include>
+    </group>
+
+</launch>

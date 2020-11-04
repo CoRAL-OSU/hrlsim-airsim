@@ -1,0 +1,123 @@
+[  0%] Built target actionlib_msgs_generate_messages_lisp
+[ 19%] Built target MavLinkCom
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_LandGroup
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_GPSYaw
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_Takeoff
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_Reset
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_VelCmd
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_GimbalAngleEulerCmd
+[ 19%] Built target geometry_msgs_generate_messages_py
+[ 19%] Built target std_msgs_generate_messages_py
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_TakeoffGroup
+[ 19%] Built target geographic_msgs_generate_messages_py
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_VelCmdGroup
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_Land
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_GimbalAngleQuatCmd
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_SetLocalPosition
+[ 19%] Built target geographic_msgs_generate_messages_lisp
+[ 19%] Built target geometry_msgs_generate_messages_lisp
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_Environment
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_SetGPSPosition
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_CarControls
+[ 19%] Built target std_msgs_generate_messages_lisp
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_Altimeter
+[ 19%] Built target _airsim_ros_pkgs_generate_messages_check_deps_CarState
+[ 19%] Built target geometry_msgs_generate_messages_eus
+[ 19%] Built target std_msgs_generate_messages_eus
+[ 19%] Built target geographic_msgs_generate_messages_eus
+[ 19%] Built target geographic_msgs_generate_messages_cpp
+[ 19%] Built target geometry_msgs_generate_messages_nodejs
+[ 19%] Built target std_msgs_generate_messages_nodejs
+[ 19%] Built target geographic_msgs_generate_messages_nodejs
+[ 19%] Built target mavros_msgs_generate_messages_py
+[ 19%] Built target rosgraph_msgs_generate_messages_lisp
+[ 19%] Built target rosgraph_msgs_generate_messages_eus
+[ 19%] Built target rosgraph_msgs_generate_messages_cpp
+[ 19%] Built target mavros_msgs_generate_messages_cpp
+[ 19%] Built target std_msgs_generate_messages_cpp
+[ 19%] Built target geometry_msgs_generate_messages_cpp
+[ 19%] Built target mavros_msgs_generate_messages_eus
+[ 19%] Built target rosgraph_msgs_generate_messages_nodejs
+[ 19%] Built target sensor_msgs_generate_messages_lisp
+[ 19%] Built target nav_msgs_generate_messages_cpp
+[ 19%] Built target roscpp_generate_messages_lisp
+[ 19%] Built target std_srvs_generate_messages_eus
+[ 19%] Built target uuid_msgs_generate_messages_lisp
+[ 19%] Built target uuid_msgs_generate_messages_py
+[ 19%] Built target actionlib_msgs_generate_messages_nodejs
+[ 19%] Built target mavros_msgs_generate_messages_nodejs
+[ 19%] Built target nav_msgs_generate_messages_nodejs
+[ 19%] Built target sensor_msgs_generate_messages_nodejs
+[ 19%] Built target roscpp_generate_messages_py
+[ 19%] Built target roscpp_generate_messages_nodejs
+[ 19%] Built target sensor_msgs_generate_messages_py
+[ 19%] Built target actionlib_generate_messages_cpp
+[ 19%] Built target sensor_msgs_generate_messages_cpp
+[ 19%] Built target mavros_msgs_generate_messages_lisp
+[ 19%] Built target actionlib_generate_messages_nodejs
+[ 19%] Built target sensor_msgs_generate_messages_eus
+[ 19%] Built target roscpp_generate_messages_cpp
+[ 19%] Built target uuid_msgs_generate_messages_cpp
+[ 19%] Built target uuid_msgs_generate_messages_eus
+[ 19%] Built target uuid_msgs_generate_messages_nodejs
+[ 19%] Built target std_srvs_generate_messages_cpp
+[ 19%] Built target nav_msgs_generate_messages_lisp
+[ 19%] Built target actionlib_msgs_generate_messages_cpp
+[ 19%] Built target roscpp_generate_messages_eus
+[ 19%] Built target rosgraph_msgs_generate_messages_py
+[ 19%] Built target actionlib_msgs_generate_messages_py
+[ 19%] Built target actionlib_msgs_generate_messages_eus
+[ 19%] Built target std_srvs_generate_messages_lisp
+[ 19%] Built target actionlib_generate_messages_lisp
+[ 19%] Built target std_srvs_generate_messages_nodejs
+[ 19%] Built target tf2_msgs_generate_messages_cpp
+[ 19%] Built target std_srvs_generate_messages_py
+[ 19%] Built target nav_msgs_generate_messages_eus
+[ 19%] Built target tf2_msgs_generate_messages_eus
+[ 19%] Built target nav_msgs_generate_messages_py
+[ 19%] Built target tf2_msgs_generate_messages_nodejs
+[ 19%] Built target tf2_msgs_generate_messages_lisp
+[ 19%] Built target actionlib_generate_messages_eus
+[ 19%] Built target tf2_msgs_generate_messages_py
+[ 19%] Built target actionlib_generate_messages_py
+[ 20%] [32mBuilding CXX object MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/Commands.cpp.o[0m
+[ 21%] [32mBuilding CXX object MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/main.cpp.o[0m
+[ 32%] Built target airsim_ros_pkgs_generate_messages_py
+[ 42%] Built target airsim_ros_pkgs_generate_messages_lisp
+[ 54%] Built target airsim_ros_pkgs_generate_messages_eus
+[ 64%] Built target airsim_ros_pkgs_generate_messages_cpp
+[ 75%] Built target airsim_ros_pkgs_generate_messages_nodejs
+[ 75%] Built target airsim_ros_pkgs_generate_messages
+[ 77%] Built target pd_position_controller_simple
+[ 87%] Built target rpc
+[01m[K/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/main.cpp:25:10:[m[K [01;31m[Kfatal error: [m[Kfilesystem: No such file or directory
+ #include [01;31m[K<filesystem>[m[K
+          [01;31m[K^~~~~~~~~~~~[m[K
+compilation terminated.
+[35m[1mScanning dependencies of target AirLib[0m
+MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/build.make:110: recipe for target 'MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/main.cpp.o' failed
+make[2]: *** [MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/main.cpp.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+[01m[K/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/Commands.cpp:14:10:[m[K [01;31m[Kfatal error: [m[Kfilesystem: No such file or directory
+ #include [01;31m[K<filesystem>[m[K
+          [01;31m[K^~~~~~~~~~~~[m[K
+compilation terminated.
+MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/build.make:62: recipe for target 'MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/Commands.cpp.o' failed
+make[2]: *** [MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/Commands.cpp.o] Error 1
+CMakeFiles/Makefile2:3812: recipe for target 'MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/all' failed
+make[1]: *** [MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+[ 87%] [32mBuilding CXX object AirLib/CMakeFiles/AirLib.dir/home/cthornton/projects/arl/sims/airsim/AirSim/AirLib/src/api/RpcLibClientBase.cpp.o[0m
+[ 87%] [32mBuilding CXX object AirLib/CMakeFiles/AirLib.dir/home/cthornton/projects/arl/sims/airsim/AirSim/AirLib/src/common/common_utils/FileSystem.cpp.o[0m
+[ 89%] [32mBuilding CXX object AirLib/CMakeFiles/AirLib.dir/home/cthornton/projects/arl/sims/airsim/AirSim/AirLib/src/api/RpcLibServerBase.cpp.o[0m
+[ 90%] [32mBuilding CXX object AirLib/CMakeFiles/AirLib.dir/home/cthornton/projects/arl/sims/airsim/AirSim/AirLib/src/safety/SafetyEval.cpp.o[0m
+[ 89%] [32mBuilding CXX object AirLib/CMakeFiles/AirLib.dir/home/cthornton/projects/arl/sims/airsim/AirSim/AirLib/src/safety/ObstacleMap.cpp.o[0m
+[ 91%] [32mBuilding CXX object AirLib/CMakeFiles/AirLib.dir/home/cthornton/projects/arl/sims/airsim/AirSim/AirLib/src/vehicles/car/api/CarRpcLibClient.cpp.o[0m
+[ 91%] [32mBuilding CXX object AirLib/CMakeFiles/AirLib.dir/home/cthornton/projects/arl/sims/airsim/AirSim/AirLib/src/vehicles/car/api/CarRpcLibServer.cpp.o[0m
+[ 91%] [32mBuilding CXX object AirLib/CMakeFiles/AirLib.dir/home/cthornton/projects/arl/sims/airsim/AirSim/AirLib/src/vehicles/multirotor/api/MultirotorApiBase.cpp.o[0m
+[ 92%] [32mBuilding CXX object AirLib/CMakeFiles/AirLib.dir/home/cthornton/projects/arl/sims/airsim/AirSim/AirLib/src/vehicles/multirotor/api/MultirotorRpcLibClient.cpp.o[0m
+[ 93%] [32mBuilding CXX object AirLib/CMakeFiles/AirLib.dir/home/cthornton/projects/arl/sims/airsim/AirSim/AirLib/src/vehicles/multirotor/api/MultirotorRpcLibServer.cpp.o[0m
+[ 93%] [32m[1mLinking CXX static library ../output/lib/libAirLib.a[0m
+[ 93%] Built target AirLib
+Makefile:140: recipe for target 'all' failed
+make: *** [all] Error 2

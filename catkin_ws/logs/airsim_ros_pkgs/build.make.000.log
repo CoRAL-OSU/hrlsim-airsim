@@ -1,0 +1,323 @@
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_VelCmd[0m
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_GPSYaw[0m
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_LandGroup[0m
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_Takeoff[0m
+[35m[1mScanning dependencies of target MavLinkCom[0m
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_Reset[0m
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_GimbalAngleEulerCmd[0m
+[  0%] Built target actionlib_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_TakeoffGroup[0m
+[  1%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/common_utils/FileSystem.cpp.o[0m
+[  1%] Built target _airsim_ros_pkgs_generate_messages_check_deps_GimbalAngleEulerCmd
+[  1%] Built target _airsim_ros_pkgs_generate_messages_check_deps_Takeoff
+[  1%] Built target _airsim_ros_pkgs_generate_messages_check_deps_VelCmd
+[  1%] Built target _airsim_ros_pkgs_generate_messages_check_deps_LandGroup
+[  1%] Built target _airsim_ros_pkgs_generate_messages_check_deps_Reset
+[  2%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/AdHocConnection.cpp.o[0m
+[  2%] Built target _airsim_ros_pkgs_generate_messages_check_deps_GPSYaw
+[  2%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/common_utils/ThreadUtils.cpp.o[0m
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_VelCmdGroup[0m
+[  3%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/MavLinkFtpClient.cpp.o[0m
+[  3%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/MavLinkConnection.cpp.o[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py[0m
+[  3%] Built target std_msgs_generate_messages_py
+[  3%] Built target _airsim_ros_pkgs_generate_messages_check_deps_TakeoffGroup
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_Land[0m
+[  4%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/MavLinkLog.cpp.o[0m
+[  4%] Built target _airsim_ros_pkgs_generate_messages_check_deps_VelCmdGroup
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_GimbalAngleQuatCmd[0m
+[  4%] Built target _airsim_ros_pkgs_generate_messages_check_deps_Land
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_py[0m
+[  4%] Built target _airsim_ros_pkgs_generate_messages_check_deps_GimbalAngleQuatCmd
+[  4%] Built target geometry_msgs_generate_messages_py
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_SetLocalPosition[0m
+[35m[1mScanning dependencies of target geographic_msgs_generate_messages_py[0m
+[  4%] Built target geographic_msgs_generate_messages_py
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_SetGPSPosition[0m
+[  4%] Built target _airsim_ros_pkgs_generate_messages_check_deps_SetLocalPosition
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_Environment[0m
+[  4%] Built target _airsim_ros_pkgs_generate_messages_check_deps_SetGPSPosition
+[  5%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/MavLinkMessageBase.cpp.o[0m
+[  5%] Built target _airsim_ros_pkgs_generate_messages_check_deps_Environment
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_CarControls[0m
+[  5%] Built target _airsim_ros_pkgs_generate_messages_check_deps_CarControls
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_Altimeter[0m
+[  5%] Built target _airsim_ros_pkgs_generate_messages_check_deps_Altimeter
+[35m[1mScanning dependencies of target _airsim_ros_pkgs_generate_messages_check_deps_CarState[0m
+[  5%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/MavLinkMessages.cpp.o[0m
+[  5%] Built target _airsim_ros_pkgs_generate_messages_check_deps_CarState
+[35m[1mScanning dependencies of target geographic_msgs_generate_messages_lisp[0m
+[  5%] Built target geographic_msgs_generate_messages_lisp
+[  6%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/MavLinkNode.cpp.o[0m
+[  6%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/MavLinkTcpServer.cpp.o[0m
+[  7%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/MavLinkVehicle.cpp.o[0m
+[  8%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/MavLinkVideoStream.cpp.o[0m
+[  8%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/Semaphore.cpp.o[0m
+[  9%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/UdpSocket.cpp.o[0m
+[ 10%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/impl/AdHocConnectionImpl.cpp.o[0m
+[ 10%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/impl/MavLinkConnectionImpl.cpp.o[0m
+[ 11%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/impl/MavLinkFtpClientImpl.cpp.o[0m
+[ 11%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/impl/MavLinkNodeImpl.cpp.o[0m
+[ 12%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/impl/MavLinkTcpServerImpl.cpp.o[0m
+[ 13%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/impl/MavLinkVehicleImpl.cpp.o[0m
+[ 13%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/impl/MavLinkVideoStreamImpl.cpp.o[0m
+[ 14%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/impl/UdpSocketImpl.cpp.o[0m
+[ 14%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/serial_com/SerialPort.cpp.o[0m
+[ 15%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/serial_com/TcpClientPort.cpp.o[0m
+[ 17%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/serial_com/UdpClientPort.cpp.o[0m
+[ 17%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/serial_com/SocketInit.cpp.o[0m
+[ 18%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/serial_com/wifi.cpp.o[0m
+[ 19%] [32mBuilding CXX object MavLinkCom/CMakeFiles/MavLinkCom.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/src/impl/linux/MavLinkFindSerialPorts.cpp.o[0m
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp[0m
+[ 19%] Built target geometry_msgs_generate_messages_lisp
+[ 19%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_eus[0m
+[ 19%] Built target geometry_msgs_generate_messages_eus
+[ 19%] Built target std_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target geographic_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target geographic_msgs_generate_messages_cpp[0m
+[ 19%] Built target geographic_msgs_generate_messages_eus
+[ 19%] Built target geographic_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target geographic_msgs_generate_messages_nodejs[0m
+[ 19%] Built target std_msgs_generate_messages_nodejs
+[ 19%] Built target geometry_msgs_generate_messages_nodejs
+[ 19%] Built target geographic_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target mavros_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_eus[0m
+[ 19%] Built target mavros_msgs_generate_messages_py
+[ 19%] Built target rosgraph_msgs_generate_messages_lisp
+[ 19%] Built target rosgraph_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target mavros_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_cpp[0m
+[ 19%] Built target mavros_msgs_generate_messages_cpp
+[ 19%] Built target rosgraph_msgs_generate_messages_cpp
+[ 19%] Built target std_msgs_generate_messages_cpp
+[ 19%] Built target geometry_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target mavros_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target nav_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_lisp[0m
+[ 19%] Built target mavros_msgs_generate_messages_eus
+[ 19%] Built target rosgraph_msgs_generate_messages_nodejs
+[ 19%] Built target nav_msgs_generate_messages_cpp
+[ 19%] Built target sensor_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target std_srvs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target roscpp_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target uuid_msgs_generate_messages_lisp[0m
+[ 19%] Built target std_srvs_generate_messages_eus
+[35m[1mScanning dependencies of target mavros_msgs_generate_messages_nodejs[0m
+[ 19%] Built target roscpp_generate_messages_lisp
+[ 19%] Built target uuid_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_nodejs[0m
+[ 19%] Built target mavros_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target uuid_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target nav_msgs_generate_messages_nodejs[0m
+[ 19%] Built target actionlib_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target roscpp_generate_messages_py[0m
+[ 19%] Built target uuid_msgs_generate_messages_py
+[ 19%] Built target nav_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_nodejs[0m
+[ 19%] Built target roscpp_generate_messages_py
+[35m[1mScanning dependencies of target actionlib_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_py[0m
+[ 19%] Built target sensor_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target roscpp_generate_messages_nodejs[0m
+[ 19%] Built target actionlib_generate_messages_cpp
+[ 19%] Built target sensor_msgs_generate_messages_py
+[35m[1mScanning dependencies of target mavros_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_cpp[0m
+[ 19%] Built target roscpp_generate_messages_nodejs
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_eus[0m
+[ 19%] Built target mavros_msgs_generate_messages_lisp
+[ 19%] Built target sensor_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target actionlib_generate_messages_nodejs[0m
+[ 19%] Built target sensor_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target roscpp_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target uuid_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target uuid_msgs_generate_messages_cpp[0m
+[ 19%] Built target actionlib_generate_messages_nodejs
+[ 19%] Built target roscpp_generate_messages_cpp
+[ 19%] Built target uuid_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target uuid_msgs_generate_messages_nodejs[0m
+[ 19%] Built target uuid_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target nav_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_cpp[0m
+[ 19%] Built target uuid_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target std_srvs_generate_messages_cpp[0m
+[ 19%] Built target nav_msgs_generate_messages_lisp
+[ 19%] Built target actionlib_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target roscpp_generate_messages_eus[0m
+[ 19%] Built target std_srvs_generate_messages_cpp
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_eus[0m
+[ 19%] Built target roscpp_generate_messages_eus
+[ 19%] Built target rosgraph_msgs_generate_messages_py
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_py[0m
+[ 19%] Built target actionlib_msgs_generate_messages_eus
+[ 19%] Built target actionlib_msgs_generate_messages_py
+[35m[1mScanning dependencies of target std_srvs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target std_srvs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target actionlib_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target std_srvs_generate_messages_py[0m
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_cpp[0m
+[ 19%] Built target std_srvs_generate_messages_nodejs
+[ 19%] Built target std_srvs_generate_messages_lisp
+[ 19%] Built target actionlib_generate_messages_lisp
+[35m[1mScanning dependencies of target nav_msgs_generate_messages_eus[0m
+[ 19%] Built target std_srvs_generate_messages_py
+[ 19%] Built target tf2_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target nav_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_nodejs[0m
+[ 19%] Built target nav_msgs_generate_messages_eus
+[ 19%] Built target tf2_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target actionlib_generate_messages_eus[0m
+[ 19%] Built target tf2_msgs_generate_messages_lisp
+[ 19%] Built target tf2_msgs_generate_messages_nodejs
+[ 19%] Built target nav_msgs_generate_messages_py
+[35m[1mScanning dependencies of target actionlib_generate_messages_py[0m
+[ 19%] Built target actionlib_generate_messages_eus
+[35m[1mScanning dependencies of target rpc[0m
+[ 19%] Built target tf2_msgs_generate_messages_py
+[35m[1mScanning dependencies of target airsim_ros_pkgs_generate_messages_lisp[0m
+[ 19%] Built target actionlib_generate_messages_py
+[35m[1mScanning dependencies of target airsim_ros_pkgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target airsim_ros_pkgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target airsim_ros_pkgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target airsim_ros_pkgs_generate_messages_cpp[0m
+[ 20%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/CarControls.msg[0m
+[ 20%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/Altimeter.msg[0m
+[ 21%] [34m[1mGenerating Python from MSG airsim_ros_pkgs/Altimeter[0m
+[ 22%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/Altimeter.msg[0m
+[ 23%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/Altimeter.msg[0m
+[ 24%] [34m[1mGenerating C++ code from airsim_ros_pkgs/Altimeter.msg[0m
+[ 24%] [34m[1mGenerating C++ code from airsim_ros_pkgs/CarControls.msg[0m
+[ 24%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/Environment.msg[0m
+[ 25%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/CarControls.msg[0m
+[ 25%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/CarControls.msg[0m
+[ 26%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/CarState.msg[0m
+[ 26%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/Environment.msg[0m
+[ 26%] [34m[1mGenerating Python from MSG airsim_ros_pkgs/CarControls[0m
+[ 27%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/Environment.msg[0m
+[ 28%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/VelCmd.msg[0m
+[ 30%] [34m[1mGenerating C++ code from airsim_ros_pkgs/Environment.msg[0m
+[ 30%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/CarState.msg[0m
+[ 30%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/dispatcher.cc.o[0m
+[ 30%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/GimbalAngleQuatCmd.msg[0m
+[ 30%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/CarState.msg[0m
+[ 30%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/VelCmd.msg[0m
+[ 31%] [34m[1mGenerating Python from MSG airsim_ros_pkgs/Environment[0m
+[ 32%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/server.cc.o[0m
+[ 34%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/GPSYaw.msg[0m
+[ 35%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/GimbalAngleQuatCmd.msg[0m
+[ 36%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/VelCmd.msg[0m
+[ 36%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/GimbalAngleEulerCmd.msg[0m
+[ 37%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/GPSYaw.msg[0m
+[ 38%] [34m[1mGenerating Python from MSG airsim_ros_pkgs/CarState[0m
+[ 39%] [34m[1mGenerating C++ code from airsim_ros_pkgs/CarState.msg[0m
+[ 41%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/GimbalAngleEulerCmd.msg[0m
+[ 41%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/VelCmdGroup.msg[0m
+[ 41%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/GimbalAngleQuatCmd.msg[0m
+[ 42%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/SetGPSPosition.srv[0m
+[ 43%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/VelCmdGroup.msg[0m
+[ 43%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/GPSYaw.msg[0m
+[ 43%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/Reset.srv[0m
+[ 43%] [34m[1mGenerating Python from MSG airsim_ros_pkgs/VelCmd[0m
+[ 44%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/SetGPSPosition.srv[0m
+[ 45%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/TakeoffGroup.srv[0m
+[ 45%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/Reset.srv[0m
+[ 46%] [34m[1mGenerating C++ code from airsim_ros_pkgs/VelCmd.msg[0m
+[ 46%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/GimbalAngleEulerCmd.msg[0m
+[ 47%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/Takeoff.srv[0m
+[ 48%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/TakeoffGroup.srv[0m
+[ 50%] [34m[1mGenerating Python from MSG airsim_ros_pkgs/GimbalAngleQuatCmd[0m
+[ 50%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/SetLocalPosition.srv[0m
+[ 50%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/Takeoff.srv[0m
+[ 51%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/VelCmdGroup.msg[0m
+[ 52%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/Land.srv[0m
+[ 53%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/SetLocalPosition.srv[0m
+[ 54%] [34m[1mGenerating Python from MSG airsim_ros_pkgs/GPSYaw[0m
+[ 54%] [34m[1mGenerating Lisp code from airsim_ros_pkgs/LandGroup.srv[0m
+[ 54%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/SetGPSPosition.srv[0m
+[ 55%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/Land.srv[0m
+[ 56%] [34m[1mGenerating C++ code from airsim_ros_pkgs/GimbalAngleQuatCmd.msg[0m
+[ 56%] [32m[1mLinking CXX static library ../output/lib/libMavLinkCom.a[0m
+[ 56%] Built target airsim_ros_pkgs_generate_messages_lisp
+[ 56%] [34m[1mGenerating Javascript code from airsim_ros_pkgs/LandGroup.srv[0m
+[ 56%] [34m[1mGenerating C++ code from airsim_ros_pkgs/GPSYaw.msg[0m
+[ 57%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/Reset.srv[0m
+[ 57%] [34m[1mGenerating Python from MSG airsim_ros_pkgs/GimbalAngleEulerCmd[0m
+[ 57%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/TakeoffGroup.srv[0m
+[ 58%] [34m[1mGenerating Python from MSG airsim_ros_pkgs/VelCmdGroup[0m
+[ 59%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/Takeoff.srv[0m
+[ 60%] [34m[1mGenerating C++ code from airsim_ros_pkgs/GimbalAngleEulerCmd.msg[0m
+[ 61%] [34m[1mGenerating C++ code from airsim_ros_pkgs/VelCmdGroup.msg[0m
+[ 61%] Built target airsim_ros_pkgs_generate_messages_nodejs
+[ 61%] [34m[1mGenerating C++ code from airsim_ros_pkgs/SetGPSPosition.srv[0m
+[ 62%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/SetLocalPosition.srv[0m
+[ 62%] [34m[1mGenerating Python code from SRV airsim_ros_pkgs/SetGPSPosition[0m
+[ 62%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/Land.srv[0m
+[ 63%] [34m[1mGenerating EusLisp code from airsim_ros_pkgs/LandGroup.srv[0m
+[ 64%] [34m[1mGenerating EusLisp manifest code for airsim_ros_pkgs[0m
+[ 65%] [34m[1mGenerating Python code from SRV airsim_ros_pkgs/Reset[0m
+[ 67%] [34m[1mGenerating C++ code from airsim_ros_pkgs/Reset.srv[0m
+[ 68%] [34m[1mGenerating C++ code from airsim_ros_pkgs/TakeoffGroup.srv[0m
+[ 69%] [34m[1mGenerating Python code from SRV airsim_ros_pkgs/TakeoffGroup[0m
+[ 69%] [34m[1mGenerating C++ code from airsim_ros_pkgs/Takeoff.srv[0m
+[ 69%] Built target MavLinkCom
+[ 69%] [34m[1mGenerating Python code from SRV airsim_ros_pkgs/Takeoff[0m
+[ 70%] [34m[1mGenerating Python code from SRV airsim_ros_pkgs/SetLocalPosition[0m
+[ 71%] [34m[1mGenerating Python code from SRV airsim_ros_pkgs/LandGroup[0m
+[ 71%] [34m[1mGenerating Python code from SRV airsim_ros_pkgs/Land[0m
+[ 72%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/client.cc.o[0m
+[ 72%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/this_handler.cc.o[0m
+[ 73%] [34m[1mGenerating C++ code from airsim_ros_pkgs/SetLocalPosition.srv[0m
+[ 74%] [34m[1mGenerating C++ code from airsim_ros_pkgs/Land.srv[0m
+[ 74%] [34m[1mGenerating Python msg __init__.py for airsim_ros_pkgs[0m
+[ 74%] [34m[1mGenerating Python srv __init__.py for airsim_ros_pkgs[0m
+[ 75%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/this_session.cc.o[0m
+[ 76%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/this_server.cc.o[0m
+[ 77%] [34m[1mGenerating C++ code from airsim_ros_pkgs/LandGroup.srv[0m
+[ 77%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/rpc_error.cc.o[0m
+[ 77%] Built target airsim_ros_pkgs_generate_messages_py
+[35m[1mScanning dependencies of target MavLinkTest[0m
+[ 78%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/detail/server_session.cc.o[0m
+[ 79%] [32mBuilding CXX object MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/Commands.cpp.o[0m
+[ 79%] Built target airsim_ros_pkgs_generate_messages_eus
+[ 79%] [32mBuilding CXX object MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/UnitTests.cpp.o[0m
+[01m[K/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/Commands.cpp:14:10:[m[K [01;31m[Kfatal error: [m[Kfilesystem: No such file or directory
+ #include [01;31m[K<filesystem>[m[K
+          [01;31m[K^~~~~~~~~~~~[m[K
+compilation terminated.
+MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/build.make:62: recipe for target 'MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/Commands.cpp.o' failed
+make[2]: *** [MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/projects/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/Commands.cpp.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+[ 79%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/detail/response.cc.o[0m
+[ 79%] Built target airsim_ros_pkgs_generate_messages_cpp
+[35m[1mScanning dependencies of target pd_position_controller_simple[0m
+[ 80%] [32mBuilding CXX object CMakeFiles/pd_position_controller_simple.dir/src/pd_position_controller_simple.cpp.o[0m
+[ 81%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/detail/client_error.cc.o[0m
+[ 82%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/lib/rpc/nonstd/optional.cc.o[0m
+[ 82%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/dependencies/src/format.cc.o[0m
+[ 84%] [32mBuilding CXX object rpclib_wrapper/rpclib/CMakeFiles/rpc.dir/dependencies/src/posix.cc.o[0m
+[35m[1mScanning dependencies of target airsim_ros_pkgs_generate_messages[0m
+[ 84%] Built target airsim_ros_pkgs_generate_messages
+[ 85%] [32m[1mLinking CXX static library ../../output/lib/librpc.a[0m
+CMakeFiles/Makefile2:3812: recipe for target 'MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/all' failed
+make[1]: *** [MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+[ 85%] Built target rpc
+[ 86%] [32m[1mLinking CXX shared library /home/cthornton/projects/arl/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/libpd_position_controller_simple.so[0m
+[ 86%] Built target pd_position_controller_simple
+Makefile:140: recipe for target 'all' failed
+make: *** [all] Error 2
