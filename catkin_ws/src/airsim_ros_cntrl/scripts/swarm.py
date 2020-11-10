@@ -4,14 +4,15 @@ import json
 import os
 import time
 import threading
+import math
 
 import rospy
 
 import drone
 
 
-def makeVelDict(lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
-    return((dict([('lx',lx), ('ly',ly), ('lz',lz), ('ax', ax), ('ay',ay), ('az',az)])))
+def makeVelDict(drone=None, lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
+    return((dict([('drone',drone), ('lx',lx), ('ly',ly), ('lz',lz), ('ax', ax), ('ay',ay), ('az',az)])))
 
 
 class Swarm:
@@ -20,14 +21,16 @@ class Swarm:
         
         self.swarm_name = swarmName
         self.vehicle_list = self.getDroneListFromSettings(settingsFilePath)
-        self.drones = list()
-        self.drone_threads = list()
+        self.drones = dict()
+        self.drone_threads = dict()
 
         for i in self.vehicle_list:
-            self.drones.append(drone.Drone(self.swarm_name, i))
-            drone_thread = threading.Thread(target=self.drones[-1].fly, args=(1000,))
+            self.drones[i] = drone.Drone(self.swarm_name, i)
+           # self.drones.append(drone.Drone(self.swarm_name, i))
+            drone_thread = threading.Thread(target=self.drones[i].fly, args=(100,))
             drone_thread.start()
-            self.drone_threads.append(drone_thread)
+            self.drone_threads[i] = drone_thread
+            #self.drone_threads.append(drone_thread)
 
         print("SWARM CREATED WITH %d DRONES" %len(self.drones))
 
@@ -54,63 +57,93 @@ class Swarm:
 
         return vehicle_list
 
+    def getDroneList(self):
+        return self.drones
+
 
     def takeoff(self, wait=False):
         for i in self.drones:
-            i.takeoff(wait)
+            self.drones[i].takeoff(wait)
 
     def land(self, wait=False):
         for i in self.drones:
-            i.land(wait)
+            self.drones[i].land(wait)
 
-    def cmd_vel(self, cmd, frame="body"):
-        if frame == "body":
-            for i in self.drones:
-                i.set_velocity_local(cmd)
-        elif frame == "world":
-            for i in self.drones:
-                i.set_velocity_world(cmd)
+    def cmd_vel(self, cmd=None, cmd_all=None, frame="body"):
+        if cmd_all != None:
+            if frame == "body":
+                for i in self.drones:
+                    self.drones[i].set_velocity_local(cmd_all)
+            elif frame == "world":
+                for i in self.drones:
+                    self.drones[i].set_velocity_world(cmd_all)
+            else:
+                print("UNRECOGNIZED FRAME")
         else:
-            print("UNRECOGNIZED FRAME")
+            if frame == "body":
+                for i in cmd:
+                    self.drones[i['drone']].set_velocity_local(i)
+            elif frame == "world":
+                for i in cmd:
+                    self.drones[i['drone']].set_velocity_world(i)
+            else:
+                print("UNRECOGNIZED FRAME")
+
 
     def hover(self):
         for i in self.drones:
-            i.hover()
+            self.drones[i].hover()
 
     def shutdown(self, shutdown=True):
         print("SHUTDOWN SWARM")
         for i in self.drones:
-            i.shutdown(shutdown=shutdown)
+            self.drones[i].shutdown(shutdown=shutdown)
 
         for i in self.drone_threads:
-            i.join()
+            self.drone_threads[i].join()
 
 
 if __name__ == "__main__":
     swarm = Swarm(swarmName="swarm")
+    cmd_vel_list = list()
+
 
     print("TAKING OFF")
-    swarm.takeoff(True)
-    #time.sleep(3)
+    swarm.takeoff(False)
+    time.sleep(3)
 
     print("CLIMB FOR 5 SECONDS AT 3 m/s")
-    swarm.cmd_vel(makeVelDict(lz=-3), frame="world")
+    swarm.cmd_vel(cmd_all=makeVelDict(lz=-2), frame="world")
+
+    cmd_vel_list.append(makeVelDict(drone="Drone0", lz=-2.1))
+    swarm.cmd_vel(cmd=cmd_vel_list, frame="world")
     time.sleep(5)
 
-    print("MOVE IN A CIRCLE WITH RADIUS 5 m AT 3 m/s")
-    lin_vel = 3.0
-    radius = 5.0
+    print("MOVE IN A CIRCLE WITH RADIUS 2 m AT 3 m/s")
+    lin_vel = 0.5
+    radius = 2.0
+    angular_vel = lin_vel/radius
+    angular_change = 2.0*math.pi
+    time_wait = angular_change/angular_vel
+    print("Time wait: %f" %time_wait)
+    print("Angular velocity: %f" %angular_vel)
 
-    swarm.cmd_vel(makeVelDict(lx=lin_vel, az=lin_vel/radius), frame="body")
-    time.sleep(30)
+    swarm.cmd_vel(cmd_all=makeVelDict(lx=lin_vel, az=angular_vel), frame="body")
+    time.sleep(time_wait)
 
-    swarm.cmd_vel(makeVelDict(lz=3), frame="world")
+
+    print("DESCENDING")
+    swarm.cmd_vel(cmd_all=makeVelDict(lz=2), frame="body")
     time.sleep(5)
     
+    print("HOVERING")
+    swarm.cmd_vel(cmd_all=makeVelDict(), frame="body")
     swarm.hover()
 
 
     print("LANDING")
     swarm.land(True)
+    #time.sleep(10)
+
 
     swarm.shutdown()

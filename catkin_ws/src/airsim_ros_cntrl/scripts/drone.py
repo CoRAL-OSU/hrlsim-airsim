@@ -79,6 +79,7 @@ class Drone:
         return resp
       except rospy.ServiceException as e:
         print("Service call failed: %s" %e)
+        
 
   def shutdown(self, shutdown=True):
     with self._lock:
@@ -96,7 +97,6 @@ class Drone:
 
   def fly(self, rate):
     r = rospy.Rate(rate)
-    i = 0
     while not rospy.is_shutdown() and self._shutdown == False:
 
       if(self._publish_vel_cmd == True):

@@ -5,7 +5,7 @@
 <arg name="scale_angular" default="3.14" />
 <arg name="deadzone" default="0.15" />
 <arg name="rviz" default="false" />
-<arg name="joy" default="true" />
+<arg name="joy" default="false" />
 
 
 <!-- AirSim ROS Wrapper -->
