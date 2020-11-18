@@ -1,9 +1,11 @@
-#! /usr/bin/python3
+#! /usr/bin/python
 
 import json
 import os
 import time
 import threading
+#import multiprocessing
+
 import math
 
 import airsim
@@ -12,10 +14,10 @@ import airsim
 import drone
 
 
-def makePosCmd(drone=None, timeout=3e38, frame="world", x=0, y=0, z=0, vel=0):
-    return((dict([('drone',drone), ('frame',frame), ('timeout',timeout), ('x',x), ('y',y), ('z',z), ('vel',vel)])))
+def makePosCmd(drone=None, timeout=3e38, frame="world", x=0, y=0, z=0, yaw=0, vel=0):
+    return((dict([('drone',drone), ('frame',frame), ('timeout',timeout), ('x',x), ('y',y), ('z',z), ('yaw',yaw), ('vel',vel)])))
 
-def makeVelDict(drone=None, dur=0.01, frame="body", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
+def makeVelCmd(drone=None, dur=0.01, frame="body", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
     return((dict([('drone',drone), ('frame',frame), ('dur',dur), ('lx',lx), ('ly',ly), ('lz',lz), ('ax', ax), ('ay',ay), ('az',az)])))
 
 
@@ -87,33 +89,36 @@ class Swarm:
             for i in range(0, len(land)):
                 land[i].join()
 
-    def cmd_vel(self, cmd=None, cmd_all=None, frame="body", wait=False):
 
-        self.client.getMultirotorState().
+    def cmd_pos(self, cmd=None, cmd_all=None, wait=False):
         if cmd_all != None:
-            threads = list()
-
             for i in self.vehicle_list:
-                thread = threading.Thread(target=drone.Drone.set_velocity, args=(self.drones[i], cmd_all))
-                thread.start()
-                threads.append(thread)
-
-                print("STARTING THREAD FOR VEHICLE: " + i)
-
-            if wait:
-                for thread in threads:
-                    thread.join()
+                self.drones[i].set_position(cmd_all)
+        
         else:
-            threads = list()
-
             for i in cmd:
-                thread = threading.Thread(target=self.drones[i['drone']].set_velocity_local, args=(i))
-                thread.start()
-                threads.append(thread)
+                self.drones[i["drone"]].set_position(i)
 
-            if wait:
-                for thread in threads:
-                    thread.join()
+        if wait:
+            for i in self.vehicle_list:
+                self.drones[i].wait_for_cmd()
+
+
+
+
+    def cmd_vel(self, cmd=None, cmd_all=None, wait=False):
+
+        if cmd_all != None:
+            for i in self.vehicle_list:
+                self.drones[i].set_velocity(cmd_all)
+        
+        else:
+            for i in cmd:
+                self.drones[i['drone']].set_velocity(i)
+
+        if wait:
+            for i in self.vehicle_list:
+                self.drones[i].wait_for_cmd()
 
 
     def hover(self):
@@ -125,8 +130,8 @@ class Swarm:
         for i in self.drones:
             self.drones[i].shutdown(shutdown=shutdown)
 
-        #for i in self.drone_threads:
-        #    self.drone_threads[i].join()
+        for i in self.drone_threads:
+            self.drones[i].join()
 
 
 if __name__ == "__main__":
@@ -139,34 +144,42 @@ if __name__ == "__main__":
     time.sleep(3)
 
     print("CLIMB FOR 5 SECONDS AT 3 m/s")
-    swarm.cmd_vel(cmd_all=makeVelDict(frame="world", dur=5, lz=-2))
+    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="world", dur=5, lz=-2))
 
-    #cmd_vel_list.append(makeVelDict(drone="Drone0", dur=5, lz=-2.1))
+    #cmd_vel_list.append(drone.makeVelCmd(drone="Drone0", dur=5, lz=-2.1))
     #swarm.cmd_vel(cmd=cmd_vel_list, frame="world")
     time.sleep(5)
 
-    print("MOVE IN A CIRCLE WITH RADIUS 2 m AT 3 m/s")
+
+    
+    print("MOVE IN A QUARTER CIRCLE WITH RADIUS 2 m AT 3 m/s")
     lin_vel = 0.25
     radius = 2.0
     angular_vel = lin_vel/radius
-    angular_change = 2.0*math.pi
+    angular_change = math.pi/2.0
     time_wait = angular_change/angular_vel
     print("Time wait: %f" %time_wait)
     print("Angular velocity: %f" %angular_vel)
 
     time_start = time.time()
-    swarm.cmd_vel(cmd_all=makeVelDict(frame="body", dur=time_wait, lx=lin_vel, az=angular_vel), wait=True)
+    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="body", dur=time_wait, lx=lin_vel, az=angular_vel), wait=True)
+    #time.sleep(time_wait)
     time_taken = time.time() - time_start
     print("Time taken: %f" %time_taken)
+    
+
+    print("MOVE OUT FOR 5 m AT 2 m/s")
+    swarm.cmd_pos(cmd_all=drone.makePosCmd(frame="body", y=-5, vel=2, timeout=10), wait=True)
 
     #time.sleep(time_wait)
     
     print("HOVERING")
     swarm.hover()
-
+    time.sleep(3)
 
     print("DESCENDING")
-    swarm.cmd_vel(cmd_all=makeVelDict(frame="body", lz=2, dur=5), wait=True)
+    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="body", lz=2, dur=5), wait=False)
+    time.sleep(5)
 
 
     print("LANDING")
