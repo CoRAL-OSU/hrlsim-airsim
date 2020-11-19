@@ -39,9 +39,7 @@ class Swarm:
             self.services   = services
             self.actions    = actions
 
-    def __init__(self, swarmName, settingsFilePath=None):
-        rospy.init_node(swarmName)
-        
+    def __init__(self, swarmName, settingsFilePath=None):       
         self.client = airsim.MultirotorClient()
         self.client.confirmConnection()
 
@@ -57,15 +55,21 @@ class Swarm:
         for i in self.vehicle_list:
             proc = drone.Drone(self.swarm_name, i, self.client, self.lock)
 
+            self.drones[i] = Swarm.DroneInfo(i, proc, None, None, None, None)
+            self.drones[i].process.start()
+
+
+        rospy.init_node(self.swarm_name)
+
+        for i in self.vehicle_list:
+
             cmd_vel_topic_name = "/" + self.swarm_name + "/" + i + "/cmd/vel"
 
             pubs = dict()
             pubs['cmd_vel'] = rospy.Publisher(cmd_vel_topic_name, TwistStamped, queue_size=10)
 
-
-            self.drones[i] = Swarm.DroneInfo(i, proc, pubs, None, None, None)
-            self.drones[i].process.start()
-
+            self.drones[i].pubs = pubs
+            
         print("SWARM CREATED WITH %d DRONES" %len(self.drones))
 
 
@@ -253,4 +257,4 @@ if __name__ == "__main__":
     #time.sleep(10)
 
 
-    swarm.shutdown()
+    #swarm.shutdown()

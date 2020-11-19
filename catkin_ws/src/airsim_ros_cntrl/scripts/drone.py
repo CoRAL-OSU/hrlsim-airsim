@@ -58,6 +58,7 @@ class Drone(mp.Process):
         self.__vel_cmd_timeout = 0.1
         self.__service_timeout = 5.0
 
+    def __setup_ros(self):
         topic_prefix = "/" + self.__swarm_name + "/" + self.__drone_name
         cmd_vel_topic  = topic_prefix + "/cmd/vel"
 
@@ -98,6 +99,9 @@ class Drone(mp.Process):
         # TODO : MAKE ROS SERVICE TO SHUTDOWN DRONE
         # TODO : MAKE ROS SERVICE TO ADJUST TIMEOUTS
 
+
+
+        
     def get_client(self):
         return self.__client
 
@@ -199,6 +203,7 @@ class Drone(mp.Process):
 
 
     def run(self):
+        self.__setup_ros()
 
         rate = rospy.Rate(100)
         while self.__shutdown == False and not rospy.is_shutdown():
