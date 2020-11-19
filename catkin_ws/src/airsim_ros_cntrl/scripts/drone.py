@@ -1,213 +1,211 @@
-#! /usr/bin/python3
+#! /usr/bin/python
 
 import time
-import threading
+import multiprocessing as mp
 import math
 
 import airsim
+import rospy
+
+from geometry_msgs.msg import TwistStamped, PoseStamped
+from airsim_ros_pkgs.srv import Takeoff, TakeoffResponse, Land, LandResponse
+
+from std_srvs.srv import SetBool, SetBoolResponse
+
+from nav_msgs.msg import Odometry
+from sensor_msgs.msg import NavSatFix, Imu
 
 
-def makePosCmd(drone=None, timeout=3e38, frame="world", x=0, y=0, z=0, yaw=0, vel=0):
-    return((dict([('drone',drone), ('frame',frame), ('timeout',timeout), ('x',x), ('y',y), ('z',z), ('yaw',yaw), ('vel',vel)])))
+def makeVelCmd(frame="local", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
+    vel_cmd = TwistStamped()
+    vel_cmd.header.frame_id = frame
+    vel_cmd.header.stamp = rospy.Time.now()
 
-def makeVelCmd(drone=None, dur=0.01, frame="body", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
-    return((dict([('drone',drone), ('frame',frame), ('dur',dur), ('lx',lx), ('ly',ly), ('lz',lz), ('ax', ax), ('ay',ay), ('az',az)])))
+    vel_cmd.twist.linear.x = lx
+    vel_cmd.twist.linear.y = ly
+    vel_cmd.twist.linear.z = lz
+    vel_cmd.twist.angular.x = ax
+    vel_cmd.twist.angular.y = ay
+    vel_cmd.twist.angular.z = az
 
+    return vel_cmd
 
-class Drone:
-  def __init__(self, swarmName, vehicleName, sim_client, threading_lock):
-    self.swarm_name = swarmName
-    self.drone_name = vehicleName
+class Drone(mp.Process):
+    def __init__(self, swarmName, droneName, sim_client, client_lock):
+        mp.Process.__init__(self)
 
-    self.__client_lock = threading_lock
-    self.__threading_lock = threading.Lock()
+        self.__swarm_name = swarmName
+        self.__drone_name = droneName
 
-    with self.__client_lock:
-      self.client = sim_client
-      self.client.confirmConnection()
-      self.client.enableApiControl(True, vehicle_name=self.drone_name)
-      self.client.armDisarm(True, vehicle_name=self.drone_name)
+        self.__client_lock = client_lock
 
-    self.state = self.get_state()
-
-    self.__cmd_thread = None
-    
-    self.__shutdown = False
-    self.__finished = False
-    self.__time_start = time.time()
-    self.__cmd_timeout = 1  
-
-  def get_client(self):
-    return self.client
-
-  def get_name(self):
-    return self.drone_name
-
-  def get_state(self):
-    with self.__client_lock:
-      self.state = self.client.getMultirotorState(vehicle_name=self.drone_name)
-      airsim.MultirotorState.kinematics_estimated
-    return self.state
-
-
-
-  def set_position(self, cmd):
-    self.__time_start = time.time()
-    self.__finished = False
-    self.__cmd_timeout = cmd['timeout']
-    self.__cancelCommand = False
-
-    self.__cmd_thread = threading.Thread(target=Drone.__moveToPosition, args=(self, cmd))
-    self.__cmd_thread.start()
-
-  def __moveToPosition(self, cmd):
-    if cmd["frame"] == "body":
-      state = self.get_state()
-      x_curr = state.kinematics_estimated.position.x_val
-      y_curr = state.kinematics_estimated.position.y_val
-      z_curr = state.kinematics_estimated.position.z_val
-
-      (pitch, roll, yaw)  = airsim.to_eularian_angles(state.kinematics_estimated.orientation)
-      
-      x_cmd = cmd['x']*math.cos(yaw) - cmd['y']*math.sin(yaw) + x_curr
-      y_cmd = cmd['x']*math.sin(yaw) + cmd['y']*math.cos(yaw) + y_curr
-      z_cmd = cmd['z'] + z_curr
-      yaw_cmd = cmd['yaw'] + math.degrees(yaw)
-    
-    elif cmd["frame"] == "world":
-      x_cmd = cmd['x']
-      y_cmd = cmd['y']
-      z_cmd = cmd['z']
-      yaw_cmd = cmd['yaw']
-    
-    else:
-      print("DRONE " + self.drone_name + " POSITION CMD UNRECOGNIZED FRAME")
-
-    yawmode = airsim.YawMode(False, yaw_cmd)
-
-    with self.__client_lock:
-      self.client.moveToPositionAsync(x_cmd, y_cmd, z_cmd, cmd['vel'], cmd['timeout'], yaw_mode=yawmode, vehicle_name=self.drone_name)
-  
-    with self.__threading_lock:
-      desired = airsim.Vector3r(x_cmd, y_cmd, z_cmd)
-      error = self.get_state().kinematics_estimated.position.distance_to(desired)
-      
-      while(time.time() - self.__time_start <= cmd['timeout'] and error > 0.05 and self.__shutdown == False and self.__cancelCommand == False):
-        error = self.get_state().kinematics_estimated.position.distance_to(desired)
-        time.sleep(0.2)
-
-      '''
-      print("DRONE " + self.drone_name + " FINISHED POSITION COMMAND")
-      print("ERROR " + str(error))
-      print("ELAPSED TIME " + str(time.time() - self.__time_start))
-      print("MAX TIME " + str(cmd['timeout']) + "\n")
-      print("CURRENT YAW " + str(yaw))
-      print("YAW COMMAND " + str(yaw_cmd))
-      '''
-
-      self.__finished = True
-      self.__publich_cmd = False
-
-
-  def set_velocity(self, cmd):    
-    self.__time_start = time.time()
-    self.__finished = False
-    self.__cmd_timeout = cmd['dur']
-    self.__cancelCommand = False
-
-    self.__cmd_thread = threading.Thread(target=Drone.__moveAtVelocity, args=(self, cmd))
-    self.__cmd_thread.start()
-
-  def __moveAtVelocity(self, cmd):
-    if cmd["frame"] == "body": 
-      while (time.time() - self.__time_start <= cmd['dur'] and self.__shutdown == False and self.__cancelCommand == False):
-        (pitch, roll, yaw) = airsim.to_eularian_angles(self.get_state().kinematics_estimated.orientation)
-
-        x = cmd['lx']*math.cos(yaw) - cmd['ly']*math.sin(yaw)
-        y = cmd['lx']*math.sin(yaw) + cmd['ly']*math.cos(yaw)
-        z = cmd['lz']
-        yawmode = airsim.YawMode(is_rate=True, yaw_or_rate=math.degrees(cmd['az']))
+        self.__command_type = None
+        self.__command = None
 
         with self.__client_lock:
-          self.client.moveByVelocityAsync(x, y, z, 0.1, yaw_mode=yawmode, vehicle_name=self.drone_name)
-        time.sleep(0.05)
+            self.__client = sim_client
+            self.__client.confirmConnection()
+            self.__client.enableApiControl(True, vehicle_name=self.__drone_name)
+            self.__client.armDisarm(True, vehicle_name=self.__drone_name)
 
-    elif cmd["frame"] == "world":
-      x = cmd['lx']
-      y = cmd['ly']
-      z = cmd['lz']
-      dur = cmd['dur']
-      yawmode = airsim.YawMode(is_rate=True, yaw_or_rate=cmd['az'])
+        self.__vehicle_state = self.get_state()
+        
+        self.__shutdown = False
+        self.__finished = False
+        self.__time_start = time.time()
 
-      with self.__client_lock:
-        self.client.moveByVelocityAsync(x, y, z, duration=dur, yaw_mode=yawmode, vehicle_name=self.drone_name)
-      time.sleep(dur)  
+        self.__pos_cmd_timeout = 5.0
+        self.__vel_cmd_timeout = 0.1
+        self.__service_timeout = 5.0
 
-    else:
-      print("DRONE " + self.drone_name + " VEL cmd UNRECOGNIZED FRAME")
-      self.hover()
+        topic_prefix = "/" + self.__swarm_name + "/" + self.__drone_name
+        cmd_vel_topic  = topic_prefix + "/cmd/vel"
 
-    with self.__threading_lock:
-      #print("DRONE " + self.drone_name + " FINISHED VELOCITY COMMAND")
-      self.__finished = True
-      self.__publich_cmd = False
+        cmd_pos_topic = topic_prefix + "/cmd/pos"
 
+        odom_topic  = topic_prefix + "/sensor/local/odom_ned"
+        gps_topic   = topic_prefix + "/sensor/global/gps"
+        imu_topic   = topic_prefix + "/sensor/local/imu"
 
-  def hover(self, wait=False):
-    self.__cancelCommand = True
-
-    with self.__client_lock:
-      if wait:
-        self.client.hoverAsync(vehicle_name=self.drone_name).join()
-      else:
-        self.client.hoverAsync(vehicle_name=self.drone_name)
-
-    self.__finished = True
+        takeoff_service_name    = topic_prefix + "/takeoff"
+        land_service_name       = topic_prefix + "/land"
+        wait_service_name       = topic_prefix + "/wait"
 
 
-  def takeoff(self, wait=False):
-    self.__cancelCommand = True
+        rospy.init_node(self.__drone_name)
 
-    if self.get_state().landed_state == airsim.LandedState.Flying:
-      return
+        self.__odom_pub = rospy.Publisher(odom_topic, Odometry, queue_size=10)
+        self.__gps_pub = rospy.Publisher(gps_topic, NavSatFix, queue_size=10)
+        self.__imu_topic = rospy.Publisher(imu_topic, Imu, queue_size=10)
+        
+        rospy.Subscriber(cmd_vel_topic, TwistStamped, callback=self.__cmd_vel_cb, queue_size=10)
 
-    with self.__client_lock:
-      if wait:
-        self.client.takeoffAsync(vehicle_name=self.drone_name).join()
-      else:
-        self.client.takeoffAsync(vehicle_name=self.drone_name)
-
-    self.__finished = True        
-      
-
-  def land(self, wait=False):
-    self.__cancelCommand = True
-
-    if self.get_state().landed_state == airsim.LandedState.Landed:
-      return
-    
-    with self.__client_lock:
-      if wait:
-        self.client.landAsync(vehicle_name=self.drone_name).join()
-      else:
-        self.client.landAsync(vehicle_name=self.drone_name)
-
-    self.__finished = True
-
-  def shutdown(self, shutdown=True):
-    self.__shutdown = True
-    self.__cancelCommand = True
-    self.hover()
-
-    with self.__client_lock:
-      self.client.armDisarm(False, vehicle_name=self.drone_name)
-      self.client.enableApiControl(is_enabled=False, vehicle_name=self.drone_name)
-
-    if self.__cmd_thread != None:
-      self.__cmd_thread.join()
+        # rospy.Subscriber(cmd_pos_local_topic, )  TODO: MAKE A ROS ACTION SERVER FOR POSITION AND PATHS
+        # TODO : MAKE ROS ACTION SERVER FOR POSITION CMD
+        # TODO : MAKE ROS ACTION SERVER FOR PATH CMD
 
 
+        self.__takeoff_service  = rospy.Service(takeoff_service_name, Takeoff, self.__handle_takeoff)
+        self.__land_service     = rospy.Service(land_service_name, Land, self.__handle_land)
+        self.__wait_service     = rospy.Service(wait_service_name, SetBool, self.__handle_wait) 
 
-  def wait_for_cmd(self):
-    if self.__cmd_thread != None:
-      self.__cmd_thread.join()
+        # TODO : MAKE ROS SERVICE TO TOGGLE EACH ROS TOPIC
+        # TODO : MAKE ROS SERVICE FOR LANDING
+        # TODO : MAKE ROS SERVICE FOR TAKEOFF
+        # TODO : MAKE ROS SERVICE FOR ARM/DISARM
+        # TODO : MAKE ROS SERVICE TO GET STATE
+        # TODO : MAKE ROS SERVICE TO WAIT FOR LAST TAKE TO COMPLETE
+        # TODO : MAKE ROS SERVICE TO SHUTDOWN DRONE
+        # TODO : MAKE ROS SERVICE TO ADJUST TIMEOUTS
+
+    def get_client(self):
+        return self.__client
+
+    def get_name(self):
+        return self.__drone_name
+
+    def get_state(self):
+        with self.__client_lock:
+            self.__vehicle_state = self.__client.getMultirotorState(vehicle_name=self.__drone_name)
+        return self.__vehicle_state
+
+    def __cmd_vel_cb(self, msg):
+        self.__time_start = time.time()
+        self.__finished = False      
+        self.__command = msg
+
+    def __moveAtVelocity(self):
+        if type(self.__command) != TwistStamped:
+            self.__cmd = None
+            self.__finished = True
+            return False
+
+        if self.__cmd.header.frame_id == "local":
+            (pitch, roll, yaw) = airsim.to_eularian_angles(self.get_state().kinematics_estimated.orientation)
+            
+            # ASSUMING 0 PITCH AND ROLL
+            x = self.__cmd.twist.linear.x*math.cos(yaw) - self.__cmd.twist.linear.y*math.sin(yaw)
+            y = self.__cmd.twist.linear.x*math.sin(yaw) + self.__cmd.twist.linear.y*math.cos(yaw)
+            z = self.__cmd.twist.linear.z
+            yawmode = airsim.YawMode(is_rate=True, yaw_or_rate=math.degrees(self.__cmd.twist.angular.z))
+        
+        elif self.__cmd.header.frame_id == "global":
+            x = self.__cmd.twist.linear.x
+            y = self.__cmd.twist.linear.y
+            z = self.__cmd.twist.linear.z
+            yawmode = airsim.YawMode(is_rate=True, yaw_or_rate=math.degrees(self.__cmd.tiwst.angular.z))
+
+        else:
+            print("DRONE " + self.__drone_name + " VEL cmd UNRECOGNIZED FRAME")
+            self.__finished = True
+            return False
+
+        with self.__client_lock:
+            self.__client.moveByVelocityAsync(x, y, z, duration=self.__vel_cmd_timeout, yaw_mode=yawmode, vehilce_name=self.__drone_name)
+
+
+
+    def __handle_takeoff(self, req):
+        if self.get_state().landed_state == airsim.LandedState.Flying:
+            return TakeoffResponse(True)
+
+        time_start = time.time()
+        with self.__client_lock:
+            self.__client.takeoffAsync(vehicle_name=self.__drone_name)
+
+        if req.waitOnLastTask == False:
+            return TakeoffResponse(False)
+
+        while self.get_state().landed_state != airsim.LandedState.Flying and time.time() - time_start < self.__service_timeout:
+            time.sleep(0.05)
+
+        if self.__vehicle_state.landed_state == airsim.LandedState.Flying:
+            return TakeoffResponse(True)
+        else:
+            return TakeoffResponse(False)
+
+    def __handle_land(self, req):
+        if self.get_state().landed_state == airsim.LandedState.Landed:
+            return LandResponse(True)
+
+        time_start = time.time()
+        with self.__client_lock:
+            self.__client.landAsync(vehicle_name=self.__drone_name)
+
+        if req.waitOnLastTask == False:
+            return LandResponse(False)
+
+        while self.get_state().landed_state != airsim.LandedState.Landed and time.time() - time_start < self.__service_timeout:
+            time.sleep(0.05)
+
+        if self.__vehicle_state.landed_state == airsim.LandedState.Landed:
+            return LandResponse(True)
+        else:
+            return LandResponse(False)        
+
+    def __handle_wait(self, req):
+        if self.__finished:
+            return SetBoolResponse(True)
+
+        while self.__finished == False and time.time() - self.__time_start <= self.__pos_cmd_timeout:
+            time.sleep(0.05)
+
+        if self.__finished:
+            return SetBoolResponse(True)
+        else:
+            return SetBoolResponse(False)
+
+
+
+
+    def run(self):
+
+        rate = rospy.Rate(100)
+        while self.__shutdown == False and not rospy.is_shutdown():
+
+            if(type(self.__command) == TwistStamped):
+                self.__moveAtVelocity()
+
+            rate.sleep()
+
+

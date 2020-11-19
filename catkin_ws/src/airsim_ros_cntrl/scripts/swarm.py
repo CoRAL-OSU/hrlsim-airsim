@@ -3,43 +3,68 @@
 import json
 import os
 import time
-import threading
-#import multiprocessing
+import multiprocessing as mp
 
 import math
 
 import airsim
-#import rospy
+import rospy
+
+from geometry_msgs.msg import TwistStamped, PoseStamped
+from airsim_ros_pkgs.srv import Takeoff, Land
+
+from std_srvs.srv import SetBool
+
+from nav_msgs.msg import Odometry
+from sensor_msgs.msg import NavSatFix, Imu
+
 
 import drone
 
 
-def makePosCmd(drone=None, timeout=3e38, frame="world", x=0, y=0, z=0, yaw=0, vel=0):
-    return((dict([('drone',drone), ('frame',frame), ('timeout',timeout), ('x',x), ('y',y), ('z',z), ('yaw',yaw), ('vel',vel)])))
-
-def makeVelCmd(drone=None, dur=0.01, frame="body", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
-    return((dict([('drone',drone), ('frame',frame), ('dur',dur), ('lx',lx), ('ly',ly), ('lz',lz), ('ax', ax), ('ay',ay), ('az',az)])))
-
-
 class Swarm:
+    class DroneInfo:
+        name = None
+        process = None
+        pubs = None 
+        subs = None 
+        services = None 
+        actions = None 
+
+        def __init__(self, DroneName, process, pubs, subs, services, actions):
+            self.name       = DroneName
+            self.process    = process
+            self.pubs       = pubs
+            self.subs       = subs
+            self.services   = services
+            self.actions    = actions
+
     def __init__(self, swarmName, settingsFilePath=None):
-        #rospy.init_node(swarmName)
+        rospy.init_node(swarmName)
         
         self.client = airsim.MultirotorClient()
         self.client.confirmConnection()
 
         self.swarm_name = swarmName
         self.vehicle_list = self.getDroneListFromSettings(settingsFilePath)
-        self.drones = dict()
-        self.drone_threads = dict()
+        self.drone_procs = dict()
+        self.drone_pubs  = dict()
 
-        self.lock = threading.Lock()
+        self.drones = dict()
+
+        self.lock = mp.Lock()
 
         for i in self.vehicle_list:
-            self.drones[i] = drone.Drone(self.swarm_name, i, self.client, self.lock)
-            #drone_thread = threading.Thread(target=self.drones[i].fly, args=(100,))
-            #drone_thread.start()
-            #self.drone_threads[i] = drone_thread
+            proc = drone.Drone(self.swarm_name, i, self.client, self.lock)
+
+            cmd_vel_topic_name = "/" + self.swarm_name + "/" + i + "/cmd/vel"
+
+            pubs = dict()
+            pubs['cmd_vel'] = rospy.Publisher(cmd_vel_topic_name, TwistStamped, queue_size=10)
+
+
+            self.drones[i] = Swarm.DroneInfo(i, proc, pubs, None, None, None)
+            self.drones[i].process.start()
 
         print("SWARM CREATED WITH %d DRONES" %len(self.drones))
 
@@ -71,25 +96,51 @@ class Swarm:
 
 
     def takeoff(self, wait=False):
-        for i in self.drones:
-            self.drones[i].takeoff(wait)
+        for i in self.vehicle_list:
+            service_name = "/" + self.swarm_name + "/" + i + "/takeoff"    
+            rospy.wait_for_service(service_name)
+
+            try:
+                takeoff = rospy.ServiceProxy(service_name, Takeoff)
+                resp = takeoff(False)
+                return resp
+            except rospy.ServiceException as e:
+                print("Service call failed: %s" %e)
+
+        if wait:
+            self.wait()
 
     def land(self, wait=False):
-        for i in self.drones:
-            self.drones[i].land(wait)
-
-    def land_all(self, wait=False):
-        land = list()
-
         for i in self.vehicle_list:
-            with self.lock:
-                land.append(self.drones[i].get_client().landAsync(vehicle_name=self.drones[i].get_name()))
-        
+            service_name = "/" + self.swarm_name + "/" + i + "/land"    
+            rospy.wait_for_service(service_name)
+
+            try:
+                land = rospy.ServiceProxy(service_name, Land)
+                resp = land(False)
+                return resp
+            except rospy.ServiceException as e:
+                print("Service call failed: %s" %e)
+
         if wait:
-            for i in range(0, len(land)):
-                land[i].join()
+            self.wait()
 
 
+
+    def wait(self):
+        for i in self.vehicle_list:
+            service_name = "/" + self.swarm_name + "/" + i + "/wait"    
+            rospy.wait_for_service(service_name)
+
+            try:
+                wait = rospy.ServiceProxy(service_name, SetBool)
+                resp = wait(True)
+                return resp
+            except rospy.ServiceException as e:
+                print("Service call failed: %s" %e)           
+
+
+    '''
     def cmd_pos(self, cmd=None, cmd_all=None, wait=False):
         if cmd_all != None:
             for i in self.vehicle_list:
@@ -103,10 +154,10 @@ class Swarm:
             for i in self.vehicle_list:
                 self.drones[i].wait_for_cmd()
 
+    '''
 
 
-
-    def cmd_vel(self, cmd=None, cmd_all=None, wait=False):
+    def cmd_vel(self, cmd=None, cmd_all=None, dur=0):
 
         if cmd_all != None:
             for i in self.vehicle_list:
@@ -116,11 +167,24 @@ class Swarm:
             for i in cmd:
                 self.drones[i['drone']].set_velocity(i)
 
-        if wait:
-            for i in self.vehicle_list:
-                self.drones[i].wait_for_cmd()
+        
+        time_start = time.time()
+        while(True):
+            if cmd_all != None:
+                for i in self.vehicle_list:
+                    self.drones[i].pubs['cmd_vel'].publish(cmd_all)
+
+            else:
+                for i in cmd:
+                    self.drones[i['drone']].pubs['cmd_vel'].publish(i)
+
+            if time.time() - time_start >= dur:
+                break
+
+            time.sleep(0.05)
 
 
+    '''
     def hover(self):
         for i in self.drones:
             self.drones[i].hover()
@@ -132,7 +196,7 @@ class Swarm:
 
         for i in self.drone_threads:
             self.drones[i].join()
-
+    '''
 
 if __name__ == "__main__":
     swarm = Swarm(swarmName="swarm")
@@ -143,10 +207,12 @@ if __name__ == "__main__":
     swarm.takeoff(False)
     time.sleep(3)
 
+    vel_cmd = TwistStamped()
+    
     print("CLIMB FOR 5 SECONDS AT 3 m/s")
-    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="world", dur=5, lz=-2))
+    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="global", lz=-2), dur=5)
 
-    #cmd_vel_list.append(drone.makeVelCmd(drone="Drone0", dur=5, lz=-2.1))
+    #cmd_vel_list.append(drone_api.makeVelCmd(drone="Drone0", dur=5, lz=-2.1))
     #swarm.cmd_vel(cmd=cmd_vel_list, frame="world")
     time.sleep(5)
 
@@ -162,28 +228,28 @@ if __name__ == "__main__":
     print("Angular velocity: %f" %angular_vel)
 
     time_start = time.time()
-    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="body", dur=time_wait, lx=lin_vel, az=angular_vel), wait=True)
+    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="local", lx=lin_vel, az=angular_vel), dur=time_wait)
     #time.sleep(time_wait)
     time_taken = time.time() - time_start
     print("Time taken: %f" %time_taken)
     
 
-    print("MOVE OUT FOR 5 m AT 2 m/s")
-    swarm.cmd_pos(cmd_all=drone.makePosCmd(frame="body", y=-5, vel=2, timeout=10), wait=True)
+    #print("MOVE OUT FOR 5 m AT 2 m/s")
+    #swarm.cmd_pos(cmd_all=drone.makePosCmd(frame="body", y=-5, vel=2, timeout=10), wait=True)
 
     #time.sleep(time_wait)
     
-    print("HOVERING")
-    swarm.hover()
-    time.sleep(3)
+    #print("HOVERING")
+    #swarm.hover()
+    #time.sleep(3)
 
     print("DESCENDING")
-    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="body", lz=2, dur=5), wait=False)
+    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="local", lz=2), dur=5)
     time.sleep(5)
 
 
     print("LANDING")
-    swarm.land_all(wait=True)
+    swarm.land(wait=True)
     #time.sleep(10)
 
 
