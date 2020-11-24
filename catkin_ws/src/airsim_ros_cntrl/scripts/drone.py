@@ -40,7 +40,7 @@ class Drone(mp.Process):
         self.__client_lock = client_lock
 
         self.__command_type = None
-        self.__command = None
+        self.__cmd = None
 
         with self.__client_lock:
             self.__client = sim_client
@@ -116,10 +116,10 @@ class Drone(mp.Process):
     def __cmd_vel_cb(self, msg):
         self.__time_start = time.time()
         self.__finished = False      
-        self.__command = msg
+        self.__cmd = msg
 
     def __moveAtVelocity(self):
-        if type(self.__command) != TwistStamped:
+        if type(self.__cmd) != TwistStamped:
             self.__cmd = None
             self.__finished = True
             return False
@@ -137,7 +137,7 @@ class Drone(mp.Process):
             x = self.__cmd.twist.linear.x
             y = self.__cmd.twist.linear.y
             z = self.__cmd.twist.linear.z
-            yawmode = airsim.YawMode(is_rate=True, yaw_or_rate=math.degrees(self.__cmd.tiwst.angular.z))
+            yawmode = airsim.YawMode(is_rate=True, yaw_or_rate=math.degrees(self.__cmd.twist.angular.z))
 
         else:
             print("DRONE " + self.__drone_name + " VEL cmd UNRECOGNIZED FRAME")
@@ -145,7 +145,7 @@ class Drone(mp.Process):
             return False
 
         with self.__client_lock:
-            self.__client.moveByVelocityAsync(x, y, z, duration=self.__vel_cmd_timeout, yaw_mode=yawmode, vehilce_name=self.__drone_name)
+            self.__client.moveByVelocityAsync(x, y, z, duration=self.__vel_cmd_timeout, yaw_mode=yawmode, vehicle_name=self.__drone_name)
 
 
 
@@ -208,7 +208,7 @@ class Drone(mp.Process):
         rate = rospy.Rate(100)
         while self.__shutdown == False and not rospy.is_shutdown():
 
-            if(type(self.__command) == TwistStamped):
+            if(type(self.__cmd) == TwistStamped):
                 self.__moveAtVelocity()
 
             rate.sleep()
