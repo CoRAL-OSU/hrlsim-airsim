@@ -1,7 +1,9 @@
 blacklist: []
 build_space: build
 catkin_make_args: []
-cmake_args: []
+cmake_args:
+- -DCMAKE_C_COMPILER=gcc-8
+- -DCMAKE_CXX_COMPILER=g++-8
 devel_layout: linked
 devel_space: devel
 extend_path: null

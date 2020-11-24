@@ -72,13 +72,16 @@ class Swarm:
 
             takeoff_srv_name = prefix + "/takeoff"
             land_srv_name = prefix + "/land"
+            wait_srv_name = prefix + "/wait"
 
             rospy.wait_for_service(takeoff_srv_name)
             rospy.wait_for_service(land_srv_name)
+            rospy.wait_for_service(wait_srv_name)
 
             srvs = dict()
             srvs['takeoff'] = rospy.ServiceProxy(takeoff_srv_name, Takeoff)
             srvs['land'] = rospy.ServiceProxy(land_srv_name, Land)
+            srvs['wait'] = rospy.ServiceProxy(wait_srv_name, SetBool)
 
             self.drones[i].pubs = pubs
             self.drones[i].srvs = srvs
@@ -127,12 +130,8 @@ class Swarm:
 
     def land(self, wait=False):
         for i in self.vehicle_list:
-            service_name = "/" + self.swarm_name + "/" + i + "/land"    
-            rospy.wait_for_service(service_name)
-
             try:
-                land = rospy.ServiceProxy(service_name, Land)
-                resp = land(False)
+                resp = self.drones[i].srvs['land'](False)
                 return resp
             except rospy.ServiceException as e:
                 print("Service call failed: %s" %e)
@@ -144,12 +143,8 @@ class Swarm:
 
     def wait(self):
         for i in self.vehicle_list:
-            service_name = "/" + self.swarm_name + "/" + i + "/wait"    
-            rospy.wait_for_service(service_name)
-
             try:
-                wait = rospy.ServiceProxy(service_name, SetBool)
-                resp = wait(True)
+                resp = self.drones[i].srvs['wait'](True)
                 return resp
             except rospy.ServiceException as e:
                 print("Service call failed: %s" %e)           
@@ -172,29 +167,23 @@ class Swarm:
     '''
 
 
-    def cmd_vel(self, cmd=None, cmd_all=None, dur=0):
+    def cmd_vel(self, cmd=None, cmd_all=None, dur=0, drone_name=None):
 
         if cmd_all != None:
             for i in self.vehicle_list:
-                self.drones[i].set_velocity(cmd_all)
+                self.drones[i].pubs['cmd_vel'].publish(cmd_all)
         
         else:
-            for i in cmd:
-                self.drones[i['drone']].set_velocity(i)
-
+            self.drones[drone_name].pubs['cmd_vel'].publish(i)
         
         time_start = time.time()
-        while(True):
+        while(time.time() - time_start >= dur):
             if cmd_all != None:
                 for i in self.vehicle_list:
                     self.drones[i].pubs['cmd_vel'].publish(cmd_all)
 
             else:
-                for i in cmd:
-                    self.drones[i['drone']].pubs['cmd_vel'].publish(i)
-
-            if time.time() - time_start >= dur:
-                break
+                self.drones[drone_name].pubs['cmd_vel'].publish(i)
 
             time.sleep(0.05)
 
@@ -220,14 +209,14 @@ if __name__ == "__main__":
 
     print("TAKING OFF")
     swarm.takeoff(False)
-    time.sleep(10)
+    time.sleep(5)
 
     vel_cmd = TwistStamped()
     
     print("CLIMB FOR 5 SECONDS AT 3 m/s")
     swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="global", lz=-2), dur=5)
 
-    #cmd_vel_list.append(drone_api.makeVelCmd(drone="Drone0", dur=5, lz=-2.1))
+    #cmd_vel_list.append(drone.makeVelCmd(lz=-2.1), dur=5, drone_name="Drone0")
     #swarm.cmd_vel(cmd=cmd_vel_list, frame="world")
     time.sleep(5)
 

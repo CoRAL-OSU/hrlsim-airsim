@@ -1,0 +1,6 @@
+[31m[1mCMake Error[0m at /home/cthornton/HDD/local/college/research/arl/sims/airsim/AirSim/cmake/rpclib_wrapper/CMakeLists.txt:13 (add_subdirectory):
+  add_subdirectory given source
+  "/home/cthornton/HDD/local/college/research/arl/sims/airsim/AirSim/external/rpclib/rpclib-2.2.1"
+  which is not an existing directory.
+
+

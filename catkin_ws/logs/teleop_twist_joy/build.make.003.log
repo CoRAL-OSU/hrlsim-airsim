@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [35m[1mScanning dependencies of target teleop_twist_joy[0m
 [ 25%] [32mBuilding CXX object CMakeFiles/teleop_twist_joy.dir/src/teleop_twist_joy.cpp.o[0m
 [ 50%] [32m[1mLinking CXX shared library /home/cthornton/projects/arl/sims/airsim/catkin_ws/devel/.private/teleop_twist_joy/lib/libteleop_twist_joy.so[0m
@@ -5,4 +6,7 @@
 [35m[1mScanning dependencies of target teleop_twist_joy_node[0m
 [ 75%] [32mBuilding CXX object CMakeFiles/teleop_twist_joy_node.dir/src/teleop_node.cpp.o[0m
 [100%] [32m[1mLinking CXX executable /home/cthornton/projects/arl/sims/airsim/catkin_ws/devel/.private/teleop_twist_joy/lib/teleop_twist_joy/teleop_node[0m
+=======
+[ 50%] Built target teleop_twist_joy
+>>>>>>> 64496de0692f122469f4e5adeb07bfeb3ec577a0
 [100%] Built target teleop_twist_joy_node
