@@ -11,7 +11,7 @@ import airsim
 import rospy
 
 from geometry_msgs.msg import TwistStamped, PoseStamped
-from airsim_ros_pkgs.srv import Takeoff, Land
+from airsim_ros_pkgs.srv import Takeoff, TakeoffResponse, Land, LandResponse
 
 from std_srvs.srv import SetBool
 
@@ -63,13 +63,26 @@ class Swarm:
 
         for i in self.vehicle_list:
 
-            cmd_vel_topic_name = "/" + self.swarm_name + "/" + i + "/cmd/vel"
+            prefix = "/" + self.swarm_name + "/" + i
+
+            cmd_vel_topic_name = prefix + "/cmd/vel"
 
             pubs = dict()
             pubs['cmd_vel'] = rospy.Publisher(cmd_vel_topic_name, TwistStamped, queue_size=10)
 
+            takeoff_srv_name = prefix + "/takeoff"
+            land_srv_name = prefix + "/land"
+
+            rospy.wait_for_service(takeoff_srv_name)
+            rospy.wait_for_service(land_srv_name)
+
+            srvs = dict()
+            srvs['takeoff'] = rospy.ServiceProxy(takeoff_srv_name, Takeoff)
+            srvs['land'] = rospy.ServiceProxy(land_srv_name, Land)
+
             self.drones[i].pubs = pubs
-            
+            self.drones[i].srvs = srvs
+
         print("SWARM CREATED WITH %d DRONES" %len(self.drones))
 
 
@@ -101,12 +114,10 @@ class Swarm:
 
     def takeoff(self, wait=False):
         for i in self.vehicle_list:
-            service_name = "/" + self.swarm_name + "/" + i + "/takeoff"    
-            rospy.wait_for_service(service_name)
-
             try:
-                takeoff = rospy.ServiceProxy(service_name, Takeoff)
-                resp = takeoff(False)
+                resp = self.drones[i].srvs['takeoff'](False)
+            
+                print(i + " takeoff resp: %d" %resp.success)
                 return resp
             except rospy.ServiceException as e:
                 print("Service call failed: %s" %e)
@@ -209,7 +220,7 @@ if __name__ == "__main__":
 
     print("TAKING OFF")
     swarm.takeoff(False)
-    time.sleep(3)
+    time.sleep(10)
 
     vel_cmd = TwistStamped()
     
