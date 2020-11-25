@@ -16,6 +16,8 @@ from std_srvs.srv import SetBool, SetBoolResponse
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import NavSatFix, Imu
 
+from std_msgs.msg import Float32
+
 
 def makeVelCmd(frame="local", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
     vel_cmd = TwistStamped()
@@ -66,18 +68,19 @@ class Drone(mp.Process):
 
         self.__vehicle_state = self.get_state()
         
+        self.__pub_looptime = True
         self.__shutdown = False
         self.__finished = False
         self.__time_start = time.time()
 
         self.__pos_cmd_timeout = 5.0
-        self.__vel_cmd_timeout = 0.05
+        self.__vel_cmd_timeout = 0.1
         self.__service_timeout = 5.0
 
     def __setup_ros(self):
         topic_prefix = "/" + self.__swarm_name + "/" + self.__drone_name
         cmd_vel_topic  = topic_prefix + "/cmd/vel"
-
+        loop_time_topic = topic_prefix + "/looptime"
         cmd_pos_topic = topic_prefix + "/cmd/pos"
 
         odom_topic  = topic_prefix + "/sensor/local/odom_ned"
@@ -95,6 +98,7 @@ class Drone(mp.Process):
         self.__odom_pub = rospy.Publisher(odom_topic, Odometry, queue_size=10)
         self.__gps_pub = rospy.Publisher(gps_topic, NavSatFix, queue_size=10)
         self.__imu_topic = rospy.Publisher(imu_topic, Imu, queue_size=10)
+        self.__looptime_pub = rospy.Publisher(loop_time_topic, Float32, queue_size=10)
         
         rospy.Subscriber(cmd_vel_topic, TwistStamped, callback=self.__cmd_vel_cb, queue_size=10)
 
@@ -134,12 +138,22 @@ class Drone(mp.Process):
         """
 
         with self.__client_lock:
-            try:
-                self.__vehicle_state = self.__client.getMultirotorState(vehicle_name=self.__drone_name)
-        
-            except Exception as e:
-                print(self.__drone_name + " Error from getMultirotorState API call: {0}" .format(e.message))
-                #print(self.__vehicle_state)
+            # Try to get state thrice
+            error_count = 0
+            max_errors = 3
+            error = Exception()
+
+            for _ in range(0, max_errors):
+                try:
+                    self.__vehicle_state = self.__client.getMultirotorState(vehicle_name=self.__drone_name)
+                    break
+
+                except Exception as e:
+                    error = e
+                    error_count += 1
+
+            if error_count == max_errors:
+                print(self.__drone_name + " Error from getMultirotorState API call: {0}" .format(error.message))
 
         return self.__vehicle_state
 
@@ -189,6 +203,7 @@ class Drone(mp.Process):
                 print("DRONE " + self.__drone_name + " VEL cmd UNRECOGNIZED FRAME")
                 self.__finished = True
                 return False
+
 
             with self.__client_lock:
                 self.__client.moveByVelocityAsync(x, y, z, duration=self.__vel_cmd_timeout, yaw_mode=yawmode, vehicle_name=self.__drone_name)
@@ -308,10 +323,17 @@ class Drone(mp.Process):
             return SetBoolResponse(True, "")
 
 
+
     def run(self):
         self.__setup_ros()
 
         rate = rospy.Rate(100)
+
+        avg_time = 0
+        begin_time = time.time()
+
+        i = 0
+
         while True:
             with self.__flag_lock:
                 if self.__shutdown == True or rospy.is_shutdown():
@@ -322,6 +344,20 @@ class Drone(mp.Process):
 
             if(type(cmd) == TwistStamped):
                 self.__moveAtVelocity()
+
+
+            avg_time  += time.time() - begin_time
+            begin_time = time.time()
+
+            if self.__pub_looptime:
+                i += 1
+
+                if i == 100:
+                    avg_time /= i
+                    msg = Float32(avg_time)
+                    self.__looptime_pub.publish(msg)
+                    avg_time = 0
+                    i = 0
 
             rate.sleep()
 

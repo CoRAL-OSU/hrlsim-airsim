@@ -223,7 +223,7 @@ if __name__ == "__main__":
     vel_cmd = TwistStamped()
     
     print("CLIMB FOR 5 SECONDS AT 3 m/s")
-    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="global", lz=-2), dur=5)
+    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="global", lz=-1), dur=5)
 
     #cmd_vel_list.append(drone.makeVelCmd(lz=-2.1), dur=5, drone_name="Drone0")
     #swarm.cmd_vel(cmd=cmd_vel_list, frame="world")
