@@ -39,6 +39,7 @@ class Swarm:
             self.services   = services
             self.actions    = actions
 
+
     def __init__(self, swarmName, settingsFilePath=None):       
         self.client = airsim.MultirotorClient()
         self.client.confirmConnection()
@@ -58,7 +59,6 @@ class Swarm:
             self.drones[i] = Swarm.DroneInfo(i, proc, None, None, None, None)
             self.drones[i].process.start()
 
-
         rospy.init_node(self.swarm_name)
 
         for i in self.vehicle_list:
@@ -73,15 +73,18 @@ class Swarm:
             takeoff_srv_name = prefix + "/takeoff"
             land_srv_name = prefix + "/land"
             wait_srv_name = prefix + "/wait"
+            shutdown_srv_name = prefix + "/shutdown"
 
             rospy.wait_for_service(takeoff_srv_name)
             rospy.wait_for_service(land_srv_name)
             rospy.wait_for_service(wait_srv_name)
+            rospy.wait_for_service(shutdown_srv_name)
 
             srvs = dict()
             srvs['takeoff'] = rospy.ServiceProxy(takeoff_srv_name, Takeoff)
             srvs['land'] = rospy.ServiceProxy(land_srv_name, Land)
             srvs['wait'] = rospy.ServiceProxy(wait_srv_name, SetBool)
+            srvs['shutdown'] = rospy.ServiceProxy(shutdown_srv_name, SetBool)
 
             self.drones[i].pubs = pubs
             self.drones[i].srvs = srvs
@@ -177,7 +180,7 @@ class Swarm:
             self.drones[drone_name].pubs['cmd_vel'].publish(i)
         
         time_start = time.time()
-        while(time.time() - time_start >= dur):
+        while(time.time() - time_start <= dur):
             if cmd_all != None:
                 for i in self.vehicle_list:
                     self.drones[i].pubs['cmd_vel'].publish(cmd_all)
@@ -193,14 +196,20 @@ class Swarm:
         for i in self.drones:
             self.drones[i].hover()
 
+    '''
     def shutdown(self, shutdown=True):
         print("SHUTDOWN SWARM")
-        for i in self.drones:
-            self.drones[i].shutdown(shutdown=shutdown)
+        for i in self.vehicle_list:
+            try:
+                resp = self.drones[i].srvs['shutdown'](True)
+                #return resp
+            except rospy.ServiceException as e:
+                print("Service call failed: %s" %e)       
 
-        for i in self.drone_threads:
-            self.drones[i].join()
-    '''
+        for i in self.vehicle_list:
+            self.drones[i].process.join()    
+
+
 
 if __name__ == "__main__":
     swarm = Swarm(swarmName="swarm")
@@ -208,8 +217,8 @@ if __name__ == "__main__":
 
 
     print("TAKING OFF")
-    swarm.takeoff(False)
-    time.sleep(5)
+    swarm.takeoff(True)
+    #time.sleep(5)
 
     vel_cmd = TwistStamped()
     
@@ -218,7 +227,7 @@ if __name__ == "__main__":
 
     #cmd_vel_list.append(drone.makeVelCmd(lz=-2.1), dur=5, drone_name="Drone0")
     #swarm.cmd_vel(cmd=cmd_vel_list, frame="world")
-    time.sleep(5)
+    #time.sleep(5)
 
 
     
@@ -249,7 +258,7 @@ if __name__ == "__main__":
 
     print("DESCENDING")
     swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="local", lz=2), dur=5)
-    time.sleep(5)
+    #time.sleep(5)
 
 
     print("LANDING")
@@ -257,4 +266,4 @@ if __name__ == "__main__":
     #time.sleep(10)
 
 
-    #swarm.shutdown()
+    swarm.shutdown()

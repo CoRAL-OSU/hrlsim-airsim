@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/opt/ros/melodic/include/**",
+                "/media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/include/**",
+                "/home/cthornton/HDD/local/college/research/golf_cart/coral-agc/catkin_ws/devel/include/**",
+                "/media/storage/local/college/research/arl/sims/airsim/catkin_ws/src/airsim_ros_pkgs/include/**",
+                "/home/cthornton/HDD/local/college/research/golf_cart/coral-agc/catkin_ws/src/perception/pointcloud2_to_points/include/**",
+                "/home/cthornton/HDD/local/college/research/golf_cart/coral-agc/catkin_ws/src/peripherals/rosserial-0.7.7/rosserial_server/include/**",
+                "/home/cthornton/HDD/local/college/research/golf_cart/coral-agc/catkin_ws/src/peripherals/rosserial-0.7.7/rosserial_test/include/**",
+                "/home/cthornton/HDD/local/college/research/golf_cart/coral-agc/catkin_ws/src/navigation/teb_local_planner/include/**",
+                "/media/storage/local/college/research/arl/sims/airsim/catkin_ws/src/teleop_twist_joy/include/**",
+                "/usr/include/**"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++14"
+        }
+    ],
+    "version": 4
+}
