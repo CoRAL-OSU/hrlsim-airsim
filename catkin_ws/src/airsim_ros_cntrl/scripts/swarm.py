@@ -219,12 +219,25 @@ if __name__ == "__main__":
     print("TAKING OFF")
     swarm.takeoff(False)
 
-    list = swarm.client.simListSceneObjects()
-    print(list)
+
+    print("DONE TAKING OFF")
+
+    with swarm.lock:
+        object_list = swarm.client.simListSceneObjects("Animal.*")
+        print(list)
 
 
-    pose = swarm.client.simGetObjectPose("Drone5")
-    print(pose)
+        pose = swarm.client.simGetObjectPose(object_list[-1])
+        print("Pose of Animal: " + str(pose))
+
+        pose = swarm.client.simGetObjectPose("Drone0")
+        print("Pose of Drone: " + str(pose))
+
+        print("SETTING POSE OF DRONE TO ANIMAL")
+        swarm.client.simSetObjectPose("Drone0", swarm.client.simGetObjectPose(object_list[-1]))
+
+        pose = swarm.client.simGetObjectPose(object_list[-1])
+        print(pose)
 
     #time.sleep(5)
 
