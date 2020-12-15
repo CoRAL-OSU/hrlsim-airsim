@@ -217,7 +217,15 @@ if __name__ == "__main__":
 
 
     print("TAKING OFF")
-    swarm.takeoff(True)
+    swarm.takeoff(False)
+
+    list = swarm.client.simListSceneObjects()
+    print(list)
+
+
+    pose = swarm.client.simGetObjectPose("Drone5")
+    print(pose)
+
     #time.sleep(5)
 
     vel_cmd = TwistStamped()
