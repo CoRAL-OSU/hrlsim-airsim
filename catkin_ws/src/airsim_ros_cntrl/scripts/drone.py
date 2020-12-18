@@ -6,7 +6,7 @@ import math
 import sys
 
 import airsim
-import rospy
+import rospy, actionlib
 
 from geometry_msgs.msg import TwistStamped, PoseStamped
 from airsim_ros_pkgs.srv import Takeoff, TakeoffResponse, Land, LandResponse
@@ -17,6 +17,8 @@ from nav_msgs.msg import Odometry
 from sensor_msgs.msg import NavSatFix, Imu
 
 from std_msgs.msg import Float32
+
+from airsim_ros_cntrl.msg import TrackObjectAction, TrackObjectFeedback, TrackObjectResult, TrackObjectGoal
 
 
 def makeVelCmd(frame="local", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
@@ -73,9 +75,11 @@ class Drone(mp.Process):
         self.__finished = False
         self.__time_start = time.time()
 
-        self.__pos_cmd_timeout = 5.0
+        self.__pos_cmd_timeout_factor = 1.0
+        self.__pos_cmd_velocity_factor = 2.0/1.0
         self.__vel_cmd_timeout = 0.1
         self.__service_timeout = 5.0
+        self.__max_velocity = 15.0
 
     def __setup_ros(self):
         topic_prefix = "/" + self.__swarm_name + "/" + self.__drone_name
@@ -101,9 +105,14 @@ class Drone(mp.Process):
         self.__looptime_pub = rospy.Publisher(loop_time_topic, Float32, queue_size=10)
         
         rospy.Subscriber(cmd_vel_topic, TwistStamped, callback=self.__cmd_vel_cb, queue_size=10)
+        rospy.Subscriber(cmd_pos_topic, PoseStamped, callback=self.__cmd_pos_cb, queue_size=10)
 
-        # rospy.Subscriber(cmd_pos_local_topic, )  TODO: MAKE A ROS ACTION SERVER FOR POSITION AND PATHS
-        # TODO : MAKE ROS ACTION SERVER FOR POSITION CMD
+
+        self.__track_action_name = topic_prefix + "/track_object"
+
+        self.__track_action = actionlib.SimpleActionServer(self.__track_action_name, TrackObjectAction, execute_cb=self.__track_action_cb, auto_start=False)
+        self.__track_action.start()
+        
         # TODO : MAKE ROS ACTION SERVER FOR PATH CMD
 
 
@@ -157,6 +166,136 @@ class Drone(mp.Process):
 
         return self.__vehicle_state
 
+
+    def __track_action_cb(self, goal):
+        start_time = time.time()
+
+        success = True
+
+        with self.__client_lock:
+            target_pose = self.__client.simGetObjectPose(goal.object_name)
+        
+        drone_pose = self.get_state()
+
+        # Calculate vecotr1 - vector2
+        def calc_distance(vector1, vector2):
+            output = airsim.Vector3r()
+
+            output.x_val = vector1.x_val - vector2.x_val
+            output.y_val = vector1.y_val - vector2.y_val
+            output.z_val = vector1.z_val - vector2.z_val
+            return output
+
+        feedback_vector = calc_distance(target_pose.position, drone_pose.kinematics_estimated.position)
+        feedback_magnitude = airsim.Vector3r.distance_to(drone_pose.kinematics_estimated.position, target_pose.position)
+
+
+        r = rospy.Rate(5)
+    
+        cmd = PoseStamped()
+        cmd.header.frame_id = "global"
+
+        feedback = TrackObjectFeedback()
+
+        print(self.__drone_name + " ENTERING WHILE LOOP")
+
+        while time.time() - start_time < goal.timeout:
+            if self.__track_action.is_preempt_requested():
+                rospy.loginfo("%s: Preempted" % self.__track_action_name)
+                self.__track_action.set_preempted()
+                success = False
+                break
+                
+            cmd.pose.position.x = target_pose.position.x_val + goal.offset[0]
+            cmd.pose.position.y = target_pose.position.y_val + goal.offset[1]
+            cmd.pose.position.z = target_pose.position.z_val + goal.offset[2]
+
+            self.__moveToPosition(cmd)
+
+            with self.__client_lock:
+                target_pose = self.__client.simGetObjectPose(goal.object_name)
+            
+            drone_pose = self.get_state()
+            feedback_vector = calc_distance(target_pose.position, drone_pose.kinematics_estimated.position)
+            feedback_magnitude = airsim.Vector3r.distance_to(drone_pose.kinematics_estimated.position, target_pose.position)
+            
+            feedback.dist = []
+            feedback.dist.append(feedback_vector.x_val)
+            feedback.dist.append(feedback_vector.y_val)
+            feedback.dist.append(feedback_vector.z_val)
+            feedback.dist_mag = feedback_magnitude
+
+            self.__track_action.publish_feedback(feedback)
+
+
+            r.sleep()
+
+        if success:
+            result = feedback
+            self.__track_action.set_succeeded(result)
+
+
+    def __cmd_pos_cb(self, msg):
+        """
+        Callback for the /cmd/pos ROS topic
+
+        @param msg (geometry_msgs.PoseStamped)
+        """
+
+        with self.__flag_lock:
+            self.__time_start = time.time()
+            self.__finished = False      
+            self.__cmd = msg
+
+    def __moveToPosition(self, cmd):
+        """
+        Utilize AirSim's Python API to move the drone
+        """
+
+        with self.__flag_lock:
+            if type(cmd) != PoseStamped:
+                return False
+
+
+
+            if cmd.header.frame_id == "local":
+                orientation = self.__vehicle_state.kinematics_estimated.orientation
+
+                #print(orientation)
+                (pitch, roll, yaw) = airsim.to_eularian_angles(orientation)
+                
+                # ASSUMING 0 PITCH AND ROLL
+                x = cmd.pose.position.x*math.cos(yaw) - cmd.pose.position.y*math.sin(yaw)
+                y = cmd.pose.position.x*math.sin(yaw) + cmd.pose.position.y*math.cos(yaw)
+                z = cmd.pose.position.z
+                yawmode = airsim.YawMode(is_rate=False, yaw_or_rate=math.degrees(cmd.pose.orientation.z))
+            
+            elif cmd.header.frame_id == "global":
+                x = cmd.pose.position.x
+                y = cmd.pose.position.y
+                z = cmd.pose.position.z
+                yawmode = airsim.YawMode(is_rate=False, yaw_or_rate=math.degrees(cmd.pose.orientation.z))
+
+            else:
+                print("DRONE " + self.__drone_name + " VEL cmd UNRECOGNIZED FRAME")
+                return False
+
+            goal = airsim.Vector3r(x, y, z)
+            distance = airsim.Vector3r.distance_to(goal, self.__vehicle_state.kinematics_estimated.position)
+
+            timeout = distance*self.__pos_cmd_timeout_factor*self.__pos_cmd_velocity_factor
+
+            velocity = abs(distance*self.__pos_cmd_velocity_factor)
+            velocity = min(velocity, self.__max_velocity)
+            velocity = max(velocity, 1.0)
+
+            with self.__client_lock:
+                self.__client.moveToPositionAsync(x, y, z, velocity, timeout_sec=timeout, yaw_mode=yawmode, vehicle_name=self.__drone_name)
+
+
+
+
+
     def __cmd_vel_cb(self, msg):
         """
         Callback for the /cmd/vel ROS topic
@@ -170,46 +309,41 @@ class Drone(mp.Process):
             self.__cmd = msg
 
 
-    def __moveAtVelocity(self):
+    def __moveAtVelocity(self, cmd):
         """
         Utilize AirSim's Python API to move the drone
         """
 
         with self.__flag_lock:
-            if type(self.__cmd) != TwistStamped:
-                self.__cmd = None
-                self.__finished = True
+            if type(cmd) != TwistStamped:
                 return False
 
-            if self.__cmd.header.frame_id == "local":
+            if cmd.header.frame_id == "local":
                 orientation = self.__vehicle_state.kinematics_estimated.orientation
 
                 #print(orientation)
                 (pitch, roll, yaw) = airsim.to_eularian_angles(orientation)
                 
                 # ASSUMING 0 PITCH AND ROLL
-                x = self.__cmd.twist.linear.x*math.cos(yaw) - self.__cmd.twist.linear.y*math.sin(yaw)
-                y = self.__cmd.twist.linear.x*math.sin(yaw) + self.__cmd.twist.linear.y*math.cos(yaw)
-                z = self.__cmd.twist.linear.z
-                yawmode = airsim.YawMode(is_rate=True, yaw_or_rate=math.degrees(self.__cmd.twist.angular.z))
+                x = cmd.twist.linear.x*math.cos(yaw) - cmd.twist.linear.y*math.sin(yaw)
+                y = cmd.twist.linear.x*math.sin(yaw) + cmd.twist.linear.y*math.cos(yaw)
+                z = cmd.twist.linear.z
+                yawmode = airsim.YawMode(is_rate=True, yaw_or_rate=math.degrees(cmd.twist.angular.z))
             
-            elif self.__cmd.header.frame_id == "global":
-                x = self.__cmd.twist.linear.x
-                y = self.__cmd.twist.linear.y
-                z = self.__cmd.twist.linear.z
-                yawmode = airsim.YawMode(is_rate=True, yaw_or_rate=math.degrees(self.__cmd.twist.angular.z))
+            elif cmd.header.frame_id == "global":
+                x = cmd.twist.linear.x
+                y = cmd.twist.linear.y
+                z = cmd.twist.linear.z
+                yawmode = airsim.YawMode(is_rate=True, yaw_or_rate=math.degrees(cmd.twist.angular.z))
 
             else:
                 print("DRONE " + self.__drone_name + " VEL cmd UNRECOGNIZED FRAME")
-                self.__finished = True
                 return False
 
 
             with self.__client_lock:
                 self.__client.moveByVelocityAsync(x, y, z, duration=self.__vel_cmd_timeout, yaw_mode=yawmode, vehicle_name=self.__drone_name)
 
-            self.__cmd = None
-            self.__finished = True
 
     def __handle_takeoff(self, req):
         """
@@ -343,7 +477,12 @@ class Drone(mp.Process):
                 cmd = self.__cmd
 
             if(type(cmd) == TwistStamped):
-                self.__moveAtVelocity()
+                self.__moveAtVelocity(cmd)
+
+            elif(type(cmd) == PoseStamped):
+                self.__moveToPosition(cmd)
+
+            self.__cmd = None
 
 
             avg_time  += time.time() - begin_time
@@ -361,6 +500,9 @@ class Drone(mp.Process):
 
             rate.sleep()
 
+        with self.__client_lock:
+            self.__client.cancelLastTask(vehicle_name=self.__drone_name)
+        
         print(self.__drone_name + " QUITTING")
 
 

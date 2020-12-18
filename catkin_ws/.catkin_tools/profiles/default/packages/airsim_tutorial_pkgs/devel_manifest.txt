@@ -1,5 +1,0 @@
-airsim_tutorial_pkgs
-/media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/.private/airsim_tutorial_pkgs/cmake.lock /media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/./cmake.lock
-/media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/.private/airsim_tutorial_pkgs/lib/pkgconfig/airsim_tutorial_pkgs.pc /media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/lib/pkgconfig/airsim_tutorial_pkgs.pc
-/media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/.private/airsim_tutorial_pkgs/share/airsim_tutorial_pkgs/cmake/airsim_tutorial_pkgsConfig-version.cmake /media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/share/airsim_tutorial_pkgs/cmake/airsim_tutorial_pkgsConfig-version.cmake
-/media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/.private/airsim_tutorial_pkgs/share/airsim_tutorial_pkgs/cmake/airsim_tutorial_pkgsConfig.cmake /media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/share/airsim_tutorial_pkgs/cmake/airsim_tutorial_pkgsConfig.cmake

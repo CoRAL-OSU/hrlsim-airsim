@@ -1,8 +1,0 @@
-[01m[K/home/cthornton/HDD/local/college/research/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/Commands.cpp:14:10:[m[K [01;31m[Kfatal error: [m[Kfilesystem: No such file or directory
- #include [01;31m[K<filesystem>[m[K
-          [01;31m[K^~~~~~~~~~~~[m[K
-compilation terminated.
-make[2]: *** [MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/home/cthornton/HDD/local/college/research/arl/sims/airsim/AirSim/MavLinkCom/MavLinkTest/Commands.cpp.o] Error 1
-make[1]: *** [MavLinkCom/MavLinkTest/CMakeFiles/MavLinkTest.dir/all] Error 2
-make[1]: *** Waiting for unfinished jobs....
-make: *** [all] Error 2
