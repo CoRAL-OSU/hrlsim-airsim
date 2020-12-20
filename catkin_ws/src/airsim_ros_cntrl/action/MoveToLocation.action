@@ -1,0 +1,17 @@
+#goal definition
+float32[3] target
+float32 timeout
+float32 tolerance
+
+string yaw_frame
+float32 yaw
+---
+#result definition
+float32[3] location
+float32 error
+float32 time_left
+---
+#feedback
+float32[3] location
+float32 error
+float32 time_left

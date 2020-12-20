@@ -19,6 +19,7 @@ from sensor_msgs.msg import NavSatFix, Imu
 from std_msgs.msg import Float32
 
 from airsim_ros_cntrl.msg import TrackObjectAction, TrackObjectFeedback, TrackObjectResult, TrackObjectGoal
+from airsim_ros_cntrl.msg import MoveToLocationAction, MoveToLocationFeedback, MoveToLocationResult, MoveToLocationGoal
 
 
 def makeVelCmd(frame="local", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
@@ -34,6 +35,18 @@ def makeVelCmd(frame="local", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
     vel_cmd.twist.angular.z = az
 
     return vel_cmd
+
+# Calculate vector1 - vector2
+def calc_distance(vector1, vector2):
+    output = airsim.Vector3r()
+
+    output.x_val = vector1.x_val - vector2.x_val
+    output.y_val = vector1.y_val - vector2.y_val
+    output.z_val = vector1.z_val - vector2.z_val
+    return output
+
+
+
 
 class Drone(mp.Process):
     def __init__(self, swarmName, droneName, sim_client, client_lock):
@@ -68,6 +81,12 @@ class Drone(mp.Process):
             self.__client.enableApiControl(True, vehicle_name=self.__drone_name)
             self.__client.armDisarm(True, vehicle_name=self.__drone_name)
 
+            x_y_gains = airsim.PIDGains(0.2, 0.0, 0.05)
+            z_gains = airsim.PIDGains(4.0, 2.0, 0.0)
+            vel_pid_gains = airsim.VelocityControllerGains(x_gains=x_y_gains, y_gains=x_y_gains, z_gains=z_gains)
+
+            #self.__client.setVelocityControllerGains(velocity_gains=vel_pid_gains, vehicle_name=self.__drone_name)
+
         self.__vehicle_state = self.get_state()
         
         self.__pub_looptime = True
@@ -76,10 +95,12 @@ class Drone(mp.Process):
         self.__time_start = time.time()
 
         self.__pos_cmd_timeout_factor = 1.0
-        self.__pos_cmd_velocity_factor = 2.0/1.0
-        self.__vel_cmd_timeout = 0.1
-        self.__service_timeout = 5.0
-        self.__max_velocity = 15.0
+        self.__pos_cmd_velocity_factor = 1.0/5.0
+        self.__vel_cmd_timeout = 0.1 # SECONDS
+        self.__service_timeout = 5.0 # SECONDS
+        self.__max_velocity = 10.0 # m/s
+
+        self.__wait_timeout = 5.0 # SECONDS
 
     def __setup_ros(self):
         topic_prefix = "/" + self.__swarm_name + "/" + self.__drone_name
@@ -109,9 +130,13 @@ class Drone(mp.Process):
 
 
         self.__track_action_name = topic_prefix + "/track_object"
+        self.__move_to_location_action_name = topic_prefix + "/move_to_location"
 
         self.__track_action = actionlib.SimpleActionServer(self.__track_action_name, TrackObjectAction, execute_cb=self.__track_action_cb, auto_start=False)
         self.__track_action.start()
+
+        self.__move_to_location_action = actionlib.SimpleActionServer(self.__move_to_location_action_name, MoveToLocationAction, execute_cb=self.__move_to_location_action_cb, auto_start=False)
+        self.__move_to_location_action.start()
         
         # TODO : MAKE ROS ACTION SERVER FOR PATH CMD
 
@@ -167,6 +192,75 @@ class Drone(mp.Process):
         return self.__vehicle_state
 
 
+
+    def __move_to_location_action_cb(self, goal):
+        start_time = time.time()
+        success = True
+
+        target = airsim.Vector3r(goal.target[0], goal.target[1], goal.target[2])
+
+        drone_pose = self.get_state()
+
+        r = rospy.Rate(10)
+
+        cmd = PoseStamped()
+        cmd.header.frame_id = "global"
+
+        feedback = MoveToLocationFeedback()
+        
+        drone_position = drone_pose.kinematics_estimated.position
+        feedback.error = airsim.Vector3r.distance_to(target, drone_position)
+
+        while time.time() - start_time < goal.timeout and feedback.error > goal.tolerance:
+            if self.__move_to_location_action.is_preempt_requested():
+                rospy.loginfo("%s: Preempted" % self.__move_to_location_action_name)
+                self.__move_to_location_action.set_preempted()
+                success = False
+                break             
+
+            cmd.pose.position.x = target.x_val
+            cmd.pose.position.y = target.y_val
+            cmd.pose.position.z = target.z_val
+
+            if(goal.yaw_frame == "local"):
+                cmd.pose.orientation.z = goal.yaw + drone_pose.kinematics_estimated.orientation.z_val
+            elif(goal.yaw_frame == "global"):
+                cmd.pose.orientation.z = goal.yaw
+            else:
+                rospy.logerr("%s: Yaw frame_id unkown" % self.__move_to_location_action_name)
+                success = False
+                break
+
+            self.__moveToPosition(cmd)
+
+
+            drone_pose = self.get_state()
+            drone_position = drone_pose.kinematics_estimated.position
+
+            feedback.location = []
+            feedback.location.append(drone_position.x_val)
+            feedback.location.append(drone_position.y_val)
+            feedback.location.append(drone_position.z_val)
+
+            feedback.error = airsim.Vector3r.distance_to(target, drone_position)
+            feedback.time_left = time.time() - start_time
+
+            self.__move_to_location_action.publish_feedback(feedback)
+
+
+            r.sleep()
+
+        with self.__client_lock:
+            self.__client.cancelLastTask(self.__drone_name)
+            self.__client.hoverAsync(self.__drone_name)
+
+        if success:
+            result = feedback
+            self.__move_to_location_action.set_succeeded(result)
+
+
+
+
     def __track_action_cb(self, goal):
         start_time = time.time()
 
@@ -177,20 +271,10 @@ class Drone(mp.Process):
         
         drone_pose = self.get_state()
 
-        # Calculate vecotr1 - vector2
-        def calc_distance(vector1, vector2):
-            output = airsim.Vector3r()
-
-            output.x_val = vector1.x_val - vector2.x_val
-            output.y_val = vector1.y_val - vector2.y_val
-            output.z_val = vector1.z_val - vector2.z_val
-            return output
-
         feedback_vector = calc_distance(target_pose.position, drone_pose.kinematics_estimated.position)
         feedback_magnitude = airsim.Vector3r.distance_to(drone_pose.kinematics_estimated.position, target_pose.position)
 
-
-        r = rospy.Rate(5)
+        r = rospy.Rate(10)
     
         cmd = PoseStamped()
         cmd.header.frame_id = "global"
@@ -212,9 +296,24 @@ class Drone(mp.Process):
 
             self.__moveToPosition(cmd)
 
+
             with self.__client_lock:
-                target_pose = self.__client.simGetObjectPose(goal.object_name)
-            
+                error_count = 0
+                max_errors = 3
+                error = Exception()
+
+                for _ in range(0, max_errors):
+                    try:
+                        target_pose = self.__client.simGetObjectPose(goal.object_name)
+                        break
+
+                    except Exception as e:
+                        error = e
+                        error_count += 1
+
+                if error_count == max_errors:
+                    print(self.__drone_name + " Error from track object callback: {0}" .format(error.message))
+
             drone_pose = self.get_state()
             feedback_vector = calc_distance(target_pose.position, drone_pose.kinematics_estimated.position)
             feedback_magnitude = airsim.Vector3r.distance_to(drone_pose.kinematics_estimated.position, target_pose.position)
@@ -229,6 +328,10 @@ class Drone(mp.Process):
 
 
             r.sleep()
+
+        with self.__client_lock:
+            self.__client.cancelLastTask(self.__drone_name)
+            self.__client.hoverAsync(self.__drone_name)
 
         if success:
             result = feedback
@@ -260,15 +363,15 @@ class Drone(mp.Process):
 
             if cmd.header.frame_id == "local":
                 orientation = self.__vehicle_state.kinematics_estimated.orientation
+                position = self.__vehicle_state.kinematics_estimated.position
 
-                #print(orientation)
                 (pitch, roll, yaw) = airsim.to_eularian_angles(orientation)
                 
                 # ASSUMING 0 PITCH AND ROLL
-                x = cmd.pose.position.x*math.cos(yaw) - cmd.pose.position.y*math.sin(yaw)
-                y = cmd.pose.position.x*math.sin(yaw) + cmd.pose.position.y*math.cos(yaw)
-                z = cmd.pose.position.z
-                yawmode = airsim.YawMode(is_rate=False, yaw_or_rate=math.degrees(cmd.pose.orientation.z))
+                x = cmd.pose.position.x*math.cos(yaw) - cmd.pose.position.y*math.sin(yaw) + position.x_val
+                y = cmd.pose.position.x*math.sin(yaw) + cmd.pose.position.y*math.cos(yaw) + position.y_val
+                z = cmd.pose.position.z + position.z_val
+                yawmode = airsim.YawMode(is_rate=False, yaw_or_rate=math.degrees(cmd.pose.orientation.z+yaw))
             
             elif cmd.header.frame_id == "global":
                 x = cmd.pose.position.x
@@ -428,7 +531,7 @@ class Drone(mp.Process):
             if self.__finished:
                 return SetBoolResponse(True, "")
 
-            while self.__finished == False and time.time() - self.__time_start <= self.__pos_cmd_timeout:
+            while self.__finished == False and time.time() - self.__time_start <= self.__wait_timeout:
                 time.sleep(0.05)
 
             if self.__finished:
@@ -504,7 +607,7 @@ class Drone(mp.Process):
             self.__client.cancelLastTask(vehicle_name=self.__drone_name)
         
         print(self.__drone_name + " QUITTING")
-
+        time.sleep(0.5)
 
 
 

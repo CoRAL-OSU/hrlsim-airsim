@@ -4,6 +4,8 @@ import json
 import os
 import time
 import multiprocessing as mp
+import sys
+import signal
 
 import math
 
@@ -19,12 +21,13 @@ from nav_msgs.msg import Odometry
 from sensor_msgs.msg import NavSatFix, Imu
 
 from airsim_ros_cntrl.msg import TrackObjectAction, TrackObjectFeedback, TrackObjectResult, TrackObjectGoal
+from airsim_ros_cntrl.msg import MoveToLocationAction, MoveToLocationFeedback, MoveToLocationResult, MoveToLocationGoal
 
 
 import drone
 
 
-
+swarm_list = list()
 
 class Swarm:
     class DroneInfo:
@@ -95,10 +98,14 @@ class Swarm:
 
 
             track_object_action_name = prefix + "/track_object"
+            move_to_location_action_name = prefix + "/move_to_location"
 
             actions = dict()
             actions['track'] = actionlib.SimpleActionClient(track_object_action_name, TrackObjectAction)
             actions['track'].wait_for_server()
+
+            actions['move_to_location'] = actionlib.SimpleActionClient(move_to_location_action_name, MoveToLocationAction)
+            actions['move_to_location'].wait_for_server()
 
             self.drones[i].pubs = pubs
             self.drones[i].srvs = srvs
@@ -137,9 +144,7 @@ class Swarm:
         for i in self.vehicle_list:
             try:
                 resp = self.drones[i].srvs['takeoff'](False)
-            
-                print(i + " takeoff resp: %d" %resp.success)
-                return resp
+                #return resp
             except rospy.ServiceException as e:
                 print("Service call failed: %s" %e)
 
@@ -150,7 +155,7 @@ class Swarm:
         for i in self.vehicle_list:
             try:
                 resp = self.drones[i].srvs['land'](False)
-                return resp
+                #return resp
             except rospy.ServiceException as e:
                 print("Service call failed: %s" %e)
 
@@ -163,7 +168,7 @@ class Swarm:
         for i in self.vehicle_list:
             try:
                 resp = self.drones[i].srvs['wait'](True)
-                return resp
+                #return resp
             except rospy.ServiceException as e:
                 print("Service call failed: %s" %e)           
 
@@ -204,6 +209,38 @@ class Swarm:
                 self.drones[drone_name].pubs['cmd_vel'].publish(i)
 
             time.sleep(0.05)
+
+
+    def move_to_location(self, target, timeout, tolerance):
+         # Move to location in a circle configuration
+
+        l = 2
+        
+        delta_theta = 2*math.pi / len(self.vehicle_list)
+        
+        if len(self.vehicle_list) > 1:
+            r = l / delta_theta
+        else:
+            r = 0
+
+        i = 0
+
+        for drone in self.vehicle_list:
+            position = []
+            position.append(target[0] + r*math.cos(delta_theta*i))
+            position.append(target[1] + r*math.sin(delta_theta*i))
+            position.append(target[2])
+
+            yaw_frame = "local"
+            yaw = 0.0
+            
+            i += 1    
+
+            goal = MoveToLocationGoal(target=position, timeout=timeout, tolerance=tolerance, yaw_frame=yaw_frame, yaw=yaw)
+            self.drones[drone].actions['move_to_location'].send_goal(goal)
+
+        for drone in self.vehicle_list:
+            self.drones[drone].actions['move_to_location'].wait_for_result()        
 
 
     def track_object(self, object_name, timeout, z_offset):
@@ -255,30 +292,38 @@ class Swarm:
         for i in self.vehicle_list:
             self.drones[i].process.join()    
 
-        exit(0)
+
+def sigint_handler(sig, frame):
+    for swarm in swarm_list:
+        swarm.shutdown()
+
+    sys.exit(0)
+
 
 
 
 if __name__ == "__main__":
     swarm = Swarm(swarmName="swarm")
+    swarm_list.append(swarm)
+
     cmd_vel_list = list()
 
 
     print("TAKING OFF")
     swarm.takeoff(False)
 
-    time.sleep(1)
+    time.sleep(5)
 
 
-    print("RISING 20 METERS")
-    pos_cmd = PoseStamped()
-    pos_cmd.header.frame_id = "global"
-    pos_cmd.pose.position.x = 0
-    pos_cmd.pose.position.z = -30
+    print("MOVING TO [5,5,-30]")
+    swarm.move_to_location(target=[5,5,-30], timeout=10, tolerance=0.5)
+    time.sleep(5)
 
-    swarm.cmd_pos(cmd_all=pos_cmd, wait=False)
+    #swarm.move_to_location(target=[5,35,-30], timeout=10)
+    #time.sleep(15)
 
-    time.sleep(10)
+    #swarm.move_to_location(target=[30,30,-30], timeout=10)
+    #time.sleep(15)
 
     with swarm.lock:
         deer_name = swarm.client.simListSceneObjects("Deer.*")[0]
@@ -290,7 +335,10 @@ if __name__ == "__main__":
     print(swarm.drones["Drone0"].actions["track"].get_result())
 
     print("LANDING")
+    pos_cmd = PoseStamped()
     pos_cmd.header.frame_id = "local"
+    pos_cmd.pose.position.x = 0
+    pos_cmd.pose.position.y = 0
     pos_cmd.pose.position.z = 25
     swarm.cmd_pos(cmd_all=pos_cmd, wait=False)
     time.sleep(10)
@@ -302,6 +350,8 @@ if __name__ == "__main__":
 
     print("SHUTDOWN")
     swarm.shutdown()
+
+    sys.exit(0)
 
     '''
     with swarm.lock:
