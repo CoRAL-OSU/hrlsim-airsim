@@ -306,6 +306,13 @@ if __name__ == "__main__":
     swarm = Swarm(swarmName="swarm")
     swarm_list.append(swarm)
 
+    time.sleep(20)
+    print("SHUTDOWN")
+    swarm.shutdown()
+    sys.exit(0)
+
+    '''
+
     cmd_vel_list = list()
 
 
@@ -352,6 +359,8 @@ if __name__ == "__main__":
     swarm.shutdown()
 
     sys.exit(0)
+
+    '''
 
     '''
     with swarm.lock:

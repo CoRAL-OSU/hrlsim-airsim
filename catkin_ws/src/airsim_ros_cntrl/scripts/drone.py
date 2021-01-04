@@ -2,11 +2,14 @@
 
 import time
 import multiprocessing as mp
+import numpy as np
 import math
-import sys
+import sys, os
 
 import airsim
 import rospy, actionlib
+
+import lowlevel
 
 from geometry_msgs.msg import TwistStamped, PoseStamped
 from airsim_ros_pkgs.srv import Takeoff, TakeoffResponse, Land, LandResponse
@@ -68,6 +71,9 @@ class Drone(mp.Process):
 
         self.__swarm_name = swarmName
         self.__drone_name = droneName
+
+        self.__mass = 1.0 # kg 
+        self.__max_thrust = 4.1794 * 4 # N
 
         self.__client_lock = client_lock
         self.__flag_lock = mp.Lock()
@@ -571,6 +577,19 @@ class Drone(mp.Process):
 
         i = 0
 
+        controller = lowlevel.LQR() #lowlevel.LowLevelController(self.__drone_name, self.__client_lock, self.__client)
+
+        p0 = [1,0,-5]
+        q0 = [1,0,0,0]
+        v0 = [0,0,0]
+        x0 = lowlevel.LQR.set_state(p0, q0, v0)
+        x0 = lowlevel.LQR.ned2xyz(x0)
+
+        omega = [0,0,0]
+        c = 9.8
+        u0 = lowlevel.LQR.set_command(omega, c)
+
+
         while True:
             with self.__flag_lock:
                 if self.__shutdown == True or rospy.is_shutdown():
@@ -579,6 +598,7 @@ class Drone(mp.Process):
                 self.get_state()
                 cmd = self.__cmd
 
+            '''
             if(type(cmd) == TwistStamped):
                 self.__moveAtVelocity(cmd)
 
@@ -587,21 +607,96 @@ class Drone(mp.Process):
 
             self.__cmd = None
 
+            '''
 
-            avg_time  += time.time() - begin_time
-            begin_time = time.time()
+            state = self.get_state()
+            p = state.kinematics_estimated.position
+            p = [p.x_val, p.y_val, p.z_val]
 
-            if self.__pub_looptime:
-                i += 1
+            q = state.kinematics_estimated.orientation
+            q = [q.w_val, q.x_val, q.y_val, q.z_val]
 
-                if i == 100:
-                    avg_time /= i
-                    msg = Float32(avg_time)
-                    self.__looptime_pub.publish(msg)
-                    avg_time = 0
-                    i = 0
+            v = state.kinematics_estimated.linear_velocity
+            v = [v.x_val, v.y_val, v.z_val]
+
+            roll, pitch, yaw = lowlevel.LQR.quat2rpy(q)
+
+            x = lowlevel.LQR.set_state(p,q,v)
+            #print(x)
+            x = lowlevel.LQR.ned2xyz(x)
+            #print(x)
+            '''
+            p = state.kinematics_estimated.position
+            p = [p.y_val, p.x_val, -p.z_val]
+
+            q = state.kinematics_estimated.orientation
+            q = [q.w_val, q.y_val, q.x_val, -q.z_val]
+
+            v = state.kinematics_estimated.linear_velocity
+            v = [v.y_val, v.x_val, -v.z_val]
+
+            roll    = math.atan2(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1])*q[1]+q[2]*q[2])
+            pitch   = math.asin(2*(q[0]*q[2]-q[3]*q[1]))
+            yaw     = math.atan2(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]))
+    
+            cr = math.cos(roll/2)
+            sr = math.sin(roll/2)
+            cp = math.cos(pitch/2)
+            sp = math.sin(pitch/2)
+            cy = math.cos(yaw/2)
+            sy = math.sin(yaw/2)
+
+            q = [cr*cp*cy+sr*sp*sy, sr*cp*cy-cr*sp*sy, cr*sp*cy+sr*cp*sy, cr*cp*sy - sr*sp*cy]
+            '''
+            #x = lowlevel.LQR.set_state(p, q, v)
+            u = controller.compute(x0, u0, x, 1)
+           
+            #print(state)
+            print("command: " + str(u.T))
+
+            print("pos: " + str(p))
+            print("goal: " + str(p0))
+            print("vel: " + str(v))
+            print("orien: " + str([roll, pitch, yaw]))
+
+            omega,c = lowlevel.LQR.get_command(u)
+
+            thrust = c[0,0]*self.__mass
+
+            for i in range(0, 3):
+                if abs(omega[i]) > math.pi:
+                    print('WARNING -> RATE ' + str(i) + ' FOR ' + self.__drone_name + " GREATER THAN MAX RATE " + str(omega[i,0]))
+                    
+                #omega[i] = max(-math.pi, omega[i])
+                #omega[i] = min(math.pi, omega[i])
+
+
+            if(thrust > self.__max_thrust):
+                print('WARNING -> THRUST FOR ' + self.__drone_name + ' GREATER THAN MAX THRUST ' + str(thrust))
+                thrust = self.__max_thrust
+
+            print("---")
+
+            throttle = thrust / self.__max_thrust
+
+            with self.__client_lock:
+                roll =  omega[0,0] # math.pi/20
+                pitch = 0#omega[1,0] # math.pi/20
+ 
+                self.__client.moveByAngleRatesThrottleAsync(pitch, -roll, 0, throttle, 1.0, self.__drone_name)
+                #self.__client.moveToPositionAsync(1,0,-1,1, vehicle_name=self.__drone_name)
+                #self.__client.moveByAngleRatesThrottleAsync(0, omega[1,0], 0, throttle, 1.0, self.__drone_name)
+                #controller.set_pwm([0.6,0.6,0.6,0.6])
+            
 
             rate.sleep()
+
+            if self.__pub_looptime:
+                elapsed_time = time.time() - begin_time
+                begin_time = time.time()
+
+                msg = Float32(elapsed_time)
+                self.__looptime_pub.publish(msg)
 
         with self.__client_lock:
             self.__client.cancelLastTask(vehicle_name=self.__drone_name)
