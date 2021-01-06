@@ -568,7 +568,29 @@ class Drone(mp.Process):
             return SetBoolResponse(True, "")
 
 
-    def testLQR(self, state):
+    def testLQR(self, state, update_gains):
+        if update_gains:
+            omega = state.kinematics_estimated.angular_velocity
+            omega = [omega.y_val, omega.x_val, omega.z_val]
+            c = state.kinematics_estimated.linear_acceleration.z_val
+
+            u = lowlevel.LQR.set_command(omega,c)
+
+            p = state.kinematics_estimated.position
+            p = [p.x_val, p.y_val, p.z_val]
+
+            q = state.kinematics_estimated.orientation
+            q = [q.w_val, q.x_val, q.y_val, q.z_val]
+
+            v = state.kinematics_estimated.linear_velocity
+            v = [v.x_val, v.y_val, v.z_val]
+
+            x = lowlevel.LQR.set_state(p,q,v)
+            #x = lowlevel.LQR.ned2xyz(x)
+
+            self.__controller.updateGains(x,u)
+            self.__prev_gain_time = time.time()
+
         p = state.kinematics_estimated.position
         p = [p.x_val, p.y_val, p.z_val]
 
@@ -622,9 +644,9 @@ class Drone(mp.Process):
 
         with self.__client_lock:
             # Calculate w/ equation 5 from submitted paper
-            roll_rate = omega[0,0] # math.pi/20      phi dot
-            pitch_rate = 0 # omega[1,0] # math.pi/20     theta dot
-            yaw_rate = 0   # omega[2,0]                   psi dot
+            roll_rate = omega[0,0] + math.sin(roll)*math.tan(pitch)*omega[1,0] + math.cos(roll)*math.tan(pitch)*omega[2,0] # math.pi/20      phi dot
+            pitch_rate = 0 # math.cos(roll)*omega[1,0] - math.sin(roll)*omega[2,0] # math.pi/20     theta dot
+            yaw_rate = 0   # math.sin(roll)/math.cos(pitch)*omega[1,0] + math.cos(roll)/math.cos(pitch)*omeag[2,0]                   psi dot
 
             self.__client.moveByAngleRatesThrottleAsync(roll_rate, pitch_rate, yaw_rate, throttle, 1.0, self.__drone_name)            
 
@@ -641,12 +663,16 @@ class Drone(mp.Process):
 
         #lowlevel.LowLevelController(self.__drone_name, self.__client_lock, self.__client)
 
+
+        # Move to starting position (0,0,-5)
         with self.__client_lock:
             self.__client.moveToPositionAsync(0, 0, -5, 5).join()
             print("Reached (0,0,-5), starting motion")
             time.sleep(1)
             #self.__client.moveByAngleRatesThrottleAsync(math.pi/2, 0, 0, 1, 1, self.__drone_name)
 
+
+        # Set up goal position
         p0 = [1,0,-5]
         q0 = [1,0,0,0]
         v0 = [0,0,0]
@@ -659,10 +685,13 @@ class Drone(mp.Process):
 
         self.__controller.set_goals(x0, u0)
 
+        # Setup timing variables
         begin_time = time.time()
-        prev_gain_time = begin_time
+        self.__prev_gain_time = begin_time
         update_gains = True
 
+
+        # Main loop
         while True:
             with self.__flag_lock:
                 if self.__shutdown == True or rospy.is_shutdown():
@@ -681,42 +710,19 @@ class Drone(mp.Process):
             self.__cmd = None
 
             '''
-            if time.time() - prev_gain_time >= 0.1:
+
+            # Update LQR gains at 10 Hz
+            if time.time() - self.__prev_gain_time >= 0.1:
                 update_gains = True
 
-            if update_gains:
-                update_gains = False
-
-                omega = state.kinematics_estimated.angular_velocity
-                omega = [omega.y_val, omega.x_val, omega.z_val]
-                c = state.kinematics_estimated.linear_acceleration.z_val
-
-                print("c: " + str(c))
-                u = lowlevel.LQR.set_command(omega,c)
-
-                p = state.kinematics_estimated.position
-                p = [p.x_val, p.y_val, p.z_val]
-
-                q = state.kinematics_estimated.orientation
-                q = [q.w_val, q.x_val, q.y_val, q.z_val]
-
-                v = state.kinematics_estimated.linear_velocity
-                v = [v.x_val, v.y_val, v.z_val]
-
-                x = lowlevel.LQR.set_state(p,q,v)
-                #x = lowlevel.LQR.ned2xyz(x)
-
-                self.__controller.updateGains(x,u)
-                prev_gain_time = time.time()
-
-
-            self.testLQR(state)
-
-            #print(str(state.kinematics_estimated.angular_acceleration.to_numpy_array()))
+            # Compute the control at the main loop rate
+            self.testLQR(state, update_gains)
+            update_gains = False
 
             
             rate.sleep()
 
+            # Calculate a publish looptime after sleeping
             if self.__pub_looptime:
                 elapsed_time = time.time() - begin_time
                 begin_time = time.time()
@@ -725,9 +731,12 @@ class Drone(mp.Process):
                 self.__looptime_pub.publish(msg)
                 print(elapsed_time)
 
+
+        # Wait for last task to finish
         with self.__client_lock:
             self.__client.cancelLastTask(vehicle_name=self.__drone_name)
         
+        # Quit
         print(self.__drone_name + " QUITTING")
         time.sleep(0.5)
 
