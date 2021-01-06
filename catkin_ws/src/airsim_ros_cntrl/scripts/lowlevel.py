@@ -11,8 +11,15 @@ import control
 
 class LQR:
     def __init__(self):
-        self.Q = np.diag([50,50,100,1,1,1,1,10,10,10])
-        self.R = np.diag([10,10,5,1])
+        self.Q = np.diag([50,50,100,1,1,1,1,2,2,2])
+        self.R = np.diag([10,10,10,4])
+
+        self.A = np.zeros((10,10))
+        self.B = np.zeros((10,4))
+        self.K = np.zeros((10,10))
+
+        self.x0 = np.zeros((10,1))
+        self.u0 = np.zeros((4,1))
 
 
     def set_costs(self, Q=None, R=None):
@@ -24,39 +31,47 @@ class LQR:
             assert len(R) == 4, "R must be a list of length 4"
             self.R = np.diag(R)
 
+    def set_goals(self, x0=None, u0=None):
+        if type(x0) != None:
+            assert x0.shape == (10,1), "x0 must be a 10x1 vector"
+            self.x0 = x0
+        if type(u0) != None:
+            assert u0.shape == (4,1), "u0 must be a 4x1 vector"
+            self.u0 = u0
 
-    def compute(self, x0, u0, init_state, t):
-        assert np.shape(x0) == (10,1), "The goal must be a 10x1 state vector"
-        assert np.shape(u0) == (4,1), "The goal command must be a 4x1 control vector"
-        assert np.shape(init_state) == (10,1), "The initial condition must be a 10x1 state vector"
-        
-        #nsteps = t/0.01
 
-        x = init_state
-        u = np.zeros((4,1))
-        u[2:4] = 0.001
+    def updateGains(self, x, u):
+        assert np.shape(x) == (10,1), "The state must be a 10x1 state vector"
+        assert np.shape(u) == (4,1), "The goal command must be a 4x1 control vector"
 
-        #for i in range(0, nsteps):
-        
-        # Compute linearized model
-        A = self.__updateA(x, u)
-        B = self.__updateB(x)
+        for i in range(0,4):       
+            if abs(u[i]) < 0.001:
+                u[i] = 0.001
 
-        Co = control.ctrb(A,B)
+        self.A = self.__updateA(x,u)
+        self.B = self.__updateB(x)
+
+        Co = control.ctrb(self.A,self.B)
 
         try:
-            assert np.linalg.matrix_rank(A) <= np.linalg.matrix_rank(Co), "System is not controllable"
+            assert np.linalg.matrix_rank(self.A) <= np.linalg.matrix_rank(Co), "System is not controllable"
         
         except AssertionError:
             print("System is not controllable")
-            exit(1)
+            exit(1)     
 
-        # Update gain every 0.1 seconds
-        #if(i % 10 == 0):
-        K,S,E = control.lqr(A,B,self.Q,self.R)
+        self.K,_,_ = control.lqr(self.A,self.B,self.Q,self.R)   
+
+        return self.K            
+
+
+    def computeControl(self, x):
+        assert np.shape(x) == (10,1), "The initial condition must be a 10x1 state vector"
+        
+        u = np.zeros((4,1))
 
         # Compute the optimal control step
-        u = u0 - np.matmul(K,(x-x0))
+        u = self.u0 - np.matmul(self.K,(x-self.x0))
 
         return u
 
@@ -82,15 +97,31 @@ class LQR:
     @staticmethod
     def ned2xyz(x):
         assert np.shape(x) == (10,1), "The state must be a 10x1 vector"
-        tp = np.matrix([[0,1,0],[1,0,0],[0,0,-1]])
-        tq = np.block([[1,0,0,0],[0,0,1,0],[0,1,0,0],[0,0,0,-1]])
+        #tp = np.matrix([[0,1,0],[1,0,0],[0,0,-1]])
+        #tq = np.block([[1,0,0,0],[0,0,1,0],[0,1,0,0],[0,0,0,-1]])
 
-        T = np.block([[ tp, np.zeros((3,4)), np.zeros((3,3)) ],
-                      [ np.zeros((4,3)), tq, np.zeros((4,3)) ],
-                      [ np.zeros((3,3)), np.zeros((3,4)), tp ]])
+        #T = np.block([[ tp, np.zeros((3,4)), np.zeros((3,3)) ],
+        #              [ np.zeros((4,3)), tq, np.zeros((4,3)) ],
+        #              [ np.zeros((3,3)), np.zeros((3,4)), tp ]])
 
-        x = np.matmul(T,x)
+        xnew = np.zeros((10,1))
 
+        xnew[0] = x[1]
+        xnew[1] = x[0]
+        xnew[2] = -x[2]
+        
+        # Apply quaternion rotation to  translate. Don't swap axis
+        # R =[1 0 0 ; 0 -1 0; 0 0 -1]
+        xnew[3] = x[3]
+        xnew[4] = x[5]
+        xnew[5] = x[4]
+        xnew[6] = -x[6]
+        
+        xnew[7] = x[8]
+        xnew[8] = x[7]
+        xnew[9] = -x[9]
+
+        x = xnew#np.matmul(T,x)
         return x
 
     @staticmethod
