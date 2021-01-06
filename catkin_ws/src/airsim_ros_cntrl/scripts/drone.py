@@ -5,6 +5,7 @@ import multiprocessing as mp
 import numpy as np
 import math
 import sys, os
+import matplotlib.pyplot as plt
 
 import airsim
 import rospy, actionlib
@@ -568,7 +569,7 @@ class Drone(mp.Process):
             return SetBoolResponse(True, "")
 
 
-    def testLQR(self, state, update_gains):
+    def testLQR(self, state, start_time, update_gains, plots):
         if update_gains:
             omega = state.kinematics_estimated.angular_velocity
             omega = [omega.y_val, omega.x_val, omega.z_val]
@@ -604,6 +605,11 @@ class Drone(mp.Process):
 
         x = lowlevel.LQR.set_state(p,q,v)
         #x = lowlevel.LQR.ned2xyz(x)
+
+        #t = time.time()
+        #plots[0].scatter(t-start_time, roll, 2, marker='o', color='blue', label='roll')
+        #plots[0].scatter(t-start_time, pitch, 2, marker='o', color='red', label='pitch')
+        #plots[0].scatter(t-start_time, yaw, 2, marker='o', color='gray', label='yaw')
 
         print("angular vel: " + str(state.kinematics_estimated.angular_velocity.to_numpy_array()))
 
@@ -658,7 +664,8 @@ class Drone(mp.Process):
     def run(self):
         self.__setup_ros()
 
-        rate = rospy.Rate(20)
+        freq = 20
+        rate = rospy.Rate(freq)
 
         avg_time = 0
 
@@ -690,17 +697,26 @@ class Drone(mp.Process):
 
         # Setup timing variables
         begin_time = time.time()
+        prev_time = time.time()
         self.__prev_gain_time = begin_time
         update_gains = True
 
+        states = list()
+        times = list()
+
+        plt.grid()
+        plots = [plt.subplot(221), plt.subplot(222), plt.subplot(223), plt.subplot(224)]
+
 
         # Main loop
-        while True:
+        while time.time()-begin_time < 5:
             with self.__flag_lock:
                 if self.__shutdown == True or rospy.is_shutdown():
                     break
                 
                 state = self.get_state()
+                states.append(state)
+                times.append(time.time())
                 cmd = self.__cmd
 
             '''
@@ -719,7 +735,7 @@ class Drone(mp.Process):
                 update_gains = True
 
             # Compute the control at the main loop rate
-            self.testLQR(state, update_gains)
+            self.testLQR(state, begin_time, update_gains, plots)
             update_gains = False
 
             
@@ -727,17 +743,25 @@ class Drone(mp.Process):
 
             # Calculate a publish looptime after sleeping
             if self.__pub_looptime:
-                elapsed_time = time.time() - begin_time
-                begin_time = time.time()
+                elapsed_time = time.time() - prev_time
+                prev_time = time.time()
 
                 msg = Float32(elapsed_time)
                 self.__looptime_pub.publish(msg)
                 print(elapsed_time)
 
+        plots[0].scatter(times, states, 2, marker='o', color='blue', label='roll')
+        #plots[0].scatter(times, pitch, 2, marker='o', color='red', label='pitch')
+        #plots[0].scatter(times, yaw, 2, marker='o', color='gray', label='yaw')
+
+        plots[0].set(xlabel='time', ylabel='radians/s')
+        plots[0].set_title('roll/pitch/yaw rates')
+        plots[0].legend(loc="upper right")
+        plt.show()
 
         # Wait for last task to finish
-        with self.__client_lock:
-            self.__client.cancelLastTask(vehicle_name=self.__drone_name)
+        #with self.__client_lock:
+        #    self.__client.cancelLastTask(vehicle_name=self.__drone_name)
         
         # Quit
         print(self.__drone_name + " QUITTING")
