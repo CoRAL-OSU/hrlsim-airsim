@@ -605,7 +605,7 @@ class Drone(mp.Process):
         x = lowlevel.LQR.set_state(p,q,v)
         #x = lowlevel.LQR.ned2xyz(x)
 
-        print("angular vel: " + str(state.kinematics_estimated.angular_velocity.to_numpy_array))
+        print("angular vel: " + str(state.kinematics_estimated.angular_velocity.to_numpy_array()))
 
 
         u = self.__controller.computeControl(x)
@@ -638,18 +638,21 @@ class Drone(mp.Process):
             print('WARNING -> THRUST FOR ' + self.__drone_name + ' GREATER THAN MAX THRUST ' + str(thrust))
             thrust = self.__max_thrust
 
-        print("---")
 
         throttle = thrust / self.__max_thrust
 
         with self.__client_lock:
             # Calculate w/ equation 5 from submitted paper
-            roll_rate = omega[0,0] + math.sin(roll)*math.tan(pitch)*omega[1,0] + math.cos(roll)*math.tan(pitch)*omega[2,0] # math.pi/20      phi dot
-            pitch_rate = 0 # math.cos(roll)*omega[1,0] - math.sin(roll)*omega[2,0] # math.pi/20     theta dot
+            roll_rate = 0# omega[0,0] + math.sin(roll)*math.tan(pitch)*omega[1,0] + math.cos(roll)*math.tan(pitch)*omega[2,0] # math.pi/20      phi dot
+            pitch_rate = math.cos(roll)*omega[1,0] - math.sin(roll)*omega[2,0] # math.pi/20     theta dot
             yaw_rate = 0   # math.sin(roll)/math.cos(pitch)*omega[1,0] + math.cos(roll)/math.cos(pitch)*omeag[2,0]                   psi dot
+
+            print("cmd rates: " + str([roll_rate,pitch_rate,yaw_rate]))
 
             self.__client.moveByAngleRatesThrottleAsync(roll_rate, pitch_rate, yaw_rate, throttle, 1.0, self.__drone_name)            
 
+
+        print("---")
 
 
     def run(self):
