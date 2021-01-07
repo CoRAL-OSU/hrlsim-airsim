@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python2
 
 import time
 import multiprocessing as mp
@@ -7,6 +7,7 @@ import math
 import sys
 
 import airsim
+import slycot
 import control
 
 class LQR:

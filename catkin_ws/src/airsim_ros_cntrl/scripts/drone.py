@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python2
 
 import time
 import multiprocessing as mp
@@ -750,7 +750,8 @@ class Drone(mp.Process):
                 self.__looptime_pub.publish(msg)
                 print(elapsed_time)
 
-        plots[0].scatter(times, states, 2, marker='o', color='blue', label='roll')
+        print(states[:])
+        plots[0].scatter(times, states[:].kinematics_estimated.angular_velocity.x, 2, marker='o', color='blue', label='roll')
         #plots[0].scatter(times, pitch, 2, marker='o', color='red', label='pitch')
         #plots[0].scatter(times, yaw, 2, marker='o', color='gray', label='yaw')
 
