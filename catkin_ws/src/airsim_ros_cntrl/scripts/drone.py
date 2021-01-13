@@ -90,9 +90,9 @@ class Drone(mp.Process):
             self.__client.enableApiControl(True, vehicle_name=self.__drone_name)
             self.__client.armDisarm(True, vehicle_name=self.__drone_name)
 
-            x_y_gains = airsim.PIDGains(0.2, 0.0, 0.05)
-            z_gains = airsim.PIDGains(4.0, 2.0, 0.0)
-            vel_pid_gains = airsim.VelocityControllerGains(x_gains=x_y_gains, y_gains=x_y_gains, z_gains=z_gains)
+            #x_y_gains = airsim.PIDGains(0.2, 0.0, 0.05)
+            #z_gains = airsim.PIDGains(4.0, 2.0, 0.0)
+            #vel_pid_gains = airsim.VelocityControllerGains(x_gains=x_y_gains, y_gains=x_y_gains, z_gains=z_gains)
 
             #self.__client.setVelocityControllerGains(velocity_gains=vel_pid_gains, vehicle_name=self.__drone_name)
 
@@ -102,6 +102,7 @@ class Drone(mp.Process):
         self.__shutdown = False
         self.__finished = False
         self.__time_start = time.time()
+        self.rpydot = np.zeros((1,3))
 
         self.__pos_cmd_timeout_factor = 1.0
         self.__pos_cmd_velocity_factor = 1.0/5.0
@@ -201,6 +202,10 @@ class Drone(mp.Process):
         return self.__vehicle_state
 
 
+    ##
+    ##
+    ###        ROS CALLBACKS            ###
+    #######################################
 
     def __move_to_location_action_cb(self, goal):
         start_time = time.time()
@@ -568,30 +573,12 @@ class Drone(mp.Process):
 
             return SetBoolResponse(True, "")
 
+    ##
+    ##
+    ###        LQR IMPLEMENATION        ###
+    #######################################
 
     def testLQR(self, state, start_time, update_gains, plots):
-        if update_gains:
-            omega = state.kinematics_estimated.angular_velocity
-            omega = [omega.y_val, omega.x_val, omega.z_val]
-            c = state.kinematics_estimated.linear_acceleration.z_val
-
-            u = lowlevel.LQR.set_command(omega,c)
-
-            p = state.kinematics_estimated.position
-            p = [p.x_val, p.y_val, p.z_val]
-
-            q = state.kinematics_estimated.orientation
-            q = [q.w_val, q.x_val, q.y_val, q.z_val]
-
-            v = state.kinematics_estimated.linear_velocity
-            v = [v.x_val, v.y_val, v.z_val]
-
-            x = lowlevel.LQR.set_state(p,q,v)
-            #x = lowlevel.LQR.ned2xyz(x)
-
-            self.__controller.updateGains(x,u)
-            self.__prev_gain_time = time.time()
-
         p = state.kinematics_estimated.position
         p = [p.x_val, p.y_val, p.z_val]
 
@@ -603,34 +590,60 @@ class Drone(mp.Process):
 
         roll, pitch, yaw = lowlevel.LQR.quat2rpy(q)
 
+        cr = math.cos(roll)
+        sr = math.sin(roll)
+        cp = math.cos(pitch)
+        sp = math.sin(pitch)
+        tp = math.tan(pitch)
+        cy = math.cos(yaw)
+        sy = math.sin(yaw)
+
+        R = np.matrix([ [1, sr*tp, cr*tp],
+                        [0, cr, -sr],
+                        [0, sr/cp, cr/cp]])
+
         x = lowlevel.LQR.set_state(p,q,v)
-        #x = lowlevel.LQR.ned2xyz(x)
+        x = lowlevel.LQR.ned2xyz(x)
 
-        #t = time.time()
-        #plots[0].scatter(t-start_time, roll, 2, marker='o', color='blue', label='roll')
-        #plots[0].scatter(t-start_time, pitch, 2, marker='o', color='red', label='pitch')
-        #plots[0].scatter(t-start_time, yaw, 2, marker='o', color='gray', label='yaw')
 
-        print("angular vel: " + str(state.kinematics_estimated.angular_velocity.to_numpy_array()))
+        if update_gains:
+            rpydot = state.kinematics_estimated.angular_velocity
+            rpydot = np.array([[rpydot.y_val, -rpydot.x_val, rpydot.z_val]]).T
+            omega = R.I*rpydot
+            omega = [omega[0,0], omega[1,0], omega[2,0]]
+
+            #c = (9.8-state.kinematics_estimated.linear_acceleration.z_val)/(cr*cp)
+            # Compute thrust from command -> this is dangerous as there are unknown thrusts
+            #   - start with open-loop from previous command
+            #   - work to get motor thrust directly from AirSim
+            #   - another option includes using nominal thrust, or 9.8/(cr*cp)
+
+            c = (9.8-self.acceleration_cmds[-1,2])/(cr*cp)
+
+            u = lowlevel.LQR.set_command(omega,c)
+
+            self.__controller.updateGains(x,u)
+            self.__prev_gain_time = time.time()
+
 
 
         u = self.__controller.computeControl(x)
 
-        #! Add plots
-        #! Plot step changes in vertical direction with LQR
+        #print("command: " + str(u.T))
 
-        #u = lowlevel.LQR.set_command(omega,c)
-
-        print("command: " + str(u.T))
-
-        print("pos: " + str(p))
+        #print("pos: " + str(p))
         #print("goal: " + str(p0))
-        print("vel: " + str(v))
-        print("orien: " + str([roll, pitch, yaw]))
+        #print("vel: " + str(v))
+        #print("orien: " + str([roll, pitch, yaw]))
 
         omega,c = lowlevel.LQR.get_command(u)
 
-        thrust = -c[0,0]*self.__mass
+        tmp = omega[0,0]
+        omega[0,0] = omega[1,0]
+        omega[1,0] = tmp
+        omega[2,0] = -omega[2,0]
+
+        thrust = abs(c[0,0])*self.__mass
 
         for i in range(0, 3):
             if abs(omega[i]) > math.pi/2:
@@ -640,22 +653,40 @@ class Drone(mp.Process):
             omega[i] = min(math.pi/2, omega[i])
 
 
+        rpydot = R*omega
+        self.rpydot = np.append(self.rpydot, rpydot.T, axis=0)
+
+
         if(thrust > self.__max_thrust):
             print('WARNING -> THRUST FOR ' + self.__drone_name + ' GREATER THAN MAX THRUST ' + str(thrust))
             thrust = self.__max_thrust
 
 
+        #t = time.time()-start_time
+        #index = int(min(self.sim_time*self.freq - 1, math.ceil(t*self.freq)))
+        #throttle = self.throttle_cmd[index] + 0.5863
+
+
         throttle = thrust / self.__max_thrust
+
+        accelF = (throttle)*self.__max_thrust/self.__mass
+        accel = np.zeros((3))
+
+        accel[0] = (-cr*sp*cy - sr*sy)*accelF
+        accel[1] = (-cr*sp*sy + sr*cy)*accelF
+        accel[2] = 9.8-(cr*cp)*accelF
+        
+        self.acceleration_cmds = np.append(self.acceleration_cmds, [accel], axis=0)
 
         with self.__client_lock:
             # Calculate w/ equation 5 from submitted paper
-            roll_rate = 0# omega[0,0] + math.sin(roll)*math.tan(pitch)*omega[1,0] + math.cos(roll)*math.tan(pitch)*omega[2,0] # math.pi/20      phi dot
-            pitch_rate = math.cos(roll)*omega[1,0] - math.sin(roll)*omega[2,0] # math.pi/20     theta dot
-            yaw_rate = 0   # math.sin(roll)/math.cos(pitch)*omega[1,0] + math.cos(roll)/math.cos(pitch)*omeag[2,0]                   psi dot
-
-            print("cmd rates: " + str([roll_rate,pitch_rate,yaw_rate]))
-
-            self.__client.moveByAngleRatesThrottleAsync(roll_rate, pitch_rate, yaw_rate, throttle, 1.0, self.__drone_name)            
+            #omega_p = omega[0,0]
+            #omega_q = omega[1,0]
+            #omega_r = omega[2,0]
+            roll_rate = rpydot[0,0]
+            pitch_rate = rpydot[1,0]
+            yaw_rate = rpydot[2,0]
+            self.__client.moveByAngleRatesThrottleAsync(roll_rate, -pitch_rate, -yaw_rate, throttle, 0.5, self.__drone_name)   
 
 
         print("---")
@@ -664,8 +695,10 @@ class Drone(mp.Process):
     def run(self):
         self.__setup_ros()
 
-        freq = 20
-        rate = rospy.Rate(freq)
+
+        self.freq = 20
+        self.sim_time = 15
+        rate = rospy.Rate(self.freq)
 
         avg_time = 0
 
@@ -676,62 +709,120 @@ class Drone(mp.Process):
 
         # Move to starting position (0,0,-5)
         with self.__client_lock:
-            self.__client.moveToPositionAsync(0, 0, -5, 5).join()
-            print("Reached (0,0,-5), starting motion")
-            time.sleep(1)
+            self.__client.moveToPositionAsync(0, 0, -15, 5).join()
+            print("Reached (0,0,-15), starting motion")
+            time.sleep(3)
             #self.__client.moveByAngleRatesThrottleAsync(math.pi/2, 0, 0, 1, 1, self.__drone_name)
 
 
-        # Set up goal position
-        p0 = [1,0,-5]
-        q0 = [1,0,0,0]
-        v0 = [0,0,0]
-        x0 = lowlevel.LQR.set_state(p0, q0, v0)
-        #x0 = lowlevel.LQR.ned2xyz(x0)
 
-        omega = [0,0,0]
-        c = 9.8
-        u0 = lowlevel.LQR.set_command(omega, c)
+        states = np.zeros((1,15))
+        states[0,2] = -15
 
-        self.__controller.set_goals(x0, u0)
+        times = np.zeros((1,1))
+        self.acceleration_cmds = np.zeros((1,3))
+
+        references = np.zeros((1,9))
 
         # Setup timing variables
         begin_time = time.time()
         prev_time = time.time()
         self.__prev_gain_time = begin_time
+        prev_reference_time = 0
         update_gains = True
 
-        states = list()
-        times = list()
 
+        # Calculate sinusoidal throttle test command
+        t = np.linspace(0, self.sim_time, self.sim_time*self.freq)
+
+        N = 20
+        freqs = (np.random.random(N) - 0.5)*50
+
+        sins = np.zeros((N,self.sim_time*self.freq))
+        for i in range(0,N):
+            sins[i] = np.sin(freqs[i]*t)
+
+        self.throttle_cmd = 0.2*np.sum(sins,0)/N
+
+
+        # Setup plots
+
+        #plot1 = plt.figure(1)
+        #plt.plot(t, -self.throttle_cmd*self.__max_thrust/self.__mass, '--g', label='ad0')
+        
+        plot2 = plt.figure(2)
         plt.grid()
         plots = [plt.subplot(221), plt.subplot(222), plt.subplot(223), plt.subplot(224)]
 
 
+        # Setup initial reference position
+        p0 = self.get_state().kinematics_estimated.position.to_numpy_array()
+
+
+
         # Main loop
-        while time.time()-begin_time < 5:
+        while time.time()-begin_time < self.sim_time:
             with self.__flag_lock:
                 if self.__shutdown == True or rospy.is_shutdown():
                     break
                 
                 state = self.get_state()
-                states.append(state)
-                times.append(time.time())
+                pos = state.kinematics_estimated.position.to_numpy_array()
+                vel = state.kinematics_estimated.linear_velocity.to_numpy_array()
+
+                q = state.kinematics_estimated.orientation
+                q = np.array([q.w_val, q.x_val, q.y_val, q.z_val], dtype=np.float32)                
+                r,p,y = lowlevel.LQR.quat2rpy(q)
+                orien = np.array([r,p,y], dtype=np.float32)
+
+                rpydot = state.kinematics_estimated.angular_velocity.to_numpy_array()
+                accel = state.kinematics_estimated.linear_acceleration.to_numpy_array()
+                
+                statevector = np.concatenate((pos, vel, orien, rpydot, accel), axis=0)
+
+                states = np.append(states, [statevector], axis=0)
+                times = np.append(times, [[time.time()-begin_time]], axis=0)
+
                 cmd = self.__cmd
 
-            '''
-            if(type(cmd) == TwistStamped):
-                self.__moveAtVelocity(cmd)
 
-            elif(type(cmd) == PoseStamped):
-                self.__moveToPosition(cmd)
 
-            self.__cmd = None
+                '''
+                if(type(cmd) == TwistStamped):
+                    self.__moveAtVelocity(cmd)
 
-            '''
+                elif(type(cmd) == PoseStamped):
+                    self.__moveToPosition(cmd)
+
+                self.__cmd = None
+
+                '''
+            if  np.linalg.norm(pos - np.array(p0)) < 0.25 and time.time() - prev_reference_time > 4: 
+                p0[0] += 2
+                p0[1] += 1
+                p0[2] -= 1
+                rpy = [0,0,0]
+                q0 = lowlevel.LQR.rpy2quat(rpy[0], rpy[1], rpy[2])
+                v0 = [0,0,0]
+
+                x0 = lowlevel.LQR.set_state(p0, q0, v0)
+                x0 = lowlevel.LQR.ned2xyz(x0)
+            
+                reference = np.concatenate((p0, v0, rpy), axis=0)
+
+                omega = [0,0,0]
+                c = 9.8
+                u0 = lowlevel.LQR.set_command(omega, c)
+
+                self.__controller.set_goals(x0, u0)
+            
+            if np.linalg.norm(pos - np.array(p0)) > 0.25:
+                prev_reference_time = time.time()
+
+            references = np.append(references, [reference], axis=0)
 
             # Update LQR gains at 10 Hz
-            if time.time() - self.__prev_gain_time >= 0.1:
+            if time.time() - self.__prev_gain_time >= 0.01:
                 update_gains = True
 
             # Compute the control at the main loop rate
@@ -748,17 +839,64 @@ class Drone(mp.Process):
 
                 msg = Float32(elapsed_time)
                 self.__looptime_pub.publish(msg)
-                print(elapsed_time)
+                print("%6.3f"% elapsed_time)
 
-        print(states[:])
-        plots[0].scatter(times, states[:].kinematics_estimated.angular_velocity.x, 2, marker='o', color='blue', label='roll')
-        #plots[0].scatter(times, pitch, 2, marker='o', color='red', label='pitch')
-        #plots[0].scatter(times, yaw, 2, marker='o', color='gray', label='yaw')
 
-        plots[0].set(xlabel='time', ylabel='radians/s')
-        plots[0].set_title('roll/pitch/yaw rates')
+        print("Theoretical number of loops: " + str(self.throttle_cmd.shape))
+        print("Actual number of loops: " + str(times.shape))
+
+
+
+        plots[0].plot(times, states[:,0], 'b', label='n')
+        plots[0].plot(times, states[:,1], 'r', label='e')
+        plots[0].plot(times, states[:,2], 'g', label='d')
+        plots[0].plot(times, references[:,0], '--b', label='n0')
+        plots[0].plot(times, references[:,1], '--r', label='e0')
+        plots[0].plot(times, references[:,2], '--g', label='d0')
+        plots[0].set(xlabel='time', ylabel='m')
+        plots[0].set_title('position')
         plots[0].legend(loc="upper right")
+
+        plots[1].plot(times, states[:,3], 'b', label='vn')
+        plots[1].plot(times, states[:,4], 'r', label='ve')
+        plots[1].plot(times, states[:,5], 'g', label='vd')       
+        plots[1].plot(times, references[:,3], '--b', label='vn0')
+        plots[1].plot(times, references[:,4], '--r', label='ve0')
+        plots[1].plot(times, references[:,5], '--g', label='vd0')        
+        plots[1].set(xlabel='time', ylabel='m/s')
+        plots[1].set_title('ned vecloties')
+        plots[1].legend(loc="upper right")
+
+        #plots[2].plot(times, states[:,6], color='blue', label='r')
+        #plots[2].plot(times, states[:,7], color='red', label='p')
+        #plots[2].plot(times, states[:,8], color='gray', label='y')
+        #plots[2].set(xlabel='time', ylabel='rad')
+        #plots[2].set_title('orientation')
+        #plots[2].legend(loc="upper right")
+
+        plots[2].plot(times, states[:,9], 'b', label='dr')
+        plots[2].plot(times, states[:,10], 'r', label='dp')
+        plots[2].plot(times, states[:,11], 'g', label='dy')
+        plots[2].plot(times, self.rpydot[:,0], '--b', label='dr0')
+        plots[2].plot(times, self.rpydot[:,1], '--r', label='dp0')
+        plots[2].plot(times, self.rpydot[:,2], '--g', label='dy0')
+        plots[2].set(xlabel='time', ylabel='rad/s')
+        plots[2].set_title('angular velocity')
+        plots[2].legend(loc="upper right")
+
+        plots[3].set_title('angular velocity')
+        plots[3].plot(times, states[:,12], 'b', label='an')
+        plots[3].plot(times, states[:,13], 'r', label='ae')
+        plots[3].plot(times, states[:,14], 'g', label='ad')
+        plots[3].plot(times, self.acceleration_cmds[:,0], '--b', label='an0')
+        plots[3].plot(times, self.acceleration_cmds[:,1], '--r', label='ae0')
+        plots[3].plot(times, self.acceleration_cmds[:,2], '--g', label='ad0')
+        plots[3].set(xlabel='time', ylabel='m/s^2')
+        plots[3].set_title('linear acceleration')
+        plots[3].legend(loc="upper right")
+
         plt.show()
+
 
         # Wait for last task to finish
         #with self.__client_lock:

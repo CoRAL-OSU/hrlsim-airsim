@@ -13,7 +13,7 @@ import control
 class LQR:
     def __init__(self):
         self.Q = np.diag([50,50,100,1,1,1,1,2,2,2])
-        self.R = np.diag([1000,1000,1e5,4])
+        self.R = np.diag([50,50,50,4])
 
         self.A = np.zeros((10,10))
         self.B = np.zeros((10,4))
@@ -72,6 +72,8 @@ class LQR:
         u = np.zeros((4,1))
 
         # Compute the optimal control step
+        #print(str(x.T))
+        #print(str(self.x0.T))
         u = self.u0 - np.matmul(self.K,(x-self.x0))
 
         return u
@@ -113,10 +115,16 @@ class LQR:
         
         # Apply quaternion rotation to  translate. Don't swap axis
         # R =[1 0 0 ; 0 -1 0; 0 0 -1]
-        xnew[3] = x[3]
-        xnew[4] = x[5]
-        xnew[5] = x[4]
-        xnew[6] = -x[6]
+        q1 = airsim.Quaternionr(x[4], x[5], x[6], x[3])
+        q_rot = airsim.Quaternionr(math.sqrt(2)/2, math.sqrt(2)/2, 0, 0)
+
+        qnew = q1.rotate(q_rot)
+        qnew = qnew.to_numpy_array()
+
+        xnew[3] = qnew[3]
+        xnew[4] = qnew[0]
+        xnew[5] = qnew[1]
+        xnew[6] = qnew[2]
         
         xnew[7] = x[8]
         xnew[8] = x[7]
