@@ -265,7 +265,7 @@ class Swarm:
             i += 1
 
             offset = (dx, dy, dz)
-            goal = TrackObjectGoal(object_name=deer_name, timeout=60, offset=offset)
+            goal = TrackObjectGoal(object_name=object_name, timeout=60, offset=offset)
             self.drones[drone].actions['track'].send_goal(goal)       
 
 
@@ -306,15 +306,7 @@ if __name__ == "__main__":
     swarm = Swarm(swarmName="swarm")
     swarm_list.append(swarm)
 
-    time.sleep(20)
-    print("SHUTDOWN")
-    swarm.shutdown()
-    sys.exit(0)
-
-    '''
-
-    cmd_vel_list = list()
-
+    #time.sleep(8)
 
     print("TAKING OFF")
     swarm.takeoff(False)
@@ -322,34 +314,22 @@ if __name__ == "__main__":
     time.sleep(5)
 
 
-    print("MOVING TO [5,5,-30]")
-    swarm.move_to_location(target=[5,5,-30], timeout=10, tolerance=0.5)
+    print("MOVING TO [0,0,-5]")
+    swarm.move_to_location(target=[0,0,-5], timeout=10, tolerance=0.5)
     time.sleep(5)
 
-    #swarm.move_to_location(target=[5,35,-30], timeout=10)
-    #time.sleep(15)
-
-    #swarm.move_to_location(target=[30,30,-30], timeout=10)
-    #time.sleep(15)
-
     with swarm.lock:
-        deer_name = swarm.client.simListSceneObjects("Deer.*")[0]
+        #object_name = swarm.client.simListSceneObjects("Deer.*")[0]
+        object_name = "Stop_Sign_02_8"
 
-    print("TRACKING DEER %s" % deer_name)
-    swarm.track_object(deer_name, 120, -30)
+    print("TRACKING OBJECT %s" % object_name)
+    swarm.track_object(object_name, 20, -5)
 
     print("RESULT")
     print(swarm.drones["Drone0"].actions["track"].get_result())
 
+    
     print("LANDING")
-    pos_cmd = PoseStamped()
-    pos_cmd.header.frame_id = "local"
-    pos_cmd.pose.position.x = 0
-    pos_cmd.pose.position.y = 0
-    pos_cmd.pose.position.z = 25
-    swarm.cmd_pos(cmd_all=pos_cmd, wait=False)
-    time.sleep(10)
-
     swarm.land(True)
 
     time.sleep(10)
@@ -359,8 +339,6 @@ if __name__ == "__main__":
     swarm.shutdown()
 
     sys.exit(0)
-
-    '''
 
     '''
     with swarm.lock:
