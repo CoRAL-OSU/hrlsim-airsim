@@ -82,7 +82,7 @@ class Drone(mp.Process):
         self.__command_type = None
         self.__cmd = None
 
-        self.dstep = 1.0
+        self.dstep = 20.0
 
         self.__controller = lowlevel.LQR() 
 
@@ -253,8 +253,14 @@ class Drone(mp.Process):
 
             xn = S*math.cos(theta) + pos.x_val
             xe = S*math.sin(theta) + pos.y_val
-            xd = z
-
+            
+            if z-pos.z_val > self.dstep:
+                xd = pos.z_val + self.dstep
+            elif z-pos.z_val < -self.dstep:
+                xd = pos.z_val - self.dstep
+            else:
+                xd = z
+                
             dn = xn-pos.x_val
             de = xe-pos.y_val
 
@@ -359,7 +365,13 @@ class Drone(mp.Process):
 
             xn = S*math.cos(theta) + pos.x_val
             xe = S*math.sin(theta) + pos.y_val
-            xd = z
+
+            if z-pos.z_val > self.dstep:
+                xd = pos.z_val + self.dstep
+            elif z-pos.z_val < -self.dstep:
+                xd = pos.z_val - self.dstep
+            else:
+                xd = z
 
             dn = xn-pos.x_val
             de = xe-pos.y_val
@@ -466,11 +478,18 @@ class Drone(mp.Process):
 
             theta = math.atan2(dy,dx)
 
-            V = 1.0*dmag
-            V = min(V, 2)
+            V = 1.5*dmag
+            V = 0#min(V, 2)
 
             vn = V*math.cos(theta)
-            ve = V*math.sin(theta) 
+            ve = V*math.sin(theta)
+
+            if theta-yaw > math.pi/2:
+                dyaw =  yaw + math.pi/2
+            elif theta-yaw < -math.pi/2:
+                dyaw = yaw - math.pi/2
+            else:
+                dyaw = theta
 
             p0      = [x, y, z]
             rpy0    = [0, 0, yaw]
@@ -488,7 +507,7 @@ class Drone(mp.Process):
                 v0 = [vn, ve, 0]
                 self.__controller.set_goals(p0, v0, rpy0, omega0, c0)
 
-                while time.time() - begin_time < timeout and error > self.dstep*1.5:
+                while time.time() - begin_time < timeout and error > self.dstep/2:
                     self.testLQR(state)
                     state = self.get_state()
                     error = np.linalg.norm(np.array(p0)-state.kinematics_estimated.position.to_numpy_array())
@@ -498,7 +517,7 @@ class Drone(mp.Process):
                 v0 = [0, 0, 0]
                 self.__controller.set_goals(p0, v0, rpy0, omega0, c0)
                 
-                while time.time() - begin_time < timeout and error > self.dstep/4:
+                while time.time() - begin_time < timeout and error > 0.25:
                     self.testLQR(state)
                     state = self.get_state()
                     error = np.linalg.norm(np.array(p0)-state.kinematics_estimated.position.to_numpy_array())

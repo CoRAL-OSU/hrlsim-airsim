@@ -265,7 +265,7 @@ class Swarm:
             i += 1
 
             offset = (dx, dy, dz)
-            goal = TrackObjectGoal(object_name=object_name, timeout=60, offset=offset)
+            goal = TrackObjectGoal(object_name=object_name, timeout=timeout, offset=offset)
             self.drones[drone].actions['track'].send_goal(goal)       
 
 
@@ -314,8 +314,8 @@ if __name__ == "__main__":
     time.sleep(5)
 
 
-    print("MOVING TO [0,0,-5]")
-    swarm.move_to_location(target=[0,0,-5], timeout=10, tolerance=0.5)
+    print("MOVING TO [0,0,-4]")
+    swarm.move_to_location(target=[0,0,-4], timeout=10, tolerance=0.5)
     time.sleep(5)
 
     with swarm.lock:
@@ -323,12 +323,15 @@ if __name__ == "__main__":
         object_name = "Stop_Sign_02_8"
 
     print("TRACKING OBJECT %s" % object_name)
-    swarm.track_object(object_name, 20, -5)
+    swarm.track_object(object_name, 15, -4)
 
     print("RESULT")
     print(swarm.drones["Drone0"].actions["track"].get_result())
 
-    
+    print("MOVING TO [0,0,-1]")
+    swarm.move_to_location(target=[0,0,-1], timeout=10, tolerance=0.5)
+    time.sleep(5)
+
     print("LANDING")
     swarm.land(True)
 

@@ -12,8 +12,8 @@ import control
 
 class LQR:
     def __init__(self):
-        self.Q = np.diag([100,100,100,1,1,1,1,10,10,10])
-        self.R = np.diag([2e2,2e2,5e3,10])
+        self.Q = np.diag([100,100,100,1,1,1,1,1000,1000,10])
+        self.R = np.diag([2e3,2e3,5e8,10])
 
         self.A = np.zeros((10,10))
         self.B = np.zeros((10,4))
