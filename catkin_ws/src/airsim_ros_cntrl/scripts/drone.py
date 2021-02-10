@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import airsim
 import rospy, actionlib
 
-import lowlevel
+import lqr
 
 from geometry_msgs.msg import TwistStamped, PoseStamped
 from airsim_ros_pkgs.srv import Takeoff, TakeoffResponse, Land, LandResponse
@@ -84,7 +84,7 @@ class Drone(mp.Process):
 
         self.dstep = 20.0
 
-        self.__controller = lowlevel.LQR() 
+        self.__controller = lqr.LQR() 
 
         with self.__client_lock:
             self.__client = sim_client
@@ -852,7 +852,7 @@ class Drone(mp.Process):
 
                     q = state.kinematics_estimated.orientation
                     q = np.array([q.w_val, q.x_val, q.y_val, q.z_val], dtype=np.float32)                
-                    r,p,y = lowlevel.LQR.quat2rpy(q)
+                    r,p,y = lqr.LQR.quat2rpy(q)
                     orien = np.array([r,p,y], dtype=np.float32)
 
                     rpydot = state.kinematics_estimated.angular_velocity.to_numpy_array()
