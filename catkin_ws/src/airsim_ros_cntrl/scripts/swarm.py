@@ -1,11 +1,8 @@
 #! /usr/bin/python
 
-import json
-import os
 import time
 import multiprocessing as mp
 import sys
-import signal
 
 import math
 
@@ -47,12 +44,12 @@ class Swarm:
             self.actions    = actions
 
 
-    def __init__(self, swarmName, settingsFilePath=None):       
-        self.client = airsim.MultirotorClient()
+    def __init__(self, swarmName, vehicle_list, target, ip=""):       
+        self.client = airsim.MultirotorClient(ip)
         self.client.confirmConnection()
 
         self.swarm_name = swarmName
-        self.vehicle_list = self.getDroneListFromSettings(settingsFilePath)
+        self.vehicle_list = vehicle_list
         self.drone_procs = dict()
         self.drone_pubs  = dict()
 
@@ -112,29 +109,6 @@ class Swarm:
             self.drones[i].actions = actions
 
         print("SWARM CREATED WITH %d DRONES" %len(self.drones))
-
-
-    def getDroneListFromSettings(self, settingsFilePath=None):
-        if settingsFilePath == None:
-            HOME = os.getenv('HOME')
-            settings_path = HOME + '/Documents/AirSim/settings.json'
-        else:
-            settings_path = settingsFilePath
-
-        try:
-            settings_file = open(settings_path, "r")
-        except Exception:
-            print("Error opening settings file. Exiting")
-            exit()
-
-        settings = json.loads(settings_file.read())
-        settings_file.close()
-
-        vehicle_list = list()
-        for i in settings["Vehicles"]:
-            vehicle_list.append(i)
-
-        return vehicle_list
 
     def getDroneList(self):
         return self.drones
