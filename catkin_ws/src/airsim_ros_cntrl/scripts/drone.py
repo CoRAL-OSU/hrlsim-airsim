@@ -26,6 +26,9 @@ from airsim_ros_cntrl.msg import TrackObjectAction, TrackObjectFeedback, TrackOb
 from airsim_ros_cntrl.msg import MoveToLocationAction, MoveToLocationFeedback, MoveToLocationResult, MoveToLocationGoal
 
 
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
+
 def makeVelCmd(frame="local", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
     vel_cmd = TwistStamped()
     vel_cmd.header.frame_id = frame
@@ -238,7 +241,7 @@ class Drone(mp.Process):
             pos = state.kinematics_estimated.position            
 
 
-            self.moveByLQR(time.time()-start_time, state)
+            self.moveByLQR(time.time()-start_time, state)       # SLOW CALL
 
 
             state = self.get_state()
@@ -663,16 +666,16 @@ class Drone(mp.Process):
                     if self.__shutdown == True:
                         break
                     
-                    state = self.get_state()
-                    cmd = self.__cmd
+                    #state = self.get_state()
+                    #cmd = self.__cmd
                     
-                    if(type(cmd) == TwistStamped):
-                        self.__moveAtVelocity(cmd)
+                    #if(type(cmd) == TwistStamped):
+                    #    self.__moveAtVelocity(cmd)
 
-                    elif(type(cmd) == PoseStamped):
-                        self.__moveToPosition(cmd)
+                    #elif(type(cmd) == PoseStamped):
+                    #    self.__moveToPosition(cmd)
 
-                    self.__cmd = None
+                    #self.__cmd = None
 
                 rate.sleep()
 
@@ -731,56 +734,58 @@ class Drone(mp.Process):
             begin_time = time.time()
             prev_reference_time = 0
 
-            # Main loop
-            while not rospy.is_shutdown() and time.time()-begin_time < self.sim_time:
-                with self.__flag_lock:
-                    if self.__shutdown == True:
-                        break
+
+            with PyCallGraph(output=GraphvizOutput()):
+
+                # Main loop
+                while not rospy.is_shutdown() and time.time()-begin_time < self.sim_time:
+                    with self.__flag_lock:
+                        if self.__shutdown == True:
+                            break
+                        
+                        
+                        state = self.get_state()
+                        pos = state.kinematics_estimated.position.to_numpy_array()
+                        vel = state.kinematics_estimated.linear_velocity.to_numpy_array()
+
+                        q = state.kinematics_estimated.orientation
+                        q = np.array([q.w_val, q.x_val, q.y_val, q.z_val], dtype=np.float32)                
+                        r,p,y = lqr.LQR.quat2rpy(q)
+                        orien = np.array([r,p,y], dtype=np.float32)
+
+                        rpydot = state.kinematics_estimated.angular_velocity.to_numpy_array()
+                        accel = state.kinematics_estimated.linear_acceleration.to_numpy_array()
+                        
+                        statevector = np.concatenate((pos, vel, orien, rpydot, accel), axis=0)
+
+                        states = np.append(states, [statevector], axis=0)
+                        times = np.append(times, [[time.time()-begin_time]], axis=0)
+                        
+
+                        cmd = self.__cmd
+                        
+                        if(type(cmd) == TwistStamped):
+                            self.__moveAtVelocity(cmd)
+
+                        elif(type(cmd) == PoseStamped):
+                            self.__moveToPosition(cmd)
+
+                        self.__cmd = None
+
+                    self.moveByLQR(time.time()-begin_time, state)
                     
-                    
-                    state = self.get_state()
-                    pos = state.kinematics_estimated.position.to_numpy_array()
-                    vel = state.kinematics_estimated.linear_velocity.to_numpy_array()
+                    references = np.append(references, self.reference, axis=0)
 
-                    q = state.kinematics_estimated.orientation
-                    q = np.array([q.w_val, q.x_val, q.y_val, q.z_val], dtype=np.float32)                
-                    r,p,y = lqr.LQR.quat2rpy(q)
-                    orien = np.array([r,p,y], dtype=np.float32)
+                    rate.sleep()
 
-                    rpydot = state.kinematics_estimated.angular_velocity.to_numpy_array()
-                    accel = state.kinematics_estimated.linear_acceleration.to_numpy_array()
-                    
-                    statevector = np.concatenate((pos, vel, orien, rpydot, accel), axis=0)
+                    # Calculate a publish looptime after sleeping
+                    if self.__pub_looptime:
+                        elapsed_time = time.time() - prev_time
+                        prev_time = time.time()
 
-                    states = np.append(states, [statevector], axis=0)
-                    times = np.append(times, [[time.time()-begin_time]], axis=0)
-                    
-
-                    cmd = self.__cmd
-                    
-                    if(type(cmd) == TwistStamped):
-                        self.__moveAtVelocity(cmd)
-
-                    elif(type(cmd) == PoseStamped):
-                        self.__moveToPosition(cmd)
-
-                    self.__cmd = None
-
-
-                self.moveByLQR(time.time()-begin_time, state)
-                
-                references = np.append(references, self.reference, axis=0)
-
-                rate.sleep()
-
-                # Calculate a publish looptime after sleeping
-                if self.__pub_looptime:
-                    elapsed_time = time.time() - prev_time
-                    prev_time = time.time()
-
-                    msg = Float32(elapsed_time)
-                    self.__looptime_pub.publish(msg)
-                    #print("%6.3f"% elapsed_time)
+                        msg = Float32(elapsed_time)
+                        self.__looptime_pub.publish(msg)
+                        #print("%6.3f"% elapsed_time)
 
             
             print("Theoretical number of loops: " + str(int(math.ceil(self.sim_time*self.freq))))

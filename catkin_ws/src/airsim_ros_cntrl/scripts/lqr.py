@@ -24,7 +24,7 @@ class LQR:
         self.mass = 1                       # kg
         self.max_thrust = 4.1794 * 4        # N
 
-        self.update_gain_period = 0.1       # seconds
+        self.update_gain_period = 0.2       # seconds
         self.prev_gain_time = time.time()
 
 
@@ -48,17 +48,8 @@ class LQR:
         self.traj_generator = minimum_snap.MinimumSnap(waypoints)
 
 
-    def updateGains(self, state, prev_accel_cmd):
-        p = state.kinematics_estimated.position
-        p = [p.x_val, p.y_val, p.z_val]
-
-        q = state.kinematics_estimated.orientation
-        q = [q.w_val, q.x_val, q.y_val, q.z_val]
-
-        v = state.kinematics_estimated.linear_velocity
-        v = [v.x_val, v.y_val, v.z_val]
-
-        roll, pitch, _ = LQR.quat2rpy(q)
+    def updateGains(self, x, rpydot, prev_accel_cmd):
+        roll, pitch, _ = LQR.quat2rpy(x[3:7])
 
         cr = math.cos(roll)
         sr = math.sin(roll)
@@ -69,10 +60,6 @@ class LQR:
                         [0, cr, -sr],
                         [0, sr/cp, cr/cp]])
 
-        x = LQR.set_state(p,q,v)
-        x = LQR.ned2xyz(x)
-
-        rpydot = state.kinematics_estimated.angular_velocity
         rpydot = np.array([[rpydot.y_val, -rpydot.x_val, rpydot.z_val]]).T
         omega = R.I*rpydot
         omega = [omega[0,0], omega[1,0], omega[2,0]]
@@ -102,6 +89,7 @@ class LQR:
         self.A = self.__updateA(x,u)
         self.B = self.__updateB(x)
 
+        '''
         Co = control.ctrb(self.A,self.B)
 
         try:
@@ -110,6 +98,7 @@ class LQR:
         except AssertionError:
             print("System is not controllable")
             exit(1)     
+        '''
 
         self.K,_,_ = control.lqr(self.A,self.B,self.Q,self.R)   
 
@@ -145,7 +134,7 @@ class LQR:
         x0, u0 = self.traj_generator.compute(t, x)
 
         if time.time()-self.prev_gain_time > self.update_gain_period:
-            self.updateGains(state, prev_accel_cmd)
+            self.updateGains(x, state.kinematics_estimated.angular_velocity, prev_accel_cmd)
             self.prev_gain_time = time.time()
 
         u = np.zeros((4,1))
@@ -154,14 +143,7 @@ class LQR:
         u = u0 - np.matmul(self.K,(x-x0))
 
 
-        #print("command: " + str(u.T))
-
-        #print("pos: " + str(p))
-        #print("goal: " + str(p0))
-        #print("vel: " + str(v))
-        #print("orien: " + str([roll, pitch, yaw]))
-
-        tmp = u[0,0] #np.copy(u[0,0])
+        tmp = u[0,0] 
         u[0,0] = u[1,0]
         u[1,0] = tmp
         u[2,0] = -u[2,0]
