@@ -314,8 +314,8 @@ if __name__ == "__main__":
     time.sleep(5)
 
 
-    print("MOVING TO [0,0,-4]")
-    swarm.move_to_location(target=[0,0,-4], timeout=10, tolerance=0.5)
+    print("MOVING TO [3,3,-4]")
+    swarm.move_to_location(target=[3,3,-5], timeout=10, tolerance=0.5)
     time.sleep(5)
 
     with swarm.lock:
@@ -323,7 +323,7 @@ if __name__ == "__main__":
         object_name = "Stop_Sign_02_8"
 
     print("TRACKING OBJECT %s" % object_name)
-    swarm.track_object(object_name, 15, -4)
+    swarm.track_object(object_name, 15, -7)
 
     print("RESULT")
     print(swarm.drones["Drone0"].actions["track"].get_result())

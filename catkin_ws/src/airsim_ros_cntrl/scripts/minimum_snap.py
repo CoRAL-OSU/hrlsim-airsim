@@ -27,10 +27,10 @@ class MinimumSnap:
         
         d = waypoints[:,1:] - waypoints[:,0:-1]
 
-        self.d0 = 0.35*np.sqrt(d[0,:]*d[0,:] + d[1,:]*d[1,:] + d[2,:]*d[2,:])
+        self.d0 = 0.25*np.sqrt(d[0,:]*d[0,:] + d[1,:]*d[1,:] + d[2,:]*d[2,:])
 
         self.traj_time = np.append(0, np.cumsum(self.d0))
-        self.waypoints0 = waypoints
+        self.waypoints0 = np.copy(waypoints)
 
         N = np.size(waypoints, 1)-1
 
@@ -146,7 +146,17 @@ class MinimumSnap:
                                            [np.polyval(f_a[1,:], scale)],
                                            [np.polyval(f_a[2,:], scale)]] ) / self.d0[t_index-1]**2
 
-        desired_state.yaw = 0
+        dx = self.waypoints0[0,-1] - state[0,0]
+        dy = self.waypoints0[1, -1] - state[1,0]
+
+
+        _, _, cyaw = lqr.LQR.quat2rpy(state[3:7])
+
+        if dx**2 + dy**2 < 1:
+            desired_state.yaw = cyaw # 0
+        else:
+            desired_state.yaw = cyaw #-math.atan2(dy,dx)
+
         desired_state.yawdot = 0
 
         x0 = np.zeros((10,1))

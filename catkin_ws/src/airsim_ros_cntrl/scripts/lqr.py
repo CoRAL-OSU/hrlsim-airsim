@@ -15,7 +15,7 @@ import minimum_snap
 class LQR:
     def __init__(self):
         self.Q = np.diag([100,100,100,1,1,1,1,10,10,10])
-        self.R = np.diag([1e1,1e1,5e8,2])
+        self.R = np.diag([1e1,1e1,2e1,2])
 
         self.A = np.zeros((10,10))
         self.B = np.zeros((10,4))
@@ -142,7 +142,7 @@ class LQR:
         x = LQR.set_state(p,q,v)
         x = LQR.ned2xyz(x)
 
-        x0, u0 = self.traj_generator.compute(t, None)
+        x0, u0 = self.traj_generator.compute(t, x)
 
         if time.time()-self.prev_gain_time > self.update_gain_period:
             self.updateGains(state, prev_accel_cmd)

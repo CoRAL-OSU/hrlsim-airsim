@@ -210,20 +210,23 @@ class Drone(mp.Process):
     #######################################
 
     def __move_to_location_action_cb(self, goal):
-        start_time = time.time()
         success = True
 
         target = airsim.Vector3r(goal.target[0], goal.target[1], goal.target[2])
 
         state = self.get_state()
 
-        cmd = PoseStamped()
-        cmd.header.frame_id = "global"
-
         feedback = MoveToLocationFeedback()
         
         pos = state.kinematics_estimated.position
         feedback.error = airsim.Vector3r.distance_to(target, pos)
+
+        waypoints = np.array([pos.to_numpy_array(), target.to_numpy_array()]).T
+        self.__controller.set_goals(waypoints)
+
+        start_time = time.time()
+
+        r = rospy.Rate(20)
 
         while time.time() - start_time < goal.timeout and feedback.error > goal.tolerance:
             if self.__move_to_location_action.is_preempt_requested():
@@ -232,58 +235,10 @@ class Drone(mp.Process):
                 success = False
                 break      
 
-            pos = state.kinematics_estimated.position
-            orien = state.kinematics_estimated.orientation
-            (pitch, roll, yaw) = airsim.to_eularian_angles(orien)                
-
-            x = target.x_val
-            y = target.y_val
-            z = target.z_val
+            pos = state.kinematics_estimated.position            
 
 
-            ex = x - pos.x_val
-            ey = y - pos.y_val
-
-            if math.sqrt(ex**2 + ey**2) < self.dstep:
-                S = math.sqrt(ex**2 + ey**2)
-            else:
-                S = self.dstep
-
-            theta = math.atan2(ey, ex)
-
-            xn = S*math.cos(theta) + pos.x_val
-            xe = S*math.sin(theta) + pos.y_val
-            
-            if z-pos.z_val > self.dstep:
-                xd = pos.z_val + self.dstep
-            elif z-pos.z_val < -self.dstep:
-                xd = pos.z_val - self.dstep
-            else:
-                xd = z
-                
-            dn = xn-pos.x_val
-            de = xe-pos.y_val
-
-            #print("dn: " + str(dn))
-            #print("dx: " + str(de))
-            #print("mag: " + str(math.sqrt(dn**2+de**2)))
-            #print("\n")
-
-            cmd.pose.position.x = xn
-            cmd.pose.position.y = xe
-            cmd.pose.position.z = xd
-
-
-            if(goal.yaw_frame == "local"):
-                cmd.pose.orientation.z = goal.yaw + yaw
-            elif(goal.yaw_frame == "global"):
-                cmd.pose.orientation.z = goal.yaw
-            else:
-                rospy.logerr("%s: Yaw frame_id unkown" % self.__move_to_location_action_name)
-                success = False
-                break
-
-            self.__moveToPosition(cmd)
+            self.moveByLQR(time.time()-start_time, state)
 
 
             state = self.get_state()
@@ -298,6 +253,8 @@ class Drone(mp.Process):
             feedback.time_left = time.time() - start_time
 
             self.__move_to_location_action.publish_feedback(feedback)
+
+            r.sleep()
 
 
         with self.__client_lock:
@@ -315,27 +272,25 @@ class Drone(mp.Process):
         start_time = time.time()
 
         success = True
+        
+        state = self.get_state()
 
         with self.__client_lock:
             target_pose = self.__client.simGetObjectPose(goal.object_name)
-        
-        state = self.get_state()
 
         feedback_vector = calc_distance(target_pose.position, state.kinematics_estimated.position)
         feedback_magnitude = airsim.Vector3r.distance_to(state.kinematics_estimated.position, target_pose.position)
 
-        #r = rospy.Rate(10)
-    
-        cmd = PoseStamped()
-        cmd.header.frame_id = "global"
+        r = rospy.Rate(20)
 
         feedback = TrackObjectFeedback()
 
         print(self.__drone_name + " ENTERING WHILE LOOP")
 
-
         update_object_location_period = 0.1     # seconds
-        prev_object_update_time = time.time()
+        prev_object_update_time = 0
+
+        start_pos = state.kinematics_estimated.position.to_numpy_array()
 
         while time.time() - start_time < goal.timeout:
             if self.__track_action.is_preempt_requested():
@@ -344,16 +299,8 @@ class Drone(mp.Process):
                 success = False
                 break
             
-            x = target_pose.position.x_val + goal.offset[0]
-            y = target_pose.position.y_val + goal.offset[1]
-            z = target_pose.position.z_val + goal.offset[2]
 
-
-            cmd.pose.position.x = x
-            cmd.pose.position.y = y
-            cmd.pose.position.z = z
-
-            self.__moveToPosition(cmd)
+            pos = state.kinematics_estimated.position.to_numpy_array()
 
 
             if time.time() - prev_object_update_time > update_object_location_period:
@@ -374,7 +321,20 @@ class Drone(mp.Process):
                     if error_count == max_errors:
                         print(self.__drone_name + " Error from track object callback: {0}" .format(error.message))
                 
-                prev_object_update_time = 0.1
+                prev_object_update_time = time.time()
+
+
+                x = target_pose.position.x_val + goal.offset[0]
+                y = target_pose.position.y_val + goal.offset[1]
+                z = target_pose.position.z_val + goal.offset[2]
+
+                waypoints = np.array([start_pos, [x,y,z]]).T
+                self.__controller.set_goals(waypoints)
+
+
+
+            self.moveByLQR(time.time()-start_time, state)
+
 
             state = self.get_state()
             feedback_vector = calc_distance(target_pose.position, state.kinematics_estimated.position)
@@ -387,6 +347,8 @@ class Drone(mp.Process):
             feedback.dist_mag = feedback_magnitude
 
             self.__track_action.publish_feedback(feedback)
+
+            r.sleep()
 
 
         with self.__client_lock:
@@ -454,7 +416,7 @@ class Drone(mp.Process):
 
             while time.time() - begin_time < timeout and error > self.dstep/2:
 
-                self.testLQR(time.time() - begin_time, state)
+                self.moveByLQR(time.time() - begin_time, state)
                 
                 state = self.get_state()
                 error = np.linalg.norm(np.array(p0)-state.kinematics_estimated.position.to_numpy_array())
@@ -643,7 +605,7 @@ class Drone(mp.Process):
     ###        LQR IMPLEMENATION        ###
     #######################################
 
-    def testLQR(self, t, state):        
+    def moveByLQR(self, t, state):        
         x0, u0, u = self.__controller.computeControl(t, state, self.prev_accel_cmd)
 
         for i in range(0, 3):
@@ -653,7 +615,7 @@ class Drone(mp.Process):
             u[i,0] = max(-3, u[i,0])
             u[i,0] = min(3, u[i,0])
 
-        self.rpydot = np.append(self.rpydot, u0[0:3].T, axis=0)
+        #self.rpydot = np.append(self.rpydot, u0[0:3].T, axis=0)
 
         if(u[3,0] > 1.0):
             print('WARNING -> THROTTLE FOR ' + self.__drone_name + ' OUT OF BOUNDS ' + str(u[3,0]))
@@ -667,7 +629,7 @@ class Drone(mp.Process):
         accel = self.__controller.thrust2world(state, throttle)
 
         self.prev_acceleration_cmd = accel[2]
-        self.acceleration_cmds = np.append(self.acceleration_cmds, [accel], axis=0)
+        #self.acceleration_cmds = np.append(self.acceleration_cmds, [accel], axis=0)
 
         self.reference = x0.T
 
@@ -692,7 +654,7 @@ class Drone(mp.Process):
 
         prev_time = time.time()
 
-        run_swarm = False
+        run_swarm = True
 
 
         if run_swarm:
@@ -805,7 +767,7 @@ class Drone(mp.Process):
                     self.__cmd = None
 
 
-                self.testLQR(time.time()-begin_time, state)
+                self.moveByLQR(time.time()-begin_time, state)
                 
                 references = np.append(references, self.reference, axis=0)
 
