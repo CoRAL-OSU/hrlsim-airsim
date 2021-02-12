@@ -7,6 +7,7 @@ import sys
 
 import matplotlib.pyplot as plt
 
+import lqr
 
 
 class DesiredState:
@@ -25,7 +26,9 @@ class MinimumSnap:
         self.state = np.zeros((10,1))
         
         d = waypoints[:,1:] - waypoints[:,0:-1]
-        self.d0 = 2*np.sqrt(d[0,:]*d[0,:] + d[1,:]*d[1,:] + d[2,:]*d[2,:])
+
+        self.d0 = 0.35*np.sqrt(d[0,:]*d[0,:] + d[1,:]*d[1,:] + d[2,:]*d[2,:])
+
         self.traj_time = np.append(0, np.cumsum(self.d0))
         self.waypoints0 = waypoints
 
@@ -99,6 +102,8 @@ class MinimumSnap:
         self.alpha[:,:,2] = np.reshape(x3, (8, N), 'F')
 
 
+
+
     def compute(self, t, state):
         if t > self.traj_time[-1]:
             t = self.traj_time[-1]
@@ -139,36 +144,69 @@ class MinimumSnap:
 
             desired_state.acc = np.array( [[np.polyval(f_a[0,:], scale)],
                                            [np.polyval(f_a[1,:], scale)],
-                                           [np.polyval(f_a[2,:], scale)]] ) /self.d0[t_index-1]**2
+                                           [np.polyval(f_a[2,:], scale)]] ) / self.d0[t_index-1]**2
 
         desired_state.yaw = 0
         desired_state.yawdot = 0
 
+        x0 = np.zeros((10,1))
+        x0[0:3] = np.array([desired_state.pos]).T
+        x0[7:10] = desired_state.vel
 
-        return desired_state
+        yaw = desired_state.yaw
+
+        cy = math.cos(yaw)
+        sy = math.sin(yaw)
+
+        roll = (1/9.8)*(desired_state.acc[0,0]*sy-desired_state.acc[1,0]*cy)
+        pitch = (1/9.8)*(desired_state.acc[0,0]*cy + desired_state.acc[1,0]*sy)
+        
+        cr = math.cos(roll)
+        sr = math.sin(roll)
+        cp = math.cos(pitch)
+        sp = math.sin(pitch)
+
+        x0[3:7] = np.array([lqr.LQR.rpy2quat(roll, pitch, yaw)]).T
+
+
+        u0 = np.zeros((4,1))
+
+        omega_r = cr*cp*desired_state.yawdot
+        u0[2] = omega_r
+        
+        R_BA = np.array(  [[ cr*cp-sr*sy*sp, -cr*sy, cy*sp+cp*sr*sy],
+                           [ cp*sy+cy*sp*sr, cr*cy, sy*sp-cy*cp*sr],
+                           [ -cr*sp, sr, cr*cp]] )
+
+        c = np.matmul(np.linalg.inv(R_BA), np.array([[0,0,desired_state.acc[2,0]+9.8]]).T)
+        u0[3] = c[2]
+
+        return x0, u0
 
 
 
 if __name__ == "__main__":
 
-    waypoints = np.array(  [[0,    0,   0],
-                            [1,    1,   1],
-                            [3,    5,   0],
-                            [20,   20,  2],
-                            [6,    5,   1],
-                            [0,    0,   0]]).T
+    waypoints = np.array(  [[0, 0,  0],
+                            [1,    1,   5],
+                            [3,    2,   6],
+                            [4,   5,  8],
+                            [6,    7,   9],
+                            [8,    9,   10]]).T
+
+    print(waypoints.shape)
 
     traj_generator = MinimumSnap(waypoints)
 
 
-    t = np.linspace(0,200,1000)
+    t = np.linspace(0,50,1000)
     states = np.empty((0, 3))
 
     state = traj_generator.compute(4.04, None)
 
     for i in t:
-        state = np.reshape(traj_generator.compute(i, None).pos, (1,3))
-        states = np.append(states, state, 0)
+        x0, u0 = traj_generator.compute(i, None)
+        states = np.append(states, x0[0:3].T, 0)
 
 
     plt.plot(t, states[:,:], "-")

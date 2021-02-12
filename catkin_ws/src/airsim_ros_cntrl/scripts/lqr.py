@@ -10,6 +10,8 @@ import airsim
 import slycot
 import control
 
+import minimum_snap
+
 class LQR:
     def __init__(self):
         self.Q = np.diag([100,100,100,1,1,1,1,10,10,10])
@@ -18,9 +20,6 @@ class LQR:
         self.A = np.zeros((10,10))
         self.B = np.zeros((10,4))
         self.K = np.zeros((10,10))
-
-        self.x0 = np.zeros((10,1))
-        self.u0 = np.zeros((4,1))
 
         self.mass = 1                       # kg
         self.max_thrust = 4.1794 * 4        # N
@@ -38,13 +37,15 @@ class LQR:
             assert len(R) == 4, "R must be a list of length 4"
             self.R = np.diag(R)
 
-    def set_goals(self, p0, v0, rpy0, omega0, c0):
-        q0 = LQR.rpy2quat(rpy0[0], rpy0[1], rpy0[2])
+    def set_goals(self, waypoints):
 
-        x0 = LQR.set_state(p0, q0, v0)
-       
-        self.x0 = LQR.ned2xyz(x0)
-        self.u0 = LQR.set_command(omega0, c0)
+        tmp = np.copy(waypoints[0,:])
+
+        waypoints[0,:] = waypoints[1,:]
+        waypoints[1,:] = tmp
+        waypoints[2,:] = -waypoints[2,:]
+        
+        self.traj_generator = minimum_snap.MinimumSnap(waypoints)
 
 
     def updateGains(self, state, prev_accel_cmd):
@@ -57,7 +58,7 @@ class LQR:
         v = state.kinematics_estimated.linear_velocity
         v = [v.x_val, v.y_val, v.z_val]
 
-        roll, pitch, yaw = LQR.quat2rpy(q)
+        roll, pitch, _ = LQR.quat2rpy(q)
 
         cr = math.cos(roll)
         sr = math.sin(roll)
@@ -117,7 +118,7 @@ class LQR:
 
 
 
-    def computeControl(self, state, prev_accel_cmd):
+    def computeControl(self, t, state, prev_accel_cmd):
         p = state.kinematics_estimated.position
         p = [p.x_val, p.y_val, p.z_val]
 
@@ -127,7 +128,7 @@ class LQR:
         v = state.kinematics_estimated.linear_velocity
         v = [v.x_val, v.y_val, v.z_val]
 
-        roll, pitch, yaw = LQR.quat2rpy(q)
+        roll, pitch, _ = LQR.quat2rpy(q)
 
         cr = math.cos(roll)
         sr = math.sin(roll)
@@ -141,13 +142,17 @@ class LQR:
         x = LQR.set_state(p,q,v)
         x = LQR.ned2xyz(x)
 
+        x0, u0 = self.traj_generator.compute(t, None)
 
         if time.time()-self.prev_gain_time > self.update_gain_period:
             self.updateGains(state, prev_accel_cmd)
             self.prev_gain_time = time.time()
 
+        u = np.zeros((4,1))
 
-        u = self.__computeControl(x)
+        # Compute the optimal control step
+        u = u0 - np.matmul(self.K,(x-x0))
+
 
         #print("command: " + str(u.T))
 
@@ -156,35 +161,40 @@ class LQR:
         #print("vel: " + str(v))
         #print("orien: " + str([roll, pitch, yaw]))
 
-        omega,c = LQR.get_command(u)
+        tmp = u[0,0] #np.copy(u[0,0])
+        u[0,0] = u[1,0]
+        u[1,0] = tmp
+        u[2,0] = -u[2,0]
 
-        tmp = omega[0,0]
-        omega[0,0] = omega[1,0]
-        omega[1,0] = tmp
-        omega[2,0] = -omega[2,0]
+        u[3,0] = abs(u[3,0])*self.mass / self.max_thrust
 
-        thrust = abs(c[0,0])*self.mass
+        u[0:3] = R*u[0:3]
 
-        rpydot = R*omega
-        throttle = thrust / self.max_thrust
+        u[1,0] = -u[1,0]
+        u[2,0] = -u[2,0]
 
-        roll_rate = rpydot[0,0]
-        pitch_rate = rpydot[1,0]
-        yaw_rate = rpydot[2,0]  
+        tmp = x0[0,0]
+        x0[0,0] = x0[1,0]
+        x0[1,0] = tmp
+        x0[2,0] = -x0[2,0]
 
-        return roll_rate, -pitch_rate, -yaw_rate, throttle
+        tmp = x0[4,0]
+        x0[4,0] = x0[5,0]
+        x0[5,0] = tmp
+        x0[6,0] = -x0[6,0]
+
+        tmp = x0[7,0]
+        x0[7,0] = x0[8,0]
+        x0[8,0] = tmp
+        x0[9,0] = -x0[9,0]
+
+        tmp = u0[0,0]
+        u0[0,0] = u0[1,0]
+        u0[1,0] = tmp
+        u0[2,0] = -u0[2,0]
 
 
-    def __computeControl(self, x):
-        assert np.shape(x) == (10,1), "The initial condition must be a 10x1 state vector"
-        
-        u = np.zeros((4,1))
-
-        # Compute the optimal control step
-        u = self.u0 - np.matmul(self.K,(x-self.x0))
-
-        return u
-
+        return x0, u0, u
 
 
     def thrust2world(self, state, throttle):
