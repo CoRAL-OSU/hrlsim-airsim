@@ -261,7 +261,6 @@ class Drone(mp.Process):
 
 
         with self.__client_lock:
-            self.__client.cancelLastTask(self.__drone_name)
             self.__client.hoverAsync(self.__drone_name)
 
         if success:
@@ -355,7 +354,6 @@ class Drone(mp.Process):
 
 
         with self.__client_lock:
-            self.__client.cancelLastTask(self.__drone_name)
             self.__client.hoverAsync(self.__drone_name)
 
         if success:
@@ -865,7 +863,7 @@ if __name__ == "__main__":
     else:
         drone_name = str(sys.argv[1])
     
-    client = airsim.MultirotorClient()
+    client = airsim.MultirotorClient(ip="192.168.1.96")
     lock = mp.Lock()
 
     drone = Drone("swarm", drone_name, client, lock)

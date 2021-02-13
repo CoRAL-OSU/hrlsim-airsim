@@ -27,9 +27,9 @@ from airsim_ros_cntrl.msg import MoveToLocationAction, MoveToLocationFeedback, M
 import drone
 
 
-swarm_list = list()
+team_list = list()
 
-class Swarm:
+class Team:
     class DroneInfo:
         name = None
         process = None
@@ -47,11 +47,11 @@ class Swarm:
             self.actions    = actions
 
 
-    def __init__(self, swarmName, settingsFilePath=None):       
-        self.client = airsim.MultirotorClient()
+    def __init__(self, teamName, settingsFilePath=None):       
+        self.client = airsim.MultirotorClient(ip="192.168.1.96")
         self.client.confirmConnection()
 
-        self.swarm_name = swarmName
+        self.team_name = teamName
         self.vehicle_list = self.getDroneListFromSettings(settingsFilePath)
         self.drone_procs = dict()
         self.drone_pubs  = dict()
@@ -61,17 +61,17 @@ class Swarm:
         self.lock = mp.Lock()
 
         for i in self.vehicle_list:
-            proc = drone.Drone(self.swarm_name, i, self.client, self.lock)
+            proc = drone.Drone(self.team_name, i, self.client, self.lock)
 
-            self.drones[i] = Swarm.DroneInfo(i, proc, None, None, None, None)
+            self.drones[i] = Team.DroneInfo(i, proc, None, None, None, None)
             self.drones[i].process.start()
 
-        rospy.init_node(self.swarm_name)
+        rospy.init_node(self.team_name)
         rospy.on_shutdown(self.shutdown)
 
         for i in self.vehicle_list:
 
-            prefix = "/" + self.swarm_name + "/" + i
+            prefix = "/" + self.team_name + "/" + i
 
             cmd_vel_topic_name = prefix + "/cmd/vel"
             cmd_pos_topic_name = prefix + "/cmd/pos"
@@ -294,8 +294,8 @@ class Swarm:
 
 
 def sigint_handler(sig, frame):
-    for swarm in swarm_list:
-        swarm.shutdown()
+    for team in team_list:
+        team.shutdown()
 
     sys.exit(0)
 
@@ -303,160 +303,49 @@ def sigint_handler(sig, frame):
 
 
 if __name__ == "__main__":
-    swarm = Swarm(swarmName="swarm")
-    swarm_list.append(swarm)
+    team = Team(teamName="team")
+    team_list.append(team)
 
     #time.sleep(8)
 
     print("TAKING OFF")
-    swarm.takeoff(False)
+    team.takeoff(False)
 
     time.sleep(5)
 
 
-    print("MOVING TO [3,3,-4]")
-    swarm.move_to_location(target=[3,3,-5], timeout=10, tolerance=0.5)
+    print("MOVING TO [3,3,-30]")
+    team.move_to_location(target=[3,3,-30], timeout=15, tolerance=0.5)
     time.sleep(5)
 
-    with swarm.lock:
-        #object_name = swarm.client.simListSceneObjects("Deer.*")[0]
-        object_name = "Stop_Sign_02_8"
+    with team.lock:
+        object_name = team.client.simListSceneObjects("Deer.*")[-1]
+        #object_name = "Stop_Sign_02_8"
 
     print("TRACKING OBJECT %s" % object_name)
-    swarm.track_object(object_name, 15, -7)
+    team.track_object(object_name, 150, -30)
 
     print("RESULT")
-    print(swarm.drones["Drone0"].actions["track"].get_result())
+    print(team.drones["Drone0"].actions["track"].get_result())
 
-    print("MOVING TO [0,0,-1]")
-    swarm.move_to_location(target=[0,0,-1], timeout=10, tolerance=0.5)
+    print("MOVING TO [4,4,-5]")
+    team.move_to_location(target=[4,4,-5], timeout=10, tolerance=0.5)
     time.sleep(5)
 
+    print("MOVING TO [-1,-1,-5]")
+    team.move_to_location(target=[-1,-1,-5], timeout=10, tolerance=0.5)
+    time.sleep(5)
+
+    print("MOVING TO [0,0,-1")
+    team.move_to_location(target=[0,0,-1], timeout=10, tolerance=0.5)
+
     print("LANDING")
-    swarm.land(True)
+    team.land(True)
 
     time.sleep(10)
 
 
     print("SHUTDOWN")
-    swarm.shutdown()
+    team.shutdown()
 
     sys.exit(0)
-
-    '''
-    with swarm.lock:
-        deer_list = swarm.client.simListSceneObjects("Deer.*")
-        deer = deer_list[-1]
-        print(deer_list)
-
-
-        pose = swarm.client.simGetObjectPose(deer)
-        print("Pose of Animal: " + str(pose))
-
-        poseD = swarm.client.simGetObjectPose("Drone0")
-        print("Pose of Drone: " + str(poseD))
-
-
-
-    print("MOVING TO ANIMAL")
-
-    with swarm.lock:
-        drone_pose = swarm.client.simGetObjectPose("Drone0")
-    drone_pose.position.z_val = 0
-
-    while airsim.Vector3r.distance_to(drone_pose.position,pose.position) > 1:
-        with swarm.lock:
-           pose = swarm.client.simGetObjectPose(deer)
-        pose.position.z_val = 0
-
-        pos_cmd.header.frame_id = "global"
-        pos_cmd.pose.position.x = pose.position.x_val
-        pos_cmd.pose.position.y = pose.position.y_val
-        pos_cmd.pose.position.z = poseD.position.z_val
-
-        swarm.cmd_pos(cmd_all=pos_cmd, wait=False)
-
-        time.sleep(0.1)
-
-    with swarm.lock:
-        pose = swarm.client.simGetObjectPose(deer)
-    
-    pos_cmd.header.frame_id = "global"
-    pos_cmd.pose.position.x = pose.position.x_val
-    pos_cmd.pose.position.y = pose.position.y_val
-    pos_cmd.pose.position.z = pose.position.z_val - 2
-
-    time.sleep(10)
-
-
-
-
-
-    with swarm.lock:
-        object_list = swarm.client.simListSceneObjects("Animal.*")
-        print(list)
-
-
-        pose = swarm.client.simGetObjectPose(object_list[-1])
-        print("Pose of Animal: " + str(pose))
-
-        poseD = swarm.client.simGetObjectPose("Drone0")
-        print("Pose of Drone: " + str(poseD))
-
-        pose.position.z_val -= 2
-
-        print("SETTING POSE OF DRONE TO ANIMAL")
-        swarm.client.simSetObjectPose("Drone0", pose)
-
-        poseD = swarm.client.simGetObjectPose("Drone0")
-        print(poseD)
-
-    #time.sleep(5)
-
-    vel_cmd = TwistStamped()
-    
-    print("CLIMB FOR 5 SECONDS AT 3 m/s")
-    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="global", lz=-1), dur=5)
-
-    #cmd_vel_list.append(drone.makeVelCmd(lz=-2.1), dur=5, drone_name="Drone0")
-    #swarm.cmd_vel(cmd=cmd_vel_list, frame="world")
-    #time.sleep(5)
-
-
-    
-    print("MOVE IN A QUARTER CIRCLE WITH RADIUS 2 m AT 3 m/s")
-    lin_vel = 0.25
-    radius = 2.0
-    angular_vel = lin_vel/radius
-    angular_change = math.pi/2.0
-    time_wait = angular_change/angular_vel
-    print("Time wait: %f" %time_wait)
-    print("Angular velocity: %f" %angular_vel)
-
-    time_start = time.time()
-    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="local", lx=lin_vel, az=angular_vel), dur=time_wait)
-    #time.sleep(time_wait)
-    time_taken = time.time() - time_start
-    print("Time taken: %f" %time_taken)
-    
-
-    #print("MOVE OUT FOR 5 m AT 2 m/s")
-    #swarm.cmd_pos(cmd_all=drone.makePosCmd(frame="body", y=-5, vel=2, timeout=10), wait=True)
-
-    #time.sleep(time_wait)
-    
-    #print("HOVERING")
-    #swarm.hover()
-    #time.sleep(3)
-
-    print("DESCENDING")
-    swarm.cmd_vel(cmd_all=drone.makeVelCmd(frame="local", lz=2), dur=5)
-    #time.sleep(5)
-
-
-    print("LANDING")
-    swarm.land(wait=True)
-    #time.sleep(10)
-
-    swarm.shutdown()
-    '''
