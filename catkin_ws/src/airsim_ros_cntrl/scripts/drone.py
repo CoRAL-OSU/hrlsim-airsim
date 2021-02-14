@@ -117,6 +117,8 @@ class Drone(mp.Process):
 
         self.__wait_timeout = 5.0 # SECONDS
 
+        self.__target_pose = None
+
     def __setup_ros(self):
         topic_prefix = "/" + self.__swarm_name + "/" + self.__drone_name
         cmd_vel_topic  = topic_prefix + "/cmd/vel"
@@ -212,6 +214,22 @@ class Drone(mp.Process):
     ###        ROS CALLBACKS            ###
     #######################################
 
+    def __target_pose_cb(self, msg):
+        """
+        Callback for the /cmd/pos ROS topic
+
+        @param msg (geometry_msgs.PoseStamped)
+        """
+
+        with self.__flag_lock:
+            self.__time_start = time.time()
+            self.__finished = False      
+            
+            self.__target_pose = airsim.MultirotorState()
+            self.__target_pose.kinematics_estimated.position.x_val = msg.pose.position.x
+            self.__target_pose.kinematics_estimated.position.y_val = msg.pose.position.y    
+            self.__target_pose.kinematics_estimated.position.z_val = msg.pose.position.z 
+
     def __move_to_location_action_cb(self, goal):
         success = True
 
@@ -277,8 +295,13 @@ class Drone(mp.Process):
         
         state = self.get_state()
 
-        with self.__client_lock:
-            target_pose = self.__client.simGetObjectPose(goal.object_name)
+        target_topic = self.__swarm_name + "/" + goal.object_name + "/"
+        rospy.Subscriber(target_topic + "pos", PoseStamped, callback=self.__target_pose_cb, queue_size=10)
+
+        while self.__target_pose == None and time.time() - start_time < goal.timeout:
+            time.sleep(0.05)
+        
+        target_pose = self.__target_pose.kinematics_estimated
 
         feedback_vector = calc_distance(target_pose.position, state.kinematics_estimated.position)
         feedback_magnitude = airsim.Vector3r.distance_to(state.kinematics_estimated.position, target_pose.position)
@@ -306,25 +329,8 @@ class Drone(mp.Process):
 
 
             if time.time() - prev_object_update_time > update_object_location_period:
-                with self.__client_lock:
-                    error_count = 0
-                    max_errors = 3
-                    error = Exception()
-
-                    for _ in range(0, max_errors):
-                        try:
-                            target_pose = self.__client.simGetObjectPose(goal.object_name)
-                            break
-
-                        except Exception as e:
-                            error = e
-                            error_count += 1
-
-                    if error_count == max_errors:
-                        print(self.__drone_name + " Error from track object callback: {0}" .format(error.message))
-                
+                target_pose = self.__target_pose.kinematics_estimated
                 prev_object_update_time = time.time()
-
 
                 x = target_pose.position.x_val + goal.offset[0]
                 y = target_pose.position.y_val + goal.offset[1]
@@ -352,6 +358,7 @@ class Drone(mp.Process):
 
             r.sleep()
 
+        self.__target_pose = None
 
         with self.__client_lock:
             self.__client.hoverAsync(self.__drone_name)
@@ -384,7 +391,8 @@ class Drone(mp.Process):
             state = self.get_state()
             pos = state.kinematics_estimated.position
             orien = state.kinematics_estimated.orientation
-            (_, _, yaw) = airsim.to_eularian_angles(orien)
+            q = [orien.w_val, orien.x_val, orien.y_val, orien.z_val]
+            (_, _, yaw) = lqr.LQR.quat2rpy(q)
 
             if cmd.header.frame_id == "local":               
                 # ASSUMING 0 PITCH AND ROLL
@@ -459,15 +467,16 @@ class Drone(mp.Process):
         Utilize AirSim's Python API to move the drone
         """
 
+        state = self.get_state()
+
         with self.__flag_lock:
             if type(cmd) != TwistStamped:
                 return False
 
             if cmd.header.frame_id == "local":
-                orientation = self.__vehicle_state.kinematics_estimated.orientation
-
-                #print(orientation)
-                (pitch, roll, yaw) = airsim.to_eularian_angles(orientation)
+                orien = state.kinematics_estimated.orientation
+                q = [orien.w_val, orien.x_val, orien.y_val, orien.z_val]
+                (_, _, yaw) = lqr.LQR.quat2rpy(q)
                 
                 # ASSUMING 0 PITCH AND ROLL
                 x = cmd.twist.linear.x*math.cos(yaw) - cmd.twist.linear.y*math.sin(yaw)

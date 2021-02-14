@@ -1,4 +1,4 @@
-#! /usr/bin/python2
+#! /usr/bin/python3
 
 import multiprocessing as mp
 import time
@@ -6,7 +6,7 @@ from math import cos, pi, sin
 from typing import List, Tuple
 from airsim.client import MultirotorClient
 from airsim.types import MultirotorState
-import rospy
+import rospy, os
 
 from std_srvs.srv import SetBool, SetBoolResponse
 from geometry_msgs.msg import TwistStamped, PoseStamped, Pose, Point, Quaternion, Twist, Vector3, AccelStamped, Accel
@@ -51,7 +51,6 @@ class Target(mp.Process):
         self.__path = path if path_type == "" else self.generate_path(path_type)
         self.__path_index = 0
 
-        self.__setup_ros()
         self.__vehicle_state = self.get_state()
 
     def __setup_ros(self):
@@ -63,6 +62,9 @@ class Target(mp.Process):
 
         wait_service_name       = topic_prefix + "/wait"
         shutdown_service_name   = topic_prefix + "/shutdown"
+
+        rospy.init_node(self.__drone_name)
+        rospy.on_shutdown(self.shutdown)
 
         self.__pos_pub = rospy.Publisher(pos_topic, PoseStamped, queue_size=10)
         self.__vel_pub = rospy.Publisher(vel_topic, TwistStamped, queue_size=10)
@@ -99,6 +101,9 @@ class Target(mp.Process):
         @param req (StdBoolRequest) Currently unused\n
         @return (StdBoolResponse) True on success
         """
+
+        print("TARGET SHUTDOWN REQUEST RECEIVED")
+
         with self.__flag_lock:
             self.__finished = False
             self.__shutdown = True
@@ -109,7 +114,26 @@ class Target(mp.Process):
 
             self.__finished = True
 
+
+            print("TARGET SHUTDOWN REQUEST HANDLED")
             return SetBoolResponse(True, "")
+
+    def shutdown(self):
+        """
+        Handle improper rospy shutdown. Uses Python API to disarm drone
+        """
+        with self.__flag_lock:
+            self.__finished = False
+            self.__shutdown = True
+
+            with self.__client_lock:
+                self.__client.armDisarm(False, vehicle_name=self.__drone_name)
+                self.__client.enableApiControl(False, vehicle_name=self.__drone_name)
+
+            self.__finished = True
+
+        print(self.__drone_name + " QUITTING")
+
 
     def get_client(self):
         return self.__client
@@ -161,21 +185,33 @@ class Target(mp.Process):
         return path
 
     def run(self):
+        self.__setup_ros()
+
+        time.sleep(8)
+
         rate = rospy.Rate(self.freq)
         
         prev_time = time.time()
+
+        with self.__client_lock:
+            self.__path_future = self.__client.moveToPositionAsync(*self.__path[self.__path_index], 2, vehicle_name=self.__drone_name)
+        self.__path_index += 1
+        if self.__path_index == len(self.__path):
+            self.__path_index = 0
 
         while not rospy.is_shutdown():
             with self.__flag_lock:
                 if self.__shutdown == True:
                     break
             
-            if self.__path_future.result is not None:
+            '''
+            if self.__path_future._result is not None:
                 with self.__client_lock:
                     self.__path_future = self.__client.moveToPositionAsync(*self.__path[self.__path_index], 5)
                 self.__path_index += 1
                 if self.__path_index == len(self.__path):
                     self.__path_index = 0
+            '''
 
             state = self.get_state().kinematics_estimated
 
@@ -184,7 +220,7 @@ class Target(mp.Process):
                 quat = Quaternion(state.orientation.x_val, state.orientation.y_val, state.orientation.z_val, state.orientation.w_val)
                 pose = Pose(point, quat)
                 header = Header()
-                header.stamp = rospy.get_time()
+                header.stamp = rospy.Time.now()
 
                 msg = PoseStamped(header, pose)
                 self.__pos_pub.publish(msg)
@@ -194,7 +230,7 @@ class Target(mp.Process):
                 angular = Vector3(state.angular_velocity.x_val, state.angular_velocity.y_val, state.angular_velocity.z_val)
                 twist = Twist(linear, angular)
                 header = Header()
-                header.stamp = rospy.get_time()
+                header.stamp = rospy.Time.now()
                 msg = TwistStamped(header, twist)
                 self.__vel_pub.publish(msg)
 
@@ -203,7 +239,7 @@ class Target(mp.Process):
                 angular = Vector3(state.angular_acceleration.x_val, state.angular_acceleration.y_val, state.angular_acceleration.z_val)
                 accel = Accel(linear, angular)
                 header = Header()
-                header.stamp = rospy.get_time()
+                header.stamp = rospy.Time.now()
                 msg = AccelStamped(header, accel)
                 self.__acc_pub.publish(msg)
 
@@ -215,4 +251,7 @@ class Target(mp.Process):
                 self.__looptime_pub.publish(msg)
 
             rate.sleep()
+
         self.__path_future.join()
+
+        print(self.__drone_name + " QUITTING")

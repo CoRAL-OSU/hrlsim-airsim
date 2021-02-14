@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 
 import time
 import multiprocessing as mp
@@ -24,8 +24,6 @@ from airsim_ros_cntrl.msg import MoveToLocationAction, MoveToLocationFeedback, M
 import drone
 
 
-team_list = list()
-
 class Team:
     class DroneInfo:
         name = None
@@ -44,18 +42,22 @@ class Team:
             self.actions    = actions
 
 
-    def __init__(self, teamName, vehicle_list, target, ip=""):       
-        self.client = airsim.MultirotorClient(ip)
-        self.client.confirmConnection()
+    def __init__(self, teamName, vehicle_list, target, client, lock):     
+        self.client = client
+        self.lock = lock
 
         self.team_name = teamName
+
         self.vehicle_list = vehicle_list
         self.drone_procs = dict()
         self.drone_pubs  = dict()
 
         self.drones = dict()
 
-        self.lock = mp.Lock()
+        self.target = Team.DroneInfo(target, None, None, None, None, None)
+
+        self.__shutdown = False
+
 
         for i in self.vehicle_list:
             proc = drone.Drone(self.team_name, i, self.client, self.lock)
@@ -105,8 +107,19 @@ class Team:
             actions['move_to_location'].wait_for_server()
 
             self.drones[i].pubs = pubs
-            self.drones[i].srvs = srvs
+            self.drones[i].services = srvs
             self.drones[i].actions = actions
+
+
+            target_prefix = "/" + self.team_name + "/" + self.target.name
+            #subs = dict()
+            #subs['pos'] = rospy.Subscriber(target_prefix+"/pos", PoseStamped, )
+
+            srvs = dict()
+            srvs['shutdown'] = rospy.ServiceProxy(target_prefix+"/shutdown", SetBool)
+
+            self.target.services = srvs
+
 
         print("SWARM CREATED WITH %d DRONES" %len(self.drones))
 
@@ -117,7 +130,7 @@ class Team:
     def takeoff(self, wait=False):
         for i in self.vehicle_list:
             try:
-                resp = self.drones[i].srvs['takeoff'](False)
+                resp = self.drones[i].services['takeoff'](False)
                 #return resp
             except rospy.ServiceException as e:
                 print("Service call failed: %s" %e)
@@ -128,7 +141,7 @@ class Team:
     def land(self, wait=False):
         for i in self.vehicle_list:
             try:
-                resp = self.drones[i].srvs['land'](False)
+                resp = self.drones[i].services['land'](False)
                 #return resp
             except rospy.ServiceException as e:
                 print("Service call failed: %s" %e)
@@ -141,7 +154,7 @@ class Team:
     def wait(self):
         for i in self.vehicle_list:
             try:
-                resp = self.drones[i].srvs['wait'](True)
+                resp = self.drones[i].services['wait'](True)
                 #return resp
             except rospy.ServiceException as e:
                 print("Service call failed: %s" %e)           
@@ -188,7 +201,7 @@ class Team:
     def move_to_location(self, target, timeout, tolerance):
          # Move to location in a circle configuration
 
-        l = 2
+        l = 4*math.pi/3
         
         delta_theta = 2*math.pi / len(self.vehicle_list)
         
@@ -201,8 +214,8 @@ class Team:
 
         for drone in self.vehicle_list:
             position = []
-            position.append(target[0] + r*math.cos(delta_theta*i))
-            position.append(target[1] + r*math.sin(delta_theta*i))
+            position.append(target[0] - r*math.cos(delta_theta*i))
+            position.append(target[1] - r*math.sin(delta_theta*i))
             position.append(target[2])
 
             yaw_frame = "local"
@@ -220,7 +233,7 @@ class Team:
     def track_object(self, object_name, timeout, z_offset):
         # Track object in a circle configuration
 
-        l = 2
+        l = 4*math.pi/3
         
         delta_theta = 2*math.pi / len(self.vehicle_list)
         
@@ -232,8 +245,8 @@ class Team:
         i = 0
 
         for drone in self.vehicle_list:
-            dx = r*math.cos(delta_theta*i)
-            dy = r*math.sin(delta_theta*i)
+            dx = -r*math.cos(delta_theta*i)
+            dy = -r*math.sin(delta_theta*i)
             dz = z_offset
             
             i += 1
@@ -255,71 +268,22 @@ class Team:
     def shutdown(self, shutdown=True):
         print("SHUTDOWN SWARM")
 
+        if self.__shutdown == True:
+            return
+
+        self.__shutdown = True
+
         if not rospy.is_shutdown():
             for i in self.vehicle_list:
                 try:
-                    resp = self.drones[i].srvs['shutdown'](True)
+                    resp = self.drones[i].services['shutdown'](True)
                     #return resp
                 except rospy.ServiceException as e:
                     print("Service call failed: %s" %e)       
 
-        for i in self.vehicle_list:
-            self.drones[i].process.join()    
+            try:
+                resp = self.target.services['shutdown'](True)
+            except rospy.ServiceException as e:
+                print("Service call failed: %s" %e)   
 
 
-def sigint_handler(sig, frame):
-    for team in team_list:
-        team.shutdown()
-
-    sys.exit(0)
-
-
-
-
-if __name__ == "__main__":
-    team = Team(teamName="team")
-    team_list.append(team)
-
-    #time.sleep(8)
-
-    print("TAKING OFF")
-    team.takeoff(False)
-
-    time.sleep(5)
-
-
-    print("MOVING TO [3,3,-30]")
-    team.move_to_location(target=[3,3,-30], timeout=15, tolerance=0.5)
-    time.sleep(5)
-
-    with team.lock:
-        object_name = team.client.simListSceneObjects("Deer.*")[-1]
-        #object_name = "Stop_Sign_02_8"
-
-    print("TRACKING OBJECT %s" % object_name)
-    team.track_object(object_name, 150, -30)
-
-    print("RESULT")
-    print(team.drones["Drone0"].actions["track"].get_result())
-
-    print("MOVING TO [4,4,-5]")
-    team.move_to_location(target=[4,4,-5], timeout=10, tolerance=0.5)
-    time.sleep(5)
-
-    print("MOVING TO [-1,-1,-5]")
-    team.move_to_location(target=[-1,-1,-5], timeout=10, tolerance=0.5)
-    time.sleep(5)
-
-    print("MOVING TO [0,0,-1")
-    team.move_to_location(target=[0,0,-1], timeout=10, tolerance=0.5)
-
-    print("LANDING")
-    team.land(True)
-
-    time.sleep(10)
-
-
-    print("SHUTDOWN")
-    team.shutdown()
-
-    sys.exit(0)
