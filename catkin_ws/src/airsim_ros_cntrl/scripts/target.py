@@ -3,9 +3,6 @@
 import multiprocessing as mp
 import time
 from math import cos, pi, sin
-from typing import List, Tuple
-from airsim.client import MultirotorClient
-from airsim.types import MultirotorState
 import rospy
 
 from std_srvs.srv import SetBool, SetBoolResponse
@@ -14,7 +11,7 @@ from std_msgs.msg import Header
 from std_msgs.msg import Float32
 
 class Target(mp.Process):
-    def __init__(self, swarmName: str, droneName: str, sim_client: MultirotorClient, client_lock: mp.Lock, path: List[Tuple[float, float, float]]=[], path_type=""):
+    def __init__(self, swarmName, droneName, sim_client, client_lock, path=[], path_type=""):
         """
         Initialize a Drone process, spinup the ROS node, and setup topics/services/action servers
         
@@ -55,6 +52,8 @@ class Target(mp.Process):
         self.__vehicle_state = self.get_state()
 
     def __setup_ros(self):
+        rospy.init_node(self.__drone_name)
+
         topic_prefix = "/" + self.__swarm_name + "/" + self.__drone_name
         vel_topic  = topic_prefix + "/vel"
         loop_time_topic = topic_prefix + "/looptime"
@@ -117,7 +116,7 @@ class Target(mp.Process):
     def get_name(self):
         return self.__drone_name
 
-    def get_state(self) -> MultirotorState:
+    def get_state(self):
         """
         Return the state of the drone. Refer to MultirotorClient.getMultirotorState for more information
 
@@ -144,7 +143,7 @@ class Target(mp.Process):
 
         return self.__vehicle_state
 
-    def generate_path(self, path_type: str, radius: int=5, height:float = -5) -> List[Tuple[float, float, float]]:
+    def generate_path(self, path_type, radius=5, height=-5):
         paths = {
             "circle": 12,
             "triangle": 3,
@@ -153,7 +152,7 @@ class Target(mp.Process):
         }
         points = paths[path_type]
         center = self.get_state().kinematics_estimated.position
-        path :List[Tuple[float, float, float]] = []
+        path = []
         for i in range(points):
             x = radius * cos(pi / points * i * 2) + center.x_val
             y = radius * sin(pi / points * i * 2) + center.y_val
@@ -172,7 +171,7 @@ class Target(mp.Process):
             
             if self.__path_future.result is not None:
                 with self.__client_lock:
-                    self.__path_future = self.__client.moveToPositionAsync(*self.__path[self.__path_index], 5)
+                    self.__path_future = self.__client.moveToPositionAsync(self.__path[self.__path_index][0], self.__path[self.__path_index][1], self.__path[self.__path_index][2], 5)
                 self.__path_index += 1
                 if self.__path_index == len(self.__path):
                     self.__path_index = 0
