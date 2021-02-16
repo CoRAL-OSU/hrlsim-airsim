@@ -65,9 +65,10 @@ class Team:
             self.drones[i] = Team.DroneInfo(i, proc, None, None, None, None)
             self.drones[i].process.start()
 
-        rospy.init_node(self.team_name)
-        rospy.on_shutdown(self.shutdown)
 
+        print("SWARM CREATED WITH %d DRONES" %len(self.drones))
+
+    def setup_ros(self):
         for i in self.vehicle_list:
 
             prefix = "/" + self.team_name + "/" + i
@@ -121,8 +122,6 @@ class Team:
             self.target.services = srvs
 
 
-        print("SWARM CREATED WITH %d DRONES" %len(self.drones))
-
     def getDroneList(self):
         return self.drones
 
@@ -152,12 +151,8 @@ class Team:
 
 
     def wait(self):
-        for i in self.vehicle_list:
-            try:
-                resp = self.drones[i].services['wait'](True)
-                #return resp
-            except rospy.ServiceException as e:
-                print("Service call failed: %s" %e)           
+        for drone in self.vehicle_list:
+            self.drones[drone].actions['track'].wait_for_result()         
 
 
     
@@ -201,7 +196,7 @@ class Team:
     def move_to_location(self, target, timeout, tolerance):
          # Move to location in a circle configuration
 
-        l = 4*math.pi/3
+        l = 8*math.pi/3
         
         delta_theta = 2*math.pi / len(self.vehicle_list)
         
@@ -233,7 +228,7 @@ class Team:
     def track_object(self, object_name, timeout, z_offset):
         # Track object in a circle configuration
 
-        l = 4*math.pi/3
+        l = 8*math.pi/3
         
         delta_theta = 2*math.pi / len(self.vehicle_list)
         
@@ -255,9 +250,6 @@ class Team:
             goal = TrackObjectGoal(object_name=object_name, timeout=timeout, offset=offset)
             self.drones[drone].actions['track'].send_goal(goal)       
 
-
-        for drone in self.vehicle_list:
-            self.drones[drone].actions['track'].wait_for_result()  
 
     '''
     def hover(self):
@@ -284,6 +276,7 @@ class Team:
             try:
                 resp = self.target.services['shutdown'](True)
             except rospy.ServiceException as e:
-                print("Service call failed: %s" %e)   
+                print("Service call failed: %s" %e) 
 
-
+        with self.lock:
+            self.client.cancelLastTask()

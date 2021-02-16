@@ -12,7 +12,7 @@ import rospy, actionlib
 
 import lqr
 
-from geometry_msgs.msg import TwistStamped, PoseStamped
+from geometry_msgs.msg import TwistStamped, PoseStamped, AccelStamped
 from airsim_ros_pkgs.srv import Takeoff, TakeoffResponse, Land, LandResponse
 
 from std_srvs.srv import SetBool, SetBoolResponse
@@ -117,7 +117,9 @@ class Drone(mp.Process):
 
         self.__wait_timeout = 5.0 # SECONDS
 
-        self.__target_pose = None
+        self.__target_pose = airsim.MultirotorState()
+        self.__target_ready = False
+
 
     def __setup_ros(self):
         topic_prefix = "/" + self.__swarm_name + "/" + self.__drone_name
@@ -206,6 +208,21 @@ class Drone(mp.Process):
             if error_count == max_errors:
                 print(self.__drone_name + " Error from getMultirotorState API call: {0}" .format(error.message))
 
+            for _ in range(0, max_errors):
+                try:
+                    pose = self.__client.simGetObjectPose(object_name=self.__drone_name)
+                    break
+
+                except Exception as e:
+                    error = e
+                    error_count += 1
+
+            if error_count == max_errors:
+                print(self.__drone_name + " Error from getMultirotorState API call: {0}" .format(error.message))
+
+            self.__vehicle_state.kinematics_estimated.position = pose.position
+            self.__vehicle_state.kinematics_estimated.orientation = pose.orientation
+
         return self.__vehicle_state
 
 
@@ -222,13 +239,21 @@ class Drone(mp.Process):
         """
 
         with self.__flag_lock:
-            self.__time_start = time.time()
-            self.__finished = False      
-            
-            self.__target_pose = airsim.MultirotorState()
-            self.__target_pose.kinematics_estimated.position.x_val = msg.pose.position.x
-            self.__target_pose.kinematics_estimated.position.y_val = msg.pose.position.y    
-            self.__target_pose.kinematics_estimated.position.z_val = msg.pose.position.z 
+            pos = msg.pose.position
+            self.__target_pose.kinematics_estimated.position = airsim.Vector3r(pos.x, pos.y, pos.z)
+            self.__target_ready = True
+
+    def __target_vel_cb(self, msg):
+        with self.__flag_lock:
+            vel = msg.twist.linear
+            self.__target_pose.kinematics_estimated.linear_velocity = airsim.Vector3r(vel.x, vel.y, vel.z)
+            self.__target_ready = True
+
+    def __target_acc_cb(self, msg):
+        with self.__flag_lock:
+            accel = msg.accel.linear
+            self.__target_pose.kinematics_estimated.linear_acceleration = airsim.Vector3r(accel.x, accel.y, accel.z)
+            self.__target_ready = True
 
     def __move_to_location_action_cb(self, goal):
         success = True
@@ -296,9 +321,12 @@ class Drone(mp.Process):
         state = self.get_state()
 
         target_topic = self.__swarm_name + "/" + goal.object_name + "/"
-        rospy.Subscriber(target_topic + "pos", PoseStamped, callback=self.__target_pose_cb, queue_size=10)
 
-        while self.__target_pose == None and time.time() - start_time < goal.timeout:
+        target_pos_sub = rospy.Subscriber(target_topic + "pos", PoseStamped, callback=self.__target_pose_cb, queue_size=10)
+        target_vel_sub = rospy.Subscriber(target_topic + "vel", TwistStamped, callback=self.__target_vel_cb, queue_size=10)
+        target_acc_sub = rospy.Subscriber(target_topic + "acc", AccelStamped, callback=self.__target_acc_cb, queue_size=10)
+
+        while self.__target_ready == False and time.time() - start_time < goal.timeout:
             time.sleep(0.05)
         
         target_pose = self.__target_pose.kinematics_estimated
@@ -316,6 +344,8 @@ class Drone(mp.Process):
         prev_object_update_time = 0
 
         start_pos = state.kinematics_estimated.position.to_numpy_array()
+        start_time = time.time()
+
 
         while time.time() - start_time < goal.timeout:
             if self.__track_action.is_preempt_requested():
@@ -332,21 +362,33 @@ class Drone(mp.Process):
                 target_pose = self.__target_pose.kinematics_estimated
                 prev_object_update_time = time.time()
 
-                x = target_pose.position.x_val + goal.offset[0]
-                y = target_pose.position.y_val + goal.offset[1]
-                z = target_pose.position.z_val + goal.offset[2]
+
+            
+                bias = np.array([target_pose.linear_velocity.x_val*update_object_location_period + 0.5*update_object_location_period**2*target_pose.linear_acceleration.x_val,
+                                    target_pose.linear_velocity.y_val*update_object_location_period + 0.5*update_object_location_period**2*target_pose.linear_acceleration.y_val,
+                                    target_pose.linear_velocity.z_val*update_object_location_period + 0.5*update_object_location_period**2*target_pose.linear_acceleration.z_val])
+
+                bias *= 10
+
+                x = target_pose.position.x_val + goal.offset[0] + bias[0]
+                y = target_pose.position.y_val + goal.offset[1] + bias[1]
+                z = target_pose.position.z_val + goal.offset[2] + bias[2]
 
                 waypoints = np.array([start_pos, [x,y,z]]).T
                 self.__controller.set_goals(waypoints)
 
 
-
+            #self.moveByLQR(time.time()-prev_object_update_time, state)
             self.moveByLQR(time.time()-start_time, state)
 
 
             state = self.get_state()
-            feedback_vector = calc_distance(target_pose.position, state.kinematics_estimated.position)
-            feedback_magnitude = airsim.Vector3r.distance_to(state.kinematics_estimated.position, target_pose.position)
+
+            feedback_vector = airsim.Vector3r(x, y, z)
+            feedback_vector = calc_distance(feedback_vector, state.kinematics_estimated.position)
+
+
+            feedback_magnitude = airsim.Vector3r.distance_to(feedback_vector, state.kinematics_estimated.position)
             
             feedback.dist = []
             feedback.dist.append(feedback_vector.x_val)
@@ -358,7 +400,10 @@ class Drone(mp.Process):
 
             r.sleep()
 
-        self.__target_pose = None
+        self.__target_ready = False
+        target_pos_sub.unregister()
+        target_vel_sub.unregister()
+        target_acc_sub.unregister()
 
         with self.__client_lock:
             self.__client.hoverAsync(self.__drone_name)

@@ -27,7 +27,7 @@ class MinimumSnap:
         
         d = waypoints[:,1:] - waypoints[:,0:-1]
 
-        self.d0 = 0.65*np.sqrt(d[0,:]*d[0,:] + d[1,:]*d[1,:] + d[2,:]*d[2,:])
+        self.d0 = 0.5*np.sqrt(d[0,:]*d[0,:] + d[1,:]*d[1,:] + d[2,:]*d[2,:])
 
         self.traj_time = np.append(0, np.cumsum(self.d0))
         self.waypoints0 = np.copy(waypoints)
@@ -122,7 +122,7 @@ class MinimumSnap:
 
         if t == 0:
             desired_state.pos = self.waypoints0[:,0]
-            desired_state.vel = np.zeros((3,1))
+            desired_state.vel = state[7:9,0] #np.zeros((3,1))
             desired_state.acc = np.zeros((3,1))
         else:
             scale = t/self.d0[t_index-1]

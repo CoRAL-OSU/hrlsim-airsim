@@ -125,13 +125,7 @@ class Target(mp.Process):
         Handle improper rospy shutdown. Uses Python API to disarm drone
         """
         with self.__flag_lock:
-            self.__finished = False
             self.__shutdown = True
-
-            with self.__client_lock:
-                self.__client.armDisarm(False, vehicle_name=self.__drone_name)
-                self.__client.enableApiControl(False, vehicle_name=self.__drone_name)
-
             self.__finished = True
 
         print(self.__drone_name + " QUITTING")
@@ -168,7 +162,19 @@ class Target(mp.Process):
             if error_count == max_errors:
                 print(self.__drone_name + " Error from getMultirotorState API call: {0}" .format(error.message))
 
-        return self.__vehicle_state
+            for _ in range(0, max_errors):
+                try:
+                    pose = self.__client.simGetObjectPose(object_name=self.__drone_name)
+                    break
+
+                except Exception as e:
+                    error = e
+                    error_count += 1
+
+            if error_count == max_errors:
+                print(self.__drone_name + " Error from getMultirotorState API call: {0}" .format(error.message))
+
+        return pose, self.__vehicle_state
 
     def generate_path(self, path_type, radius=5, height=-5):
         paths = {
@@ -196,7 +202,7 @@ class Target(mp.Process):
         prev_time = time.time()
 
         with self.__client_lock:
-            self.__path_future = self.__client.moveToPositionAsync(*self.__path[self.__path_index], 2, vehicle_name=self.__drone_name)
+            self.__path_future = self.__client.moveToPositionAsync(*self.__path[self.__path_index], 2, 20, vehicle_name=self.__drone_name)
         self.__path_index += 1
         if self.__path_index == len(self.__path):
             self.__path_index = 0
@@ -215,11 +221,12 @@ class Target(mp.Process):
                     self.__path_index = 0
             '''
 
-            state = self.get_state().kinematics_estimated
+            pose, state = self.get_state()
+            state = state.kinematics_estimated
 
             if self.__pos_pub:
-                point = Point(state.position.x_val, state.position.y_val, state.position.z_val)
-                quat = Quaternion(state.orientation.x_val, state.orientation.y_val, state.orientation.z_val, state.orientation.w_val)
+                point = Point(pose.position.x_val, pose.position.y_val, pose.position.z_val)
+                quat = Quaternion(pose.orientation.x_val, pose.orientation.y_val, pose.orientation.z_val, pose.orientation.w_val)
                 pose = Pose(point, quat)
                 header = Header()
                 header.stamp = rospy.Time.now()
@@ -254,6 +261,6 @@ class Target(mp.Process):
 
             rate.sleep()
 
-        self.__path_future.join()
+        #self.__path_future.join()
 
         print(self.__drone_name + " QUITTING")
