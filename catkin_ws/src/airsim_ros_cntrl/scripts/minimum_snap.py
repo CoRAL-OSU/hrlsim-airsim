@@ -150,8 +150,6 @@ class MinimumSnap:
         else:
             desired_state.yaw = cyaw #-math.atan2(dy,dx)+math.pi/2
 
-        print(desired_state.yaw - cyaw)
-
         desired_state.yawdot = 0
 
         x0 = np.zeros((10,1))

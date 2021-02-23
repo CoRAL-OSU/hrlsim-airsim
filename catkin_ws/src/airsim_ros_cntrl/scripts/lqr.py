@@ -49,9 +49,6 @@ class LQR:
         fv[0] = fv[1]
         fv[1] = tmp
         fv[2] = -fv[2]
-
-        print("waypoints: " + str(waypoints[1,:]))
-        print("fv: " + str(fv))
         
         self.traj_generator = minimum_snap.MinimumSnap(waypoints, fv)
 
