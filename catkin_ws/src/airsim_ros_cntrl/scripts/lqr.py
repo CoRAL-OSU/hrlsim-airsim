@@ -37,15 +37,23 @@ class LQR:
             assert len(R) == 4, "R must be a list of length 4"
             self.R = np.diag(R)
 
-    def set_goals(self, waypoints):
+    def set_goals(self, waypoints, fv):
 
         tmp = np.copy(waypoints[0,:])
 
         waypoints[0,:] = waypoints[1,:]
         waypoints[1,:] = tmp
         waypoints[2,:] = -waypoints[2,:]
+
+        tmp = np.copy(fv[0])
+        fv[0] = fv[1]
+        fv[1] = tmp
+        fv[2] = -fv[2]
+
+        print("waypoints: " + str(waypoints[1,:]))
+        print("fv: " + str(fv))
         
-        self.traj_generator = minimum_snap.MinimumSnap(waypoints)
+        self.traj_generator = minimum_snap.MinimumSnap(waypoints, fv)
 
 
     def updateGains(self, x, rpydot, prev_accel_cmd):

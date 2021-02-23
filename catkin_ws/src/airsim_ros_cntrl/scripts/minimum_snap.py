@@ -21,13 +21,15 @@ class DesiredState:
 
 
 class MinimumSnap:
-    def __init__(self, waypoints):
+    def __init__(self, waypoints, fv):
         self.t = time.time()
         self.state = np.zeros((10,1))
         
         d = waypoints[:,1:] - waypoints[:,0:-1]
 
-        self.d0 = 0.5*np.sqrt(d[0,:]*d[0,:] + d[1,:]*d[1,:] + d[2,:]*d[2,:])
+
+        avg_spd = 2#min(1,np.linalg.norm(fv))
+        self.d0 = np.sqrt(d[0,:]*d[0,:] + d[1,:]*d[1,:] + d[2,:]*d[2,:])/avg_spd
 
         self.traj_time = np.append(0, np.cumsum(self.d0))
         self.waypoints0 = np.copy(waypoints)
@@ -35,27 +37,14 @@ class MinimumSnap:
         N = np.size(waypoints, 1)-1
 
         self.p_c = np.zeros((7,8))
+
         self.p_c[0,:] = np.ones((1,8))
-
-        p = np.poly1d(self.p_c[0,:])
-
-        p_d1 = np.polyder(p)
-        self.p_c[1,1:] = np.flip(p_d1.c)
-
-        p_d2 = np.polyder(p_d1)
-        self.p_c[2,2:] = np.flip(p_d2.c)
-
-        p_d3 = np.polyder(p_d2)
-        self.p_c[3,3:] = np.flip(p_d3.c)
-
-        p_d4 = np.polyder(p_d3)
-        self.p_c[4,4:] = np.flip(p_d4.c)
-
-        p_d5 = np.polyder(p_d4)
-        self.p_c[5,5:] = np.flip(p_d5.c)
-
-        p_d6 = np.polyder(p_d5)
-        self.p_c[6,6:] = np.flip(p_d6.c)
+        self.p_c[1,:] = np.array([0,1,2,3,4,5,6,7])
+        self.p_c[2,:] = np.array([0,0,2,6,12,20,30,42])
+        self.p_c[3,:] = np.array([0,0,0,6,24,60,120,210])
+        self.p_c[4,:] = np.array([0,0,0,0,24,120,360,840])
+        self.p_c[5,:] = np.array([0,0,0,0,0,120,720,2520])
+        self.p_c[6,:] = np.array([0,0,0,0,0,0,720,5040])
 
         head_c = np.diag(self.p_c)
         head_c = np.diag(head_c)
@@ -90,6 +79,10 @@ class MinimumSnap:
         A[8*N-2, np.arange(0,8)+8*(N-1)] = self.p_c[2,:]
         A[8*N-1, np.arange(0,8)+8*(N-1)] = self.p_c[3,:]
 
+
+        #s = 0.5*fv*self.d0[0]
+        #for i in range(0,6):
+        #    b[8*N-6+i, 0:3] = s[0:3]*(i+1)
 
         x1 = np.matmul(np.linalg.inv(A), b[:,0])    
         x2 = np.matmul(np.linalg.inv(A), b[:,1])
@@ -155,7 +148,9 @@ class MinimumSnap:
         if dx**2 + dy**2 < 1:
             desired_state.yaw = cyaw # 0
         else:
-            desired_state.yaw = cyaw #-math.atan2(dy,dx)
+            desired_state.yaw = cyaw #-math.atan2(dy,dx)+math.pi/2
+
+        print(desired_state.yaw - cyaw)
 
         desired_state.yawdot = 0
 

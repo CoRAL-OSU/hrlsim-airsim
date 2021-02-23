@@ -47,15 +47,24 @@ def shutdown():
     sys.exit(0)
 
 if __name__ == "__main__":
-    client = airsim.MultirotorClient(ip="192.168.1.96")
+    #ip = "" 
+    ip = "192.168.1.96"
+    
+    client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
 
     lock = mp.Lock()
 
-    remote_computer = True
+    # COMMAND TO CREAT WIND VECTOR -> airsim.Vector3r(n, e, d) [m/s in world frame]
+    wind = airsim.Vector3r(0, 0, 0)  
+    
+    # SET WIND
+    client.simSetWind(wind)
 
-    if remote_computer:
-        vehicle_list = ["Drone0", "Drone1", "Drone2", "Target0", "Drone3", "Drone4", "Target1"]
+
+    if ip != "":
+        vehicle_list = ["Drone0", "Target0"]
+        #vehicle_list = ["Drone0", "Drone1", "Drone2", "Target0", "Drone3", "Drone4", "Target1"]
     else:
         vehicle_list = getDroneListFromSettings()
     
@@ -89,19 +98,19 @@ if __name__ == "__main__":
 
     print("TAKING OFF")
     team_list[0].takeoff(False)
-    team_list[1].takeoff(False)
+    #team_list[1].takeoff(False)
     time.sleep(5)
 
 
     print("BEGIN TRACKING")
     team_list[0].track_object("Target0", 25, -10)
-    team_list[1].track_object("Target1", 25, -10)
+    #team_list[1].track_object("Target1", 25, -10)
     
     for i in team_list:
         i.wait()
 
     team_list[0].track_object("Target0", 5, 0)
-    team_list[1].track_object("Target1", 5, 0)
+    #team_list[1].track_object("Target1", 5, 0)
     
     for i in team_list:
         i.wait()
@@ -117,10 +126,10 @@ if __name__ == "__main__":
 
     print("LANDING")
     team_list[0].land(False)
-    team_list[1].land(False)
+    #team_list[1].land(False)
 
     time.sleep(5)
 
     print("SHUTDOWN")
     team_list[0].shutdown()
-    team_list[1].shutdown()
+    #team_list[1].shutdown()

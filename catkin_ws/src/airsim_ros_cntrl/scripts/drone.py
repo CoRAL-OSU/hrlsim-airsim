@@ -3,6 +3,7 @@
 import time
 import multiprocessing as mp
 import numpy as np
+import scipy as sp
 import math
 import sys, os
 import matplotlib.pyplot as plt
@@ -346,6 +347,10 @@ class Drone(mp.Process):
         start_pos = state.kinematics_estimated.position.to_numpy_array()
         start_time = time.time()
 
+        #window_secs = 1
+        #waypoints = np.zeros((int(window_secs/update_object_location_period+1),3))
+        #waypoints[-1, 0:3] = start_pos
+
 
         while time.time() - start_time < goal.timeout:
             if self.__track_action.is_preempt_requested():
@@ -368,18 +373,25 @@ class Drone(mp.Process):
                                     target_pose.linear_velocity.y_val*update_object_location_period + 0.5*update_object_location_period**2*target_pose.linear_acceleration.y_val,
                                     target_pose.linear_velocity.z_val*update_object_location_period + 0.5*update_object_location_period**2*target_pose.linear_acceleration.z_val])
 
-                bias *= 10
+                bias *= 1#*target_pose.linear_velocity.get_length()
 
                 x = target_pose.position.x_val + goal.offset[0] + bias[0]
                 y = target_pose.position.y_val + goal.offset[1] + bias[1]
                 z = target_pose.position.z_val + goal.offset[2] + bias[2]
 
-                waypoints = np.array([start_pos, [x,y,z]]).T
-                self.__controller.set_goals(waypoints)
+                fv = target_pose.linear_velocity.to_numpy_array()
+
+                #waypoints[-1, 0:3] = pos
+                #waypoints = sp.ndimage.interpolation.shift(waypoints, -1, cval=0)
+                #waypoints[-1, 0:3] = np.array([x,y,z])
+
+                waypoints = np.array([start_pos, [x,y,z]])
+                self.__controller.set_goals(waypoints.T, fv)
 
 
             #self.moveByLQR(time.time()-prev_object_update_time, state)
-            self.moveByLQR(time.time()-start_time, state)
+            t = time.time()-start_time #min(time.time()-start_time, window_secs)
+            self.moveByLQR(t, state)
 
 
             state = self.get_state()
