@@ -27,9 +27,6 @@ from airsim_ros_cntrl.msg import TrackObjectAction, TrackObjectFeedback, TrackOb
 from airsim_ros_cntrl.msg import MoveToLocationAction, MoveToLocationFeedback, MoveToLocationResult, MoveToLocationGoal
 
 
-from pycallgraph import PyCallGraph
-from pycallgraph.output import GraphvizOutput
-
 def makeVelCmd(frame="local", lx=0, ly=0, lz=0, ax=0, ay=0, az=0):
     vel_cmd = TwistStamped()
     vel_cmd.header.frame_id = frame
@@ -473,7 +470,7 @@ class Drone(mp.Process):
 
             r = rospy.Rate(20)
 
-            self.__controller.set_goals(waypoints)
+            self.__controller.set_goals(waypoints, fv=np.array([0,0,0]))
 
             while time.time() - begin_time < timeout and error > self.dstep/2:
 

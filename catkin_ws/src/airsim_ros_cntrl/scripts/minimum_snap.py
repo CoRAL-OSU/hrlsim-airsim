@@ -199,7 +199,7 @@ if __name__ == "__main__":
 
     print(waypoints.shape)
 
-    traj_generator = MinimumSnap(waypoints)
+    traj_generator = MinimumSnap(waypoints, fv=np.array([0,0,0]))
 
 
     t = np.linspace(0,50,1000)
