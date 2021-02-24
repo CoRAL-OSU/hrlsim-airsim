@@ -269,7 +269,7 @@ class Drone(mp.Process):
         feedback.error = airsim.Vector3r.distance_to(target, pos)
 
         waypoints = np.array([pos.to_numpy_array(), target.to_numpy_array()]).T
-        self.__controller.set_goals(waypoints)
+        self.__controller.set_goals(waypoints, np.array([0,0,0]))
 
         start_time = time.time()
 
@@ -282,14 +282,11 @@ class Drone(mp.Process):
                 success = False
                 break      
 
+            state = self.get_state()
             pos = state.kinematics_estimated.position            
 
+            self.moveByLQR(time.time()-start_time, state)      
 
-            self.moveByLQR(time.time()-start_time, state)       # SLOW CALL
-
-
-            state = self.get_state()
-            pos = state.kinematics_estimated.position
 
             feedback.location = []
             feedback.location.append(pos.x_val)
@@ -338,8 +335,6 @@ class Drone(mp.Process):
         r = rospy.Rate(20)
 
         feedback = TrackObjectFeedback()
-
-        print(self.__drone_name + " ENTERING WHILE LOOP")
 
         update_object_location_period = 0.1     # seconds
         prev_object_update_time = 0

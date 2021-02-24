@@ -9,6 +9,8 @@ import math
 import airsim
 import rospy, actionlib
 
+from actionlib_msgs.msg import GoalStatus
+
 from geometry_msgs.msg import TwistStamped, PoseStamped
 from airsim_ros_pkgs.srv import Takeoff, TakeoffResponse, Land, LandResponse
 
@@ -54,7 +56,10 @@ class Team:
 
         self.drones = dict()
 
-        self.target = Team.DroneInfo(target, None, None, None, None, None)
+        if target != None:
+            self.target = Team.DroneInfo(target, None, None, None, None, None)
+        else:
+            self.target = None
 
         self.__shutdown = False
 
@@ -112,14 +117,15 @@ class Team:
             self.drones[i].actions = actions
 
 
-            target_prefix = "/" + self.team_name + "/" + self.target.name
-            #subs = dict()
-            #subs['pos'] = rospy.Subscriber(target_prefix+"/pos", PoseStamped, )
+            if self.target != None:
+                target_prefix = "/" + self.team_name + "/" + self.target.name
+            
+                #subs = dict()
+                #subs['pos'] = rospy.Subscriber(target_prefix+"/pos", PoseStamped, )
 
-            srvs = dict()
-            srvs['shutdown'] = rospy.ServiceProxy(target_prefix+"/shutdown", SetBool)
-
-            self.target.services = srvs
+                srvs = dict()
+                srvs['shutdown'] = rospy.ServiceProxy(target_prefix+"/shutdown", SetBool)
+                self.target.services = srvs
 
 
     def getDroneList(self):
@@ -152,7 +158,9 @@ class Team:
 
     def wait(self):
         for drone in self.vehicle_list:
-            self.drones[drone].actions['track'].wait_for_result()         
+            for action in self.drones[drone].actions.values():
+                if action.get_state() != GoalStatus.LOST:
+                    action.wait_for_result()      
 
 
     
@@ -274,7 +282,8 @@ class Team:
                     print("Service call failed: %s" %e)       
 
             try:
-                resp = self.target.services['shutdown'](True)
+                if self.target != None:
+                    resp = self.target.services['shutdown'](True)
             except rospy.ServiceException as e:
                 print("Service call failed: %s" %e) 
 
