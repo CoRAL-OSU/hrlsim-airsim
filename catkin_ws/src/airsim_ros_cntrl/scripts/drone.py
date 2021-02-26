@@ -34,37 +34,39 @@ class Drone(mp.Process):
     ) -> None:
         mp.Process.__init__(self)
 
-        self.__swarm_name = swarmName
-        self.__drone_name = droneName
+        self.swarm_name = swarmName
+        self.drone_name = droneName
 
-        self.__shutdown = False
+        self._shutdown = False
         self.__service_timeout = 5.0  # SECONDS
 
-        self.__client_lock = client_lock
-        self.__flag_lock = mp.Lock()
+        self.client_lock = client_lock
+        self.flag_lock = mp.Lock()
 
         self.freq = 20
 
-        with self.__client_lock:
-            self.__client = sim_client
-            self.__client.confirmConnection()
-            self.__client.enableApiControl(True, vehicle_name=self.__drone_name)
-            self.__client.armDisarm(True, vehicle_name=self.__drone_name)
+        self.cmd = None
+
+        with self.client_lock:
+            self.client = sim_client
+            self.client.confirmConnection()
+            self.client.enableApiControl(True, vehicle_name=self.drone_name)
+            self.client.armDisarm(True, vehicle_name=self.drone_name)
 
         self.__vehicle_state = self.get_state()
 
-    def __setup_ros(self) -> None:
-        rospy.init_node(self.__drone_name)
-        self.__topic_prefix = "/" + self.__swarm_name + "/" + self.__drone_name
-        loop_time_topic = self.__topic_prefix + "/looptime"
+    def setup_ros(self) -> None:
+        rospy.init_node(self.drone_name)
+        self.topic_prefix = "/" + self.swarm_name + "/" + self.drone_name
+        loop_time_topic = self.topic_prefix + "/looptime"
 
-        takeoff_service_name = self.__topic_prefix + "/takeoff"
-        land_service_name = self.__topic_prefix + "/land"
-        shutdown_service_name = self.__topic_prefix + "/shutdown"
+        takeoff_service_name = self.topic_prefix + "/takeoff"
+        land_service_name = self.topic_prefix + "/land"
+        shutdown_service_name = self.topic_prefix + "/shutdown"
 
         rospy.on_shutdown(self.shutdown)
 
-        self.__looptime_pub = rospy.Publisher(loop_time_topic, Float32, queue_size=10)
+        self.looptime_pub = rospy.Publisher(loop_time_topic, Float32, queue_size=10)
         rospy.Service(shutdown_service_name, SetBool, self.__handle_shutdown)
         rospy.Service(takeoff_service_name, Takeoff, self.__handle_takeoff)
         rospy.Service(land_service_name, Land, self.__handle_land)
@@ -79,15 +81,13 @@ class Drone(mp.Process):
 
         print("TARGET SHUTDOWN REQUEST RECEIVED")
 
-        with self.__flag_lock:
-            self.__finished = False
-            self.__shutdown = True
+        with self.flag_lock:
+            self._shutdown = True
 
-            with self.__client_lock:
-                self.__client.armDisarm(False, vehicle_name=self.__drone_name)
-                self.__client.enableApiControl(False, vehicle_name=self.__drone_name)
+            with self.client_lock:
+                self.client.armDisarm(False, vehicle_name=self.drone_name)
+                self.client.enableApiControl(False, vehicle_name=self.drone_name)
 
-            self.__finished = True
 
             print("TARGET SHUTDOWN REQUEST HANDLED")
             return SetBoolResponse(True, "")
@@ -100,20 +100,17 @@ class Drone(mp.Process):
         @return (TakeoffResponse) True on successfuly takeoff. Else false.
         """
 
-        with self.__flag_lock:
-            self.__finished = False
-            self.__cmd = None
+        with self.flag_lock:
+            self.cmd = None
 
             if self.get_state().landed_state == LandedState.Flying:
-                self.__finished = True
                 return TakeoffResponse(True)
 
             time_start = time.time()
-            with self.__client_lock:
-                self.__client.takeoffAsync(vehicle_name=self.__drone_name)
+            with self.client_lock:
+                self.client.takeoffAsync(vehicle_name=self.drone_name)
 
             if req.waitOnLastTask == False:
-                self.__finished = True
                 return TakeoffResponse(False)
 
             while (
@@ -121,8 +118,6 @@ class Drone(mp.Process):
                 and time.time() - time_start < self.__service_timeout
             ):
                 time.sleep(0.05)
-
-            self.__finished = True
 
             if self.__vehicle_state.landed_state == LandedState.Flying:
                 return TakeoffResponse(True)
@@ -137,20 +132,17 @@ class Drone(mp.Process):
         @return (LandResponse) True of succesfully landed. Else false
         """
 
-        with self.__flag_lock:
-            self.__finished = False
-            self.__cmd = None
+        with self.flag_lock:
+            self.cmd = None
 
             if self.get_state().landed_state == LandedState.Landed:
-                self.__finished = True
                 return LandResponse(True)
 
             time_start = time.time()
-            with self.__client_lock:
-                self.__client.landAsync(vehicle_name=self.__drone_name)
+            with self.client_lock:
+                self.client.landAsync(vehicle_name=self.drone_name)
 
             if req.waitOnLastTask == False:
-                self.__finished = True
                 return LandResponse(False)
 
             while (
@@ -159,22 +151,20 @@ class Drone(mp.Process):
             ):
                 time.sleep(0.05)
 
-            self.__finished = True
 
             if self.__vehicle_state.landed_state == LandedState.Landed:
                 return LandResponse(True)
             else:
                 return LandResponse(False)
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         """
         Handle improper rospy shutdown. Uses Python API to disarm drone
         """
-        with self.__flag_lock:
-            self.__shutdown = True
-            self.__finished = True
+        with self.flag_lock:
+            self._shutdown = True
 
-        print(self.__drone_name + " QUITTING")
+        print(self.drone_name + " QUITTING")
 
     def get_state(self) -> MultirotorState:
         """
@@ -183,7 +173,7 @@ class Drone(mp.Process):
         @return (MultirotorState)
         """
 
-        with self.__client_lock:
+        with self.client_lock:
             # Try to get state thrice
             error_count = 0
             max_errors = 3
@@ -191,8 +181,8 @@ class Drone(mp.Process):
 
             for _ in range(0, max_errors):
                 try:
-                    self.__vehicle_state = self.__client.getMultirotorState(
-                        vehicle_name=self.__drone_name
+                    self.__vehicle_state = self.client.getMultirotorState(
+                        vehicle_name=self.drone_name
                     )
                     break
 
@@ -202,7 +192,7 @@ class Drone(mp.Process):
 
             if error_count == max_errors:
                 print(
-                    self.__drone_name
+                    self.drone_name
                     + " Error from getMultirotorState API call: {0}".format(
                         error.message
                     )
@@ -210,7 +200,7 @@ class Drone(mp.Process):
 
             for _ in range(0, max_errors):
                 try:
-                    pose = self.__client.simGetObjectPose(object_name=self.__drone_name)
+                    pose = self.client.simGetObjectPose(object_name=self.drone_name)
                     break
 
                 except Exception as e:
@@ -219,19 +209,19 @@ class Drone(mp.Process):
 
             if error_count == max_errors:
                 print(
-                    self.__drone_name
+                    self.drone_name
                     + " Error from getMultirotorState API call: {0}".format(
                         error.message
                     )
                 )
-
-            self.__vehicle_state.kinematics_estimated.position = pose.position
-            self.__vehicle_state.kinematics_estimated.orientation = pose.orientation
+            else:
+                self.__vehicle_state.kinematics_estimated.position = pose.position
+                self.__vehicle_state.kinematics_estimated.orientation = pose.orientation
 
         return self.__vehicle_state
 
     def run(self) -> None:
-        self.__setup_ros()
+        self.setup_ros()
 
 
 if __name__ == "__main__":

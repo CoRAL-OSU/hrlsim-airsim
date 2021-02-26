@@ -76,8 +76,6 @@ class Agent(Drone):
 
         super().__init__(swarmName, droneName, sim_client, client_lock)
 
-        self.__cmd = None
-
         self.dstep = 20.0
 
         self.__controller = lqr.LQR()
@@ -87,15 +85,13 @@ class Agent(Drone):
         self.__target_pose = MultirotorState()
         self.__target_ready = False
 
-    def __setup_ros(self) -> None:
-        super().__setup_ros()
-        cmd_pos_topic = self.__topic_prefix + "/cmd/pos"
+    def setup_ros(self) -> None:
+        Drone.setup_ros(self)
+        cmd_pos_topic = self.topic_prefix + "/cmd/pos"
 
-        odom_topic = self.__topic_prefix + "/sensor/local/odom_ned"
-        gps_topic = self.__topic_prefix + "/sensor/global/gps"
-        imu_topic = self.__topic_prefix + "/sensor/local/imu"
-
-        rospy.init_node(self.__drone_name)
+        odom_topic = self.topic_prefix + "/sensor/local/odom_ned"
+        gps_topic = self.topic_prefix + "/sensor/global/gps"
+        imu_topic = self.topic_prefix + "/sensor/local/imu"
 
         self.__odom_pub = rospy.Publisher(odom_topic, Odometry, queue_size=10)
         self.__gps_pub = rospy.Publisher(gps_topic, NavSatFix, queue_size=10)
@@ -105,8 +101,7 @@ class Agent(Drone):
             cmd_pos_topic, PoseStamped, callback=self.__cmd_pos_cb, queue_size=10
         )
 
-        self.__track_action_name = self.__topic_prefix + "/track_object"
-        self.__move_to_location_action_name = self.__topic_prefix + "/move_to_location"
+        self.__track_action_name = self.topic_prefix + "/track_object"
 
         self.__track_action = actionlib.SimpleActionServer(
             self.__track_action_name,
@@ -115,14 +110,6 @@ class Agent(Drone):
             auto_start=False,
         )
         self.__track_action.start()
-
-        self.__move_to_location_action = actionlib.SimpleActionServer(
-            self.__move_to_location_action_name,
-            MoveToLocationAction,
-            execute_cb=self.__move_to_location_action_cb,
-            auto_start=False,
-        )
-        self.__move_to_location_action.start()
 
     ##
     ##
@@ -136,7 +123,7 @@ class Agent(Drone):
         @param msg (geometry_msgs.PoseStamped)
         """
 
-        with self.__flag_lock:
+        with self.flag_lock:
             pos = msg.pose.position
             self.__target_pose.kinematics_estimated.position = airsim.Vector3r(
                 pos.x, pos.y, pos.z
@@ -144,7 +131,7 @@ class Agent(Drone):
             self.__target_ready = True
 
     def __target_vel_cb(self, msg: TwistStamped) -> None:
-        with self.__flag_lock:
+        with self.flag_lock:
             vel = msg.twist.linear
             self.__target_pose.kinematics_estimated.linear_velocity = airsim.Vector3r(
                 vel.x, vel.y, vel.z
@@ -152,7 +139,7 @@ class Agent(Drone):
             self.__target_ready = True
 
     def __target_acc_cb(self, msg: AccelStamped) -> None:
-        with self.__flag_lock:
+        with self.flag_lock:
             accel = msg.accel.linear
             self.__target_pose.kinematics_estimated.linear_acceleration = (
                 airsim.Vector3r(accel.x, accel.y, accel.z)
@@ -166,7 +153,7 @@ class Agent(Drone):
 
         state = self.get_state()
 
-        target_topic = self.__swarm_name + "/" + goal.object_name + "/"
+        target_topic = self.swarm_name + "/" + goal.object_name + "/"
 
         target_pos_sub = rospy.Subscriber(
             target_topic + "pos",
@@ -203,7 +190,7 @@ class Agent(Drone):
 
         feedback = TrackObjectFeedback()
 
-        print(self.__drone_name + " ENTERING WHILE LOOP")
+        print(self.drone_name + " ENTERING WHILE LOOP")
 
         update_object_location_period = 0.1  # seconds
         prev_object_update_time = 0
@@ -282,8 +269,8 @@ class Agent(Drone):
         target_vel_sub.unregister()
         target_acc_sub.unregister()
 
-        with self.__client_lock:
-            self.__client.hoverAsync(self.__drone_name)
+        with self.client_lock:
+            self.client.hoverAsync(self.drone_name)
 
         if success:
             result = feedback
@@ -295,16 +282,15 @@ class Agent(Drone):
         @param msg (geometry_msgs.PoseStamped)
         """
 
-        with self.__flag_lock:
-            self.__time_start = time.time()
-            self.__cmd = msg
+        with self.flag_lock:
+            self.cmd = msg
 
     def __moveToPosition(self, cmd):
         """
         Utilize AirSim's Python API to move the drone
         """
 
-        with self.__flag_lock:
+        with self.flag_lock:
             assert type(cmd) == PoseStamped, "movetoposition cmd must be posestamped"
 
             state = self.get_state()
@@ -333,7 +319,7 @@ class Agent(Drone):
                 z = cmd.pose.position.z
 
             else:
-                print("DRONE " + self.__drone_name + " VEL cmd UNRECOGNIZED FRAME")
+                print("DRONE " + self.drone_name + " VEL cmd UNRECOGNIZED FRAME")
                 return False
 
             p0 = [x, y, z]
@@ -376,7 +362,7 @@ class Agent(Drone):
                     "WARNING -> RATE "
                     + str(i)
                     + " FOR "
-                    + self.__drone_name
+                    + self.drone_name
                     + " GREATER THAN MAX RATE "
                     + str(u[i, 0])
                 )
@@ -389,7 +375,7 @@ class Agent(Drone):
         if u[3, 0] > 1.0:
             print(
                 "WARNING -> THROTTLE FOR "
-                + self.__drone_name
+                + self.drone_name
                 + " OUT OF BOUNDS "
                 + str(u[3, 0])
             )
@@ -407,12 +393,17 @@ class Agent(Drone):
 
         self.reference = x0.T
 
-        with self.__client_lock:
-            self.__client.moveByAngleRatesThrottleAsync(
-                roll_rate, pitch_rate, yaw_rate, throttle, 0.5, self.__drone_name
+        with self.client_lock:
+            self.client.moveByAngleRatesThrottleAsync(
+                roll_rate, pitch_rate, yaw_rate, throttle, 0.5, self.drone_name
             )
 
-    def createGraphs(self, rate: rospy.Rate):
+    def createGraphs(self, rate: rospy.Rate, prev_time: float):
+        states = np.zeros((1, 15))
+        states[
+            0, 0:3
+        ] = self.get_state().kinematics_estimated.position.to_numpy_array()
+
         times = np.zeros((1, 1))
 
         # Setup timing variables
@@ -436,8 +427,8 @@ class Agent(Drone):
 
             # Main loop
             while not rospy.is_shutdown() and time.time() - begin_time < self.sim_time:
-                with self.__flag_lock:
-                    if self.__shutdown == True:
+                with self.flag_lock:
+                    if self._shutdown == True:
                         break
 
                     state = self.get_state()
@@ -463,12 +454,12 @@ class Agent(Drone):
                     states = np.append(states, [statevector], axis=0)
                     times = np.append(times, [[time.time() - begin_time]], axis=0)
 
-                    cmd = self.__cmd
+                    cmd = self.cmd
 
                     if type(cmd) == PoseStamped:
                         self.__moveToPosition(cmd)
 
-                    self.__cmd = None
+                    self.cmd = None
 
                 self.moveByLQR(time.time() - begin_time, state)
 
@@ -477,12 +468,12 @@ class Agent(Drone):
                 rate.sleep()
 
                 # Calculate a publish looptime after sleeping
-                if self.__pub_looptime:
+                if self.looptime_pub is not None:
                     elapsed_time = time.time() - prev_time
                     prev_time = time.time()
 
                     msg = Float32(elapsed_time)
-                    self.__looptime_pub.publish(msg)
+                    self.looptime_pub.publish(msg)
                     # print("%6.3f"% elapsed_time)
 
         print(
@@ -544,7 +535,7 @@ class Agent(Drone):
         plt.show()
 
     def run(self):
-        self.__setup_ros()
+        self.setup_ros()
 
         self.sim_time = 20
         self.prev_accel_cmd = 0
@@ -553,35 +544,30 @@ class Agent(Drone):
 
         prev_time = time.time()
 
-        run_swarm = True
+        run_swarm = False
 
         if run_swarm:
-            while not rospy.is_shutdown() or self.__shutdown:
+            while not rospy.is_shutdown() or self._shutdown:
                 rate.sleep()
 
                 # Calculate a publish looptime after sleeping
-                if self.__pub_looptime:
+                if self.looptime_pub is not None:
                     elapsed_time = time.time() - prev_time
                     prev_time = time.time()
 
                     msg = Float32(elapsed_time)
-                    self.__looptime_pub.publish(msg)
+                    self.looptime_pub.publish(msg)
                     # print("%6.3f"% elapsed_time)
 
         else:
             # Move to starting position (0,0,-5)
-            with self.__client_lock:
-                # self.__client.takeoffAsync(vehicle_name=self.__drone_name).join()
-                self.__client.moveToPositionAsync(
-                    0, 0, -4, 5, vehicle_name=self.__drone_name
+            with self.client_lock:
+                # self.client.takeoffAsync(vehicle_name=self.drone_name).join()
+                self.client.moveToPositionAsync(
+                    0, 0, -4, 5, vehicle_name=self.drone_name
                 ).join()
                 time.sleep(3)
                 print("Reached (0,0,-30), starting motion")
-
-            states = np.zeros((1, 15))
-            states[
-                0, 0:3
-            ] = self.get_state().kinematics_estimated.position.to_numpy_array()
 
             self.acceleration_cmds = np.zeros((1, 3))
 
@@ -593,14 +579,14 @@ class Agent(Drone):
 
             self.__controller.set_goals(waypoints)
 
-            self.createGraphs()
+            self.createGraphs(rate, prev_time)
 
         # Wait for last task to finish
-        with self.__client_lock:
-            self.__client.cancelLastTask(vehicle_name=self.__drone_name)
+        with self.client_lock:
+            self.client.cancelLastTask(vehicle_name=self.drone_name)
 
         # Quit
-        print(self.__drone_name + " QUITTING")
+        print(self.drone_name + " QUITTING")
         time.sleep(0.5)
 
 
