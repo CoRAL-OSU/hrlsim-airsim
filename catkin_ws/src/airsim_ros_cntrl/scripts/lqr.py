@@ -1,26 +1,28 @@
-#! /usr/bin/python2
-
 import time
-import multiprocessing as mp
 import numpy as np
 import math
-import sys
-
-import airsim
+from typing import Any, List, Tuple
+from airsim import Vector3r, Quaternionr, MultirotorState
 import slycot
 import control
 
-import minimum_snap
-
+from . import minimum_snap
 
 class LQR:
-    def __init__(self):
-        self.Q = np.diag([100, 100, 100, 1, 1, 1, 1, 10, 10, 10])
-        self.R = np.diag([1e1, 1e1, 2e1, 2])
+    """
+    Class to compute the LQR controls.
+    Uses minimum snap to compute trajectories
+    """
+    def __init__(self) -> None:
+        """
+        Constructs the intial LQR matrices
+        """
+        self.Q: np.ndarray = np.diag([100, 100, 100, 1, 1, 1, 1, 10, 10, 10])
+        self.R: np.ndarray = np.diag([1e1, 1e1, 2e1, 2])
 
-        self.A = np.zeros((10, 10))
-        self.B = np.zeros((10, 4))
-        self.K = np.zeros((10, 10))
+        self.A: np.ndarray = np.zeros((10, 10))
+        self.B: np.ndarray = np.zeros((10, 4))
+        self.K: np.ndarray = np.zeros((10, 10))
 
         self.mass = 1  # kg
         self.max_thrust = 4.1794 * 4  # N
@@ -28,7 +30,14 @@ class LQR:
         self.update_gain_period = 0.2  # seconds
         self.prev_gain_time = time.time()
 
-    def set_costs(self, Q=None, R=None):
+    def set_costs(self, Q: List[int]=None, R: List[int]=None) -> None:
+        """
+        Sets the control matrices Q and R 
+
+        Args:
+            Q (List[int], optional): List of ints to set for Q. Must be length 10 Defaults to None.
+            R (List[int], optional): List of ints to set for R. Must be length 4 Defaults to None.
+        """
         if Q != None:
             assert len(Q) == 10, "Q must be a list of length 10"
             self.Q = np.diag(Q)
@@ -37,8 +46,13 @@ class LQR:
             assert len(R) == 4, "R must be a list of length 4"
             self.R = np.diag(R)
 
-    def set_goals(self, waypoints):
+    def set_goals(self, waypoints: np.ndarray) -> None:
+        """
+        Sets the goals for the LQR controller.
 
+        Args:
+            waypoints (np.ndarray): Waypoints to set
+        """
         tmp = np.copy(waypoints[0, :])
 
         waypoints[0, :] = waypoints[1, :]
@@ -47,7 +61,15 @@ class LQR:
 
         self.traj_generator = minimum_snap.MinimumSnap(waypoints)
 
-    def updateGains(self, x, rpydot, prev_accel_cmd):
+    def updateGains(self, x: np.ndarray, rpydot:Vector3r, prev_accel_cmd: int) -> None:
+        """
+        Updates the gains for the controller
+
+        Args:
+            x (np.ndarray): State, must be 10x1 state vector
+            rpydot (Vector3r): Angular Vector 
+            prev_accel_cmd (int): Previous Acceleration
+        """
         roll, pitch, _ = LQR.quat2rpy(x[3:7])
 
         cr = math.cos(roll)
@@ -55,6 +77,7 @@ class LQR:
         cp = math.cos(pitch)
         tp = math.tan(pitch)
 
+        #np.matrix is being depricated should move to np.ndarray
         R = np.matrix([[1, sr * tp, cr * tp], [0, cr, -sr], [0, sr / cp, cr / cp]])
 
         rpydot = np.array([[rpydot.y_val, -rpydot.x_val, rpydot.z_val]]).T
@@ -74,7 +97,14 @@ class LQR:
         self.__updateGains(x, u)
         self.prev_gain_time = time.time()
 
-    def __updateGains(self, x, u):
+    def __updateGains(self, x: np.ndarray, u: np.ndarray) -> np.ndarray:
+        """
+        Updates the gains for the controller
+
+        Args:
+            x (np.ndarray): State, must be 10x1 state vector
+            u (np.ndarray): Goal Command, must be 4x1 control vector
+        """
         assert np.shape(x) == (10, 1), "The state must be a 10x1 state vector"
         assert np.shape(u) == (4, 1), "The goal command must be a 4x1 control vector"
 
@@ -100,7 +130,18 @@ class LQR:
 
         return self.K
 
-    def computeControl(self, t, state, prev_accel_cmd):
+    def computeControl(self, t: float, state: MultirotorState, prev_accel_cmd: int) -> Tuple[np.ndarray, np.ndarray, Any]:
+        """
+        Computes the control for a given state
+
+        Args:
+            t (float): the time
+            state (MultirotorState): the state of the drone
+            prev_accel_cmd (int): previous acceleration
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray, np.matrix]: Tuple representing
+        """
         p = state.kinematics_estimated.position
         p = [p.x_val, p.y_val, p.z_val]
 
@@ -169,7 +210,17 @@ class LQR:
 
         return x0, u0, u
 
-    def thrust2world(self, state, throttle):
+    def thrust2world(self, state: MultirotorState, throttle: np.matrix) -> np.ndarray:
+        """
+        Converts thrust to acceleration vector
+
+        Args:
+            state (MultirotorState): State of the drone
+            throttle (np.matrix): matrix representing the throttle
+
+        Returns:
+            np.ndarray: Acceleration vector
+        """
         q = state.kinematics_estimated.orientation
         q = [q.w_val, q.x_val, q.y_val, q.z_val]
 
@@ -192,7 +243,16 @@ class LQR:
         return accel
 
     @staticmethod
-    def quat2rpy(q):
+    def quat2rpy(q: List[float, float, float, float]) -> Tuple[float, float, float]:
+        """
+        Convert Quaterion to Roll, Pitch, Yaw 
+
+        Args:
+            q (List[float, float, float, float]): Quaterion in [W, X, Y, Z]
+
+        Returns:
+            Tuple[float, float, float]: Roll, Pitch, Yaw
+        """
         roll = math.atan2(
             2 * (q[0] * q[1] + q[2] * q[3]), 1 - 2 * (q[1]) * q[1] + q[2] * q[2]
         )
@@ -203,7 +263,18 @@ class LQR:
         return roll, pitch, yaw
 
     @staticmethod
-    def rpy2quat(roll, pitch, yaw):
+    def rpy2quat(roll: float, pitch: float, yaw: float):
+        """
+        Converts Roll, Pitch, Yaw to Quaterion
+
+        Args:
+            roll (float): roll
+            pitch (float): pitch
+            yaw (float): yaw
+
+        Returns:
+            List[float, float, float, float]: Quaterion
+        """
         cr = math.cos(roll / 2)
         sr = math.sin(roll / 2)
         cp = math.cos(pitch / 2)
@@ -219,7 +290,16 @@ class LQR:
         return q
 
     @staticmethod
-    def ned2xyz(x):
+    def ned2xyz(x: np.ndarray) -> np.ndarray:
+        """
+        Convert North, East, Down to X, Y, Z
+
+        Args:
+            x (np.ndarray): North, East, Down
+
+        Returns:
+            np.ndarray: X, Y, Z
+        """
         assert np.shape(x) == (10, 1), "The state must be a 10x1 vector"
         # tp = np.matrix([[0,1,0],[1,0,0],[0,0,-1]])
         # tq = np.block([[1,0,0,0],[0,0,1,0],[0,1,0,0],[0,0,0,-1]])
@@ -236,8 +316,8 @@ class LQR:
 
         # Apply quaternion rotation to  translate. Don't swap axis
         # R =[1 0 0 ; 0 -1 0; 0 0 -1]
-        q1 = airsim.Quaternionr(x[4], x[5], x[6], x[3])
-        q_rot = airsim.Quaternionr(math.sqrt(2) / 2, math.sqrt(2) / 2, 0, 0)
+        q1 = Quaternionr(x[4], x[5], x[6], x[3])
+        q_rot = Quaternionr(math.sqrt(2) / 2, math.sqrt(2) / 2, 0, 0)
 
         qnew = q1.rotate(q_rot)
         qnew = qnew.to_numpy_array()
@@ -255,17 +335,46 @@ class LQR:
         return x
 
     @staticmethod
-    def get_state(x):
+    def get_state(x: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """
+        Gets the state from a array
+
+        Args:
+            x (np.ndarray): the state
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray, np.ndarray]: Tuple representing, Position, Orientation, Velocity
+        """
         assert np.shape(x) == (10, 1), "The state must be a 10x1 vector"
         return x[0:3], x[3:7], x[7:10]
 
     @staticmethod
-    def get_command(u):
+    def get_command(u: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Gets the command from an array
+
+        Args:
+            u (np.ndarray): The command
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray]: Tuple representing body rates
+        """
         assert np.shape(u) == (4, 1), "The command must be a 4x1 vector"
         return u[0:3], u[3][0]
 
     @staticmethod
-    def set_state(p, q, v):
+    def set_state(p: np.ndarray, q: np.ndarray, v: np.ndarray) -> np.ndarray:
+        """
+        Sets the state list from the position, quaterion and velocity lists
+
+        Args:
+            p (np.ndarray): Position List
+            q (np.ndarray): Quaterion List
+            v (np.ndarray): Velocity List
+
+        Returns:
+            np.ndarray: State List
+        """
         assert len(p) == 3, "The position must be a 3x1 list"
         assert len(q) == 4, "The quaternion must be a 4x1 list"
         assert len(v) == 3, "The velocity must be a 3x1 list"
@@ -278,7 +387,17 @@ class LQR:
         return x
 
     @staticmethod
-    def set_command(omega, c):
+    def set_command(omega: np.ndarray, c: float) -> np.ndarray:
+        """
+        Sets the command List from an array and a float
+
+        Args:
+            omega (np.ndarray): The body rates
+            c (float): c
+
+        Returns:
+            np.ndarray: command list
+        """
         assert len(omega) == 3, "The body rates must be a 3x1 list"
 
         omega = np.array([omega], dtype="float").T
@@ -286,9 +405,20 @@ class LQR:
         u = np.block([[omega], [c]])
         return u
 
-    def __updateA(self, x, u):
-        p, q, v = self.get_state(x)
-        omega, c = self.get_command(u)
+    @staticmethod
+    def __updateA(x: np.ndarray, u: np.ndarray) -> np.ndarray:
+        """
+        Updates A maxtrix from state and command lists
+
+        Args:
+            x (np.ndarray): The state list
+            u (np.ndarray): The command list
+
+        Returns:
+            np.ndarray: Updated A Matrix
+        """
+        _, q, _ = LQR.get_state(x)
+        omega, c = LQR.get_command(u)
 
         # 10x10 block matrix
         A = np.block(
@@ -300,8 +430,18 @@ class LQR:
         )
         return A
 
-    def __updateB(self, x):
-        p, q, v = LQR.get_state(x)
+    @staticmethod
+    def __updateB(x: np.ndarray) -> np.ndarray:
+        """
+        Updates B from state list
+
+        Args:
+            x (np.ndarray): the state list
+
+        Returns:
+            np.ndarray: Updated B Matrix
+        """
+        _, q, _ = LQR.get_state(x)
 
         # 10x4 block matrix
         B = np.block(
@@ -314,7 +454,17 @@ class LQR:
         return B
 
     @staticmethod
-    def __qdotq(omega, q):
+    def __qdotq(omega: np.ndarray, q: np.ndarray) -> np.ndarray:
+        """
+        Takes the dot product of the omega and Q arrays
+
+        Args:
+            omega (np.ndarray): Omega
+            q (np.ndarray): Q
+
+        Returns:
+            np.ndarray: Dot Product
+        """
         y = np.block(
             [
                 [0.0, -omega[0], -omega[1], -omega[2]],
@@ -330,7 +480,17 @@ class LQR:
         )
 
     @staticmethod
-    def __vdotq(c, q):
+    def __vdotq(c: np.ndarray, q: np.ndarray) -> np.ndarray:
+        """
+        Takes the dot product of the omega and Q arrays
+
+        Args:
+            c (np.ndarray): c
+            q (np.ndarray): q
+
+        Returns:
+            np.ndarray: Dot Product
+        """
         y = np.block(
             [
                 [q[2], q[3], q[0], q[1]],
@@ -348,7 +508,16 @@ class LQR:
         )
 
     @staticmethod
-    def __qdotomega(q):
+    def __qdotomega(q: np.ndarray) -> np.ndarray:
+        """
+        Takes the dot product of Q and Omega
+
+        Args:
+            q (np.ndarray): q
+
+        Returns:
+            np.ndarray: Dot Product
+        """
         y = np.block(
             [
                 [-q[1], -q[2], -q[3]],
@@ -360,7 +529,16 @@ class LQR:
         return 0.5 * y
 
     @staticmethod
-    def __vdotc(q):
+    def __vdotc(q: np.ndarray) -> np.ndarray:
+        """
+        Takes the dot product of V and C
+
+        Args:
+            q (np.ndarray): q
+
+        Returns:
+            np.ndarray: Dot Product
+        """
         y = np.block(
             [
                 [q[0] * q[2] + q[1] * q[3]],

@@ -5,10 +5,20 @@ from target import Target
 
 import multiprocessing as mp
 import airsim, rospy
+from typing import List
 import os, sys, json, time
 
 
-def getDroneListFromSettings(settingsFilePath=None):
+def getDroneListFromSettings(settingsFilePath: str=None) -> List[str]:
+    """
+    Loads the list of drones from the airsim setting file
+
+    Args:
+        settingsFilePath (str, optional): Path to airsim settings file. Defaults to None.
+
+    Returns:
+        List[str]: List of vehicles in file
+    """
     if settingsFilePath == None:
         HOME = os.getenv("HOME")
         settings_path = HOME + "/Documents/AirSim/settings.json"
@@ -33,16 +43,10 @@ def getDroneListFromSettings(settingsFilePath=None):
 
 team_list = []
 
-
-def sigint_handler(sig, frame):
-
-    for team in team_list:
-        team.shutdown()
-
-    sys.exit(0)
-
-
-def shutdown():
+def shutdown() -> None:
+    """
+    Shuts downs all teams 
+    """
     for team in team_list:
         team.shutdown()
 

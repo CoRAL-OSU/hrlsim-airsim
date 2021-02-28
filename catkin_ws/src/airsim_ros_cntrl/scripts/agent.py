@@ -4,21 +4,19 @@ import time
 import multiprocessing as mp
 import numpy as np
 import math
-import sys, os
+import sys
 import matplotlib.pyplot as plt
 
-import airsim, minimum_snap
+import airsim
 import rospy, actionlib
 
-import lqr
-from drone import Drone
+from . import lqr
+from .drone import Drone
 from airsim.client import MultirotorClient
-from airsim.types import MultirotorState
+from airsim.types import MultirotorState, Vector3r
 
 from geometry_msgs.msg import TwistStamped, PoseStamped, AccelStamped, PoseStamped
-from airsim_ros_pkgs.srv import Takeoff, TakeoffResponse, Land, LandResponse
 
-from std_srvs.srv import SetBool, SetBoolResponse
 
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import NavSatFix, Imu
@@ -31,19 +29,22 @@ from airsim_ros_cntrl.msg import (
     TrackObjectResult,
     TrackObjectGoal,
 )
-from airsim_ros_cntrl.msg import (
-    MoveToLocationAction,
-    MoveToLocationFeedback,
-    MoveToLocationResult,
-    MoveToLocationGoal,
-)
-
 
 from pycallgraph import PyCallGraph
 from pycallgraph.output import GraphvizOutput
 
 # Calculate vector1 - vector2
-def calc_distance(vector1, vector2):
+def calc_distance(vector1: Vector3r, vector2: Vector3r):
+    """
+    Calculates the distance between two vectors.
+
+    Args:
+        vector1 (Vector3r): [description]
+        vector2 (Vector3r): [description]
+
+    Returns:
+        Vector3r: Output vector
+    """
     output = airsim.Vector3r()
 
     output.x_val = vector1.x_val - vector2.x_val
@@ -53,6 +54,17 @@ def calc_distance(vector1, vector2):
 
 
 class Agent(Drone):
+    """
+    Class to handle individual agents of a team.
+    An agent is a drone that takes commands to either track an object or move to a certain location.
+    Refer to Drone documentation for more info.
+
+    Args:
+        swarmName (str): The name of the team this drone is associated with.
+        droneName (str): The name of the drone itself.
+        sim_client (airsim.MultirotorClient): The client to use to execture commands.
+        client_lock (mp.Lock): The lock for the sim_client.
+    """
     def __init__(
         self,
         swarmName: str,
@@ -61,19 +73,14 @@ class Agent(Drone):
         client_lock: mp.Lock,
     ) -> None:
         """
-        Initialize a Drone process, spinup the ROS node, and setup topics/services/action servers
+        Constructs a new Agent Process.
 
-        All topic names are set up as /swarm_name/drone_name/major_cmd/minor_cmd. Eg. commanding the velocity
-        of drone1 in swarm1 would be: /swarm1/drones1/cmd/vel
-
-        @param swarmName (string) Name of the UAV swarm
-        ---
-        @param droneName (string) Name of the UAV
-        ---
-        @param sim_client (airsim.MultirotorClient) Airsim Python Client
-        ---
+        Args:
+            swarmName (str): The name of the swarm this drone is associated with.
+            droneName (str): The name of the drone itself.
+            sim_client (airsim.MultirotorClient): The client to use to execture commands.
+            client_lock (mp.Lock): The lock for the sim_client.
         """
-
         super().__init__(swarmName, droneName, sim_client, client_lock)
 
         self.dstep = 20.0
@@ -86,6 +93,28 @@ class Agent(Drone):
         self.__target_ready = False
 
     def setup_ros(self) -> None:
+        """
+        @Override
+        Sets up the ros node for use during simulation.
+        Must be called during the run function since the handoff is not done from multiprocessing until after started.
+
+        Topics:
+            /looptime (Float32): The looptime of the drone
+            /sensor/local/odom_ned (nav_msgs.Odometry): Odometry of the agent.
+            /sensor/global/gps (sensor_msgs.NavSatFix): The GPS location of the agent
+            /sensor/local/imu (sensor_msgs.Imu): The acceleration of the agent
+
+        Services:
+            /takeoff (airsim_ros_pkgs.Takeoff): Service to takeoff the drone
+            /land (airsim_ros_pkgs.Land): Service to land the drone
+            /shutdown (std_srvs.SetBool): Service to shutdown process
+            /cmd/pos (geometry_msgs.PoseStamped): Command drone to go to position
+        
+        Actions:
+            /track_object (airsim_ros_cntrl.TrackObjectAction): Action to track a target.
+
+        Returns: None
+        """
         Drone.setup_ros(self)
         cmd_pos_topic = self.topic_prefix + "/cmd/pos"
 
@@ -118,11 +147,14 @@ class Agent(Drone):
 
     def __target_pose_cb(self, msg: PoseStamped) -> None:
         """
-        Callback for the /cmd/pos ROS topic
+        Subscriber callback for tracking target position.
+        Used in /track_object
 
-        @param msg (geometry_msgs.PoseStamped)
+        Args:
+            msg (geometry_msgs.PoseStamped)
+
+        Returns: None
         """
-
         with self.flag_lock:
             pos = msg.pose.position
             self.__target_pose.kinematics_estimated.position = airsim.Vector3r(
@@ -131,6 +163,15 @@ class Agent(Drone):
             self.__target_ready = True
 
     def __target_vel_cb(self, msg: TwistStamped) -> None:
+        """
+        Subscriber callback for tracking target velocity.
+        Used in /track_object
+
+        Args:
+            msg (geometry_msgs.TwistStamped)
+
+        Returns: None
+        """
         with self.flag_lock:
             vel = msg.twist.linear
             self.__target_pose.kinematics_estimated.linear_velocity = airsim.Vector3r(
@@ -139,6 +180,15 @@ class Agent(Drone):
             self.__target_ready = True
 
     def __target_acc_cb(self, msg: AccelStamped) -> None:
+        """
+        Subscriber callback for tracking target acceleration.
+        Used in /track_object
+
+        Args:
+            msg (geometry_msgs.AccelStamped)
+
+        Returns: None
+        """
         with self.flag_lock:
             accel = msg.accel.linear
             self.__target_pose.kinematics_estimated.linear_acceleration = (
@@ -146,7 +196,22 @@ class Agent(Drone):
             )
             self.__target_ready = True
 
-    def __track_action_cb(self, goal):
+    def __track_action_cb(self, goal: TrackObjectGoal) -> TrackObjectResult:
+        """
+        Callback to track a target.
+        Subscribes to the position, velocity and acceleration,
+        then tracks the object using LQR to control with minimum snap.
+
+        Args:
+            goal (TrackObjectGoal): The object to track
+
+        Topic:
+            /track_object
+        
+        Feedback (TrackObjectFeedback): Continuous feedback about how tracking is going
+
+        Returns (TrackObjectResult): The Result after tracking
+        """
         start_time = time.time()
 
         success = True
@@ -276,18 +341,25 @@ class Agent(Drone):
             result = feedback
             self.__track_action.set_succeeded(result)
 
-    def __cmd_pos_cb(self, msg: PoseStamped):
+    def __cmd_pos_cb(self, msg: PoseStamped) -> None:
         """
         Callback for the /cmd/pos ROS topic
-        @param msg (geometry_msgs.PoseStamped)
+        
+        Args:
+            msg (geometry_msgs.PoseStamped)
         """
 
         with self.flag_lock:
             self.cmd = msg
 
-    def __moveToPosition(self, cmd):
+    def __moveToPosition(self, cmd: PoseStamped) -> bool:
         """
-        Utilize AirSim's Python API to move the drone
+        Utilize AirSim's Python API to move the drone.
+
+        Args:
+            cmd: The command to execute
+        
+        Returns (bool): True if successful, false otherwise
         """
 
         with self.flag_lock:
@@ -347,13 +419,21 @@ class Agent(Drone):
                 )
 
                 r.sleep()
+        return True
 
     ##
     ##
     ###        LQR IMPLEMENATION        ###
     #######################################
 
-    def moveByLQR(self, t, state):
+    def moveByLQR(self, t: float, state: MultirotorState) -> None:
+        """
+        Moves the agent via LQR.
+
+        Args:
+            t (float): Time elapsed since beginning
+            state (MultirotorState): Current Multirotor State
+        """
         x0, u0, u = self.__controller.computeControl(t, state, self.prev_accel_cmd)
 
         for i in range(0, 3):
@@ -398,7 +478,15 @@ class Agent(Drone):
                 roll_rate, pitch_rate, yaw_rate, throttle, 0.5, self.drone_name
             )
 
-    def createGraphs(self, rate: rospy.Rate, prev_time: float):
+    def createGraphs(self, rate: rospy.Rate, prev_time: float) -> None:
+        """
+        Creates a PyCallGraph and a matplotlib graph of the drones movement
+        Useful for analysis on drone movement/runtime
+
+        Args:
+            rate (rospy.Rate): The update rate of the main thread
+            prev_time (float): the time previously executed
+        """
         states = np.zeros((1, 15))
         states[
             0, 0:3
@@ -535,6 +623,12 @@ class Agent(Drone):
         plt.show()
 
     def run(self):
+        """
+        @Override
+        Funciton to run when the process starts.
+
+        Returns: None
+        """
         self.setup_ros()
 
         self.sim_time = 20

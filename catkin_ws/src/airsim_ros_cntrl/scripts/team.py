@@ -1,57 +1,54 @@
 #! /usr/bin/python3
 
+from multiprocessing import Lock
 import time
-import multiprocessing as mp
-import sys
 
 import math
 
-import airsim
+from airsim.client import MultirotorClient
+
 import rospy, actionlib
 
 from geometry_msgs.msg import TwistStamped, PoseStamped
-from airsim_ros_pkgs.srv import Takeoff, TakeoffResponse, Land, LandResponse
+from airsim_ros_pkgs.srv import Takeoff, Land
 
 from std_srvs.srv import SetBool
 
-from nav_msgs.msg import Odometry
-from sensor_msgs.msg import NavSatFix, Imu
-
 from airsim_ros_cntrl.msg import (
     TrackObjectAction,
-    TrackObjectFeedback,
-    TrackObjectResult,
     TrackObjectGoal,
 )
 from airsim_ros_cntrl.msg import (
     MoveToLocationAction,
-    MoveToLocationFeedback,
-    MoveToLocationResult,
     MoveToLocationGoal,
 )
 
+from typing import List, Dict
+from .target import Target
 
-import drone
+from .drone import DroneInfo
+from .agent import Agent
 
 
 class Team:
-    class DroneInfo:
-        name = None
-        process = None
-        pubs = None
-        subs = None
-        services = None
-        actions = None
+    """
+    Class to define a team of drones.
+    A team is comprised of any number of agents and up to one target to track.
+    Manages the deployment and management of all drones.
+    """
 
-        def __init__(self, DroneName, process, pubs, subs, services, actions):
-            self.name = DroneName
-            self.process = process
-            self.pubs = pubs
-            self.subs = subs
-            self.services = services
-            self.actions = actions
+    def __init__(self, teamName: str, vehicle_list: List[str], target: Target, client: MultirotorClient, lock: Lock) -> None:
+        """
+        Contructs a team object.
+        A team is comprised of any number of agents and up to one target to track. 
 
-    def __init__(self, teamName, vehicle_list, target, client, lock):
+        Args:
+            teamName (str): The name of the team
+            vehicle_list (List[str]): List of agent names
+            target (Target): The target to track
+            client (MultirotorClient): The client to use
+            lock (Lock): The client lock
+        """
         self.client = client
         self.lock = lock
 
@@ -61,21 +58,25 @@ class Team:
         self.drone_procs = dict()
         self.drone_pubs = dict()
 
-        self.drones = dict()
+        self.drones: Dict[str, Agent] = dict()
 
-        self.target = Team.DroneInfo(target, None, None, None, None, None)
+        self.target = DroneInfo(target.name, target)
 
         self.__shutdown = False
 
         for i in self.vehicle_list:
-            proc = drone.Drone(self.team_name, i, self.client, self.lock)
+            proc = Agent(self.team_name, i, self.client, self.lock)
 
-            self.drones[i] = Team.DroneInfo(i, proc, None, None, None, None)
+            self.drones[i] = DroneInfo(i, proc)
             self.drones[i].process.start()
 
         print("SWARM CREATED WITH %d DRONES" % len(self.drones))
 
-    def setup_ros(self):
+    def setup_ros(self) -> None:
+        """
+        Function to set up ros topics to talk to teams.
+        The team itself does not have a node associated with it.
+        """
         for i in self.vehicle_list:
 
             prefix = "/" + self.team_name + "/" + i
@@ -134,69 +135,85 @@ class Team:
 
             self.target.services = srvs
 
-    def getDroneList(self):
+    def getDroneList(self) -> Dict[str, Agent]:
+        """
+        Gets the dictionary of Agents where key is drone name and value is the agent process
+
+        Returns:
+            Dict[str, Agent]: Dictionary of Agents
+        """
         return self.drones
 
-    def takeoff(self, wait=False):
+    def takeoff(self, wait: bool=False) -> None:
+        """
+        Send the takeoff command to all agents.
+
+        Args:
+            wait (bool, optional): Wait for all drones to complete task. Defaults to False.
+        """
         for i in self.vehicle_list:
             try:
-                resp = self.drones[i].services["takeoff"](False)
-                # return resp
+                self.drones[i].services["takeoff"](False)
             except rospy.ServiceException as e:
                 print("Service call failed: %s" % e)
 
         if wait:
             self.wait()
 
-    def land(self, wait=False):
+    def land(self, wait: bool=False) -> None:
+        """
+        Send land command to all agents.
+
+        Args:
+            wait (bool, optional): Wait for all drones to complete task. Defaults to False.
+        """
         for i in self.vehicle_list:
             try:
-                resp = self.drones[i].services["land"](False)
-                # return resp
+                self.drones[i].services["land"](False)
             except rospy.ServiceException as e:
                 print("Service call failed: %s" % e)
 
+        # Doesn't Work?
         if wait:
             self.wait()
 
-    def wait(self):
+    def wait(self) -> None:
+        """
+        Funciton to wait for agents to complete tracking
+        """
         for drone in self.vehicle_list:
             self.drones[drone].actions["track"].wait_for_result()
 
-    def cmd_pos(self, cmd=None, cmd_all=None, wait=False, drone_name=None):
+    def cmd_pos(self, cmd: PoseStamped=None, cmd_all: PoseStamped=None, wait: bool=False, drone_name: str=None) -> None:
+        """
+        Send command to agents to move to position. Can either send same position to all via cmd_all or to one drone by specifying cmd and drone_name.
 
+        Args:
+            cmd (PoseStamped, optional): Command to send to a single agent. Must also specify drone_name. Defaults to None.
+            cmd_all (PoseStamped, optional): Command to send to all agents. Defaults to None.
+            wait (bool, optional): Toggle to wait for all drones to complete. Defaults to False.
+            drone_name (str, optional): Drone name to send a single command to. Defaults to None.
+        """
         if cmd_all != None:
             for i in self.vehicle_list:
                 self.drones[i].pubs["cmd_pos"].publish(cmd_all)
 
         else:
-            self.drones[drone_name].pubs["cmd_pos"].publish(i)
+            self.drones[drone_name].pubs["cmd_pos"].publish(cmd)
 
+        # Doesn't Work?
         if wait:
             self.wait()
 
-    def cmd_vel(self, cmd=None, cmd_all=None, dur=0, drone_name=None):
+    def move_to_location(self, target: List[float], timeout: float, tolerance: float) -> None:
+        """
+        Move agents to location in a circle configuration.
 
-        if cmd_all != None:
-            for i in self.vehicle_list:
-                self.drones[i].pubs["cmd_vel"].publish(cmd_all)
-
-        else:
-            self.drones[drone_name].pubs["cmd_vel"].publish(i)
-
-        time_start = time.time()
-        while time.time() - time_start <= dur:
-            if cmd_all != None:
-                for i in self.vehicle_list:
-                    self.drones[i].pubs["cmd_vel"].publish(cmd_all)
-
-            else:
-                self.drones[drone_name].pubs["cmd_vel"].publish(i)
-
-            time.sleep(0.05)
-
-    def move_to_location(self, target, timeout, tolerance):
-        # Move to location in a circle configuration
+        Args:
+            target (List[float]): the center location to move the agents to
+            timeout (float): the timeout to stop moving
+            tolerance (float): the tolerance for the final position
+        """
 
         l = 8 * math.pi / 3
 
@@ -232,7 +249,15 @@ class Team:
         for drone in self.vehicle_list:
             self.drones[drone].actions["move_to_location"].wait_for_result()
 
-    def track_object(self, object_name, timeout, z_offset):
+    def track_object(self, object_name: str, timeout: float, z_offset: float) -> None:
+        """
+        Commands the agents to track a target
+
+        Args:
+            object_name (str): the drone name to track, must be Target class
+            timeout (float): timeout for the command
+            z_offset (float): offset for the z axis
+        """
         # Track object in a circle configuration
 
         l = 8 * math.pi / 3
@@ -259,14 +284,10 @@ class Team:
             )
             self.drones[drone].actions["track"].send_goal(goal)
 
-    """
-    def hover(self):
-        for i in self.drones:
-            self.drones[i].hover()
-
-    """
-
-    def shutdown(self, shutdown=True):
+    def shutdown(self) -> None:
+        """
+        Shuts down the swarm
+        """
         print("SHUTDOWN SWARM")
 
         if self.__shutdown == True:
@@ -277,13 +298,12 @@ class Team:
         if not rospy.is_shutdown():
             for i in self.vehicle_list:
                 try:
-                    resp = self.drones[i].services["shutdown"](True)
-                    # return resp
+                    self.drones[i].services["shutdown"](True)
                 except rospy.ServiceException as e:
                     print("Service call failed: %s" % e)
 
             try:
-                resp = self.target.services["shutdown"](True)
+                self.target.services["shutdown"](True)
             except rospy.ServiceException as e:
                 print("Service call failed: %s" % e)
 

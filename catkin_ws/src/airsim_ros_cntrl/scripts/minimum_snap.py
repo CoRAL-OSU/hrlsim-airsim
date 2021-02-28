@@ -3,15 +3,21 @@
 import time
 import numpy as np
 import math
-import sys
+from typing import Tuple
 
 import matplotlib.pyplot as plt
 
-import lqr
+from . import lqr
 
 
 class DesiredState:
-    def __init__(self):
+    """
+    Class to represent the desired final state
+    """
+    def __init__(self) -> None:
+        """
+        Constructs a desired state
+        """
         self.pos = np.zeros((3, 1))
         self.vel = np.zeros((3, 1))
         self.acc = np.zeros((3, 1))
@@ -20,7 +26,17 @@ class DesiredState:
 
 
 class MinimumSnap:
-    def __init__(self, waypoints):
+    """
+    Class to represent a minimum snap object.
+    Used to compute the desired trajectory.
+    """
+    def __init__(self, waypoints: np.ndarray) -> None:
+        """
+        Constructs a minimum snap object from the desired waypoints
+
+        Args:
+            waypoints (np.ndarray): Desired Waypoints
+        """
         self.t = time.time()
         self.state = np.zeros((10, 1))
 
@@ -111,7 +127,17 @@ class MinimumSnap:
         self.alpha[:, :, 1] = np.reshape(x2, (8, N), "F")
         self.alpha[:, :, 2] = np.reshape(x3, (8, N), "F")
 
-    def compute(self, t, state):
+    def compute(self, t: float, state: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Computes the next trajectory from time and state
+
+        Args:
+            t (float): The current time
+            state (np.ndarray): the state list
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray]: Tuple of lists
+        """
         if t > self.traj_time[-1]:
             t = self.traj_time[-1]
 
