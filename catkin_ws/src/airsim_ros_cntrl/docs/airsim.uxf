@@ -1,0 +1,161 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>0</x><y>490</y><w>300</w><h>190</h></coordinates><panel_attributes>Target
+--
+-path: List[Tuple[float, float, int]]
+-path_index: int
+--
++setup_ros(): &lt;override&gt;
++generate_path(str, int, int): List[Tuple[float, float, int]]
++run(): &lt;override&gt;
+--
+*Topics:*
+/vel: geometry_msgs.TwistStamped
+/acc: geometry_msgs.AccelStamped
+/pos: geometry_msgs.PoseStamped
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>110</y><w>250</w><h>350</h></coordinates><panel_attributes>Drone
+--
++swarm_name: String
++drone_name: String
++shutdown: Boolean
+-service_timeout: int
++client_lock: mp.Lock
++flag_lock: mp.Lock
++freq: int
++cmd: geometry_msgs.PoseStamped
++client: airsim.MultiRotorClient
+-vehicle_state: airsim.MultirotorState
+--
++setup_ros()
+-handle_shutdown(Bool)
+-handle_takeoff(airsim_ros_pkgs.Takeoff)
+-handle_shutdown(airsim_ros_pkgs.Land)
++shutdown()
++get_state(): airsim.MultirotorState
++run()
+--
+/looptime: Float
+/takeoff: airsim_ros_pkgs.Takeoff
+/land: airsim_ros_pkgs.Land
+/shutdown: Boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>420</x><y>490</y><w>330</w><h>410</h></coordinates><panel_attributes>Agent
+--
++dstep: int
++rpydot: numpy.ndarray
+-target_pose: airsim.MultirotorState
+-target_ready: Boolean
+
+--
++setup_ros(): &lt;override&gt;
+-target_pose_cb(geometry_msgs.PoseStamped)
+-target_vel_cb(geometry_msgs.TwistStamped)
+-target_acc_cb(geometry_msgs.AccelStamped)
+-track_action_cb(airsim_ros_pkgs.TrackObject)
+-cmd_pos_cb(geometry_msgs.PoseStamped)
+-moveToPosition(geometry_msgs.PoseStamped): Boolean
++moveByLQR(float, airsim.MultirotorState)
++createGraphs(rospy.rate, float)
++run(): &lt;override&gt;
+--
+*Topics:*
+/sensor/local/odom_ned: nav_msgs.Odometry
+/sensor/global/gps: sensor_msgs.NavSatFix
+/sensor/local/imu: sensor_msgs.Imu
+--
+*Services:*
+/cmd/pos: geometry_msgs.PoseStamped
+--
+*Actions:*
+/track_object: airsim_ros_cntrl.TrackObjectAction</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>870</x><y>550</y><w>570</w><h>460</h></coordinates><panel_attributes>LQR
+--
++Q: numpy.ndarray
++R: numpy.ndarray
++A: numpy.ndarray
++B: numpy.ndarray
++K: numpy.ndarray
++mass: int
++max_thrust: int
++update_gain_period: int
++prev_gain_time: float
+--
++set_costs(List[int], List[int])
++set_goals(numpy.ndarray)
++updateGains(numpy.ndarray, airsim.Vector3r, int)
+-updateGains(numpy.ndarray, numpy.ndarray): numpy.ndarray
++computeControl(Float, airsim.MultirotorState, int): Tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray]
++thurst2world(airsim.MultirotorState, numpy.ndarray): numpy.ndarray
+_+quat2rpy(List[Float, Float, Float, Float]): Tuple[Float, Float, Float]_
+_+rpy2quat(Float, Float, Float): List[float, float, float, float]_
+_+ned2xyz(numpy.ndarray): numpy.ndarray_
+_+get_state(numpy.ndarray): Tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray]_
+_+get_command(numpy.ndarray): Tuple[numpy.ndarray, numpy.ndarray]_
+_+set_state(numpy.ndarray, numpy.ndarray, numpy.ndarray): numpy.ndarray_
+_+set_command(numpy.ndarray, float): numpy.ndarray_
+_-updateA(numpy.ndarray, numpy.ndarray): numpy.ndarray_
+_-updateB(numpy.ndarray): numpy.ndarray_
+_-qdotq(numpy.ndarray, numpy.ndarray): numpy.ndarray_
+_-vdotq(numpy.ndarray, numpy.ndarray): numpy.ndarray_
+_-qdotomega(numpy.ndarray): numpy.ndarray_
+_-vdotc(numpy.ndarray): numpy.ndarray_
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>940</x><y>300</y><w>410</w><h>160</h></coordinates><panel_attributes>MinimumSnap
+--
++t: Float
++state: numpy.ndarray
++d0: numpy.ndarray
++traj_time: numpy.ndarray
++waypoints0: numpy.ndarray
++p_c: numpy.ndarray
++alpha: numpy.ndarray
+--
++compute(Float, numpy.ndarray): Tuple[numpy.ndarray, numpy.ndarray]
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>610</x><y>320</y><w>210</w><h>110</h></coordinates><panel_attributes>DesiredState
+--
++pos: numpy.ndarray
++vel: numpy.ndarray
++acc: numpy.ndarray
++yaw: numpy.ndarray
++yawdot: numpy.ndarray
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>0</y><w>210</w><h>190</h></coordinates><panel_attributes>DroneInfo
+--
++name: String
++pubs: Dict[String, rospy.Publisher]
++subs: Dict[String, rospy.Subscriber]
++services: Dict[String, rospy.ServiceProxy]
++actions: Dict[String, rospy.SimpleActionClient]
+--
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>950</y><w>500</w><h>210</h></coordinates><panel_attributes>Team
+--
++client: airsim.MultirotorClient
++lock: mp.Lock
++team_name: String
++vehicle_list: List[String]
+-shutdown: Boolean
+--
++setup_ros()
++getDroneList(): Dict[String, Agent]
++takeoff(Boolean)
++land(Boolean)
++wait(Boolean)
++cmd_pos(geometry_msgs.PoseStamped, geometry_msgs.PoseStamped, Boolean, String)
++move_to_location(List[Float], Float, Float)
++track_object(String, Float, Float)
++shutdown()
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>750</x><y>1020</y><w>210</w><h>50</h></coordinates><panel_attributes>Run_Sim
+--
++main()
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>340</x><y>30</y><w>240</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+process
+0..1</panel_attributes><additional_attributes>10;80;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>450</y><w>90</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>70;10;70;100;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>350</x><y>540</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;10;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>490</x><y>890</y><w>140</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+drones
+0..*</panel_attributes><additional_attributes>80;10;80;90;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>60</x><y>670</y><w>80</w><h>300</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+target
+0..1</panel_attributes><additional_attributes>60;10;10;280</additional_attributes></element><element><id>Relation</id><coordinates><x>489</x><y>1030</y><w>280</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+team_list
+0..*</panel_attributes><additional_attributes>10;20;260;20</additional_attributes></element><element><id>Relation</id><coordinates><x>739</x><y>590</y><w>150</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+controller
+0..1</panel_attributes><additional_attributes>130;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1120</x><y>450</y><w>100</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+traj_generator
+0..1</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>810</x><y>370</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element></diagram>

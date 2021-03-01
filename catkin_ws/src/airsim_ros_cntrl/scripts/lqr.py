@@ -263,7 +263,7 @@ class LQR:
         return roll, pitch, yaw
 
     @staticmethod
-    def rpy2quat(roll: float, pitch: float, yaw: float):
+    def rpy2quat(roll: float, pitch: float, yaw: float) -> List[float, float, float, float]:
         """
         Converts Roll, Pitch, Yaw to Quaterion
 

@@ -55,8 +55,6 @@ class Team:
         self.team_name = teamName
 
         self.vehicle_list = vehicle_list
-        self.drone_procs = dict()
-        self.drone_pubs = dict()
 
         self.drones: Dict[str, Agent] = dict()
 

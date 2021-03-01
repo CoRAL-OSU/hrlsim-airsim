@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
-from team import Team
-from target import Target
+from .team import Team
+from .target import Target
 
 import multiprocessing as mp
 import airsim, rospy
