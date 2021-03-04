@@ -7,8 +7,7 @@ from typing import Tuple
 
 import matplotlib.pyplot as plt
 
-from . import lqr
-
+import lqr
 
 class DesiredState:
     """

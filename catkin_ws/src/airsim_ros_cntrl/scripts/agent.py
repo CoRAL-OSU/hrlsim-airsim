@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 import airsim
 import rospy, actionlib
 
-from . import lqr
-from .drone import Drone
+import lqr
+from drone import Drone
 from airsim.client import MultirotorClient
 from airsim.types import MultirotorState, Vector3r
 
@@ -638,10 +638,10 @@ class Agent(Drone):
 
         prev_time = time.time()
 
-        run_swarm = False
+        run_swarm = True
 
         if run_swarm:
-            while not rospy.is_shutdown() or self._shutdown:
+            while not rospy.is_shutdown() and self._shutdown == False:
                 rate.sleep()
 
                 # Calculate a publish looptime after sleeping
@@ -681,7 +681,6 @@ class Agent(Drone):
 
         # Quit
         print(self.drone_name + " QUITTING")
-        time.sleep(0.5)
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ import rospy, actionlib
 
 from geometry_msgs.msg import TwistStamped, PoseStamped
 from airsim_ros_pkgs.srv import Takeoff, Land
+from actionlib_msgs.msg import GoalStatus
 
 from std_srvs.srv import SetBool
 
@@ -24,10 +25,10 @@ from airsim_ros_cntrl.msg import (
 )
 
 from typing import List, Dict
-from .target import Target
+from target import Target
 
-from .drone import DroneInfo
-from .agent import Agent
+from drone import DroneInfo
+from agent import Agent
 
 
 class Team:
@@ -58,7 +59,7 @@ class Team:
 
         self.drones: Dict[str, Agent] = dict()
 
-        self.target = DroneInfo(target.name, target)
+        self.target = DroneInfo(target.drone_name, target)
 
         self.__shutdown = False
 
@@ -92,22 +93,19 @@ class Team:
 
             takeoff_srv_name = prefix + "/takeoff"
             land_srv_name = prefix + "/land"
-            wait_srv_name = prefix + "/wait"
             shutdown_srv_name = prefix + "/shutdown"
 
             rospy.wait_for_service(takeoff_srv_name)
             rospy.wait_for_service(land_srv_name)
-            rospy.wait_for_service(wait_srv_name)
             rospy.wait_for_service(shutdown_srv_name)
 
             srvs = dict()
             srvs["takeoff"] = rospy.ServiceProxy(takeoff_srv_name, Takeoff)
             srvs["land"] = rospy.ServiceProxy(land_srv_name, Land)
-            srvs["wait"] = rospy.ServiceProxy(wait_srv_name, SetBool)
             srvs["shutdown"] = rospy.ServiceProxy(shutdown_srv_name, SetBool)
 
             track_object_action_name = prefix + "/track_object"
-            move_to_location_action_name = prefix + "/move_to_location"
+            #move_to_location_action_name = prefix + "/move_to_location"
 
             actions = dict()
             actions["track"] = actionlib.SimpleActionClient(
@@ -115,10 +113,10 @@ class Team:
             )
             actions["track"].wait_for_server()
 
-            actions["move_to_location"] = actionlib.SimpleActionClient(
-                move_to_location_action_name, MoveToLocationAction
-            )
-            actions["move_to_location"].wait_for_server()
+            #actions["move_to_location"] = actionlib.SimpleActionClient(
+            #    move_to_location_action_name, MoveToLocationAction
+            #)
+            #actions["move_to_location"].wait_for_server()
 
             self.drones[i].pubs = pubs
             self.drones[i].services = srvs
@@ -176,11 +174,10 @@ class Team:
             self.wait()
 
     def wait(self) -> None:
-        """
-        Funciton to wait for agents to complete tracking
-        """
         for drone in self.vehicle_list:
-            self.drones[drone].actions["track"].wait_for_result()
+            for action in self.drones[drone].actions.values():
+                if action.get_state() != GoalStatus.LOST:
+                    action.wait_for_result()   
 
     def cmd_pos(self, cmd: PoseStamped=None, cmd_all: PoseStamped=None, wait: bool=False, drone_name: str=None) -> None:
         """

@@ -36,7 +36,7 @@ class DroneInfo:
         services (Dict[str, rospy.ServiceProxy], optional): Dict of services associated with a drone. Defaults to None.
         actions (Dict[str, SimpleActionClient], optional): Dict of actions associated with a drone. Defaults to None.
     """
-    def __init__(self, DroneName: str, process: Drone, pubs: Dict[str, rospy.Publisher]=None, subs: Dict[str, rospy.Subscriber]=None, services: Dict[str, rospy.ServiceProxy]=None, actions: Dict[str, SimpleActionClient]=None):
+    def __init__(self, DroneName: str, process, pubs: Dict[str, rospy.Publisher]=None, subs: Dict[str, rospy.Subscriber]=None, services: Dict[str, rospy.ServiceProxy]=None, actions: Dict[str, SimpleActionClient]=None):
         """
         Constructs info about a drone.
         Used in teams to keep track of all the different ros topics
@@ -89,7 +89,7 @@ class Drone(Process):
             sim_client (airsim.MultirotorClient): The client to use to execture commands.
             client_lock (mp.Lock): The lock for the sim_client.
         """
-        super().__init__(self)
+        Process.__init__(self)
 
         self.swarm_name = swarmName
         self.drone_name = droneName
@@ -152,8 +152,7 @@ class Drone(Process):
         Returns (StdBoolResponse): True on success
         """
 
-        print("TARGET SHUTDOWN REQUEST RECEIVED")
-
+        print(self.drone_name + " SHUTDOWN REQUEST RECEIVED")
         with self.flag_lock:
             self._shutdown = True
 
@@ -162,7 +161,7 @@ class Drone(Process):
                 self.client.enableApiControl(False, vehicle_name=self.drone_name)
 
 
-            print("TARGET SHUTDOWN REQUEST HANDLED")
+            print(self.drone_name + " SHUTDOWN REQUEST HANDLED")
             return SetBoolResponse(True, "")
 
     def __handle_takeoff(self, req: TakeoffRequest) -> TakeoffResponse:
@@ -273,7 +272,7 @@ class Drone(Process):
                 print(
                     self.drone_name
                     + " Error from getMultirotorState API call: {0}".format(
-                        error.message
+                        str(error)
                     )
                 )
 
@@ -290,7 +289,7 @@ class Drone(Process):
                 print(
                     self.drone_name
                     + " Error from getMultirotorState API call: {0}".format(
-                        error.message
+                        str(error)
                     )
                 )
             else:

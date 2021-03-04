@@ -21,7 +21,7 @@ from geometry_msgs.msg import (
     Accel,
 )
 from std_msgs.msg import Header, Float32
-from .drone import Drone
+from drone import Drone
 
 
 class Target(Drone):
@@ -60,9 +60,9 @@ class Target(Drone):
         """
         super().__init__(swarmName, droneName, sim_client, client_lock)
 
-        with self.__client_lock:
-            self.__path_future = self.__client.takeoffAsync(
-                vehicle_name=self.__drone_name
+        with self.client_lock:
+            self.__path_future = self.client.takeoffAsync(
+                vehicle_name=self.drone_name
             )
 
         self.__path = path if path_type == "" else self.generate_path(path_type)
@@ -87,11 +87,11 @@ class Target(Drone):
 
         Returns: None
         """
-        super().__setup_ros()
+        super().setup_ros()
 
-        vel_topic = self.__topic_prefix + "/vel"
-        pos_topic = self.__topic_prefix + "/pos"
-        acc_topic = self.__topic_prefix + "/acc"
+        vel_topic = self.topic_prefix + "/vel"
+        pos_topic = self.topic_prefix + "/pos"
+        acc_topic = self.topic_prefix + "/acc"
 
         self.__pos_pub = rospy.Publisher(pos_topic, PoseStamped, queue_size=10)
         self.__vel_pub = rospy.Publisher(vel_topic, TwistStamped, queue_size=10)
@@ -136,30 +136,31 @@ class Target(Drone):
 
         prev_time = time.time()
 
-        with self.__client_lock:
-            self.__path_future = self.__client.moveToPositionAsync(
-                *self.__path[self.__path_index], 2, 20, vehicle_name=self.__drone_name
+        with self.client_lock:
+            self.__path_future = self.client.moveToPositionAsync(
+                *self.__path[self.__path_index], 2, 20, vehicle_name=self.drone_name
             )
         self.__path_index += 1
         if self.__path_index == len(self.__path):
             self.__path_index = 0
 
-        while not rospy.is_shutdown() and not self.__shutdown:
-            with self.__flag_lock:
-                if self.__shutdown == True:
+
+        while not rospy.is_shutdown() and self._shutdown == False:
+            with self.flag_lock:
+                if self._shutdown == True:
                     break
 
             state = self.get_state().kinematics_estimated
 
             if self.__pos_pub:
                 point = Point(
-                    state.position.x_val, pose.position.y_val, pose.position.z_val
+                    state.position.x_val, state.position.y_val, state.position.z_val
                 )
                 quat = Quaternion(
                     state.orientation.x_val,
-                    pose.orientation.y_val,
-                    pose.orientation.z_val,
-                    pose.orientation.w_val,
+                    state.orientation.y_val,
+                    state.orientation.z_val,
+                    state.orientation.w_val,
                 )
                 pose = Pose(point, quat)
                 header = Header()
@@ -202,13 +203,13 @@ class Target(Drone):
                 msg = AccelStamped(header, accel)
                 self.__acc_pub.publish(msg)
 
-            if self.__looptime_pub:
+            if self.looptime_pub:
                 elapsed_time = time.time() - prev_time
                 prev_time = time.time()
 
                 msg = Float32(elapsed_time)
-                self.__looptime_pub.publish(msg)
+                self.looptime_pub.publish(msg)
 
             rate.sleep()
 
-        print(self.__drone_name + " QUITTING")
+        print(self.drone_name + " QUITTING")

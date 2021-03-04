@@ -6,7 +6,7 @@ from airsim import Vector3r, Quaternionr, MultirotorState
 import slycot
 import control
 
-from . import minimum_snap
+import minimum_snap
 
 class LQR:
     """
@@ -243,7 +243,7 @@ class LQR:
         return accel
 
     @staticmethod
-    def quat2rpy(q: List[float, float, float, float]) -> Tuple[float, float, float]:
+    def quat2rpy(q: List[float]) -> Tuple[float, float, float]:
         """
         Convert Quaterion to Roll, Pitch, Yaw 
 
@@ -263,7 +263,7 @@ class LQR:
         return roll, pitch, yaw
 
     @staticmethod
-    def rpy2quat(roll: float, pitch: float, yaw: float) -> List[float, float, float, float]:
+    def rpy2quat(roll: float, pitch: float, yaw: float) -> List[float]:
         """
         Converts Roll, Pitch, Yaw to Quaterion
 
