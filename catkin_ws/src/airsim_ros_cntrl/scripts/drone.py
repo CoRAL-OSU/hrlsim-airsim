@@ -378,6 +378,10 @@ class Drone(mp.Process):
                 #waypoints[-1, 0:3] = np.array([x,y,z])
 
                 waypoints = np.array([start_pos, [x,y,z]])
+
+                waypoints = np.array([current_pos, target_pos]).T
+                
+
                 self.__controller.set_goals(waypoints.T, fv)
 
 
