@@ -54,6 +54,8 @@ def shutdown() -> None:
 
 
 if __name__ == "__main__":
+
+
     ######################################
     #
     #     SETUP PYTHON CLIENT

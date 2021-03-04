@@ -9,6 +9,8 @@ from airsim.client import MultirotorClient
 
 import rospy, actionlib
 
+from actionlib_msgs.msg import GoalStatus
+
 from geometry_msgs.msg import TwistStamped, PoseStamped
 from airsim_ros_pkgs.srv import Takeoff, Land
 from actionlib_msgs.msg import GoalStatus
@@ -59,7 +61,10 @@ class Team:
 
         self.drones: Dict[str, Agent] = dict()
 
-        self.target = DroneInfo(target.drone_name, target)
+        if target != None:
+            self.target = DroneInfo(target.drone_name, target)
+        else:
+            self.target = None
 
         self.__shutdown = False
 
@@ -122,14 +127,14 @@ class Team:
             self.drones[i].services = srvs
             self.drones[i].actions = actions
 
-            target_prefix = "/" + self.team_name + "/" + self.target.name
-            # subs = dict()
-            # subs['pos'] = rospy.Subscriber(target_prefix+"/pos", PoseStamped, )
+            if self.target != None:
+                target_prefix = "/" + self.team_name + "/" + self.target.name
+                # subs = dict()
+                # subs['pos'] = rospy.Subscriber(target_prefix+"/pos", PoseStamped, )
 
-            srvs = dict()
-            srvs["shutdown"] = rospy.ServiceProxy(target_prefix + "/shutdown", SetBool)
-
-            self.target.services = srvs
+                srvs = dict()
+                srvs["shutdown"] = rospy.ServiceProxy(target_prefix + "/shutdown", SetBool)
+                self.target.services = srvs
 
     def getDroneList(self) -> Dict[str, Agent]:
         """
@@ -298,7 +303,8 @@ class Team:
                     print("Service call failed: %s" % e)
 
             try:
-                self.target.services["shutdown"](True)
+                if self.target != None:
+                    resp = self.target.services['shutdown'](True)
             except rospy.ServiceException as e:
                 print("Service call failed: %s" % e)
 

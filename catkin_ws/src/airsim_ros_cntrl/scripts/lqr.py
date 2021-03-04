@@ -59,6 +59,10 @@ class LQR:
         waypoints[1, :] = tmp
         waypoints[2, :] = -waypoints[2, :]
 
+        waypoints[0,:] = waypoints[1,:]
+        waypoints[1,:] = tmp
+        waypoints[2,:] = -waypoints[2,:]
+        
         self.traj_generator = minimum_snap.MinimumSnap(waypoints)
 
     def updateGains(self, x: np.ndarray, rpydot:Vector3r, prev_accel_cmd: int) -> None:
