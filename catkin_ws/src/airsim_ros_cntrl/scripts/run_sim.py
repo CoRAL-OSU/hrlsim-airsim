@@ -5,13 +5,23 @@ from target import Target
 
 import multiprocessing as mp
 import airsim, rospy
+from typing import List
 import os, sys, json, time
 
 
-def getDroneListFromSettings(settingsFilePath=None):
+def getDroneListFromSettings(settingsFilePath: str=None) -> List[str]:
+    """
+    Loads the list of drones from the airsim setting file
+
+    Args:
+        settingsFilePath (str, optional): Path to airsim settings file. Defaults to None.
+
+    Returns:
+        List[str]: List of vehicles in file
+    """
     if settingsFilePath == None:
-        HOME = os.getenv('HOME')
-        settings_path = HOME + '/Documents/AirSim/settings.json'
+        HOME = os.getenv("HOME")
+        settings_path = HOME + "/Documents/AirSim/settings.json"
     else:
         settings_path = settingsFilePath
 
@@ -31,20 +41,17 @@ def getDroneListFromSettings(settingsFilePath=None):
     return vehicle_list
 
 
-
 team_list = []
-def sigint_handler(sig, frame):
 
+def shutdown() -> None:
+    """
+    Shuts downs all teams 
+    """
     for team in team_list:
         team.shutdown()
 
     sys.exit(0)
 
-def shutdown():
-    for team in team_list:
-        team.shutdown()
-
-    sys.exit(0)
 
 if __name__ == "__main__":
 
@@ -54,8 +61,8 @@ if __name__ == "__main__":
     #     SETUP PYTHON CLIENT
     # 
   
-    #ip = ""                    # UNCOMMENT TO RUN ON LOCALHOST
-    ip = "192.168.1.96"         # UNCOMMENT TO RUN ON REMOTE HOST
+    ip = ""                    # UNCOMMENT TO RUN ON LOCALHOST
+    #ip = "192.168.1.96"         # UNCOMMENT TO RUN ON REMOTE HOST
     
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -69,7 +76,7 @@ if __name__ == "__main__":
     #     SET WIND
 
     wind = airsim.Vector3r(0, 0, 0)     # CREATE WIND VECTOR -> airsim.Vector3r(n, e, d) [m/s in world frame]
-    client.simSetWind(wind)             # SET WIND
+    #client.simSetWind(wind)             # SET WIND
 
 
 
@@ -94,26 +101,33 @@ if __name__ == "__main__":
         elif "Target" in v:
             target_list.append(v)
 
-    if len(target_list) > 0:
-        for i in range(len(target_list)):
-            target_procs[target_list[i]] = Target("Team"+str(i), target_list[i], client, lock, path=[tuple([100+(3*(-1**i)),0,-2])])
-            target_procs[target_list[i]].start()
 
-            sub_drone = drone_list[i*len(drone_list)//len(target_list):(i+1)*len(drone_list)//len(target_list)]
-            s = Team("Team" + str(i), sub_drone, target_list[i], client, lock)
-            team_list.append(s)
-    
-    else:
-        s = Team("Team0", vehicle_list, None, client, lock)
+    for i in range(len(target_list)):
+        target_procs[target_list[i]] = Target(
+            "Team" + str(i),
+            target_list[i],
+            client,
+            lock,
+            path=[tuple([100 + (3 * (-(1 ** i))), 0, -2])],
+        )
+        target_procs[target_list[i]].start()
+
+        sub_drone = drone_list[
+            i
+            * len(drone_list)
+            // len(target_list) : (i + 1)
+            * len(drone_list)
+            // len(target_list)
+        ]
+        s = Team("Team" + str(i), sub_drone, target_procs[target_list[i]], client, lock)
         team_list.append(s)
-
-
 
 
     ######################################
     #
     #     SETUP ROS
 
+    print("SETUP ROS ON PARENT PROCESS")
     rospy.init_node("swarm")
     rospy.on_shutdown(shutdown)
 
@@ -136,19 +150,19 @@ if __name__ == "__main__":
     time.sleep(5)
 
 
-    print("MOVE TO [0,0,-4]")
-    team_list[0].move_to_location(target=[10,10,-4], timeout=10, tolerance=0.5)
-    team_list[0].wait()
+    #print("MOVE TO [0,0,-4]")
+    #team_list[0].move_to_location(target=[10,10,-4], timeout=10, tolerance=0.5)
+    #team_list[0].wait()
 
 
-    #print("BEGIN TRACKING")
-    #team_list[0].track_object("Target0", 25, -10)
+    print("BEGIN TRACKING")
+    team_list[0].track_object("Target0", 25, -10)
     #team_list[1].track_object("Target1", 25, -10)
     
-    #for team in team_list:
-    #    team.wait()
+    for team in team_list:
+        team.wait()
 
-    #team_list[0].track_object("Target0", 5, 0)
+    team_list[0].track_object("Target0", 5, 0)
     #team_list[1].track_object("Target1", 5, 0)
     
     for team in team_list:
@@ -164,3 +178,5 @@ if __name__ == "__main__":
     print("SHUTDOWN")
     for team in team_list:
         team.shutdown()
+
+    print("SIMULATION ENDED")

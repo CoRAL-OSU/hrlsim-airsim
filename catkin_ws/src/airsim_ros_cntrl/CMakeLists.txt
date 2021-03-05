@@ -106,7 +106,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES airsim_ros_cntrl
-  CATKIN_DEPENDS airsim_ros_pkgs actionlib_msgs
+  CATKIN_DEPENDS airsim_ros_pkgs  actionlib_msgs
 #  DEPENDS system_lib
 )
 
