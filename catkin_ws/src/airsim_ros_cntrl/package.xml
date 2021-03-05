@@ -50,11 +50,8 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>airsim_ros_pkgs</build_depend>
-  <build_depend>airsim_tutorial_pkgs</build_depend>
   <build_export_depend>airsim_ros_pkgs</build_export_depend>
-  <build_export_depend>airsim_tutorial_pkgs</build_export_depend>
   <exec_depend>airsim_ros_pkgs</exec_depend>
-  <exec_depend>airsim_tutorial_pkgs/</exec_depend>
 
   <exec_depend>message_generation</exec_depend>
 

@@ -9,7 +9,6 @@ project(airsim_ros_cntrl)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   airsim_ros_pkgs
-  airsim_tutorial_pkgs
   actionlib_msgs
 )
 
@@ -107,7 +106,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES airsim_ros_cntrl
-  CATKIN_DEPENDS airsim_ros_pkgs airsim_tutorial_pkgs/ actionlib_msgs
+  CATKIN_DEPENDS airsim_ros_pkgs  actionlib_msgs
 #  DEPENDS system_lib
 )
 
