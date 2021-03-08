@@ -46,7 +46,7 @@ class LQR:
             assert len(R) == 4, "R must be a list of length 4"
             self.R = np.diag(R)
 
-    def set_goals(self, waypoints: np.ndarray) -> None:
+    def set_goals(self, waypoints: np.ndarray, ic: np.ndarray, fc: np.ndarray) -> None:
         """
         Sets the goals for the LQR controller.
 
@@ -58,8 +58,18 @@ class LQR:
         waypoints[0, :] = waypoints[1, :]
         waypoints[1, :] = tmp
         waypoints[2, :] = -waypoints[2, :]
-        
-        self.traj_generator = minimum_snap.MinimumSnap(waypoints)
+
+        tmp = np.copy(ic[:, 0])
+        ic[:, 0] = ic[:, 1]
+        ic[:, 1] = tmp
+        ic[:, 2] = -ic[:, 2]
+
+        tmp = np.copy(fc[:, 0])
+        fc[:, 0] = fc[:, 1]
+        fc[:, 1] = tmp
+        fc[:, 2] = -fc[:, 2]
+
+        self.traj_generator = minimum_snap.MinimumSnap(waypoints, ic, fc)
 
     def updateGains(self, x: np.ndarray, rpydot:Vector3r, prev_accel_cmd: int) -> None:
         """

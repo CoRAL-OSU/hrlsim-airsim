@@ -29,7 +29,7 @@ class MinimumSnap:
     Class to represent a minimum snap object.
     Used to compute the desired trajectory.
     """
-    def __init__(self, waypoints: np.ndarray) -> None:
+    def __init__(self, waypoints: np.ndarray, initial_conditions: np.ndarray, final_conditions: np.ndarray) -> None:
         """
         Constructs a minimum snap object from the desired waypoints
 
@@ -92,6 +92,13 @@ class MinimumSnap:
         A[8*N-2, np.arange(0,8)+8*(N-1)] = self.p_c[2,:]
         A[8*N-1, np.arange(0,8)+8*(N-1)] = self.p_c[3,:]
 
+        b[8*N-6, :] = initial_conditions[0,:]
+        b[8*N-5, :] = initial_conditions[1,:]
+        b[8*N-4, :] = initial_conditions[2,:]
+        b[8*N-3, :] = final_conditions[0,:]
+        b[8*N-2, :] = final_conditions[1,:]
+        b[8*N-1, :] = final_conditions[2,:]
+
 
         #s = 0.5*fv*self.d0[0]
         #for i in range(0,6):
@@ -134,55 +141,55 @@ class MinimumSnap:
 
         desired_state = DesiredState()
 
-        if t == 0:
-            desired_state.pos = self.waypoints0[:, 0]
-            desired_state.vel = state[7:9, 0]  # np.zeros((3,1))
-            desired_state.acc = np.zeros((3, 1))
-        else:
-            scale = t / self.d0[t_index - 1]
+        #if t == 0:
+        #    desired_state.pos = self.waypoints0[:, 0]
+        #    desired_state.vel = state[7:9, 0]  # np.zeros((3,1))
+        #    desired_state.acc = np.zeros((3, 1))
+        #else:
+        scale = t / self.d0[t_index - 1]
 
-            f_p = np.squeeze(self.alpha[:, t_index - 1, :]).T * np.reshape(
-                np.repeat(self.p_c[0, :], 3), (3, 8), "F"
-            )
-            f_p = np.flip(f_p, 1)
-            desired_state.pos = np.array(
+        f_p = np.squeeze(self.alpha[:, t_index - 1, :]).T * np.reshape(
+            np.repeat(self.p_c[0, :], 3), (3, 8), "F"
+        )
+        f_p = np.flip(f_p, 1)
+        desired_state.pos = np.array(
+            [
+                [np.polyval(f_p[0, :], scale)],
+                [np.polyval(f_p[1, :], scale)],
+                [np.polyval(f_p[2, :], scale)],
+            ]
+        )
+
+        f_v = np.squeeze(self.alpha[:, t_index - 1, :]).T * np.reshape(
+            np.repeat(self.p_c[1, :], 3), (3, 8), "F"
+        )
+        f_v = np.flip(f_v[:, np.arange(1, 8)], 1)
+        desired_state.vel = (
+            np.array(
                 [
-                    [np.polyval(f_p[0, :], scale)],
-                    [np.polyval(f_p[1, :], scale)],
-                    [np.polyval(f_p[2, :], scale)],
+                    [np.polyval(f_v[0, :], scale)],
+                    [np.polyval(f_v[1, :], scale)],
+                    [np.polyval(f_v[2, :], scale)],
                 ]
             )
+            / self.d0[t_index - 1]
+        )
 
-            f_v = np.squeeze(self.alpha[:, t_index - 1, :]).T * np.reshape(
-                np.repeat(self.p_c[1, :], 3), (3, 8), "F"
-            )
-            f_v = np.flip(f_v[:, np.arange(1, 8)], 1)
-            desired_state.vel = (
-                np.array(
-                    [
-                        [np.polyval(f_v[0, :], scale)],
-                        [np.polyval(f_v[1, :], scale)],
-                        [np.polyval(f_v[2, :], scale)],
-                    ]
-                )
-                / self.d0[t_index - 1]
-            )
+        f_a = np.squeeze(self.alpha[:, t_index - 1, :]).T * np.reshape(
+            np.repeat(self.p_c[2, :], 3), (3, 8), "F"
+        )
+        f_a = np.flip(f_a[:, np.arange(2, 8)], 1)
 
-            f_a = np.squeeze(self.alpha[:, t_index - 1, :]).T * np.reshape(
-                np.repeat(self.p_c[2, :], 3), (3, 8), "F"
+        desired_state.acc = (
+            np.array(
+                [
+                    [np.polyval(f_a[0, :], scale)],
+                    [np.polyval(f_a[1, :], scale)],
+                    [np.polyval(f_a[2, :], scale)],
+                ]
             )
-            f_a = np.flip(f_a[:, np.arange(2, 8)], 1)
-
-            desired_state.acc = (
-                np.array(
-                    [
-                        [np.polyval(f_a[0, :], scale)],
-                        [np.polyval(f_a[1, :], scale)],
-                        [np.polyval(f_a[2, :], scale)],
-                    ]
-                )
-                / self.d0[t_index - 1] ** 2
-            )
+            / self.d0[t_index - 1] ** 2
+        )
 
         dx = self.waypoints0[0, -1] - state[0, 0]
         dy = self.waypoints0[1, -1] - state[1, 0]
@@ -246,7 +253,9 @@ if __name__ == "__main__":
 
     print(waypoints.shape)
 
-    traj_generator = MinimumSnap(waypoints, fv=np.array([0,0,0]))
+    ic = np.zeros((3,3))
+    fc = np.zeros((3,3))
+    traj_generator = MinimumSnap(waypoints, ic, fc)
 
     t = np.linspace(0, 50, 1000)
     states = np.empty((0, 3))

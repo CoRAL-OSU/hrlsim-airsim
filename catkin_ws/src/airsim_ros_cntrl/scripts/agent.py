@@ -257,7 +257,7 @@ class Agent(Drone):
 
         print(self.drone_name + " ENTERING WHILE LOOP")
 
-        update_object_location_period = 0.1  # seconds
+        update_object_location_period = 0.2  # seconds
         prev_object_update_time = 0
 
         start_pos = state.kinematics_estimated.position.to_numpy_array()
@@ -274,7 +274,6 @@ class Agent(Drone):
 
             if time.time() - prev_object_update_time > update_object_location_period:
                 target_pose = self.__target_pose.kinematics_estimated
-                prev_object_update_time = time.time()
 
                 bias = np.array(
                     [
@@ -296,21 +295,38 @@ class Agent(Drone):
                     ]
                 )
 
-                bias *= 10
+                #bias *= 10
+                bias *= 0
 
-                x = target_pose.position.x_val + goal.offset[0] + bias[0]
-                y = target_pose.position.y_val + goal.offset[1] + bias[1]
-                z = target_pose.position.z_val + goal.offset[2] + bias[2]
+                p = start_pos#pos
+                
+                v = np.zeros(3)#state.kinematics_estimated.linear_velocity.to_numpy_array()
+                a = np.zeros(3)#state.kinematics_estimated.linear_acceleration.to_numpy_array()
+                j = np.zeros(3)
+                ic = np.array([v, a, j]).T
 
-                waypoints = np.array([start_pos, [x, y, z]]).T
-                self.__controller.set_goals(waypoints)
 
-            # self.moveByLQR(time.time()-prev_object_update_time, state)
+                pt = target_pose.position.to_numpy_array() + goal.offset + bias
+
+                vt = target_pose.linear_velocity.to_numpy_array()
+                at = target_pose.linear_acceleration.to_numpy_array()
+                jt = np.zeros(3)
+                fc = np.array([vt, at, jt]).T
+
+                #waypoints = np.array([start_pos, pt).T
+                waypoints = np.array([p, pt]).T
+
+                self.__controller.set_goals(waypoints, ic, fc)
+
+                prev_object_update_time = time.time()
+
+
+            #self.moveByLQR(time.time()-prev_object_update_time+0.5, state)
             self.moveByLQR(time.time() - start_time, state)
 
             state = self.get_state()
 
-            feedback_vector = airsim.Vector3r(x, y, z)
+            feedback_vector = airsim.Vector3r(pt[0], pt[1], pt[2])
             feedback_vector = calc_distance(
                 feedback_vector, state.kinematics_estimated.position
             )
