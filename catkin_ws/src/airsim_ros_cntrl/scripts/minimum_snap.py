@@ -9,10 +9,12 @@ import matplotlib.pyplot as plt
 
 import lqr
 
+
 class DesiredState:
     """
     Class to represent the desired final state
     """
+
     def __init__(self) -> None:
         """
         Constructs a desired state
@@ -41,24 +43,25 @@ class MinimumSnap:
 
         d = waypoints[:, 1:] - waypoints[:, 0:-1]
 
-
-        avg_spd = 2#min(1,np.linalg.norm(fv))
-        self.d0 = np.sqrt(d[0,:]*d[0,:] + d[1,:]*d[1,:] + d[2,:]*d[2,:])/avg_spd
+        avg_spd = 2  # min(1,np.linalg.norm(fv))
+        self.d0 = (
+            np.sqrt(d[0, :] * d[0, :] + d[1, :] * d[1, :] + d[2, :] * d[2, :]) / avg_spd
+        )
 
         self.traj_time = np.append(0, np.cumsum(self.d0))
         self.waypoints0 = np.copy(waypoints)
 
         N = np.size(waypoints, 1) - 1
 
-        self.p_c = np.zeros((7,8))
+        self.p_c = np.zeros((7, 8))
 
-        self.p_c[0,:] = np.ones((1,8))
-        self.p_c[1,:] = np.array([0,1,2,3,4,5,6,7])
-        self.p_c[2,:] = np.array([0,0,2,6,12,20,30,42])
-        self.p_c[3,:] = np.array([0,0,0,6,24,60,120,210])
-        self.p_c[4,:] = np.array([0,0,0,0,24,120,360,840])
-        self.p_c[5,:] = np.array([0,0,0,0,0,120,720,2520])
-        self.p_c[6,:] = np.array([0,0,0,0,0,0,720,5040])
+        self.p_c[0, :] = np.ones((1, 8))
+        self.p_c[1, :] = np.array([0, 1, 2, 3, 4, 5, 6, 7])
+        self.p_c[2, :] = np.array([0, 0, 2, 6, 12, 20, 30, 42])
+        self.p_c[3, :] = np.array([0, 0, 0, 6, 24, 60, 120, 210])
+        self.p_c[4, :] = np.array([0, 0, 0, 0, 24, 120, 360, 840])
+        self.p_c[5, :] = np.array([0, 0, 0, 0, 0, 120, 720, 2520])
+        self.p_c[6, :] = np.array([0, 0, 0, 0, 0, 0, 720, 5040])
 
         head_c = np.diag(self.p_c)
         head_c = np.diag(head_c)
@@ -77,20 +80,24 @@ class MinimumSnap:
             b[(i - 1) * 8 + 1, :] = waypoints[:, i].T
 
             if i < N:
-                A[(i-1)*8+2, np.arange(0,16)+(i-1)*8] = np.append(self.p_c[1,:], -head_c[1,:])
-                A[(i-1)*8+3, np.arange(0,16)+(i-1)*8] = np.append(self.p_c[2,:], -head_c[2,:])
-                A[(i-1)*8+4, np.arange(0,16)+(i-1)*8] = np.append(self.p_c[3,:], -head_c[3,:])
-                A[(i-1)*8+5, np.arange(0,16)+(i-1)*8] = np.append(self.p_c[4,:], -head_c[4,:])
-                A[(i-1)*8+6, np.arange(0,16)+(i-1)*8] = np.append(self.p_c[5,:], -head_c[5,:])
-                A[(i-1)*8+7, np.arange(0,16)+(i-1)*8] = np.append(self.p_c[6,:], -head_c[6,:])
-
-
-        A[8*N-6, np.arange(0,8)] = head_c[1,:]
-        A[8*N-5, np.arange(0,8)] = head_c[2,:]
-        A[8*N-4, np.arange(0,8)] = head_c[3,:]
-        A[8*N-3, np.arange(0,8)+8*(N-1)] = self.p_c[1,:]
-        A[8*N-2, np.arange(0,8)+8*(N-1)] = self.p_c[2,:]
-        A[8*N-1, np.arange(0,8)+8*(N-1)] = self.p_c[3,:]
+                A[(i - 1) * 8 + 2, np.arange(0, 16) + (i - 1) * 8] = np.append(
+                    self.p_c[1, :], -head_c[1, :]
+                )
+                A[(i - 1) * 8 + 3, np.arange(0, 16) + (i - 1) * 8] = np.append(
+                    self.p_c[2, :], -head_c[2, :]
+                )
+                A[(i - 1) * 8 + 4, np.arange(0, 16) + (i - 1) * 8] = np.append(
+                    self.p_c[3, :], -head_c[3, :]
+                )
+                A[(i - 1) * 8 + 5, np.arange(0, 16) + (i - 1) * 8] = np.append(
+                    self.p_c[4, :], -head_c[4, :]
+                )
+                A[(i - 1) * 8 + 6, np.arange(0, 16) + (i - 1) * 8] = np.append(
+                    self.p_c[5, :], -head_c[5, :]
+                )
+                A[(i - 1) * 8 + 7, np.arange(0, 16) + (i - 1) * 8] = np.append(
+                    self.p_c[6, :], -head_c[6, :]
+                )
 
         b[8*N-6, :] = initial_conditions[0,:]
         b[8*N-5, :] = initial_conditions[1,:]
@@ -99,15 +106,21 @@ class MinimumSnap:
         b[8*N-2, :] = final_conditions[1,:]
         b[8*N-1, :] = final_conditions[2,:]
 
+        A[8 * N - 6, np.arange(0, 8)] = head_c[1, :]
+        A[8 * N - 5, np.arange(0, 8)] = head_c[2, :]
+        A[8 * N - 4, np.arange(0, 8)] = head_c[3, :]
+        A[8 * N - 3, np.arange(0, 8) + 8 * (N - 1)] = self.p_c[1, :]
+        A[8 * N - 2, np.arange(0, 8) + 8 * (N - 1)] = self.p_c[2, :]
+        A[8 * N - 1, np.arange(0, 8) + 8 * (N - 1)] = self.p_c[3, :]
 
-        #s = 0.5*fv*self.d0[0]
-        #for i in range(0,6):
+        # s = 0.5*fv*self.d0[0]
+        # for i in range(0,6):
         #    b[8*N-6+i, 0:3] = s[0:3]*(i+1)
 
-        x1 = np.matmul(np.linalg.inv(A), b[:,0])    
-        x2 = np.matmul(np.linalg.inv(A), b[:,1])
-        x3 = np.matmul(np.linalg.inv(A), b[:,2])
-        
+        x1 = np.matmul(np.linalg.inv(A), b[:, 0])
+        x2 = np.matmul(np.linalg.inv(A), b[:, 1])
+        x3 = np.matmul(np.linalg.inv(A), b[:, 2])
+
         self.alpha = np.zeros((8, N, 3))
 
         self.alpha = np.zeros((8, N, 3))

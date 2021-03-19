@@ -65,6 +65,7 @@ class Agent(Drone):
         sim_client (airsim.MultirotorClient): The client to use to execture commands.
         client_lock (mp.Lock): The lock for the sim_client.
     """
+
     def __init__(
         self,
         swarmName: str,
@@ -191,8 +192,8 @@ class Agent(Drone):
         """
         with self.flag_lock:
             accel = msg.accel.linear
-            self.__target_pose.kinematics_estimated.linear_acceleration = (
-                airsim.Vector3r(accel.x, accel.y, accel.z)
+            self.__target_pose.kinematics_estimated.linear_acceleration = airsim.Vector3r(
+                accel.x, accel.y, accel.z
             )
             self.__target_ready = True
 
@@ -331,15 +332,11 @@ class Agent(Drone):
                 feedback_vector, state.kinematics_estimated.position
             )
 
-            feedback_magnitude = airsim.Vector3r.distance_to(
-                feedback_vector, state.kinematics_estimated.position
-            )
-
             feedback.dist = []
             feedback.dist.append(feedback_vector.x_val)
             feedback.dist.append(feedback_vector.y_val)
             feedback.dist.append(feedback_vector.z_val)
-            feedback.dist_mag = feedback_magnitude
+            feedback.dist_mag = feedback_vector.get_length()
 
             self.__track_action.publish_feedback(feedback)
 
@@ -504,9 +501,7 @@ class Agent(Drone):
             prev_time (float): the time previously executed
         """
         states = np.zeros((1, 15))
-        states[
-            0, 0:3
-        ] = self.get_state().kinematics_estimated.position.to_numpy_array()
+        states[0, 0:3] = self.get_state().kinematics_estimated.position.to_numpy_array()
 
         times = np.zeros((1, 1))
 

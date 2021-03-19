@@ -8,11 +8,13 @@ import control
 
 import minimum_snap
 
+
 class LQR:
     """
     Class to compute the LQR controls.
     Uses minimum snap to compute trajectories
     """
+
     def __init__(self) -> None:
         """
         Constructs the intial LQR matrices
@@ -30,7 +32,7 @@ class LQR:
         self.update_gain_period = 0.2  # seconds
         self.prev_gain_time = time.time()
 
-    def set_costs(self, Q: List[int]=None, R: List[int]=None) -> None:
+    def set_costs(self, Q: List[int] = None, R: List[int] = None) -> None:
         """
         Sets the control matrices Q and R 
 
@@ -71,7 +73,7 @@ class LQR:
 
         self.traj_generator = minimum_snap.MinimumSnap(waypoints, ic, fc)
 
-    def updateGains(self, x: np.ndarray, rpydot:Vector3r, prev_accel_cmd: int) -> None:
+    def updateGains(self, x: np.ndarray, rpydot: Vector3r, prev_accel_cmd: int) -> None:
         """
         Updates the gains for the controller
 
@@ -87,7 +89,7 @@ class LQR:
         cp = math.cos(pitch)
         tp = math.tan(pitch)
 
-        #np.matrix is being depricated should move to np.ndarray
+        # np.matrix is being depricated should move to np.ndarray
         R = np.matrix([[1, sr * tp, cr * tp], [0, cr, -sr], [0, sr / cp, cr / cp]])
 
         rpydot = np.array([[rpydot.y_val, -rpydot.x_val, rpydot.z_val]]).T
@@ -140,7 +142,9 @@ class LQR:
 
         return self.K
 
-    def computeControl(self, t: float, state: MultirotorState, prev_accel_cmd: int) -> Tuple[np.ndarray, np.ndarray, Any]:
+    def computeControl(
+        self, t: float, state: MultirotorState, prev_accel_cmd: int
+    ) -> Tuple[np.ndarray, np.ndarray, Any]:
         """
         Computes the control for a given state
 

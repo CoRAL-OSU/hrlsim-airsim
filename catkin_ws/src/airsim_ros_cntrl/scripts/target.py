@@ -5,8 +5,8 @@ import time
 from math import cos, pi, sin
 from typing import List, Tuple
 
-from matplotlib.pyplot import flag
 from airsim.client import MultirotorClient
+from airsim import Vector3r
 import rospy
 
 from geometry_msgs.msg import (
@@ -35,9 +35,10 @@ class Target(Drone):
         droneName (str): The name of the drone itself.
         sim_client (airsim.MultirotorClient): The client to use to execture commands.
         client_lock (mp.Lock): The lock for the sim_client.
-        path (List[Tuple[float, float, int]], optional): The path for the target to follow, if blank will be stationary. Defaults to [].
+        path (List[], optional): The path for the target to follow, if blank will be stationary. Defaults to [].
         path_type (str, optional): Generates a path for the target to follow. Possible values are 'Circle', 'Triangle', 'Square' and 'Line'. Defaults to "".
     """
+
     def __init__(
         self,
         swarmName: str,
@@ -61,12 +62,9 @@ class Target(Drone):
         super().__init__(swarmName, droneName, sim_client, client_lock)
 
         with self.client_lock:
-            self.__path_future = self.client.takeoffAsync(
-                vehicle_name=self.drone_name
-            )
+            self.client.takeoffAsync(vehicle_name=self.drone_name)
 
-        self.__path = path if path_type == "" else self.generate_path(path_type)
-        self.__path_index = 0
+        self.__path = Target.modify_path(path) if path_type == "" else self.generate_path(path_type)
 
     def __setup_ros(self) -> None:
         """
@@ -97,9 +95,7 @@ class Target(Drone):
         self.__vel_pub = rospy.Publisher(vel_topic, TwistStamped, queue_size=10)
         self.__acc_pub = rospy.Publisher(acc_topic, AccelStamped, queue_size=10)
 
-    def generate_path(
-        self, path_type: str, radius=5, height=-5
-    ) -> List[Tuple[float, float, int]]:
+    def generate_path(self, path_type: str, radius=5, height=-5) -> List[Vector3r]:
         """
         Generates a default path for the target to follow.
 
@@ -109,17 +105,34 @@ class Target(Drone):
             height (int, optional): Height of the path. Defaults to -5.
 
         Returns:
-            List[Tuple[float, float, int]]: List of Points in NED orientation for the drone to follow.
+            List[Vector3r]: List of Points in NED orientation for the drone to follow.
         """
         paths = {"circle": 12, "triangle": 3, "square": 4, "line": 2}
         points = paths[path_type]
         center = self.get_state().kinematics_estimated.position
-        path: List[Tuple[float, float, int]] = []
+        path: List[Vector3r] = []
         for i in range(points):
             x = radius * cos(pi / points * i * 2) + center.x_val
             y = radius * sin(pi / points * i * 2) + center.y_val
             path.append((x, y, height))
         return path
+
+    @staticmethod
+    def modify_path(path: List[Tuple[float, float, int]]) -> List[Vector3r]:
+        """
+        Static method to translate the path from tuple points into Vectors. Used to feed into the MoveOnPath.
+
+        Args:
+            path (List[Tuple[float, float, int]]): Path to translate
+
+        Returns:
+            List[Vector3r]: Vector Path
+        """
+        new_path: List[Vector3r] = []
+        for p in path:
+            new_path.append(Vector3r(*p))
+        return new_path
+
 
     def run(self) -> None:
         """
@@ -137,13 +150,7 @@ class Target(Drone):
         prev_time = time.time()
 
         with self.client_lock:
-            self.__path_future = self.client.moveToPositionAsync(
-                *self.__path[self.__path_index], 2, 20, vehicle_name=self.drone_name
-            )
-        self.__path_index += 1
-        if self.__path_index == len(self.__path):
-            self.__path_index = 0
-
+            self.client.moveOnPathAsync(self.__path, 2)
 
         while not rospy.is_shutdown() and self._shutdown == False:
             with self.flag_lock:
@@ -151,6 +158,16 @@ class Target(Drone):
                     break
 
             state = self.get_state().kinematics_estimated
+
+            if (
+                state.linear_velocity.x_val < 0.2
+                and state.linear_velocity.x_val > -0.2
+                and state.linear_velocity.y_val < 0.2
+                and state.linear_velocity.y_val > -0.2
+                and state.linear_velocity.z_val < 0.2
+                and state.linear_velocity.z_val > -0.2
+            ):
+                self.client.moveOnPathAsync(self.__path, 2)
 
             if self.__pos_pub:
                 point = Point(
