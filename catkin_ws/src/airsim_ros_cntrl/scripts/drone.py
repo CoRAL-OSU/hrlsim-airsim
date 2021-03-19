@@ -36,7 +36,16 @@ class DroneInfo:
         services (Dict[str, rospy.ServiceProxy], optional): Dict of services associated with a drone. Defaults to None.
         actions (Dict[str, SimpleActionClient], optional): Dict of actions associated with a drone. Defaults to None.
     """
-    def __init__(self, DroneName: str, process, pubs: Dict[str, rospy.Publisher]=None, subs: Dict[str, rospy.Subscriber]=None, services: Dict[str, rospy.ServiceProxy]=None, actions: Dict[str, SimpleActionClient]=None):
+
+    def __init__(
+        self,
+        DroneName: str,
+        process,
+        pubs: Dict[str, rospy.Publisher] = None,
+        subs: Dict[str, rospy.Subscriber] = None,
+        services: Dict[str, rospy.ServiceProxy] = None,
+        actions: Dict[str, SimpleActionClient] = None,
+    ):
         """
         Constructs info about a drone.
         Used in teams to keep track of all the different ros topics
@@ -56,6 +65,7 @@ class DroneInfo:
         self.services = services
         self.actions = actions
 
+
 class Drone(Process):
     """
     Super Class for a generalized drone process.
@@ -72,7 +82,7 @@ class Drone(Process):
         sim_client (airsim.MultirotorClient): The client to use to execture commands.
         client_lock (mp.Lock): The lock for the sim_client.
     """
-    
+
     def __init__(
         self,
         swarmName: str,
@@ -160,7 +170,6 @@ class Drone(Process):
                 self.client.armDisarm(False, vehicle_name=self.drone_name)
                 self.client.enableApiControl(False, vehicle_name=self.drone_name)
 
-
             print(self.drone_name + " SHUTDOWN REQUEST HANDLED")
             return SetBoolResponse(True, "")
 
@@ -226,7 +235,6 @@ class Drone(Process):
             ):
                 time.sleep(0.05)
 
-
             if self.__vehicle_state.landed_state == LandedState.Landed:
                 return LandResponse(True)
             else:
@@ -271,9 +279,7 @@ class Drone(Process):
             if error_count == max_errors:
                 print(
                     self.drone_name
-                    + " Error from getMultirotorState API call: {0}".format(
-                        str(error)
-                    )
+                    + " Error from getMultirotorState API call: {0}".format(str(error))
                 )
 
             for _ in range(0, max_errors):
@@ -288,9 +294,7 @@ class Drone(Process):
             if error_count == max_errors:
                 print(
                     self.drone_name
-                    + " Error from getMultirotorState API call: {0}".format(
-                        str(error)
-                    )
+                    + " Error from getMultirotorState API call: {0}".format(str(error))
                 )
             else:
                 self.__vehicle_state.kinematics_estimated.position = pose.position

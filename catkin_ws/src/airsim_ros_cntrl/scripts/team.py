@@ -40,7 +40,14 @@ class Team:
     Manages the deployment and management of all drones.
     """
 
-    def __init__(self, teamName: str, vehicle_list: List[str], target: Target, client: MultirotorClient, lock: Lock) -> None:
+    def __init__(
+        self,
+        teamName: str,
+        vehicle_list: List[str],
+        target: Target,
+        client: MultirotorClient,
+        lock: Lock,
+    ) -> None:
         """
         Contructs a team object.
         A team is comprised of any number of agents and up to one target to track. 
@@ -110,7 +117,7 @@ class Team:
             srvs["shutdown"] = rospy.ServiceProxy(shutdown_srv_name, SetBool)
 
             track_object_action_name = prefix + "/track_object"
-            #move_to_location_action_name = prefix + "/move_to_location"
+            # move_to_location_action_name = prefix + "/move_to_location"
 
             actions = dict()
             actions["track"] = actionlib.SimpleActionClient(
@@ -118,10 +125,10 @@ class Team:
             )
             actions["track"].wait_for_server()
 
-            #actions["move_to_location"] = actionlib.SimpleActionClient(
+            # actions["move_to_location"] = actionlib.SimpleActionClient(
             #    move_to_location_action_name, MoveToLocationAction
-            #)
-            #actions["move_to_location"].wait_for_server()
+            # )
+            # actions["move_to_location"].wait_for_server()
 
             self.drones[i].pubs = pubs
             self.drones[i].services = srvs
@@ -133,7 +140,9 @@ class Team:
                 # subs['pos'] = rospy.Subscriber(target_prefix+"/pos", PoseStamped, )
 
                 srvs = dict()
-                srvs["shutdown"] = rospy.ServiceProxy(target_prefix + "/shutdown", SetBool)
+                srvs["shutdown"] = rospy.ServiceProxy(
+                    target_prefix + "/shutdown", SetBool
+                )
                 self.target.services = srvs
 
     def getDroneList(self) -> Dict[str, Agent]:
@@ -145,7 +154,7 @@ class Team:
         """
         return self.drones
 
-    def takeoff(self, wait: bool=False) -> None:
+    def takeoff(self, wait: bool = False) -> None:
         """
         Send the takeoff command to all agents.
 
@@ -161,7 +170,7 @@ class Team:
         if wait:
             self.wait()
 
-    def land(self, wait: bool=False) -> None:
+    def land(self, wait: bool = False) -> None:
         """
         Send land command to all agents.
 
@@ -182,9 +191,15 @@ class Team:
         for drone in self.vehicle_list:
             for action in self.drones[drone].actions.values():
                 if action.get_state() != GoalStatus.LOST:
-                    action.wait_for_result()   
+                    action.wait_for_result()
 
-    def cmd_pos(self, cmd: PoseStamped=None, cmd_all: PoseStamped=None, wait: bool=False, drone_name: str=None) -> None:
+    def cmd_pos(
+        self,
+        cmd: PoseStamped = None,
+        cmd_all: PoseStamped = None,
+        wait: bool = False,
+        drone_name: str = None,
+    ) -> None:
         """
         Send command to agents to move to position. Can either send same position to all via cmd_all or to one drone by specifying cmd and drone_name.
 
@@ -205,7 +220,9 @@ class Team:
         if wait:
             self.wait()
 
-    def move_to_location(self, target: List[float], timeout: float, tolerance: float) -> None:
+    def move_to_location(
+        self, target: List[float], timeout: float, tolerance: float
+    ) -> None:
         """
         Move agents to location in a circle configuration.
 
@@ -304,7 +321,7 @@ class Team:
 
             try:
                 if self.target != None:
-                    resp = self.target.services['shutdown'](True)
+                    resp = self.target.services["shutdown"](True)
             except rospy.ServiceException as e:
                 print("Service call failed: %s" % e)
 
