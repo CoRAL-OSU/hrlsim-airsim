@@ -18,10 +18,30 @@ from airsim_ros_pkgs.srv import (
     LandRequest,
     LandResponse,
 )
+from airsim_ros_cntrl.msg import (
+    Multirotor,
+    Sensors,
+    State
+)
+
+from sensor_msgs.msg import (
+    NavSatFix,
+    NavSatStatus,
+    MagneticField
+)
+
+from geometry_msgs.msg import (
+    Twist,
+    Pose,
+    Point,
+    Quaternion,
+    Accel,
+    Vector3
+)
 
 from std_srvs.srv import SetBool, SetBoolResponse, SetBoolRequest
 
-from std_msgs.msg import Float32
+from std_msgs.msg import Float32, Header
 
 
 class DroneInfo:
@@ -103,6 +123,7 @@ class Drone(Process):
 
         self.swarm_name = swarmName
         self.drone_name = droneName
+        self.get_sensor_data = False
 
         self._shutdown = False
         self.__service_timeout = 5.0  # SECONDS
@@ -111,6 +132,7 @@ class Drone(Process):
         self.flag_lock = Lock()
 
         self.freq = 20
+        self.prev_loop_time = time.time()
 
         self.cmd = None
 
@@ -120,7 +142,8 @@ class Drone(Process):
             self.client.enableApiControl(True, vehicle_name=self.drone_name)
             self.client.armDisarm(True, vehicle_name=self.drone_name)
 
-        self.__vehicle_state = self.get_state()
+        (self.state, self.sensors) = self.get_state()
+        
 
     def setup_ros(self) -> None:
         """
@@ -145,9 +168,12 @@ class Drone(Process):
         land_service_name = self.topic_prefix + "/land"
         shutdown_service_name = self.topic_prefix + "/shutdown"
 
+        state_topic = self.topic_prefix + "/multirotor"
+
         rospy.on_shutdown(self.shutdown)
 
-        self.looptime_pub = rospy.Publisher(loop_time_topic, Float32, queue_size=10)
+        self.multirotor_pub = rospy.Publisher(state_topic, Multirotor, queue_size=10)
+
         rospy.Service(shutdown_service_name, SetBool, self.__handle_shutdown)
         rospy.Service(takeoff_service_name, Takeoff, self.__handle_takeoff)
         rospy.Service(land_service_name, Land, self.__handle_land)
@@ -185,7 +211,7 @@ class Drone(Process):
         with self.flag_lock:
             self.cmd = None
 
-            if self.get_state().landed_state == LandedState.Flying:
+            if self.state.landed_state == LandedState.Flying:
                 return TakeoffResponse(True)
 
             time_start = time.time()
@@ -196,12 +222,12 @@ class Drone(Process):
                 return TakeoffResponse(False)
 
             while (
-                self.get_state().landed_state != LandedState.Flying
+                self.state.landed_state != LandedState.Flying
                 and time.time() - time_start < self.__service_timeout
             ):
                 time.sleep(0.05)
 
-            if self.__vehicle_state.landed_state == LandedState.Flying:
+            if self.state.landed_state == LandedState.Flying:
                 return TakeoffResponse(True)
             else:
                 return TakeoffResponse(False)
@@ -219,7 +245,7 @@ class Drone(Process):
         with self.flag_lock:
             self.cmd = None
 
-            if self.get_state().landed_state == LandedState.Landed:
+            if self.state.landed_state == LandedState.Landed:
                 return LandResponse(True)
 
             time_start = time.time()
@@ -230,12 +256,12 @@ class Drone(Process):
                 return LandResponse(False)
 
             while (
-                self.get_state().landed_state != LandedState.Landed
+                self.state.landed_state != LandedState.Landed
                 and time.time() - time_start < self.__service_timeout
             ):
                 time.sleep(0.05)
 
-            if self.__vehicle_state.landed_state == LandedState.Landed:
+            if self.state.landed_state == LandedState.Landed:
                 return LandResponse(True)
             else:
                 return LandResponse(False)
@@ -256,7 +282,7 @@ class Drone(Process):
         Return the state of the drone. Refer to MultirotorClient.getMultirotorState for more information.
         Modifies the kinematics_estimated position and orientation to be updated to global frame.
 
-        Returns (MultirotorState): The state of the drone.
+        Returns (MultirotorState, sensors): The state of the drone & dict of sensor returns.
         """
 
         with self.client_lock:
@@ -265,26 +291,25 @@ class Drone(Process):
             max_errors = 3
             error = Exception()
 
-            for _ in range(0, max_errors):
-                try:
-                    self.__vehicle_state = self.client.getMultirotorState(
-                        vehicle_name=self.drone_name
-                    )
-                    break
-
-                except Exception as e:
-                    error = e
-                    error_count += 1
-
-            if error_count == max_errors:
-                print(
-                    self.drone_name
-                    + " Error from getMultirotorState API call: {0}".format(str(error))
-                )
+            sensors = dict()
 
             for _ in range(0, max_errors):
                 try:
+                    state = self.client.getMultirotorState(vehicle_name=self.drone_name)
                     pose = self.client.simGetObjectPose(object_name=self.drone_name)
+                            
+                    if self.get_sensor_data:
+                        imu_data = self.client.getImuData(vehicle_name=self.drone_name)
+                        barometer_data = self.client.getBarometerData(vehicle_name=self.drone_name)
+                        magnetometer_data = self.client.getMagnetometerData(vehicle_name=self.drone_name)
+                        gps_data = self.client.getGpsData(vehicle_name=self.drone_name)
+                    else:
+                        imu_data = None
+                        barometer_data = None
+                        magnetometer_data = None
+                        gps_data = None
+
+
                     break
 
                 except Exception as e:
@@ -296,11 +321,79 @@ class Drone(Process):
                     self.drone_name
                     + " Error from getMultirotorState API call: {0}".format(str(error))
                 )
-            else:
-                self.__vehicle_state.kinematics_estimated.position = pose.position
-                self.__vehicle_state.kinematics_estimated.orientation = pose.orientation
 
-        return self.__vehicle_state
+            else:
+                state.kinematics_estimated.position = pose.position
+                state.kinematics_estimated.orientation = pose.orientation
+
+                sensors['imu'] = imu_data
+                sensors['alt'] = barometer_data
+                sensors['mag'] = magnetometer_data
+                sensors['gps'] = gps_data
+
+        return (state, sensors)
+
+    
+    def publish_multirotor_state(self, state, sensors) -> None:
+        """
+        Function to publish sensor/state information from the simulator
+        Returns: None
+        """
+
+        state = state.kinematics_estimated
+        msg = Multirotor()
+        
+        msg.header = Header()
+        msg.header.stamp = rospy.Time.now()
+
+        msg.looptime = Float32(time.time() - self.prev_loop_time)
+        self.prev_loop_time = time.time()
+
+
+        # Setup pose msg
+        pos = Point(*state.position.to_numpy_array())
+        q = Quaternion(*state.orientation.to_numpy_array())      
+        pose = Pose(pos, q)
+
+        # Setup twist msg
+        lin_vel = Vector3(*state.linear_velocity.to_numpy_array())
+        ang_vel = Vector3(*state.angular_velocity.to_numpy_array())
+        twist = Twist(lin_vel, ang_vel)
+
+        # Setup acc msg
+        lin_acc = Vector3(*state.linear_acceleration.to_numpy_array())
+        ang_acc = Vector3(*state.angular_acceleration.to_numpy_array())
+        acc = Accel(lin_acc, ang_acc)
+
+        # Make state msg
+        msg.state = State(pose, twist, acc)
+
+
+        if self.get_sensor_data:
+            # Setup imu msg
+            msg.sensors.imu.orientation = Quaternion(*sensors['imu'].orientation.to_numpy_array())
+            msg.sensors.imu.angular_velocity = Vector3(*sensors['imu'].angular_velocity.to_numpy_array())
+            msg.sensors.imu.linear_acceleration = Vector3(*sensors['imu'].linear_acceleration.to_numpy_array())
+
+            # Setup barometer msg
+            msg.sensors.altimeter.altitude = sensors['alt'].altitude
+            msg.sensors.altimeter.pressure = sensors['alt'].pressure
+            msg.sensors.altimeter.qnh = sensors['alt'].qnh
+
+            # Setup magnetometer msg
+            msg.sensors.magnetometer.magnetic_field = Vector3(*sensors['mag'].magnetic_field_body.to_numpy_array())
+
+            # Setup gps msg
+            msg.sensors.gps.latitude = sensors['gps'].gnss.geo_point.latitude
+            msg.sensors.gps.longitude = sensors['gps'].gnss.geo_point.longitude
+            msg.sensors.gps.altitude = sensors['gps'].gnss.geo_point.altitude
+            msg.sensors.gps.status.service = NavSatStatus.SERVICE_GLONASS
+            msg.sensors.gps.status.status = sensors['gps'].gnss.fix_type
+         
+  
+        # Publish msg
+        self.multirotor_pub.publish(msg)
+
 
     def run(self) -> None:
         """
@@ -309,6 +402,22 @@ class Drone(Process):
         Returns: None
         """
         self.setup_ros()
+
+        rate = rospy.Rate(self.freq)
+
+        while not rospy.is_shutdown() and self._shutdown == False:
+            (self.state, self.sensors) = self.get_state()
+            self.publish_multirotor_state(self.state, self.sensors)
+
+            rate.sleep()
+
+        with self.client_lock:
+            self.client.cancelLastTask(vehicle_name=self.drone_name)
+
+        print(self.drone_name + " QUITTING")
+
+
+
 
 
 if __name__ == "__main__":

@@ -151,7 +151,7 @@ if __name__ == "__main__":
     for team in team_list:
         team.wait()
 
-    team_list[0].track_object("Target0", 5, 0)
+    #team_list[0].track_object("Target0", 5, 0)
     # team_list[1].track_object("Target1", 5, 0)
 
     for team in team_list:

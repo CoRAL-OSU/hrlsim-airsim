@@ -109,7 +109,7 @@ class Target(Drone):
         """
         paths = {"circle": 12, "triangle": 3, "square": 4, "line": 2}
         points = paths[path_type]
-        center = self.get_state().kinematics_estimated.position
+        center = self.state.kinematics_estimated.position
         path: List[Vector3r] = []
         for i in range(points):
             x = radius * cos(pi / points * i * 2) + center.x_val
@@ -157,7 +157,8 @@ class Target(Drone):
                 if self._shutdown == True:
                     break
 
-            state = self.get_state().kinematics_estimated
+            (self.state, self.sensors) = self.get_state()
+            state = self.state.kinematics_estimated
 
             if (
                 state.linear_velocity.x_val < 0.2
@@ -169,63 +170,9 @@ class Target(Drone):
             ):
                 self.client.moveOnPathAsync(self.__path, 2)
 
-            if self.__pos_pub:
-                point = Point(
-                    state.position.x_val, state.position.y_val, state.position.z_val
-                )
-                quat = Quaternion(
-                    state.orientation.x_val,
-                    state.orientation.y_val,
-                    state.orientation.z_val,
-                    state.orientation.w_val,
-                )
-                pose = Pose(point, quat)
-                header = Header()
-                header.stamp = rospy.Time.now()
+        
 
-                msg = PoseStamped(header, pose)
-                self.__pos_pub.publish(msg)
-
-            if self.__vel_pub:
-                linear = Vector3(
-                    state.linear_velocity.x_val,
-                    state.linear_velocity.y_val,
-                    state.linear_velocity.z_val,
-                )
-                angular = Vector3(
-                    state.angular_velocity.x_val,
-                    state.angular_velocity.y_val,
-                    state.angular_velocity.z_val,
-                )
-                twist = Twist(linear, angular)
-                header = Header()
-                header.stamp = rospy.Time.now()
-                msg = TwistStamped(header, twist)
-                self.__vel_pub.publish(msg)
-
-            if self.__acc_pub:
-                linear = Vector3(
-                    state.linear_acceleration.x_val,
-                    state.linear_acceleration.y_val,
-                    state.linear_acceleration.z_val,
-                )
-                angular = Vector3(
-                    state.angular_acceleration.x_val,
-                    state.angular_acceleration.y_val,
-                    state.angular_acceleration.z_val,
-                )
-                accel = Accel(linear, angular)
-                header = Header()
-                header.stamp = rospy.Time.now()
-                msg = AccelStamped(header, accel)
-                self.__acc_pub.publish(msg)
-
-            if self.looptime_pub:
-                elapsed_time = time.time() - prev_time
-                prev_time = time.time()
-
-                msg = Float32(elapsed_time)
-                self.looptime_pub.publish(msg)
+            self.publish_multirotor_state(self.state, self.sensors)
 
             rate.sleep()
 

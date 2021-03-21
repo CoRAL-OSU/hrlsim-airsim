@@ -10,6 +10,9 @@ project(airsim_ros_cntrl)
 find_package(catkin REQUIRED COMPONENTS
   airsim_ros_pkgs
   actionlib_msgs
+  geometry_msgs
+  geographic_msgs
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -46,11 +49,13 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+  DIRECTORY msg
+  FILES
+  State.msg
+  Sensors.msg
+  Multirotor.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -70,6 +75,9 @@ add_action_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
+  geometry_msgs
+  sensor_msgs
+  airsim_ros_pkgs
   actionlib_msgs
   std_msgs  # Or other packages containing msgs
 )
@@ -106,7 +114,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES airsim_ros_cntrl
-  CATKIN_DEPENDS airsim_ros_pkgs  actionlib_msgs
+  CATKIN_DEPENDS airsim_ros_pkgs  actionlib_msgs sensor_msgs geometry_msgs
 #  DEPENDS system_lib
 )
 
