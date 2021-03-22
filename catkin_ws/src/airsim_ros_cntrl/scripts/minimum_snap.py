@@ -266,17 +266,20 @@ if __name__ == "__main__":
 
     print(waypoints.shape)
 
-    ic = np.zeros((3,3))
-    fc = np.zeros((3,3))
+    ic = np.zeros((3,1))
+    fc = np.zeros((3,1))
     traj_generator = MinimumSnap(waypoints, ic, fc)
 
     t = np.linspace(0, 50, 1000)
     states = np.empty((0, 3))
 
-    state = traj_generator.compute(4.04, None)
+    cur_state = np.zeros((10,1))
+    cur_state[3,0] = 1
+
+    state = traj_generator.compute(4.04, cur_state)
 
     for i in t:
-        x0, u0 = traj_generator.compute(i, None)
+        x0, u0 = traj_generator.compute(i, cur_state)
         states = np.append(states, x0[0:3].T, 0)
 
     plt.plot(t, states[:, :], "-")

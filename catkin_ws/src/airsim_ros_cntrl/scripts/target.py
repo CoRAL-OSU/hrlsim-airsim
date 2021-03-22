@@ -160,18 +160,10 @@ class Target(Drone):
             (self.state, self.sensors) = self.get_state()
             state = self.state.kinematics_estimated
 
-            if (
-                state.linear_velocity.x_val < 0.2
-                and state.linear_velocity.x_val > -0.2
-                and state.linear_velocity.y_val < 0.2
-                and state.linear_velocity.y_val > -0.2
-                and state.linear_velocity.z_val < 0.2
-                and state.linear_velocity.z_val > -0.2
-            ):
+            if (state.linear_velocity.get_length() < 0.2):
                 self.client.moveOnPathAsync(self.__path, 2)
 
         
-
             self.publish_multirotor_state(self.state, self.sensors)
 
             rate.sleep()
