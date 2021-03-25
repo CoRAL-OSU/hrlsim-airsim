@@ -131,6 +131,9 @@ class Drone(Process):
         self.client_lock = client_lock
         self.flag_lock = Lock()
 
+        #self.client_lock = Lock()
+        self.client = airsim.MultirotorClient()
+
         self.freq = 20
         self.prev_loop_time = time.time()
 
