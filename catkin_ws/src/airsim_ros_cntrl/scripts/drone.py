@@ -412,6 +412,9 @@ class Drone(Process):
             (self.state, self.sensors) = self.get_state()
             self.publish_multirotor_state(self.state, self.sensors)
 
+            if type(self.cmd) == Twist:
+                self.client.moveByAngleRatesThrottleAsync(self.cmd.angular.x, self.cmd.angular.y, self.cmd.angular.z, self.cmd.linear.z, 0.5, self.drone_name)
+
             rate.sleep()
 
         with self.client_lock:

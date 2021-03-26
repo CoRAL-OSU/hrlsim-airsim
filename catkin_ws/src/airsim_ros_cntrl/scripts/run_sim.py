@@ -61,8 +61,8 @@ if __name__ == "__main__":
     #     SETUP PYTHON CLIENT
     #
 
-    ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    # ip = "192.168.1.96"         # UNCOMMENT TO RUN ON REMOTE HOST
+    #ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
+    ip = "192.168.0.24"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     #     CREATE DRONE/TEAM LISTS
 
     if ip != "":
-        vehicle_list = ["Drone0"]
+        vehicle_list = ["Drone0", "Drone1", "Target0"]
         # vehicle_list = ["Drone0", "Drone1", "Drone2", "Target0", "Drone3", "Drone4", "Target1"]
     else:
         vehicle_list = getDroneListFromSettings()
@@ -154,8 +154,8 @@ if __name__ == "__main__":
     #team_list[0].track_object("Target0", 5, 0)
     # team_list[1].track_object("Target1", 5, 0)
 
-    for team in team_list:
-        team.wait()
+    #for team in team_list:
+    #    team.wait()
 
     print("LANDING")
     for team in team_list:

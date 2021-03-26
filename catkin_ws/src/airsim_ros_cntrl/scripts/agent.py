@@ -15,7 +15,7 @@ from drone import Drone
 from airsim.client import MultirotorClient
 from airsim.types import MultirotorState, Vector3r
 
-from geometry_msgs.msg import TwistStamped, PoseStamped, AccelStamped, PoseStamped
+from geometry_msgs.msg import TwistStamped, PoseStamped, AccelStamped, PoseStamped, Twist
 
 
 from nav_msgs.msg import Odometry
@@ -95,6 +95,8 @@ class Agent(Drone):
 
         self.__target_pose = MultirotorState()
         self.__target_ready = False
+
+        self.print_debug = False
 
     def setup_ros(self) -> None:
         """
@@ -231,6 +233,9 @@ class Agent(Drone):
 
         graphviz = GraphvizOutput()
         graphviz.output_file = self.drone_name + "_pycallgraph.png"
+
+
+        prev_time = time.time()
         with PyCallGraph(output=graphviz):
 
             while time.time() - start_time < goal.timeout:
@@ -308,6 +313,13 @@ class Agent(Drone):
                 self.__track_action.publish_feedback(feedback)
 
                 r.sleep()
+
+                print(self.drone_name + " track time: " + str(time.time()-prev_time))
+                prev_time = time.time()
+
+                
+        self.cmd = None
+
 
         self.__target_ready = False
         target_state_sub.unregister()
@@ -414,14 +426,16 @@ class Agent(Drone):
 
         for i in range(0, 3):
             if abs(u[i, 0]) > 2:
-                print(
-                    "WARNING -> RATE "
-                    + str(i)
-                    + " FOR "
-                    + self.drone_name
-                    + " GREATER THAN MAX RATE "
-                    + str(u[i, 0])
-                )
+                
+                if self.print_debug:
+                    print(
+                        "WARNING -> RATE "
+                        + str(i)
+                        + " FOR "
+                        + self.drone_name
+                        + " GREATER THAN MAX RATE "
+                        + str(u[i, 0])
+                    )
 
             u[i, 0] = max(-3, u[i, 0])
             u[i, 0] = min(3, u[i, 0])
@@ -429,12 +443,14 @@ class Agent(Drone):
         # self.rpydot = np.append(self.rpydot, u0[0:3].T, axis=0)
 
         if u[3, 0] > 1.0:
-            print(
-                "WARNING -> THROTTLE FOR "
-                + self.drone_name
-                + " OUT OF BOUNDS "
-                + str(u[3, 0])
-            )
+            if self.print_debug:
+                print(
+                    "WARNING -> THROTTLE FOR "
+                    + self.drone_name
+                    + " OUT OF BOUNDS "
+                    + str(u[3, 0])
+                )
+
             u[3, 0] = 1.0
 
         roll_rate = u[0, 0]
@@ -449,8 +465,13 @@ class Agent(Drone):
 
         self.reference = x0.T
 
-        with self.client_lock:
-            self.client.moveByAngleRatesThrottleAsync(
-                roll_rate, pitch_rate, yaw_rate, throttle, 0.5, self.drone_name
-            )
+        #with self.client_lock:
+        #self.client.moveByAngleRatesThrottleAsync(
+        #    roll_rate, pitch_rate, yaw_rate, throttle, 0.5, self.drone_name
+        #)
 
+        self.cmd = Twist()
+        self.cmd.angular.x = roll_rate
+        self.cmd.angular.y = pitch_rate
+        self.cmd.angular.z = yaw_rate
+        self.cmd.linear.z = throttle
