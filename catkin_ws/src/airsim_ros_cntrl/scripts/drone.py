@@ -8,6 +8,10 @@ import airsim
 from airsim.client import MultirotorClient
 from airsim.types import MultirotorState, LandedState
 import rospy
+
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
+
 from actionlib import SimpleActionClient
 from typing import Dict
 from airsim_ros_pkgs.srv import (
@@ -128,13 +132,13 @@ class Drone(Process):
         self._shutdown = False
         self.__service_timeout = 5.0  # SECONDS
 
-        self.client_lock = client_lock
+        #self.client_lock = client_lock
         self.flag_lock = Lock()
 
-        #self.client_lock = Lock()
+        self.client_lock = Lock()
         self.client = airsim.MultirotorClient()
 
-        self.freq = 20
+        self.freq = 10
         self.prev_loop_time = time.time()
 
         self.cmd = None
@@ -146,6 +150,8 @@ class Drone(Process):
             self.client.armDisarm(True, vehicle_name=self.drone_name)
 
         (self.state, self.sensors) = self.get_state()
+
+
         
 
     def setup_ros(self) -> None:
@@ -252,8 +258,8 @@ class Drone(Process):
                 return LandResponse(True)
 
             time_start = time.time()
-            with self.client_lock:
-                self.client.landAsync(vehicle_name=self.drone_name)
+            #with self.client_lock:
+            self.client.landAsync(vehicle_name=self.drone_name)
 
             if req.waitOnLastTask == False:
                 return LandResponse(False)
@@ -288,51 +294,67 @@ class Drone(Process):
         Returns (MultirotorState, sensors): The state of the drone & dict of sensor returns.
         """
 
-        with self.client_lock:
-            # Try to get state thrice
-            error_count = 0
-            max_errors = 3
-            error = Exception()
+        #with self.client_lock:
+        # Try to get state thrice
+        error_count = 0
+        max_errors = 3
+        error = Exception()
 
-            sensors = dict()
+        sensors = dict()
 
-            for _ in range(0, max_errors):
-                try:
-                    state = self.client.getMultirotorState(vehicle_name=self.drone_name)
-                    pose = self.client.simGetObjectPose(object_name=self.drone_name)
-                            
-                    if self.get_sensor_data:
-                        imu_data = self.client.getImuData(vehicle_name=self.drone_name)
-                        barometer_data = self.client.getBarometerData(vehicle_name=self.drone_name)
-                        magnetometer_data = self.client.getMagnetometerData(vehicle_name=self.drone_name)
-                        gps_data = self.client.getGpsData(vehicle_name=self.drone_name)
+        for _ in range(0, max_errors):
+            try:
+                with self.client_lock:
+                    print(self.drone_name + " GETTING STATE")
+                    #state = self.client.getMultirotorState(vehicle_name=self.drone_name)
+
+                    state = self.client.client.call_async('getMultirotorState', self.drone_name)
+                    start_time = time.time()
+
+
+                    while not state._set_flag and time.time() - start_time < 2.0:
+                        state._loop.start()
+                        time.sleep(0.001)
+
+                    if not state._set_flag:
+                        print(self.drone_name + " GET STATE TIMED OUT...")
                     else:
-                        imu_data = None
-                        barometer_data = None
-                        magnetometer_data = None
-                        gps_data = None
+                        print(self.drone_name + " GOT STATE")
+                        state = airsim.MultirotorState.from_msgpack(state._result)
+                    #pose = self.client.simGetObjectPose(object_name=self.drone_name)
+                        
+                if self.get_sensor_data:
+                    imu_data = self.client.getImuData(vehicle_name=self.drone_name)
+                    barometer_data = self.client.getBarometerData(vehicle_name=self.drone_name)
+                    magnetometer_data = self.client.getMagnetometerData(vehicle_name=self.drone_name)
+                    gps_data = self.client.getGpsData(vehicle_name=self.drone_name)
 
+                else:
+                    imu_data = None
+                    barometer_data = None
+                    magnetometer_data = None
+                    gps_data = None
 
-                    break
+                break
 
-                except Exception as e:
-                    error = e
-                    error_count += 1
+            except Exception as e:
+                error = e
+                error_count += 1
 
-            if error_count == max_errors:
-                print(
-                    self.drone_name
-                    + " Error from getMultirotorState API call: {0}".format(str(error))
-                )
+        if error_count == max_errors:
+            print(
+                self.drone_name
+                + " Error from getMultirotorState API call: {0}".format(str(error))
+            )
 
-            else:
-                state.kinematics_estimated.position = pose.position
-                state.kinematics_estimated.orientation = pose.orientation
+        else:
+            #state.kinematics_estimated.position = pose.position
+            #state.kinematics_estimated.orientation = pose.orientation
 
-                sensors['imu'] = imu_data
-                sensors['alt'] = barometer_data
-                sensors['mag'] = magnetometer_data
-                sensors['gps'] = gps_data
+            sensors['imu'] = imu_data
+            sensors['alt'] = barometer_data
+            sensors['mag'] = magnetometer_data
+            sensors['gps'] = gps_data
 
         return (state, sensors)
 
@@ -408,14 +430,18 @@ class Drone(Process):
 
         rate = rospy.Rate(self.freq)
 
-        while not rospy.is_shutdown() and self._shutdown == False:
-            (self.state, self.sensors) = self.get_state()
-            self.publish_multirotor_state(self.state, self.sensors)
+        graphviz = GraphvizOutput()
+        graphviz.output_file = self.drone_name + "__main_loop.png"
+        with PyCallGraph(output=graphviz):
+            while not rospy.is_shutdown() and self._shutdown == False:
+                (self.state, self.sensors) = self.get_state()
+                self.publish_multirotor_state(self.state, self.sensors)
 
-            if type(self.cmd) == Twist:
-                self.client.moveByAngleRatesThrottleAsync(self.cmd.angular.x, self.cmd.angular.y, self.cmd.angular.z, self.cmd.linear.z, 0.5, self.drone_name)
+                if type(self.cmd) == Twist:
+                    self.client.moveByAngleRatesThrottleAsync(self.cmd.angular.x, self.cmd.angular.y, self.cmd.angular.z, self.cmd.linear.z, 0.5, self.drone_name)
+                    self.cmd = None
 
-            rate.sleep()
+                rate.sleep()
 
         with self.client_lock:
             self.client.cancelLastTask(vehicle_name=self.drone_name)

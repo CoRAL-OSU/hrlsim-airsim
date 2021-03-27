@@ -62,7 +62,7 @@ if __name__ == "__main__":
     #
 
     #ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    ip = "192.168.0.24"         # UNCOMMENT TO RUN ON REMOTE HOST
+    ip = "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     #     CREATE DRONE/TEAM LISTS
 
     if ip != "":
-        vehicle_list = ["Drone0", "Drone1", "Target0"]
+        vehicle_list = ["Drone0", "Target0"]
         # vehicle_list = ["Drone0", "Drone1", "Drone2", "Target0", "Drone3", "Drone4", "Target1"]
     else:
         vehicle_list = getDroneListFromSettings()

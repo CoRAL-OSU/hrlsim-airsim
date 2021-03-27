@@ -87,13 +87,6 @@ class Target(Drone):
         """
         super().setup_ros()
 
-        vel_topic = self.topic_prefix + "/vel"
-        pos_topic = self.topic_prefix + "/pos"
-        acc_topic = self.topic_prefix + "/acc"
-
-        self.__pos_pub = rospy.Publisher(pos_topic, PoseStamped, queue_size=10)
-        self.__vel_pub = rospy.Publisher(vel_topic, TwistStamped, queue_size=10)
-        self.__acc_pub = rospy.Publisher(acc_topic, AccelStamped, queue_size=10)
 
     def generate_path(self, path_type: str, radius=5, height=-5) -> List[Vector3r]:
         """
@@ -161,7 +154,8 @@ class Target(Drone):
             state = self.state.kinematics_estimated
 
             if (state.linear_velocity.get_length() < 0.2):
-                self.client.moveOnPathAsync(self.__path, 2)
+                with self.client_lock:
+                    self.client.moveOnPathAsync(self.__path, 2)
 
         
             self.publish_multirotor_state(self.state, self.sensors)
