@@ -98,6 +98,7 @@ class Agent(Drone):
 
         print("NEW AGENT: " + self.drone_name)
 
+
     def setup_ros(self) -> None:
         """
         @Override
@@ -228,6 +229,9 @@ class Agent(Drone):
 
         graphviz = GraphvizOutput()
         graphviz.output_file = self.drone_name + "_pycallgraph.png"
+
+
+        prev_time = time.time()
         with PyCallGraph(output=graphviz):
 
             while time.time() - start_time < goal.timeout:
@@ -306,6 +310,13 @@ class Agent(Drone):
 
                 r.sleep()
 
+                print(self.drone_name + " track time: " + str(time.time()-prev_time))
+                prev_time = time.time()
+
+                
+        self.cmd = None
+
+
         self.__target_ready = False
         target_state_sub.unregister()
         
@@ -345,14 +356,16 @@ class Agent(Drone):
 
         for i in range(0, 3):
             if abs(u[i, 0]) > 2:
-                print(
-                    "WARNING -> RATE "
-                    + str(i)
-                    + " FOR "
-                    + self.drone_name
-                    + " GREATER THAN MAX RATE "
-                    + str(u[i, 0])
-                )
+                
+                if self.print_debug:
+                    print(
+                        "WARNING -> RATE "
+                        + str(i)
+                        + " FOR "
+                        + self.drone_name
+                        + " GREATER THAN MAX RATE "
+                        + str(u[i, 0])
+                    )
 
             u[i, 0] = max(-3, u[i, 0])
             u[i, 0] = min(3, u[i, 0])
@@ -360,12 +373,14 @@ class Agent(Drone):
         # self.rpydot = np.append(self.rpydot, u0[0:3].T, axis=0)
 
         if u[3, 0] > 1.0:
-            print(
-                "WARNING -> THROTTLE FOR "
-                + self.drone_name
-                + " OUT OF BOUNDS "
-                + str(u[3, 0])
-            )
+            if self.print_debug:
+                print(
+                    "WARNING -> THROTTLE FOR "
+                    + self.drone_name
+                    + " OUT OF BOUNDS "
+                    + str(u[3, 0])
+                )
+
             u[3, 0] = 1.0
 
         roll_rate = u[0, 0]
@@ -393,3 +408,8 @@ class Agent(Drone):
         #        roll_rate, pitch_rate, yaw_rate, throttle, 0.5, self.drone_name
         #    )
 
+        self.cmd = Twist()
+        self.cmd.angular.x = roll_rate
+        self.cmd.angular.y = pitch_rate
+        self.cmd.angular.z = yaw_rate
+        self.cmd.linear.z = throttle
