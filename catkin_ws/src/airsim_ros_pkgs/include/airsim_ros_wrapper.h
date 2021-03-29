@@ -108,6 +108,12 @@ struct VelCmd
     //     vehicle_name(vehicle_name) {};
 };
 
+struct ThrottleRatesCmd
+{
+    double p, q, r, throttle;
+    std::string vehicle_name;
+};
+
 struct GimbalCmd
 {
     std::string vehicle_name;
@@ -201,14 +207,16 @@ private:
         msr::airlib::MultirotorState curr_drone_state;
         // bool in_air_; // todo change to "status" and keep track of this
 
+        ros::Subscriber throttle_rates_cmd_sub;
         ros::Subscriber vel_cmd_body_frame_sub;
         ros::Subscriber vel_cmd_world_frame_sub;
 
         ros::ServiceServer takeoff_srvr;
         ros::ServiceServer land_srvr;
 
-        bool has_vel_cmd;
+        bool has_vel_cmd, has_throttle_rates_cmd;
         VelCmd vel_cmd;
+        ThrottleRatesCmd throttle_rates_cmd;
 
         /// Status
         // bool in_air_; // todo change to "status" and keep track of this
@@ -220,6 +228,7 @@ private:
     void lidar_timer_cb(const ros::TimerEvent& event);
 
     /// ROS subscriber callbacks
+    void throttle_rates_cmd_cb(const geometry_msgs::Twist::ConstPtr& msg, const std::string& vehicle_name);
     void vel_cmd_world_frame_cb(const airsim_ros_pkgs::VelCmd::ConstPtr& msg, const std::string& vehicle_name);
     void vel_cmd_body_frame_cb(const airsim_ros_pkgs::VelCmd::ConstPtr& msg, const std::string& vehicle_name);
 

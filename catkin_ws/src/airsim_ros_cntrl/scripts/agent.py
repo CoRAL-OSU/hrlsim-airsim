@@ -15,7 +15,7 @@ from drone import Drone
 from airsim.client import MultirotorClient
 from airsim.types import MultirotorState, Vector3r
 
-from geometry_msgs.msg import TwistStamped, PoseStamped, AccelStamped, PoseStamped
+from geometry_msgs.msg import TwistStamped, PoseStamped, AccelStamped, PoseStamped,  Twist
 
 
 from nav_msgs.msg import Odometry
@@ -96,6 +96,8 @@ class Agent(Drone):
         self.__target_pose = MultirotorState()
         self.__target_ready = False
 
+        print("NEW AGENT: " + self.drone_name)
+
     def setup_ros(self) -> None:
         """
         @Override
@@ -120,11 +122,6 @@ class Agent(Drone):
         Returns: None
         """
         Drone.setup_ros(self)
-        cmd_pos_topic = self.topic_prefix + "/cmd/pos"
-
-        rospy.Subscriber(
-            cmd_pos_topic, PoseStamped, callback=self.__cmd_pos_cb, queue_size=10
-        )
 
         self.__track_action_name = self.topic_prefix + "/track_object"
 
@@ -330,72 +327,6 @@ class Agent(Drone):
         with self.flag_lock:
             self.cmd = msg
 
-    def __moveToPosition(self, cmd: PoseStamped) -> bool:
-        """
-        Utilize AirSim's Python API to move the drone.
-
-        Args:
-            cmd: The command to execute
-        
-        Returns (bool): True if successful, false otherwise
-        """
-
-        with self.flag_lock:
-            assert type(cmd) == PoseStamped, "movetoposition cmd must be posestamped"
-
-            pos = self.state.kinematics_estimated.position
-            orien = self.state.kinematics_estimated.orientation
-            q = [orien.w_val, orien.x_val, orien.y_val, orien.z_val]
-            (_, _, yaw) = lqr.LQR.quat2rpy(q)
-
-            if cmd.header.frame_id == "local":
-                # ASSUMING 0 PITCH AND ROLL
-                x = (
-                    cmd.pose.position.x * math.cos(yaw)
-                    - cmd.pose.position.y * math.sin(yaw)
-                    + pos.x_val
-                )
-                y = (
-                    cmd.pose.position.x * math.sin(yaw)
-                    + cmd.pose.position.y * math.cos(yaw)
-                    + pos.y_val
-                )
-                z = cmd.pose.position.z + pos.z_val
-
-            elif cmd.header.frame_id == "global":
-                x = cmd.pose.position.x
-                y = cmd.pose.position.y
-                z = cmd.pose.position.z
-
-            else:
-                print("DRONE " + self.drone_name + " VEL cmd UNRECOGNIZED FRAME")
-                return False
-
-            p0 = [x, y, z]
-
-            waypoints = np.array([[pos.x, pos.y, pos.z], np.array(p0)])
-
-            error = np.linalg.norm(
-                np.array(p0) - self.state.kinematics_estimated.position.to_numpy_array()
-            )
-
-            timeout = 10
-            begin_time = time.time()
-
-            r = rospy.Rate(self.freq)
-
-            self.__controller.set_goals(waypoints, np.zeros(3), np.zeros(3))
-
-            while time.time() - begin_time < timeout and error > self.dstep / 2:
-
-                self.moveByLQR(time.time() - begin_time, self.state)
-
-                error = np.linalg.norm(
-                    np.array(p0) - self.state.kinematics_estimated.position.to_numpy_array()
-                )
-
-                r.sleep()
-        return True
 
     ##
     ##
@@ -449,8 +380,16 @@ class Agent(Drone):
 
         self.reference = x0.T
 
-        with self.client_lock:
-            self.client.moveByAngleRatesThrottleAsync(
-                roll_rate, pitch_rate, yaw_rate, throttle, 0.5, self.drone_name
-            )
+        throttle_rates_cmd = Twist()
+        throttle_rates_cmd.linear.z = throttle
+        throttle_rates_cmd.angular.x = roll_rate
+        throttle_rates_cmd.angular.y = pitch_rate
+        throttle_rates_cmd.angular.z = yaw_rate
+
+        self.throttle_rates_cmd_pub.publish(throttle_rates_cmd)
+
+        #with self.client_lock:
+        #    self.client.moveByAngleRatesThrottleAsync(
+        #        roll_rate, pitch_rate, yaw_rate, throttle, 0.5, self.drone_name
+        #    )
 

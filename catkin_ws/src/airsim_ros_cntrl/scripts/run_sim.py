@@ -98,7 +98,7 @@ if __name__ == "__main__":
             drone_list.append(v)
         elif "Target" in v:
             target_list.append(v)
-
+            
     for i in range(len(target_list)):
         target_procs[target_list[i]] = Target(
             "Team" + str(i),

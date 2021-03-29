@@ -61,6 +61,9 @@ class Target(Drone):
         """
         super().__init__(swarmName, droneName, sim_client, client_lock)
 
+
+        print("NEW TARGET: " + self.drone_name)
+
         with self.client_lock:
             self.client.takeoffAsync(vehicle_name=self.drone_name)
 
@@ -150,21 +153,21 @@ class Target(Drone):
         prev_time = time.time()
 
         with self.client_lock:
-            self.client.moveOnPathAsync(self.__path, 2)
+            self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
 
         while not rospy.is_shutdown() and self._shutdown == False:
             with self.flag_lock:
                 if self._shutdown == True:
                     break
 
-            (self.state, self.sensors) = self.get_state()
+            #(self.state, self.sensors) = self.get_state()
             state = self.state.kinematics_estimated
 
             if (state.linear_velocity.get_length() < 0.2):
-                self.client.moveOnPathAsync(self.__path, 2)
+                self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
 
         
-            self.publish_multirotor_state(self.state, self.sensors)
+            #self.publish_multirotor_state(self.state, self.sensors)
 
             rate.sleep()
 

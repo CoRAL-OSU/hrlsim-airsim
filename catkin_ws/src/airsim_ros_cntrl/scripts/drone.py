@@ -2,14 +2,16 @@
 
 import time
 from multiprocessing import Lock, Process
-import sys
+import sys, os
 
-import airsim
+import airsim, pymap3d
 from airsim.client import MultirotorClient
 from airsim.types import MultirotorState, LandedState
 import rospy
 from actionlib import SimpleActionClient
 from typing import Dict
+
+from airsim_ros_pkgs.msg import Environment, GPSYaw
 from airsim_ros_pkgs.srv import (
     Takeoff,
     TakeoffRequest,
@@ -27,7 +29,8 @@ from airsim_ros_cntrl.msg import (
 from sensor_msgs.msg import (
     NavSatFix,
     NavSatStatus,
-    MagneticField
+    MagneticField,
+    Imu
 )
 
 from geometry_msgs.msg import (
@@ -39,6 +42,7 @@ from geometry_msgs.msg import (
     Vector3
 )
 
+from nav_msgs.msg import Odometry
 from std_srvs.srv import SetBool, SetBoolResponse, SetBoolRequest
 
 from std_msgs.msg import Float32, Header
@@ -136,6 +140,7 @@ class Drone(Process):
 
         self.freq = 20
         self.prev_loop_time = time.time()
+        self.origin_geo_point = GPSYaw()
 
         self.cmd = None
 
@@ -145,7 +150,8 @@ class Drone(Process):
             self.client.enableApiControl(True, vehicle_name=self.drone_name)
             self.client.armDisarm(True, vehicle_name=self.drone_name)
 
-        (self.state, self.sensors) = self.get_state()
+        #(self.state, self.sensors) = self.get_state()
+        self.state = airsim.MultirotorState()
         
 
     def setup_ros(self) -> None:
@@ -172,10 +178,19 @@ class Drone(Process):
         shutdown_service_name = self.topic_prefix + "/shutdown"
 
         state_topic = self.topic_prefix + "/multirotor"
+        lqr_cmd_topic = "/airsim_node/" + self.drone_name + "/throttle_rates_cmd"
 
         rospy.on_shutdown(self.shutdown)
 
-        self.multirotor_pub = rospy.Publisher(state_topic, Multirotor, queue_size=10)
+        rospy.Subscriber("/airsim_node/origin_geo_point", GPSYaw, callback=self.get_origin)
+        rospy.Subscriber("/airsim_node/" + self.drone_name + "/imu/imu0", Imu, callback=self.imu_cb)
+        rospy.Subscriber("/airsim_node/" + self.drone_name + "/gps/gps0", NavSatFix, callback=self.gps_cb)
+        rospy.Subscriber("/airsim_node/" + self.drone_name + "/odom_local_ned", Odometry, callback=self.odom_cb)
+
+
+        #self.multirotor_pub = rospy.Publisher(state_topic, Multirotor, queue_size=10)
+        self.throttle_rates_cmd_pub = rospy.Publisher(lqr_cmd_topic, Twist, queue_size=10)
+
 
         rospy.Service(shutdown_service_name, SetBool, self.__handle_shutdown)
         rospy.Service(takeoff_service_name, Takeoff, self.__handle_takeoff)
@@ -280,6 +295,60 @@ class Drone(Process):
 
         print(self.drone_name + " QUITTING")
 
+
+    def get_origin(self, msg):
+        self.origin_geo_point = msg
+
+    def imu_cb(self, msg):
+        """
+        Get imu msg of drone from airsim_node
+        """
+        alx = msg.linear_acceleration.x
+        aly = msg.linear_acceleration.y
+        alz = msg.linear_acceleration.z
+
+        self.state.kinematics_estimated.linear_acceleration = airsim.Vector3r(alx,aly,alz)
+
+    def gps_cb(self, msg):
+        """
+        Get gps lat/lon of drone from airsim_node
+        """
+        lat0 = self.origin_geo_point.latitude
+        lon0 = self.origin_geo_point.longitude
+        alt0 = self.origin_geo_point.altitude
+
+        lat = msg.latitude
+        lon = msg.longitude
+        alt = msg.altitude
+
+        (n,e,d) = pymap3d.geodetic2ned(lat, lon, alt, lat0, lon0, alt0)
+        
+        self.state.kinematics_estimated.position = airsim.Vector3r(n,e,d)
+
+    def odom_cb(self, msg):
+        """
+        Get odom of drone from airsim node
+        """
+        vlx = msg.twist.twist.linear.x
+        vly = msg.twist.twist.linear.y
+        vlz = msg.twist.twist.linear.z
+
+        vax = msg.twist.twist.angular.x
+        vay = msg.twist.twist.angular.y
+        vaz = msg.twist.twist.angular.z
+
+        qw = msg.pose.pose.orientation.w
+        qx = msg.pose.pose.orientation.x
+        qy = msg.pose.pose.orientation.y
+        qz = msg.pose.pose.orientation.z
+
+        self.state.kinematics_estimated.linear_velocity = airsim.Vector3r(vlx,vly,vlz)
+        self.state.kinematics_estimated.angular_velocity = airsim.Vector3r(vax,vay,vaz)
+        self.state.kinematics_estimated.orientation = airsim.Quaternionr(qx, qy, qz, qw)
+
+
+
+    '''
     def get_state(self) -> MultirotorState:
         """
         Return the state of the drone. Refer to MultirotorClient.getMultirotorState for more information.
@@ -396,7 +465,7 @@ class Drone(Process):
   
         # Publish msg
         self.multirotor_pub.publish(msg)
-
+    '''
 
     def run(self) -> None:
         """
@@ -409,9 +478,8 @@ class Drone(Process):
         rate = rospy.Rate(self.freq)
 
         while not rospy.is_shutdown() and self._shutdown == False:
-            (self.state, self.sensors) = self.get_state()
-            self.publish_multirotor_state(self.state, self.sensors)
-
+            # (self.state, self.sensors) = self.get_state()
+            # self.publish_multirotor_state(self.state, self.sensors)
             rate.sleep()
 
         with self.client_lock:
