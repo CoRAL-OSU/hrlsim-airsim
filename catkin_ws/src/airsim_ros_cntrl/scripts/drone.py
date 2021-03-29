@@ -142,7 +142,7 @@ class Drone(Process):
         self.client_lock = Lock()
         self.client = airsim.MultirotorClient()
 
-        self.freq = 10
+        self.freq = 20
         self.prev_loop_time = time.time()
         self.origin_geo_point = GPSYaw()
 
@@ -156,6 +156,7 @@ class Drone(Process):
 
         #(self.state, self.sensors) = self.get_state()
         self.state = airsim.MultirotorState()
+        self.sensors = dict()
         
 
     def setup_ros(self) -> None:
@@ -192,7 +193,7 @@ class Drone(Process):
         rospy.Subscriber("/airsim_node/" + self.drone_name + "/odom_local_ned", Odometry, callback=self.odom_cb)
 
 
-        #self.multirotor_pub = rospy.Publisher(state_topic, Multirotor, queue_size=10)
+        self.multirotor_pub = rospy.Publisher(state_topic, Multirotor, queue_size=10)
         self.throttle_rates_cmd_pub = rospy.Publisher(lqr_cmd_topic, Twist, queue_size=10)
 
 
@@ -424,7 +425,7 @@ class Drone(Process):
             sensors['gps'] = gps_data
 
         return (state, sensors)
-
+    '''
     
     def publish_multirotor_state(self, state, sensors) -> None:
         """
@@ -485,7 +486,7 @@ class Drone(Process):
   
         # Publish msg
         self.multirotor_pub.publish(msg)
-    '''
+    
 
     def run(self) -> None:
         """

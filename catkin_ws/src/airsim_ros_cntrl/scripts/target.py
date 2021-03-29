@@ -160,7 +160,7 @@ class Target(Drone):
                 self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
 
         
-            #self.publish_multirotor_state(self.state, self.sensors)
+            self.publish_multirotor_state(self.state, self.sensors)
 
             rate.sleep()
 

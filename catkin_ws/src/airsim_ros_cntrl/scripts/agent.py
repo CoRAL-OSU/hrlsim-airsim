@@ -95,6 +95,7 @@ class Agent(Drone):
 
         self.__target_pose = MultirotorState()
         self.__target_ready = False
+        self.print_debug = False
 
         print("NEW AGENT: " + self.drone_name)
 
@@ -306,11 +307,16 @@ class Agent(Drone):
                 feedback.dist.append(feedback_vector.z_val)
                 feedback.dist_mag = feedback_vector.get_length()
 
+
+
+                print(goal.object_name + ": " + str(self.__target_pose.kinematics_estimated.position.to_numpy_array()))
+                print(self.drone_name + ": " + str(self.state.kinematics_estimated.position.to_numpy_array()))
+
                 self.__track_action.publish_feedback(feedback)
 
                 r.sleep()
 
-                print(self.drone_name + " track time: " + str(time.time()-prev_time))
+                #print(self.drone_name + " track time: " + str(time.time()-prev_time))
                 prev_time = time.time()
 
                 
