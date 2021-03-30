@@ -103,7 +103,7 @@ class Target(Drone):
         Returns:
             List[Vector3r]: List of Points in NED orientation for the drone to follow.
         """
-        paths = {"circle": 12, "triangle": 3, "square": 4, "line": 2}
+        paths = {"circle": 12, "triangle": 3, "square": 4, "line": 2, "": 0}
         points = paths[path_type]
         center = self.state.kinematics_estimated.position
         path: List[Vector3r] = []
@@ -145,19 +145,18 @@ class Target(Drone):
 
         prev_time = time.time()
 
-        with self.client_lock:
-            self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
+        #with self.client_lock:
+        #    self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
 
         while not rospy.is_shutdown() and self._shutdown == False:
             with self.flag_lock:
                 if self._shutdown == True:
                     break
 
-            #(self.state, self.sensors) = self.get_state()
             state = self.state.kinematics_estimated
 
-            if (state.linear_velocity.get_length() < 0.2):
-                self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
+            #if (state.linear_velocity.get_length() < 0.2):
+            #    self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
 
         
             self.publish_multirotor_state(self.state, self.sensors)

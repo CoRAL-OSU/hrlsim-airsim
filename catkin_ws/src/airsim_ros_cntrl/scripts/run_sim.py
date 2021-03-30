@@ -61,8 +61,8 @@ if __name__ == "__main__":
     #     SETUP PYTHON CLIENT
     #
 
-    #ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    ip = "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
+    ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
+    #ip = "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -149,7 +149,8 @@ if __name__ == "__main__":
     # team_list[1].track_object("Target1", 25, -10)
 
     for team in team_list:
-        team.wait()
+       team.wait()
+
 
     #team_list[0].track_object("Target0", 5, 0)
     # team_list[1].track_object("Target1", 5, 0)

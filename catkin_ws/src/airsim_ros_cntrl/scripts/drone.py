@@ -155,6 +155,7 @@ class Drone(Process):
             self.client.armDisarm(True, vehicle_name=self.drone_name)
 
         #(self.state, self.sensors) = self.get_state()
+
         self.state = airsim.MultirotorState()
         self.sensors = dict()
         
@@ -501,6 +502,7 @@ class Drone(Process):
         while not rospy.is_shutdown() and self._shutdown == False:
             # (self.state, self.sensors) = self.get_state()
             # self.publish_multirotor_state(self.state, self.sensors)
+
             rate.sleep()
 
         with self.client_lock:

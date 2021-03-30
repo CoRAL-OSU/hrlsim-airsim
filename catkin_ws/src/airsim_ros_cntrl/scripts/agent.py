@@ -125,6 +125,15 @@ class Agent(Drone):
         """
         Drone.setup_ros(self)
 
+        target_topic = self.swarm_name + "/Target0/"
+        target_state_sub = rospy.Subscriber(
+            target_topic + "multirotor",
+            Multirotor,
+            callback=self.__target_state_cb,
+            queue_size=10,
+        )
+
+
         self.__track_action_name = self.topic_prefix + "/track_object"
 
         self.__track_action = actionlib.SimpleActionServer(
@@ -172,6 +181,7 @@ class Agent(Drone):
                 acc.angular.x, acc.angular.y, acc.angular.z
             )      
   
+
             self.__target_ready = True
 
 
@@ -207,6 +217,7 @@ class Agent(Drone):
         while self.__target_ready == False and time.time() - start_time < goal.timeout:
             time.sleep(0.05)
 
+
         target_pose = self.__target_pose.kinematics_estimated
 
         feedback_vector = calc_distance(
@@ -222,7 +233,7 @@ class Agent(Drone):
 
         print(self.drone_name + " ENTERING WHILE LOOP")
 
-        update_object_location_period = 0.2  # seconds
+        update_object_location_period = 200.2  # seconds
         prev_object_update_time = 0
 
         start_pos = self.state.kinematics_estimated.position.to_numpy_array()
@@ -288,6 +299,8 @@ class Agent(Drone):
                     #waypoints = np.array([start_pos, pt).T
                     waypoints = np.array([p, pt]).T
 
+                    print(waypoints)
+
                     self.__controller.set_goals(waypoints, ic, fc)
 
                     prev_object_update_time = time.time()
@@ -306,11 +319,6 @@ class Agent(Drone):
                 feedback.dist.append(feedback_vector.y_val)
                 feedback.dist.append(feedback_vector.z_val)
                 feedback.dist_mag = feedback_vector.get_length()
-
-
-
-                print(goal.object_name + ": " + str(self.__target_pose.kinematics_estimated.position.to_numpy_array()))
-                print(self.drone_name + ": " + str(self.state.kinematics_estimated.position.to_numpy_array()))
 
                 self.__track_action.publish_feedback(feedback)
 
@@ -376,8 +384,6 @@ class Agent(Drone):
             u[i, 0] = max(-3, u[i, 0])
             u[i, 0] = min(3, u[i, 0])
 
-        # self.rpydot = np.append(self.rpydot, u0[0:3].T, axis=0)
-
         if u[3, 0] > 1.0:
             if self.print_debug:
                 print(
@@ -389,15 +395,14 @@ class Agent(Drone):
 
             u[3, 0] = 1.0
 
-        roll_rate = u[0, 0]
-        pitch_rate = u[1, 0]
-        yaw_rate = u[2, 0]
-        throttle = u[3, 0]
+        roll_rate  = u[0, 0]
+        pitch_rate = -u[1, 0]
+        yaw_rate   = u[2, 0]
+        throttle   = u[3, 0]
 
         accel = self.__controller.thrust2world(state, throttle)
 
         self.prev_acceleration_cmd = accel[2]
-        # self.acceleration_cmds = np.append(self.acceleration_cmds, [accel], axis=0)
 
         self.reference = x0.T
 
@@ -408,14 +413,3 @@ class Agent(Drone):
         throttle_rates_cmd.angular.z = yaw_rate
 
         self.throttle_rates_cmd_pub.publish(throttle_rates_cmd)
-
-        #with self.client_lock:
-        #    self.client.moveByAngleRatesThrottleAsync(
-        #        roll_rate, pitch_rate, yaw_rate, throttle, 0.5, self.drone_name
-        #    )
-
-        self.cmd = Twist()
-        self.cmd.angular.x = roll_rate
-        self.cmd.angular.y = pitch_rate
-        self.cmd.angular.z = yaw_rate
-        self.cmd.linear.z = throttle
