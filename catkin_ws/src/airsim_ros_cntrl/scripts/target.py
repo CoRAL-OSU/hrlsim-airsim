@@ -103,7 +103,7 @@ class Target(Drone):
         Returns:
             List[Vector3r]: List of Points in NED orientation for the drone to follow.
         """
-        paths = {"circle": 12, "triangle": 3, "square": 4, "line": 2, "": 0}
+        paths = {"circle": 12, "triangle": 3, "square": 4, "line": 2, "f": 0}
         points = paths[path_type]
         center = self.state.kinematics_estimated.position
         path: List[Vector3r] = []

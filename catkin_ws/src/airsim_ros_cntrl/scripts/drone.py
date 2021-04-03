@@ -190,7 +190,7 @@ class Drone(Process):
 
         rospy.Subscriber("/airsim_node/origin_geo_point", GPSYaw, callback=self.get_origin)
         rospy.Subscriber("/airsim_node/" + self.drone_name + "/imu/imu0", Imu, callback=self.imu_cb)
-        rospy.Subscriber("/airsim_node/" + self.drone_name + "/gps/gps0", NavSatFix, callback=self.gps_cb)
+        rospy.Subscriber("/airsim_node/" + self.drone_name + "/global_gps", NavSatFix, callback=self.gps_cb)
         rospy.Subscriber("/airsim_node/" + self.drone_name + "/odom_local_ned", Odometry, callback=self.odom_cb)
 
 
@@ -328,7 +328,7 @@ class Drone(Process):
         alt = msg.altitude
 
         (n,e,d) = pymap3d.geodetic2ned(lat, lon, alt, lat0, lon0, alt0)
-        
+
         self.state.kinematics_estimated.position = airsim.Vector3r(n,e,d)
 
     def odom_cb(self, msg):
@@ -501,7 +501,7 @@ class Drone(Process):
 
         while not rospy.is_shutdown() and self._shutdown == False:
             # (self.state, self.sensors) = self.get_state()
-            # self.publish_multirotor_state(self.state, self.sensors)
+            self.publish_multirotor_state(self.state, self.sensors)
 
             rate.sleep()
 

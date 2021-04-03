@@ -227,7 +227,9 @@ class Agent(Drone):
             self.state.kinematics_estimated.position, target_pose.position
         )
 
+        #r = rospy.Rate(self.freq)
         r = rospy.Rate(self.freq)
+
 
         feedback = TrackObjectFeedback()
 
@@ -291,15 +293,13 @@ class Agent(Drone):
 
                     pt = target_pose.position.to_numpy_array() + goal.offset + bias
 
-                    vt = target_pose.linear_velocity.to_numpy_array()
-                    at = target_pose.linear_acceleration.to_numpy_array()
+                    vt = np.zeros(3)#target_pose.linear_velocity.to_numpy_array()
+                    at = np.zeros(3)#target_pose.linear_acceleration.to_numpy_array()
                     jt = np.zeros(3)
                     fc = np.array([vt, at, jt]).T
 
                     #waypoints = np.array([start_pos, pt).T
                     waypoints = np.array([p, pt]).T
-
-                    print(waypoints)
 
                     self.__controller.set_goals(waypoints, ic, fc)
 
@@ -366,7 +366,7 @@ class Agent(Drone):
             t (float): Time elapsed since beginning
             state (MultirotorState): Current Multirotor State
         """
-        x0, u0, u = self.__controller.computeControl(t, state, self.prev_accel_cmd)
+        u = self.__controller.computeControl(t, state, self.prev_accel_cmd)
 
         for i in range(0, 3):
             if abs(u[i, 0]) > 2:
@@ -396,15 +396,13 @@ class Agent(Drone):
             u[3, 0] = 1.0
 
         roll_rate  = u[0, 0]
-        pitch_rate = -u[1, 0]
+        pitch_rate = u[1, 0]
         yaw_rate   = u[2, 0]
         throttle   = u[3, 0]
 
         accel = self.__controller.thrust2world(state, throttle)
 
         self.prev_acceleration_cmd = accel[2]
-
-        self.reference = x0.T
 
         throttle_rates_cmd = Twist()
         throttle_rates_cmd.linear.z = throttle

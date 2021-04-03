@@ -29,7 +29,7 @@ class LQR:
         self.mass = 1  # kg
         self.max_thrust = 4.1794 * 4  # N
 
-        self.update_gain_period = 0.2  # seconds
+        self.update_gain_period = 0.1  # seconds
         self.prev_gain_time = time.time()
 
     def set_costs(self, Q: List[int] = None, R: List[int] = None) -> None:
@@ -90,11 +90,11 @@ class LQR:
         tp = math.tan(pitch)
 
         # np.matrix is being depricated should move to np.ndarray
-        R = np.matrix([[1, sr * tp, cr * tp], [0, cr, -sr], [0, sr / cp, cr / cp]])
+        R = np.array([[1, sr * tp, cr * tp], [0, cr, -sr], [0, sr / cp, cr / cp]])
 
         rpydot = np.array([[rpydot.y_val, -rpydot.x_val, rpydot.z_val]]).T
-        omega = R.I * rpydot
-        omega = [omega[0, 0], omega[1, 0], omega[2, 0]]
+        omega = np.linalg.inv(R) * rpydot
+        #omega = omega[0, 0], omega[1, 0], omega[2, 0]]
 
         # c = (9.8-state.kinematics_estimated.linear_acceleration.z_val)/(cr*cp)
         # Compute thrust from command -> this is dangerous as there are unknown thrusts
@@ -104,8 +104,8 @@ class LQR:
 
         c = (9.8 - prev_accel_cmd) / (cr * cp)
 
-        u = LQR.set_command(omega, c)
-
+        u = np.array([[omega[0,0], omega[1,0], omega[2,0], c]]).T
+        
         self.__updateGains(x, u)
         self.prev_gain_time = time.time()
 
@@ -127,16 +127,6 @@ class LQR:
         self.A = self.__updateA(x, u)
         self.B = self.__updateB(x)
 
-        """
-        Co = control.ctrb(self.A,self.B)
-
-        try:
-            assert np.linalg.matrix_rank(self.A) <= np.linalg.matrix_rank(Co), "System is not controllable"
-        
-        except AssertionError:
-            print("System is not controllable")
-            exit(1)     
-        """
 
         self.K, _, _ = control.lqr(self.A, self.B, self.Q, self.R)
 
@@ -157,24 +147,24 @@ class LQR:
             Tuple[np.ndarray, np.ndarray, np.matrix]: Tuple representing
         """
         p = state.kinematics_estimated.position
-        p = [p.x_val, p.y_val, p.z_val]
+        p = np.array([[p.x_val, p.y_val, p.z_val]]).T
 
         q = state.kinematics_estimated.orientation
-        q = [q.w_val, q.x_val, q.y_val, q.z_val]
+        q = np.array([[q.w_val, q.x_val, q.y_val, q.z_val]]).T
 
         v = state.kinematics_estimated.linear_velocity
-        v = [v.x_val, v.y_val, v.z_val]
+        v = np.array([[v.x_val, v.y_val, v.z_val]]).T
 
-        roll, pitch, _ = LQR.quat2rpy(q)
+        #roll, pitch, _ = LQR.quat2rpy(q)
 
-        cr = math.cos(roll)
-        sr = math.sin(roll)
-        cp = math.cos(pitch)
-        tp = math.tan(pitch)
+        #cr = math.cos(roll)
+        #sr = math.sin(roll)
+        #cp = math.cos(pitch)
+        #tp = math.tan(pitch)
 
-        R = np.matrix([[1, sr * tp, cr * tp], [0, cr, -sr], [0, sr / cp, cr / cp]])
+        #R = np.matrix([[1, sr * tp, cr * tp], [0, cr, -sr], [0, sr / cp, cr / cp]])
 
-        x = LQR.set_state(p, q, v)
+        x = np.concatenate((p,q,v) , 0)
         x = LQR.ned2xyz(x)
 
         x0, u0 = self.traj_generator.compute(t, x)
@@ -193,36 +183,12 @@ class LQR:
         tmp = u[0, 0]
         u[0, 0] = u[1, 0]
         u[1, 0] = tmp
-        u[2, 0] = -u[2, 0]
+        u[2, 0] = u[2, 0]
 
         u[3, 0] = abs(u[3, 0]) * self.mass / self.max_thrust
 
-        u[0:3] = R * u[0:3]
-
-        u[1, 0] = -u[1, 0]
-        u[2, 0] = -u[2, 0]
-
-        tmp = x0[0, 0]
-        x0[0, 0] = x0[1, 0]
-        x0[1, 0] = tmp
-        x0[2, 0] = -x0[2, 0]
-
-        tmp = x0[4, 0]
-        x0[4, 0] = x0[5, 0]
-        x0[5, 0] = tmp
-        x0[6, 0] = -x0[6, 0]
-
-        tmp = x0[7, 0]
-        x0[7, 0] = x0[8, 0]
-        x0[8, 0] = tmp
-        x0[9, 0] = -x0[9, 0]
-
-        tmp = u0[0, 0]
-        u0[0, 0] = u0[1, 0]
-        u0[1, 0] = tmp
-        u0[2, 0] = -u0[2, 0]
-
-        return x0, u0, u
+        #u[0:3] = R * u[0:3]
+        return u
 
     def thrust2world(self, state: MultirotorState, throttle: np.matrix) -> np.ndarray:
         """
@@ -376,48 +342,6 @@ class LQR:
         assert np.shape(u) == (4, 1), "The command must be a 4x1 vector"
         return u[0:3], u[3][0]
 
-    @staticmethod
-    def set_state(p: np.ndarray, q: np.ndarray, v: np.ndarray) -> np.ndarray:
-        """
-        Sets the state list from the position, quaterion and velocity lists
-
-        Args:
-            p (np.ndarray): Position List
-            q (np.ndarray): Quaterion List
-            v (np.ndarray): Velocity List
-
-        Returns:
-            np.ndarray: State List
-        """
-        assert len(p) == 3, "The position must be a 3x1 list"
-        assert len(q) == 4, "The quaternion must be a 4x1 list"
-        assert len(v) == 3, "The velocity must be a 3x1 list"
-
-        p = np.array([p], dtype="float").T
-        q = np.array([q], dtype="float").T
-        v = np.array([v], dtype="float").T
-
-        x = np.block([[p], [q], [v]])
-        return x
-
-    @staticmethod
-    def set_command(omega: np.ndarray, c: float) -> np.ndarray:
-        """
-        Sets the command List from an array and a float
-
-        Args:
-            omega (np.ndarray): The body rates
-            c (float): c
-
-        Returns:
-            np.ndarray: command list
-        """
-        assert len(omega) == 3, "The body rates must be a 3x1 list"
-
-        omega = np.array([omega], dtype="float").T
-
-        u = np.block([[omega], [c]])
-        return u
 
     @staticmethod
     def __updateA(x: np.ndarray, u: np.ndarray) -> np.ndarray:
@@ -479,12 +403,12 @@ class LQR:
         Returns:
             np.ndarray: Dot Product
         """
-        y = np.block(
+        y = np.array(
             [
-                [0.0, -omega[0], -omega[1], -omega[2]],
-                [omega[0], 0.0, omega[2], -omega[1]],
-                [omega[1], -omega[2], 0.0, omega[0]],
-                [omega[2], omega[1], -omega[0], 0.0],
+                [0.0, -omega[0,0], -omega[1,0], -omega[2,0]],
+                [omega[0,0], 0.0, omega[2,0], -omega[1,0]],
+                [omega[1,0], -omega[2,0], 0.0, omega[0,0]],
+                [omega[2,0], omega[1,0], -omega[0,0], 0.0],
             ]
         )
 
@@ -505,11 +429,11 @@ class LQR:
         Returns:
             np.ndarray: Dot Product
         """
-        y = np.block(
+        y = np.array(
             [
-                [q[2], q[3], q[0], q[1]],
-                [-q[1], -q[0], q[3], q[2]],
-                [q[0], -q[1], -q[2], q[3]],
+                [q[2,0], q[3,0], q[0,0], q[1,0]],
+                [-q[1,0], -q[0,0], q[3,0], q[2,0]],
+                [q[0,0], -q[1,0], -q[2,0], q[3,0]],
             ]
         )
 
@@ -532,12 +456,12 @@ class LQR:
         Returns:
             np.ndarray: Dot Product
         """
-        y = np.block(
+        y = np.array(
             [
-                [-q[1], -q[2], -q[3]],
-                [q[0], -q[3], -q[2]],
-                [q[3], q[0], q[1]],
-                [-q[2], q[1], q[0]],
+                [-q[1,0], -q[2,0], -q[3,0]],
+                [q[0,0], -q[3,0], -q[2,0]],
+                [q[3,0], q[0,0], q[1,0]],
+                [-q[2,0], q[1,0], q[0,0]],
             ]
         )
         return 0.5 * y
@@ -553,11 +477,11 @@ class LQR:
         Returns:
             np.ndarray: Dot Product
         """
-        y = np.block(
+        y = np.array(
             [
-                [q[0] * q[2] + q[1] * q[3]],
-                [q[2] * q[3] - q[0] * q[1]],
-                [q[0] * q[0] - q[1] * q[1] - q[2] * q[2] + q[3] * q[3]],
+                [q[0,0] * q[2,0] + q[1,0] * q[3,0]],
+                [q[2,0] * q[3,0] - q[0,0] * q[1,0]],
+                [q[0,0] * q[0,0] - q[1,0] * q[1,0] - q[2,0] * q[2,0] + q[3,0] * q[3,0]],
             ]
         )
         return y
