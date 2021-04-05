@@ -145,8 +145,8 @@ class Target(Drone):
 
         prev_time = time.time()
 
-        #with self.client_lock:
-        #    self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
+        with self.client_lock:
+            self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
 
         while not rospy.is_shutdown() and self._shutdown == False:
             with self.flag_lock:
@@ -155,8 +155,8 @@ class Target(Drone):
 
             state = self.state.kinematics_estimated
 
-            #if (state.linear_velocity.get_length() < 0.2):
-            #    self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
+            if (state.linear_velocity.get_length() < 0.2):
+                self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
 
         
             self.publish_multirotor_state(self.state, self.sensors)

@@ -31,28 +31,10 @@ from airsim_ros_cntrl.msg import (
     Multirotor
 )
 
+from airsim_ros_pkgs.msg import GimbalAngleEulerCmd
+
 from pycallgraph import PyCallGraph
 from pycallgraph.output import GraphvizOutput
-
-
-# Calculate vector1 - vector2
-def calc_distance(vector1: Vector3r, vector2: Vector3r):
-    """
-    Calculates the distance between two vectors.
-
-    Args:
-        vector1 (Vector3r): [description]
-        vector2 (Vector3r): [description]
-
-    Returns:
-        Vector3r: Output vector
-    """
-    output = airsim.Vector3r()
-
-    output.x_val = vector1.x_val - vector2.x_val
-    output.y_val = vector1.y_val - vector2.y_val
-    output.z_val = vector1.z_val - vector2.z_val
-    return output
 
 
 class Agent(Drone):
@@ -133,6 +115,7 @@ class Agent(Drone):
             queue_size=10,
         )
 
+        self.__gimbal_pub = rospy.Publisher("/airsim_node/gimbal_angle_euler_cmd", GimbalAngleEulerCmd, queue_size=10)
 
         self.__track_action_name = self.topic_prefix + "/track_object"
 
@@ -220,22 +203,15 @@ class Agent(Drone):
 
         target_pose = self.__target_pose.kinematics_estimated
 
-        feedback_vector = calc_distance(
-            target_pose.position, self.state.kinematics_estimated.position
-        )
-        feedback_magnitude = airsim.Vector3r.distance_to(
-            self.state.kinematics_estimated.position, target_pose.position
-        )
-
         #r = rospy.Rate(self.freq)
-        r = rospy.Rate(self.freq)
+        sleeper = rospy.Rate(self.freq)
 
 
         feedback = TrackObjectFeedback()
 
         print(self.drone_name + " ENTERING WHILE LOOP")
 
-        update_object_location_period = 200.2  # seconds
+        update_object_location_period = 200  # seconds
         prev_object_update_time = 0
 
         start_pos = self.state.kinematics_estimated.position.to_numpy_array()
@@ -285,8 +261,8 @@ class Agent(Drone):
 
                     p = start_pos#pos
                     
-                    v = np.zeros(3)#state.kinematics_estimated.linear_velocity.to_numpy_array()
-                    a = np.zeros(3)#state.kinematics_estimated.linear_acceleration.to_numpy_array()
+                    v = np.zeros(3)#self.state.kinematics_estimated.linear_velocity.to_numpy_array()
+                    a = np.zeros(3)#self.state.kinematics_estimated.linear_acceleration.to_numpy_array()
                     j = np.zeros(3)
                     ic = np.array([v, a, j]).T
 
@@ -298,7 +274,7 @@ class Agent(Drone):
                     jt = np.zeros(3)
                     fc = np.array([vt, at, jt]).T
 
-                    #waypoints = np.array([start_pos, pt).T
+                    #waypoints = np.array([start_pos, pt]).T
                     waypoints = np.array([p, pt]).T
 
                     self.__controller.set_goals(waypoints, ic, fc)
@@ -310,9 +286,7 @@ class Agent(Drone):
                 self.moveByLQR(time.time() - start_time, self.state)
 
                 feedback_vector = airsim.Vector3r(pt[0], pt[1], pt[2])
-                feedback_vector = calc_distance(
-                    feedback_vector, self.state.kinematics_estimated.position
-                )
+                feedback_vector = feedback_vector - self.state.kinematics_estimated.position
 
                 feedback.dist = []
                 feedback.dist.append(feedback_vector.x_val)
@@ -320,9 +294,30 @@ class Agent(Drone):
                 feedback.dist.append(feedback_vector.z_val)
                 feedback.dist_mag = feedback_vector.get_length()
 
+                feedback_dir = feedback_vector/feedback_vector.get_length()
+
+                gimbal_orien = feedback_vector.cross(self.state.kinematics_estimated.position)
+                gimbal_orien = gimbal_orien.to_Quaternionr()
+                gimbal_orien.w_val = math.sqrt(feedback_vector.get_length()*self.state.kinematics_estimated.position.get_length()) + feedback_vector.dot(self.state.kinematics_estimated.position)
+                gimbal_orien = gimbal_orien / gimbal_orien.get_length()
+                
+                (gp, gr, gy) = airsim.to_eularian_angles(gimbal_orien)
+                (p,r,y) = airsim.to_eularian_angles(self.state.kinematics_estimated.orientation)
+
+
+                gimbal_msg = GimbalAngleEulerCmd()
+                gimbal_msg.roll =  (gr - r) * 180/math.pi
+                gimbal_msg.pitch = (gp - p) * 180/math.pi - 90
+                gimbal_msg.yaw =   (gy - y) * 180/math.pi
+                gimbal_msg.camera_name = "cam0"
+                gimbal_msg.vehicle_name = self.drone_name
+
+                self.__gimbal_pub.publish(gimbal_msg)
+                                
+
                 self.__track_action.publish_feedback(feedback)
 
-                r.sleep()
+                sleeper.sleep()
 
                 #print(self.drone_name + " track time: " + str(time.time()-prev_time))
                 prev_time = time.time()
