@@ -15,7 +15,7 @@ from drone import Drone
 from airsim.client import MultirotorClient
 from airsim.types import MultirotorState, Vector3r
 
-from geometry_msgs.msg import TwistStamped, PoseStamped, AccelStamped, PoseStamped,  Twist
+from geometry_msgs.msg import TwistStamped, PoseStamped, AccelStamped, PoseStamped,  Twist, Quaternion
 
 
 from nav_msgs.msg import Odometry
@@ -31,7 +31,7 @@ from airsim_ros_cntrl.msg import (
     Multirotor
 )
 
-from airsim_ros_pkgs.msg import GimbalAngleEulerCmd
+from airsim_ros_pkgs.msg import GimbalAngleEulerCmd, GimbalAngleQuatCmd
 
 from pycallgraph import PyCallGraph
 from pycallgraph.output import GraphvizOutput
@@ -115,7 +115,7 @@ class Agent(Drone):
             queue_size=10,
         )
 
-        self.__gimbal_pub = rospy.Publisher("/airsim_node/gimbal_angle_euler_cmd", GimbalAngleEulerCmd, queue_size=10)
+        self.__gimbal_pub = rospy.Publisher("/airsim_node/gimbal_angle_quat_cmd", GimbalAngleQuatCmd, queue_size=10)
 
         self.__track_action_name = self.topic_prefix + "/track_object"
 
@@ -232,9 +232,9 @@ class Agent(Drone):
                     break
 
                 pos = self.state.kinematics_estimated.position.to_numpy_array()
+                target_pose = self.__target_pose.kinematics_estimated
 
                 if time.time() - prev_object_update_time > update_object_location_period:
-                    target_pose = self.__target_pose.kinematics_estimated
 
                     bias = np.array(
                         [
@@ -296,19 +296,12 @@ class Agent(Drone):
 
                 feedback_dir = feedback_vector/feedback_vector.get_length()
 
-                gimbal_orien = feedback_vector.cross(self.state.kinematics_estimated.position)
-                gimbal_orien = gimbal_orien.to_Quaternionr()
-                gimbal_orien.w_val = math.sqrt(feedback_vector.get_length()*self.state.kinematics_estimated.position.get_length()) + feedback_vector.dot(self.state.kinematics_estimated.position)
+                gimbal_orien = target_pose.position.cross(self.state.kinematics_estimated.position).to_Quaternionr()
+                gimbal_orien.w_val = math.sqrt((target_pose.position.get_length()**2)*(self.state.kinematics_estimated.position.get_length()**2)) + target_pose.position.dot(self.state.kinematics_estimated.position)
                 gimbal_orien = gimbal_orien / gimbal_orien.get_length()
-                
-                (gp, gr, gy) = airsim.to_eularian_angles(gimbal_orien)
-                (p,r,y) = airsim.to_eularian_angles(self.state.kinematics_estimated.orientation)
 
-
-                gimbal_msg = GimbalAngleEulerCmd()
-                gimbal_msg.roll =  (gr - r) * 180/math.pi
-                gimbal_msg.pitch = (gp - p) * 180/math.pi - 90
-                gimbal_msg.yaw =   (gy - y) * 180/math.pi
+                gimbal_msg = GimbalAngleQuatCmd()
+                gimbal_msg.orientation = Quaternion(*gimbal_orien.to_numpy_array())
                 gimbal_msg.camera_name = "cam0"
                 gimbal_msg.vehicle_name = self.drone_name
 
@@ -328,9 +321,7 @@ class Agent(Drone):
 
         self.__target_ready = False
         target_state_sub.unregister()
-        
-        with self.client_lock:
-            self.client.hoverAsync(self.drone_name)
+
 
         if success:
             result = feedback

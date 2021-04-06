@@ -61,8 +61,8 @@ if __name__ == "__main__":
     #     SETUP PYTHON CLIENT
     #
 
-    ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    #ip = "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
+    #ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
+    ip = "10.0.0.3" #"192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()

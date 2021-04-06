@@ -127,7 +127,6 @@ class LQR:
         self.A = self.__updateA(x, u)
         self.B = self.__updateB(x)
 
-
         self.K, _, _ = control.lqr(self.A, self.B, self.Q, self.R)
 
         return self.K
