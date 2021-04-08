@@ -187,7 +187,9 @@ class LQR:
         u[3, 0] = abs(u[3, 0]) * self.mass / self.max_thrust
 
         #u[0:3] = R * u[0:3]
-        return u
+
+        x0 = LQR.xyz2ned(x0)
+        return x0, u
 
     def thrust2world(self, state: MultirotorState, throttle: np.matrix) -> np.ndarray:
         """
@@ -267,6 +269,41 @@ class LQR:
             cr * cp * sy - sr * sp * cy,
         ]
         return q
+
+    @staticmethod
+    def xyz2ned(x: np.ndarray) -> np.ndarray:
+        """
+        Convert X,Y,Z to North, East, Down
+
+        Args:
+            x (np.ndarray): North, East, Down
+
+        Returns:
+            np.ndarray: X, Y, Z
+        """
+
+        assert np.shape(x) == (10,1), "The state must be a 10x1 vector"
+
+        xnew = np.zeros((10,1))
+        xnew[0] = x[1]
+        xnew[1] = x[0]
+        xnew[2] = -x[2]
+
+        q1 = Quaternionr(x[4], x[5], x[6], x[7])
+        q_rot = Quaternionr(math.sqrt(2)/2, -math.sqrt(2)/2, 0, 0)
+
+        qnew = q1.rotate(q_rot)
+        xnew[3] = qnew.w_val
+        xnew[4] = qnew.x_val
+        xnew[5] = qnew.y_val
+        xnew[6] = qnew.z_val
+        
+        xnew[7] = x[8]
+        xnew[8] = x[7]
+        xnew[9] = -x[9]
+
+        return xnew
+
 
     @staticmethod
     def ned2xyz(x: np.ndarray) -> np.ndarray:

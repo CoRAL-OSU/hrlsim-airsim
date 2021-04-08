@@ -43,7 +43,7 @@ class MinimumSnap:
 
         d = waypoints[:, 1:] - waypoints[:, 0:-1]
 
-        avg_spd = 0.5  # min(1,np.linalg.norm(fv))
+        avg_spd = 1.0  # min(1,np.linalg.norm(fv))
         self.d0 = (
             np.sqrt(d[0, :] * d[0, :] + d[1, :] * d[1, :] + d[2, :] * d[2, :]) / avg_spd
         )
@@ -102,9 +102,9 @@ class MinimumSnap:
         b[8*N-6, :] = initial_conditions[0,:]
         b[8*N-5, :] = initial_conditions[1,:]
         b[8*N-4, :] = initial_conditions[2,:]
-        b[8*N-3, :] = final_conditions[0,:]
-        b[8*N-2, :] = final_conditions[1,:]
-        b[8*N-1, :] = final_conditions[2,:]
+        b[8*N-3, :] = final_conditions[0,:]*2*self.d0
+        b[8*N-2, :] = final_conditions[1,:]*2*self.d0
+        b[8*N-1, :] = final_conditions[2,:]*2*self.d0
 
         A[8 * N - 6, np.arange(0, 8)] = head_c[1, :]
         A[8 * N - 5, np.arange(0, 8)] = head_c[2, :]

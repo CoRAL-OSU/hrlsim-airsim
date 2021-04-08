@@ -15,7 +15,7 @@ from drone import Drone
 from airsim.client import MultirotorClient
 from airsim.types import MultirotorState, Vector3r
 
-from geometry_msgs.msg import TwistStamped, PoseStamped, AccelStamped, PoseStamped,  Twist, Quaternion
+from geometry_msgs.msg import TwistStamped, AccelStamped, Pose, PoseStamped,  Twist, Quaternion, Point, Vector3
 
 
 from nav_msgs.msg import Odometry
@@ -116,6 +116,8 @@ class Agent(Drone):
         )
 
         self.__gimbal_pub = rospy.Publisher("/airsim_node/gimbal_angle_quat_cmd", GimbalAngleQuatCmd, queue_size=10)
+        self.__desired_pose_pub = rospy.Publisher(self.swarm_name + "/" + self.drone_name + "/lqr/desired_pose", Pose, queue_size=10)
+        self.__desired_vel_pub = rospy.Publisher(self.swarm_name + "/" + self.drone_name + "/lqr/desired_vel", Twist, queue_size=10)
 
         self.__track_action_name = self.topic_prefix + "/track_object"
 
@@ -211,109 +213,118 @@ class Agent(Drone):
 
         print(self.drone_name + " ENTERING WHILE LOOP")
 
-        update_object_location_period = 200  # seconds
+        update_object_location_period = 1  # seconds
         prev_object_update_time = 0
 
         start_pos = self.state.kinematics_estimated.position.to_numpy_array()
         start_time = time.time()
 
-        graphviz = GraphvizOutput()
-        graphviz.output_file = self.drone_name + "_pycallgraph.png"
+        #graphviz = GraphvizOutput()
+        #graphviz.output_file = self.drone_name + "_pycallgraph.png"
 
 
         prev_time = time.time()
-        with PyCallGraph(output=graphviz):
+        #with PyCallGraph(output=graphviz):
 
-            while time.time() - start_time < goal.timeout:
-                if self.__track_action.is_preempt_requested():
-                    rospy.loginfo("%s: Preempted" % self.__track_action_name)
-                    self.__track_action.set_preempted()
-                    success = False
-                    break
+        while time.time() - start_time < goal.timeout:
+            if self.__track_action.is_preempt_requested():
+                rospy.loginfo("%s: Preempted" % self.__track_action_name)
+                self.__track_action.set_preempted()
+                success = False
+                break
 
-                pos = self.state.kinematics_estimated.position.to_numpy_array()
-                target_pose = self.__target_pose.kinematics_estimated
+            pos = self.state.kinematics_estimated.position.to_numpy_array()
+            target_pose = self.__target_pose.kinematics_estimated
 
-                if time.time() - prev_object_update_time > update_object_location_period:
+            if time.time() - prev_object_update_time > update_object_location_period:
 
-                    bias = np.array(
-                        [
-                            target_pose.linear_velocity.x_val
-                            * update_object_location_period
-                            + 0.5
-                            * update_object_location_period ** 2
-                            * target_pose.linear_acceleration.x_val,
-                            target_pose.linear_velocity.y_val
-                            * update_object_location_period
-                            + 0.5
-                            * update_object_location_period ** 2
-                            * target_pose.linear_acceleration.y_val,
-                            target_pose.linear_velocity.z_val
-                            * update_object_location_period
-                            + 0.5
-                            * update_object_location_period ** 2
-                            * target_pose.linear_acceleration.z_val,
-                        ]
-                    )
+                bias = np.array(
+                    [
+                        target_pose.linear_velocity.x_val
+                        * update_object_location_period
+                        + 0.5
+                        * update_object_location_period ** 2
+                        * target_pose.linear_acceleration.x_val,
 
-                    #bias *= 10
-                    bias *= 0
+                        target_pose.linear_velocity.y_val
+                        * update_object_location_period
+                        + 0.5
+                        * update_object_location_period ** 2
+                        * target_pose.linear_acceleration.y_val,
 
-                    p = start_pos#pos
-                    
-                    v = np.zeros(3)#self.state.kinematics_estimated.linear_velocity.to_numpy_array()
-                    a = np.zeros(3)#self.state.kinematics_estimated.linear_acceleration.to_numpy_array()
-                    j = np.zeros(3)
-                    ic = np.array([v, a, j]).T
+                        target_pose.linear_velocity.z_val
+                        * update_object_location_period
+                        + 0.5
+                        * update_object_location_period ** 2
+                        * target_pose.linear_acceleration.z_val,
+                    ]
+                )
 
+                #bias *= 3
+                bias *= 0
 
-                    pt = target_pose.position.to_numpy_array() + goal.offset + bias
-
-                    vt = np.zeros(3)#target_pose.linear_velocity.to_numpy_array()
-                    at = np.zeros(3)#target_pose.linear_acceleration.to_numpy_array()
-                    jt = np.zeros(3)
-                    fc = np.array([vt, at, jt]).T
-
-                    #waypoints = np.array([start_pos, pt]).T
-                    waypoints = np.array([p, pt]).T
-
-                    self.__controller.set_goals(waypoints, ic, fc)
-
-                    prev_object_update_time = time.time()
+                p = pos
+                
+                v = self.state.kinematics_estimated.linear_velocity.to_numpy_array()
+                a = self.state.kinematics_estimated.linear_acceleration.to_numpy_array()
+                j = np.zeros(3)
+                ic = np.array([v, a, j]).T
 
 
-                #self.moveByLQR(time.time()-prev_object_update_time+0.5, state)
-                self.moveByLQR(time.time() - start_time, self.state)
+                pt = target_pose.position.to_numpy_array() + goal.offset + bias
 
-                feedback_vector = airsim.Vector3r(pt[0], pt[1], pt[2])
-                feedback_vector = feedback_vector - self.state.kinematics_estimated.position
+                vt = target_pose.linear_velocity.to_numpy_array()
+                at = target_pose.linear_acceleration.to_numpy_array()
+                jt = np.zeros(3)
+                fc = np.array([vt, at, jt]).T
 
-                feedback.dist = []
-                feedback.dist.append(feedback_vector.x_val)
-                feedback.dist.append(feedback_vector.y_val)
-                feedback.dist.append(feedback_vector.z_val)
-                feedback.dist_mag = feedback_vector.get_length()
+                #waypoints = np.array([start_pos, pt]).T
+                waypoints = np.array([p, pt]).T
 
-                feedback_dir = feedback_vector/feedback_vector.get_length()
+                self.__controller.set_goals(waypoints, ic, fc)
 
-                gimbal_orien = target_pose.position.cross(self.state.kinematics_estimated.position).to_Quaternionr()
-                gimbal_orien.w_val = math.sqrt((target_pose.position.get_length()**2)*(self.state.kinematics_estimated.position.get_length()**2)) + target_pose.position.dot(self.state.kinematics_estimated.position)
-                gimbal_orien = gimbal_orien / gimbal_orien.get_length()
+                prev_object_update_time = time.time()
 
-                gimbal_msg = GimbalAngleQuatCmd()
-                gimbal_msg.orientation = Quaternion(*gimbal_orien.to_numpy_array())
-                gimbal_msg.camera_name = "cam0"
-                gimbal_msg.vehicle_name = self.drone_name
 
-                self.__gimbal_pub.publish(gimbal_msg)
-                                
+            #self.moveByLQR(time.time()-prev_object_update_time+0.5, state)
+            self.moveByLQR(time.time() - start_time, self.state)
 
-                self.__track_action.publish_feedback(feedback)
+            feedback_vector = airsim.Vector3r(pt[0], pt[1], pt[2])
+            feedback_vector = feedback_vector - self.state.kinematics_estimated.position
 
-                sleeper.sleep()
+            feedback.dist = []
+            feedback.dist.append(feedback_vector.x_val)
+            feedback.dist.append(feedback_vector.y_val)
+            feedback.dist.append(feedback_vector.z_val)
+            feedback.dist_mag = feedback_vector.get_length()
 
-                #print(self.drone_name + " track time: " + str(time.time()-prev_time))
-                prev_time = time.time()
+            feedback_dir = feedback_vector/feedback_vector.get_length()
+
+            normpos = self.state.kinematics_estimated.position/self.state.kinematics_estimated.position.get_length()
+            normtar = target_pose.position/target_pose.position.get_length()
+
+            gimbal_orien = target_pose.position.cross(self.state.kinematics_estimated.position).to_Quaternionr()
+            gimbal_orien.w_val = math.sqrt((target_pose.position.get_length()**2)*(self.state.kinematics_estimated.position.get_length()**2)) +  math.acos(normtar.dot(normpos))
+            gimbal_orien = gimbal_orien / gimbal_orien.get_length()
+
+            (gp, gr, gy) = airsim.to_eularian_angles(gimbal_orien)
+            (p,r,y) = airsim.to_eularian_angles(self.state.kinematics_estimated.orientation)
+
+
+            gimbal_msg = GimbalAngleQuatCmd()
+            #gimbal_msg.orientation = Quaternion(*gimbal_orien.to_numpy_array())
+            gimbal_msg.camera_name = "cam0"
+            gimbal_msg.vehicle_name = self.drone_name
+
+            self.__gimbal_pub.publish(gimbal_msg)
+                            
+
+            self.__track_action.publish_feedback(feedback)
+
+            sleeper.sleep()
+
+            #print(self.drone_name + " track time: " + str(time.time()-prev_time))
+            prev_time = time.time()
 
                 
         self.cmd = None
@@ -352,7 +363,7 @@ class Agent(Drone):
             t (float): Time elapsed since beginning
             state (MultirotorState): Current Multirotor State
         """
-        u = self.__controller.computeControl(t, state, self.prev_accel_cmd)
+        x0, u = self.__controller.computeControl(t, state, self.prev_accel_cmd)
 
         for i in range(0, 3):
             if abs(u[i, 0]) > 2:
@@ -397,3 +408,15 @@ class Agent(Drone):
         throttle_rates_cmd.angular.z = yaw_rate
 
         self.throttle_rates_cmd_pub.publish(throttle_rates_cmd)
+
+        
+        (pDes, qDes, vDes) = lqr.LQR.get_state(x0)
+        desired_pose_msg = Pose()
+        desired_pose_msg.position = Point(*pDes)
+        desired_pose_msg.orientation = Quaternion(w=qDes[0], x=qDes[1], y=qDes[2], z=qDes[3])
+        self.__desired_pose_pub.publish(desired_pose_msg)
+
+        desired_vel_msg = Twist()
+        desired_vel_msg.linear = Vector3(*vDes)
+        desired_vel_msg.angular = Vector3(*u[0:3,0])
+        self.__desired_vel_pub.publish(desired_vel_msg)

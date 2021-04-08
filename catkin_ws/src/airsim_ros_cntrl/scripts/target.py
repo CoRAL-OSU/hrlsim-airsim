@@ -45,7 +45,7 @@ class Target(Drone):
         droneName: str,
         sim_client: MultirotorClient,
         client_lock: Lock,
-        path: List[Tuple[float, float, int]] = [],
+        path: List[Tuple[float, float, float]] = [],
         path_type: str = "",
     ) -> None:
         """
@@ -56,7 +56,7 @@ class Target(Drone):
             droneName (str): The name of the drone itself.
             sim_client (airsim.MultirotorClient): The client to use to execture commands.
             client_lock (mp.Lock): The lock for the sim_client.
-            path (List[Tuple[float, float, int]], optional): The path for the target to follow, if blank will be stationary. Defaults to [].
+            path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. Defaults to [].
             path_type (str, optional): Generates a path for the target to follow. Possible values are 'Circle', 'Triangle', 'Square' and 'Line'. Defaults to "".
         """
         super().__init__(swarmName, droneName, sim_client, client_lock)
@@ -106,11 +106,13 @@ class Target(Drone):
         paths = {"circle": 12, "triangle": 3, "square": 4, "line": 2, "f": 0}
         points = paths[path_type]
         center = self.state.kinematics_estimated.position
+
         path: List[Vector3r] = []
         for i in range(points):
             x = radius * cos(pi / points * i * 2) + center.x_val
             y = radius * sin(pi / points * i * 2) + center.y_val
-            path.append((x, y, height))
+            path.append(Vector3r(x, y, height))
+
         return path
 
     @staticmethod
@@ -146,7 +148,7 @@ class Target(Drone):
         prev_time = time.time()
 
         with self.client_lock:
-            self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
+            self.client.moveOnPathAsync(self.__path, 0.5, vehicle_name=self.drone_name)
 
         while not rospy.is_shutdown() and self._shutdown == False:
             with self.flag_lock:
