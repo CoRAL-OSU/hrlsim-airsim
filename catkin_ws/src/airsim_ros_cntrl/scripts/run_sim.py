@@ -105,7 +105,7 @@ if __name__ == "__main__":
             target_list[i],
             client,
             lock,
-            0.25,
+            2.0,
             #path=[tuple([20 + (3 * (-(1 ** i))), 0, -2])],
             path_type="square"
         )

@@ -259,32 +259,35 @@ class Agent(Drone):
                 ic = np.array([v, a, j]).T
 
 
-                pt = target_pose.position.to_numpy_array() + goal.offset #+ bias
+                pt = target_pose.position.to_numpy_array() + goal.offset + bias
 
-                vt = target_pose.linear_velocity.to_numpy_array()
-                at = target_pose.linear_acceleration.to_numpy_array()
+                vt = np.zeros(3)  #target_pose.linear_velocity.to_numpy_array()
+                at = np.zeros(3)  #target_pose.linear_acceleration.to_numpy_array()
                 jt = np.zeros(3)
                 fc = np.array([vt, at, jt]).T
 
                 #waypoints = np.array([start_pos, pt]).T
                 waypoints = np.array([p, pt]).T
 
-                max_spd = 3  # m/s
-                min_spd = max(target_pose.linear_velocity.get_length() * 1.2, 0.75)  # m/s
+                max_temporal_factor = max(target_pose.linear_velocity.get_length()*2.0, 3.0)  
+                max_temporal_factor = min(max_temporal_factor, 10)
 
-                min_period = 1 # s
-                max_period = 3   # s
+                min_temporal_factor = max(target_pose.linear_velocity.get_length(), 0.7)  
+                min_temporal_factor = min(min_temporal_factor, max_temporal_factor)
+
+                min_period = 1.0 # s
+                max_period = 3.0 # s
 
                 max_d = 20  # meters
                 min_d = 0   # meters
 
-                spd = np.interp(feedback.dist_mag, [min_d, max_d], [min_spd, max_spd])
+                temporal_scaling = np.interp(feedback.dist_mag, [min_d, max_d], [min_temporal_factor, max_temporal_factor])
                 update_object_location_period = np.interp(feedback.dist_mag, [min_d, max_d], [min_period, max_period])
                 
                 if self.drone_name == "Drone0":
-                    print("%4.2f, %4.2f" % (spd, update_object_location_period))
+                    print("%4.2f, %4.2f" % (temporal_scaling, update_object_location_period))
 
-                self.__controller.set_goals(waypoints, ic, fc, spd)
+                self.__controller.set_goals(waypoints, ic, fc, temporal_scaling)
 
                 prev_object_update_time = time.time()
 
