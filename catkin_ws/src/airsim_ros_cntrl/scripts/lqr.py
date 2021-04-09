@@ -19,7 +19,7 @@ class LQR:
         """
         Constructs the intial LQR matrices
         """
-        self.Q: np.ndarray = np.diag([100, 100, 100, 1, 1, 1, 1, 10, 10, 10])
+        self.Q: np.ndarray = np.diag([50, 50, 50, 1, 1, 1, 1, 50, 50, 50])
         self.R: np.ndarray = np.diag([1e1, 1e1, 2e1, 2])
 
         self.A: np.ndarray = np.zeros((10, 10))
@@ -48,7 +48,7 @@ class LQR:
             assert len(R) == 4, "R must be a list of length 4"
             self.R = np.diag(R)
 
-    def set_goals(self, waypoints: np.ndarray, ic: np.ndarray, fc: np.ndarray) -> None:
+    def set_goals(self, waypoints: np.ndarray, ic: np.ndarray, fc: np.ndarray, avg_spd: float) -> None:
         """
         Sets the goals for the LQR controller.
 
@@ -71,7 +71,7 @@ class LQR:
         fc[:, 1] = tmp
         fc[:, 2] = -fc[:, 2]
 
-        self.traj_generator = minimum_snap.MinimumSnap(waypoints, ic, fc)
+        self.traj_generator = minimum_snap.MinimumSnap(waypoints, ic, fc, avg_spd)
 
     def updateGains(self, x: np.ndarray, rpydot: Vector3r, prev_accel_cmd: int) -> None:
         """

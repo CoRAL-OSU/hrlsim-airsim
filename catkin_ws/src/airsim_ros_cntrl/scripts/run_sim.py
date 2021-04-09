@@ -105,8 +105,9 @@ if __name__ == "__main__":
             target_list[i],
             client,
             lock,
+            0.25,
             #path=[tuple([20 + (3 * (-(1 ** i))), 0, -2])],
-            path_type="circle"
+            path_type="square"
         )
         target_procs[target_list[i]].start()
 
@@ -146,7 +147,7 @@ if __name__ == "__main__":
     # team_list[0].wait()
 
     print("BEGIN TRACKING")
-    team_list[0].track_object("Target0", 20, -4)
+    team_list[0].track_object("Target0", 40, -4)
     # team_list[1].track_object("Target1", 25, -10)
 
     for team in team_list:

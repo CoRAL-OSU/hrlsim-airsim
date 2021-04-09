@@ -31,7 +31,7 @@ class MinimumSnap:
     Class to represent a minimum snap object.
     Used to compute the desired trajectory.
     """
-    def __init__(self, waypoints: np.ndarray, initial_conditions: np.ndarray, final_conditions: np.ndarray) -> None:
+    def __init__(self, waypoints: np.ndarray, initial_conditions: np.ndarray, final_conditions: np.ndarray, average_speed: float) -> None:
         """
         Constructs a minimum snap object from the desired waypoints
 
@@ -43,7 +43,7 @@ class MinimumSnap:
 
         d = waypoints[:, 1:] - waypoints[:, 0:-1]
 
-        avg_spd = 1.0  # min(1,np.linalg.norm(fv))
+        avg_spd = average_speed  # min(1,np.linalg.norm(fv))
         self.d0 = (
             np.sqrt(d[0, :] * d[0, :] + d[1, :] * d[1, :] + d[2, :] * d[2, :]) / avg_spd
         )
@@ -99,12 +99,12 @@ class MinimumSnap:
                     self.p_c[6, :], -head_c[6, :]
                 )
 
-        b[8*N-6, :] = initial_conditions[0,:]
-        b[8*N-5, :] = initial_conditions[1,:]
-        b[8*N-4, :] = initial_conditions[2,:]
-        b[8*N-3, :] = final_conditions[0,:]*2*self.d0
-        b[8*N-2, :] = final_conditions[1,:]*2*self.d0
-        b[8*N-1, :] = final_conditions[2,:]*2*self.d0
+        b[8*N-6, :] = initial_conditions[0,:]*self.d0[0]
+        b[8*N-5, :] = initial_conditions[1,:]*self.d0[0]
+        b[8*N-4, :] = initial_conditions[2,:]*self.d0[0]
+        b[8*N-3, :] = final_conditions[0,:]*self.d0[0]
+        b[8*N-2, :] = final_conditions[1,:]*self.d0[0]
+        b[8*N-1, :] = final_conditions[2,:]*self.d0[0]
 
         A[8 * N - 6, np.arange(0, 8)] = head_c[1, :]
         A[8 * N - 5, np.arange(0, 8)] = head_c[2, :]
@@ -113,15 +113,9 @@ class MinimumSnap:
         A[8 * N - 2, np.arange(0, 8) + 8 * (N - 1)] = self.p_c[2, :]
         A[8 * N - 1, np.arange(0, 8) + 8 * (N - 1)] = self.p_c[3, :]
 
-        # s = 0.5*fv*self.d0[0]
-        # for i in range(0,6):
-        #    b[8*N-6+i, 0:3] = s[0:3]*(i+1)
-
         x1 = np.matmul(np.linalg.inv(A), b[:, 0])
         x2 = np.matmul(np.linalg.inv(A), b[:, 1])
         x3 = np.matmul(np.linalg.inv(A), b[:, 2])
-
-        self.alpha = np.zeros((8, N, 3))
 
         self.alpha = np.zeros((8, N, 3))
 

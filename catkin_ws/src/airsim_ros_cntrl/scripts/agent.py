@@ -206,14 +206,14 @@ class Agent(Drone):
         target_pose = self.__target_pose.kinematics_estimated
 
         #r = rospy.Rate(self.freq)
-        sleeper = rospy.Rate(self.freq)
+        sleeper = rospy.Rate(2*self.freq)
 
 
         feedback = TrackObjectFeedback()
 
         print(self.drone_name + " ENTERING WHILE LOOP")
 
-        update_object_location_period = 1  # seconds
+        update_object_location_period = 3.0  # seconds
         prev_object_update_time = 0
 
         start_pos = self.state.kinematics_estimated.position.to_numpy_array()
@@ -240,28 +240,16 @@ class Agent(Drone):
 
                 bias = np.array(
                     [
-                        target_pose.linear_velocity.x_val
-                        * update_object_location_period
-                        + 0.5
-                        * update_object_location_period ** 2
-                        * target_pose.linear_acceleration.x_val,
+                        target_pose.linear_velocity.x_val * update_object_location_period + 
+                        0.5 * update_object_location_period**2 * target_pose.linear_acceleration.x_val,
 
-                        target_pose.linear_velocity.y_val
-                        * update_object_location_period
-                        + 0.5
-                        * update_object_location_period ** 2
-                        * target_pose.linear_acceleration.y_val,
+                        target_pose.linear_velocity.y_val * update_object_location_period + 
+                        0.5 * update_object_location_period**2 * target_pose.linear_acceleration.y_val,
 
-                        target_pose.linear_velocity.z_val
-                        * update_object_location_period
-                        + 0.5
-                        * update_object_location_period ** 2
-                        * target_pose.linear_acceleration.z_val,
+                        target_pose.linear_velocity.z_val * update_object_location_period + 
+                        0.5 * update_object_location_period**2 * (target_pose.linear_acceleration.z_val+9.8),
                     ]
                 )
-
-                #bias *= 3
-                bias *= 0
 
                 p = pos
                 
@@ -271,7 +259,7 @@ class Agent(Drone):
                 ic = np.array([v, a, j]).T
 
 
-                pt = target_pose.position.to_numpy_array() + goal.offset + bias
+                pt = target_pose.position.to_numpy_array() + goal.offset #+ bias
 
                 vt = target_pose.linear_velocity.to_numpy_array()
                 at = target_pose.linear_acceleration.to_numpy_array()
@@ -281,13 +269,28 @@ class Agent(Drone):
                 #waypoints = np.array([start_pos, pt]).T
                 waypoints = np.array([p, pt]).T
 
-                self.__controller.set_goals(waypoints, ic, fc)
+                max_spd = 3  # m/s
+                min_spd = max(target_pose.linear_velocity.get_length() * 1.2, 0.75)  # m/s
+
+                min_period = 1 # s
+                max_period = 3   # s
+
+                max_d = 20  # meters
+                min_d = 0   # meters
+
+                spd = np.interp(feedback.dist_mag, [min_d, max_d], [min_spd, max_spd])
+                update_object_location_period = np.interp(feedback.dist_mag, [min_d, max_d], [min_period, max_period])
+                
+                if self.drone_name == "Drone0":
+                    print("%4.2f, %4.2f" % (spd, update_object_location_period))
+
+                self.__controller.set_goals(waypoints, ic, fc, spd)
 
                 prev_object_update_time = time.time()
 
 
-            #self.moveByLQR(time.time()-prev_object_update_time+0.5, state)
-            self.moveByLQR(time.time() - start_time, self.state)
+            self.moveByLQR(time.time()-prev_object_update_time, self.state)
+            #self.moveByLQR(time.time() - start_time, self.state)
 
             feedback_vector = airsim.Vector3r(pt[0], pt[1], pt[2])
             feedback_vector = feedback_vector - self.state.kinematics_estimated.position

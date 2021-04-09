@@ -45,6 +45,7 @@ class Target(Drone):
         droneName: str,
         sim_client: MultirotorClient,
         client_lock: Lock,
+        speed: float,
         path: List[Tuple[float, float, float]] = [],
         path_type: str = "",
     ) -> None:
@@ -60,6 +61,8 @@ class Target(Drone):
             path_type (str, optional): Generates a path for the target to follow. Possible values are 'Circle', 'Triangle', 'Square' and 'Line'. Defaults to "".
         """
         super().__init__(swarmName, droneName, sim_client, client_lock)
+
+        self.speed = speed
 
 
         print("NEW TARGET: " + self.drone_name)
@@ -91,7 +94,7 @@ class Target(Drone):
         super().setup_ros()
 
 
-    def generate_path(self, path_type: str, radius=5, height=-5) -> List[Vector3r]:
+    def generate_path(self, path_type: str, radius=18, height=-5) -> List[Vector3r]:
         """
         Generates a default path for the target to follow.
 
@@ -148,7 +151,7 @@ class Target(Drone):
         prev_time = time.time()
 
         with self.client_lock:
-            self.client.moveOnPathAsync(self.__path, 0.5, vehicle_name=self.drone_name)
+            self.client.moveOnPathAsync(self.__path, self.speed, vehicle_name=self.drone_name)
 
         while not rospy.is_shutdown() and self._shutdown == False:
             with self.flag_lock:
@@ -157,8 +160,8 @@ class Target(Drone):
 
             state = self.state.kinematics_estimated
 
-            #if (state.linear_velocity.get_length() < 0.2):
-            #    self.client.moveOnPathAsync(self.__path, 2, vehicle_name=self.drone_name)
+            if (state.linear_velocity.get_length() < 0.2):
+                self.client.moveOnPathAsync(self.__path, self.speed, vehicle_name=self.drone_name)
 
         
             self.publish_multirotor_state(self.state, self.sensors)
