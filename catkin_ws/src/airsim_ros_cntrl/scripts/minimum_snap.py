@@ -1,4 +1,4 @@
-#! /usr/bin/python2
+#! /usr/bin/python3
 
 import time
 import numpy as np
@@ -31,7 +31,7 @@ class MinimumSnap:
     Class to represent a minimum snap object.
     Used to compute the desired trajectory.
     """
-    def __init__(self, waypoints: np.ndarray, initial_conditions: np.ndarray, final_conditions: np.ndarray, scaling_factor: np.ndarray) -> None:
+    def __init__(self, waypoints: np.ndarray, initial_conditions: np.ndarray, final_conditions: np.ndarray, scaling_factor: float) -> None:
         """
         Constructs a minimum snap object from the desired waypoints
 
@@ -44,16 +44,17 @@ class MinimumSnap:
         d = waypoints[:, 1:] - waypoints[:, 0:-1]
 
         #self.d0 = np.array([1/scaling_factor])
-        self.d0 = np.empty((3,0))
+        
+        #self.d0 = np.empty((3,0))
+        #for i in range(0, d.shape[1]):
+        #    segment_time = np.array([[d[0,i]/scaling_factor[0], d[1,i]/scaling_factor[1], d[2,i]/scaling_factor[2]]]).T
+        #    self.d0 = np.append(self.d0, segment_time, 1)
 
-        for i in range(0, d.shape[1]):
-            segment_time = np.array([[d[0,i]/scaling_factor[0], d[1,i]/scaling_factor[1], d[2,i]/scaling_factor[2]]]).T
-            self.d0 = np.append(self.d0, segment_time, 1)
+        self.d0 = (
+            np.sqrt(d[0, :] * d[0, :] + d[1, :] * d[1, :] + d[2, :] * d[2, :]) / scaling_factor
+        )
 
-        #self.d0 = (
-        #    np.sqrt(d[0, :] * d[0, :] + d[1, :] * d[1, :] + d[2, :] * d[2, :]) / scaling_factor
-        #)
-
+        #self.traj_time = np.append(np.zeros((3,1)), np.cumsum(self.d0, 1), 1)
         self.traj_time = np.append(0, np.cumsum(self.d0))
         self.waypoints0 = np.copy(waypoints)
 
@@ -105,12 +106,12 @@ class MinimumSnap:
                     self.p_c[6, :], -head_c[6, :]
                 )
 
-        b[8*N-6, :] = initial_conditions[0,:]*self.d0[0]
-        b[8*N-5, :] = initial_conditions[1,:]*self.d0[0]
-        b[8*N-4, :] = initial_conditions[2,:]*self.d0[0]
-        b[8*N-3, :] = final_conditions[0,:]*self.d0[-1]
-        b[8*N-2, :] = final_conditions[1,:]*self.d0[-1]
-        b[8*N-1, :] = final_conditions[2,:]*self.d0[-1]
+        b[8*N-6] = initial_conditions[0]*self.d0[0]
+        b[8*N-5] = initial_conditions[1]*self.d0[0]
+        b[8*N-4] = initial_conditions[2]*self.d0[0]
+        b[8*N-3] = final_conditions[0]*self.d0[-1]
+        b[8*N-2] = final_conditions[1]*self.d0[-1]
+        b[8*N-1] = final_conditions[2]*self.d0[-1]
 
         A[8 * N - 6, np.arange(0, 8)] = head_c[1, :]
         A[8 * N - 5, np.arange(0, 8)] = head_c[2, :]
@@ -142,6 +143,25 @@ class MinimumSnap:
         Returns:
             Tuple[np.ndarray, np.ndarray]: Tuple of lists
         """
+        
+        #t = t*np.ones((3,1))
+        #for i in range(0, t.shape[0]):
+        #    if t[i] > self.traj_time[i, -1]:
+        #        t[i] = self.traj_time[i, -1]
+                
+
+        '''
+        t_index = np.zeros((3,1))        
+
+        for j in range(0, 3):
+            for i in range(0, len(self.traj_time[j])):
+                if self.traj_time[j, i] >= t[i]:
+                    t_index[j] = i
+
+            if t_index[j] > 0:
+                t[j] = t[j] - self.traj_time[t_index[j] -1]
+        '''
+
         if t > self.traj_time[-1]:
             t = self.traj_time[-1]
 
@@ -153,6 +173,7 @@ class MinimumSnap:
 
         if t_index > 0:
             t = t - self.traj_time[t_index - 1]
+
 
         desired_state = DesiredState()
 
@@ -267,13 +288,11 @@ if __name__ == "__main__":
     points_per_second = 100
     total_points = seconds*points_per_second
 
-    target_init_pos = 5*np.ones((3,1))
+    target_init_pos = np.array([[5,6,7]]).T
     target_pos = target_init_pos
 
-    target_acc = np.array([[-0.25,0.25,0.25]]).T
-
-    target_init_spd = 0
-    target_init_vel = target_init_spd/math.sqrt(3) * np.ones((3,1))
+    target_acc = np.array([[0.2,0.25,0.15]]).T
+    target_init_vel = np.array([[0.5,1,1.5]]).T
 
     target_vel = target_init_vel
     target_pos_save = np.empty((0,3))
@@ -290,7 +309,7 @@ if __name__ == "__main__":
     cur_state = np.zeros((10,1))
     cur_state[3,0] = 1
 
-    update_period = 0.5
+    update_period = 1
 
 
     for i in range(0, len(t)):
@@ -301,15 +320,26 @@ if __name__ == "__main__":
 
             waypoints = np.concatenate((x0[0:3], goal), 1)
 
-            spd_gain = 2
-            avg_spd = np.abs(target_vel + spd_gain*(x0[0:3]-target_pos))
-            avg_spd = np.minimum(avg_spd[0], [10,10,10])
+            spd_gain = 1
+            avg_spd = np.abs(np.linalg.norm(target_vel) + spd_gain*np.linalg.norm((x0[0:3]-target_pos)))
+            avg_spd = np.minimum(avg_spd, 10)
 
-            ic = x0[7:10]
-            fc = target_vel
+            #avg_spd = 10
+
+            iv = x0[7:10]
+            ia = np.zeros((3,1))
+            ij = np.zeros((3,1))
+            ic = np.concatenate([iv,ia,ij], 1).T
+
+            fv = target_vel + target_acc*update_period
+            fa = target_acc
+            fj = np.zeros((3,1))
+            fc = np.concatenate([fv,fa,fj], 1).T
+
             traj_generator = MinimumSnap(waypoints, ic, fc, avg_spd)
 
             prev_update_time = t[i]
+       
 
         x0, u0 = traj_generator.compute(t[i]-prev_update_time, cur_state)
         
@@ -326,12 +356,16 @@ if __name__ == "__main__":
     ax1.plot(t[:], state_save[:,0:3], t[:], target_pos_save)
     ax1.grid(color='k', linestyle='-', linewidth=0.25)
     ax1.legend(['x','y','z', 'tx', 'ty', 'tz'])
-    ax1.set_title("Position [m]")
+    ax1.set_title("Desired position over time")
+    ax1.set_xlabel("Time [s]")
+    ax1.set_ylabel("Position [m]")
 
     ax2 = plt.subplot(212)
     ax2.plot(t[:], state_save[:,7:10], t[:], target_vel_save)
     ax2.grid(color='k', linestyle='-', linewidth=0.25)
     ax2.legend(['x','y','z', 'tx', 'ty', 'tz'])
-    ax2.set_title("Velocity [m/s]")
+    ax2.set_title("Desired velocity over time")
+    ax2.set_xlabel("Time [s]")
+    ax2.set_ylabel("Velocity [m/s]")
 
     plt.show()
