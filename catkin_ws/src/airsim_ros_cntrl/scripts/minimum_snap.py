@@ -288,11 +288,11 @@ if __name__ == "__main__":
     points_per_second = 100
     total_points = seconds*points_per_second
 
-    target_init_pos = np.array([[5,6,7]]).T
+    target_init_pos = np.array([[5,6,7]], dtype='float64').T
     target_pos = target_init_pos
 
-    target_acc = np.array([[0.2,0.25,0.15]]).T
-    target_init_vel = np.array([[0.5,1,1.5]]).T
+    #target_acc = np.zeros((3,1)) #np.array([[0.2,0.25,0.15]]).T
+    target_init_vel = np.array([[1,0,0]], dtype='float64').T
 
     target_vel = target_init_vel
     target_pos_save = np.empty((0,3))
@@ -304,25 +304,26 @@ if __name__ == "__main__":
     fc = target_vel
 
     t = np.linspace(0, seconds, total_points)
+    target_acc = 0.5*np.reshape(np.repeat(np.sin(2*math.pi*0.1*t), 3), (total_points,3))
     state_save = np.empty((0, 10))
 
     cur_state = np.zeros((10,1))
     cur_state[3,0] = 1
 
-    update_period = 1
+    update_period = 0.5
 
 
     for i in range(0, len(t)):
         if i % int(update_period*points_per_second) == 0:
 
-            bias = target_vel*update_period + 0.5*target_acc*update_period**2
+            bias = target_vel*update_period + 0.5*target_acc[i]*update_period**2
             goal = target_pos + bias
 
             waypoints = np.concatenate((x0[0:3], goal), 1)
 
-            spd_gain = 1
+            spd_gain = 2
             avg_spd = np.abs(np.linalg.norm(target_vel) + spd_gain*np.linalg.norm((x0[0:3]-target_pos)))
-            avg_spd = np.minimum(avg_spd, 10)
+            avg_spd = np.minimum(avg_spd, 5)
 
             #avg_spd = 10
 
@@ -331,8 +332,8 @@ if __name__ == "__main__":
             ij = np.zeros((3,1))
             ic = np.concatenate([iv,ia,ij], 1).T
 
-            fv = target_vel + target_acc*update_period
-            fa = target_acc
+            fv = target_vel + target_acc[i]*update_period
+            fa = np.array([target_acc[i]]).T
             fj = np.zeros((3,1))
             fc = np.concatenate([fv,fa,fj], 1).T
 
@@ -345,11 +346,14 @@ if __name__ == "__main__":
         
         state_save = np.append(state_save, x0.T, 0)
 
-        target_pos = target_init_pos + target_init_vel*(t[i]) + 0.5*target_acc*(t[i])**2
+        target_pos += target_vel*(1/points_per_second) + np.array([target_acc[i]]).T*(1/points_per_second)**2
         target_pos_save = np.append(target_pos_save, target_pos.T, 0)
 
-        target_vel = target_init_vel + target_acc*(t[i])
+        target_vel += np.array([target_acc[i]]).T*(1/points_per_second)
         target_vel_save = np.append(target_vel_save, target_vel.T, 0)
+
+
+
 
 
     ax1 = plt.subplot(211)
@@ -363,7 +367,7 @@ if __name__ == "__main__":
     ax2 = plt.subplot(212)
     ax2.plot(t[:], state_save[:,7:10], t[:], target_vel_save)
     ax2.grid(color='k', linestyle='-', linewidth=0.25)
-    ax2.legend(['x','y','z', 'tx', 'ty', 'tz'])
+    ax2.legend(['vx','vy','vz', 'vtx', 'vty', 'vtz'])
     ax2.set_title("Desired velocity over time")
     ax2.set_xlabel("Time [s]")
     ax2.set_ylabel("Velocity [m/s]")

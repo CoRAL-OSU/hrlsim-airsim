@@ -258,7 +258,7 @@ class Agent(Drone):
                 v = self.state.kinematics_estimated.linear_velocity.to_numpy_array()
                 a = self.state.kinematics_estimated.linear_acceleration.to_numpy_array()
                 j = np.zeros(3)
-                ic = np.concatenate([v, a, j], 1).T
+                ic = np.array([v, a, j])
 
 
                 pt = target_pose.position.to_numpy_array() + goal.offset + bias
@@ -266,14 +266,14 @@ class Agent(Drone):
                 at = target_pose.linear_acceleration.to_numpy_array()
                 vt = tv + at*update_object_location_period
                 jt = np.zeros(3)
-                fc = np.concatenate([vt, at, jt], 1).T
+                fc = np.array([vt, at, jt])
 
                 #waypoints = np.array([start_pos, pt]).T
                 waypoints = np.array([p, pt]).T
 
                 spd_gain = 1
                 avg_spd = np.abs(np.linalg.norm(tv) + spd_gain*np.linalg.norm((p-tp)))
-                avg_spd = np.minimum(avg_spd, 10)
+                avg_spd = np.minimum(avg_spd, 5)
 
                 '''
                 max_temporal_factor = max(target_pose.linear_velocity.get_length()*2.0, 3.0)  
