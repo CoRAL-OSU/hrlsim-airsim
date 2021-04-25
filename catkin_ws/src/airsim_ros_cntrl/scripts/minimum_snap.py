@@ -2,6 +2,7 @@
 
 import time
 import numpy as np
+import scipy.integrate as integrate
 import math
 from typing import Tuple
 
@@ -284,46 +285,71 @@ class MinimumSnap:
 if __name__ == "__main__":
 
 
-    seconds = 20
+    seconds = 5
     points_per_second = 100
     total_points = seconds*points_per_second
 
-    target_init_pos = np.array([[5,6,7]], dtype='float64').T
-    target_pos = target_init_pos
+    target_init_pos = np.array([[0,0,0]], dtype='float64').T
+    target_pos = np.copy(target_init_pos)
 
-    #target_acc = np.zeros((3,1)) #np.array([[0.2,0.25,0.15]]).T
-    target_init_vel = np.array([[1,0,0]], dtype='float64').T
+    target_init_vel = np.array([[0,0,0.05]], dtype='float64').T
+    target_vel = np.copy(target_init_vel)
 
-    target_vel = target_init_vel
     target_pos_save = np.empty((0,3))
     target_vel_save = np.empty((0,3))
 
     x0 = np.zeros((10,1))
+    x0[3] = 1
 
 
     fc = target_vel
 
     t = np.linspace(0, seconds, total_points)
-    target_acc = 0.5*np.reshape(np.repeat(np.sin(2*math.pi*0.1*t), 3), (total_points,3))
     state_save = np.empty((0, 10))
 
     cur_state = np.zeros((10,1))
     cur_state[3,0] = 1
 
-    update_period = 0.5
+    update_period = 0.25
+
+
+    # Get differential change in acceleration
+    def tax(t: float, y=0) -> float:
+        return 0.1*np.cos(2*math.pi*0.2*t)
+
+    def tay(t: float, y=0) -> float:
+        return 0.1*np.sin(2*math.pi*0.2*t)
+
+    def taz(t: float, y=0) -> float:
+        return 0.0
+
+    def ta(t:float) -> float:
+        return np.array([[tax(t),tay(t),taz(t)]]).T
+
+    def integrate_velocity(t0, t1):
+        vx,_ = integrate.quad(tax, t0, t1)
+        vy,_ = integrate.quad(tay, t0, t1)
+        vz,_ = integrate.quad(taz, t0, t1)
+        return np.array([[vx,vy,vz]]).T
+
+    def integrate_position(t0, t1):
+        px,_ = integrate.quad(lambda t:integrate.quad(tax, 0, t)[0], t0, t1)
+        py,_ = integrate.quad(lambda t: integrate.quad(tay, 0, t)[0]-0.1/(2*math.pi*0.2), t0, t1)
+        pz,_ = integrate.quad(lambda t:integrate.quad(taz, 0, t)[0], t0, t1)
+        return np.array([[px,py,pz]]).T
 
 
     for i in range(0, len(t)):
         if i % int(update_period*points_per_second) == 0:
 
-            bias = target_vel*update_period + 0.5*target_acc[i]*update_period**2
+            bias = integrate_position(t[i], t[i]+update_period)
             goal = target_pos + bias
 
             waypoints = np.concatenate((x0[0:3], goal), 1)
 
-            spd_gain = 2
+            spd_gain = 5
             avg_spd = np.abs(np.linalg.norm(target_vel) + spd_gain*np.linalg.norm((x0[0:3]-target_pos)))
-            avg_spd = np.minimum(avg_spd, 5)
+            avg_spd = np.minimum(avg_spd, 7)
 
             #avg_spd = 10
 
@@ -332,8 +358,8 @@ if __name__ == "__main__":
             ij = np.zeros((3,1))
             ic = np.concatenate([iv,ia,ij], 1).T
 
-            fv = target_vel + target_acc[i]*update_period
-            fa = np.array([target_acc[i]]).T
+            fv = target_vel + integrate_velocity(t[i], t[i]+update_period) 
+            fa = ta(t[i]+update_period)
             fj = np.zeros((3,1))
             fc = np.concatenate([fv,fa,fj], 1).T
 
@@ -346,30 +372,45 @@ if __name__ == "__main__":
         
         state_save = np.append(state_save, x0.T, 0)
 
-        target_pos += target_vel*(1/points_per_second) + np.array([target_acc[i]]).T*(1/points_per_second)**2
-        target_pos_save = np.append(target_pos_save, target_pos.T, 0)
 
-        target_vel += np.array([target_acc[i]]).T*(1/points_per_second)
+        target_vel += integrate_velocity(t[i], t[i]+1/points_per_second)
         target_vel_save = np.append(target_vel_save, target_vel.T, 0)
 
+        target_pos += integrate_position(t[i], t[i]+1/points_per_second) + target_init_vel*(1/points_per_second)
+        target_pos_save = np.append(target_pos_save, target_pos.T, 0)
 
 
 
-
-    ax1 = plt.subplot(211)
+    ax1 = plt.subplot(221)
     ax1.plot(t[:], state_save[:,0:3], t[:], target_pos_save)
     ax1.grid(color='k', linestyle='-', linewidth=0.25)
-    ax1.legend(['x','y','z', 'tx', 'ty', 'tz'])
-    ax1.set_title("Desired position over time")
+    ax1.legend(['x', 'y', 'z', 'tx', 'ty', 'tz'])
+    ax1.set_title("Position over time")
     ax1.set_xlabel("Time [s]")
     ax1.set_ylabel("Position [m]")
 
-    ax2 = plt.subplot(212)
-    ax2.plot(t[:], state_save[:,7:10], t[:], target_vel_save)
+    ax2 = plt.subplot(222)
+    ax2.plot(state_save[:,0], state_save[:,1], target_pos_save[:,0], target_pos_save[:,1])
     ax2.grid(color='k', linestyle='-', linewidth=0.25)
-    ax2.legend(['vx','vy','vz', 'vtx', 'vty', 'vtz'])
-    ax2.set_title("Desired velocity over time")
-    ax2.set_xlabel("Time [s]")
-    ax2.set_ylabel("Velocity [m/s]")
+    ax2.legend(['Agent', 'Target'])
+    ax2.set_title("Position in the XY plane")
+    ax2.set_xlabel("x [m]")
+    ax2.set_ylabel("y [m]")
+
+    ax3 = plt.subplot(223)
+    ax3.plot(t[:], state_save[:,7:10], t[:], target_vel_save)
+    ax3.grid(color='k', linestyle='-', linewidth=0.25)
+    ax3.legend(['vx', 'vy', 'vz', 'vtx', 'vty', 'vtz'])
+    ax3.set_title("Velocity over time")
+    ax3.set_xlabel("Time [s]")
+    ax3.set_ylabel("Velocity [m/s]")
+
+    ax4 = plt.subplot(224)
+    ax4.plot(state_save[:,7], state_save[:,8], target_vel_save[:,0], target_vel_save[:,1])
+    ax4.grid(color='k', linestyle='-', linewidth=0.25)
+    ax4.legend(['Agent', 'Target'])
+    ax4.set_title("Velocity in the XY plane")
+    ax4.set_xlabel("vx [m/s]")
+    ax4.set_ylabel("vy [m/s]")
 
     plt.show()
