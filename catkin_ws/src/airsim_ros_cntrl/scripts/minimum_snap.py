@@ -7,6 +7,7 @@ import math
 from typing import Tuple
 
 import matplotlib.pyplot as plt
+import matplotlib.offsetbox as mob
 
 import lqr
 
@@ -282,17 +283,25 @@ class MinimumSnap:
         return x0, u0
 
 
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
 
 
-    seconds = 5
+    seconds = 30
     points_per_second = 100
     total_points = seconds*points_per_second
 
-    target_init_pos = np.array([[0,0,0]], dtype='float64').T
+    target_init_pos = np.array([[8,3,7]], dtype='float64').T
     target_pos = np.copy(target_init_pos)
 
-    target_init_vel = np.array([[0,0,0.05]], dtype='float64').T
+    target_init_vel = np.array([[0.0,0.0,0.5]], dtype='float64').T
     target_vel = np.copy(target_init_vel)
 
     target_pos_save = np.empty((0,3))
@@ -310,58 +319,120 @@ if __name__ == "__main__":
     cur_state = np.zeros((10,1))
     cur_state[3,0] = 1
 
-    update_period = 0.25
 
+    ### Define Parameters ###
+
+    horizon = 1.0
+    spd_gain = 0.25
+    profile = "piecewise"
+    known_model = False
+
+    ### ----------------- ###
 
     # Get differential change in acceleration
-    def tax(t: float, y=0) -> float:
-        return 0.1*np.cos(2*math.pi*0.2*t)
+    def tax(t: float) -> float:
+        if profile == "piecewise":
+            if t < 5:
+                ax = 0.5
+            elif t < 10:
+                ax = (-0.8-0.5)/(10-5)*(t-5)+0.5
+            elif t < 15:
+                ax = -0.8
+            elif t < 21:
+                ax = (0+0.8)/(21-15)*(t-15)-0.8
+            elif t < 28:
+                ax = (0.8-0.0)/(28-21)*(t-21)+0
+            else:
+                ax = 0.8
+            return ax
+        elif profile == "sinusoidal":
+            return 0.1*np.cos(2*math.pi*0.1*t)
+        elif profile == "constant":
+            return 0.025
+        elif profile == "zero":
+            return 0.0
+        else:
+            raise Exception("Unkown acceleration profile" + str(profile)) 
 
-    def tay(t: float, y=0) -> float:
-        return 0.1*np.sin(2*math.pi*0.2*t)
+    def tay(t: float) -> float:
+        if profile == "piecewise":
+            if t < 5:
+                ay = 0.3
+            elif t < 8:
+                ay = (-0.1-0.3)/(8-5)*(t-5)+0.3
+            elif t < 15:
+                ay = -0.1
+            elif t < 20:
+                ay = (0+0.1)/(20-15)*(t-15)-0.1
+            elif t < 28:
+                ay = (0.5-0)/(28-20)*(t-20) + 0
+            else:
+                ay = 0.5
 
-    def taz(t: float, y=0) -> float:
+            return ay
+        elif profile == "sinusoidal":
+            return 0.1*np.sin(2*math.pi*0.1*t)
+        elif profile == "constant":
+            return 0.05
+        elif profile == "zero":
+            return 0.0
+        else:
+            raise Exception("Unkown acceleration profile" + str(profile))
+
+    def taz(t: float) -> float:
         return 0.0
 
     def ta(t:float) -> float:
         return np.array([[tax(t),tay(t),taz(t)]]).T
 
     def integrate_velocity(t0, t1):
-        vx,_ = integrate.quad(tax, t0, t1)
-        vy,_ = integrate.quad(tay, t0, t1)
-        vz,_ = integrate.quad(taz, t0, t1)
+        vx,_ = integrate.quad(tax, t0, t1, epsabs=1.0e-4, epsrel=1.0e-4)
+        vy,_ = integrate.quad(tay, t0, t1, epsabs=1.0e-4, epsrel=1.0e-4)
+        vz,_ = integrate.quad(taz, t0, t1, epsabs=1.0e-4, epsrel=1.0e-4)
         return np.array([[vx,vy,vz]]).T
 
-    def integrate_position(t0, t1):
-        px,_ = integrate.quad(lambda t:integrate.quad(tax, 0, t)[0], t0, t1)
-        py,_ = integrate.quad(lambda t: integrate.quad(tay, 0, t)[0]-0.1/(2*math.pi*0.2), t0, t1)
-        pz,_ = integrate.quad(lambda t:integrate.quad(taz, 0, t)[0], t0, t1)
-        return np.array([[px,py,pz]]).T
+    def integrate_position(t0, t1, v0 = np.zeros((3,1))):
+        px,_ = integrate.quad(lambda t:integrate.quad(tax, 0, t, epsabs=1.0e-4, epsrel=1.0e-4)[0], t0, t1, epsabs=1.0e-4, epsrel=1.0e-4)
+        py,_ = integrate.quad(lambda t:integrate.quad(tay, 0, t, epsabs=1.0e-4, epsrel=1.0e-4)[0], t0, t1, epsabs=1.0e-4, epsrel=1.0e-4)
+        pz,_ = integrate.quad(lambda t:integrate.quad(taz, 0, t, epsabs=1.0e-4, epsrel=1.0e-4)[0], t0, t1, epsabs=1.0e-4, epsrel=1.0e-4)
+        p = np.array([[px,py,pz]]).T
+        p += v0*(t1-t0)
+        return p
 
+    print("\n\n")
+    print("Target acceleration profile: " + str(profile))
+    print("Profile known by agent: " + str(known_model))
+    print("")
 
     for i in range(0, len(t)):
-        if i % int(update_period*points_per_second) == 0:
+        print("Time [s]: %5.2f/%5.2f" % (t[i],t[-1]), end="\r")
+        if i % int(horizon*points_per_second) == 0:
 
-            bias = integrate_position(t[i], t[i]+update_period)
+            if known_model:
+                bias = integrate_position(t[i], t[i]+horizon, target_vel)
+                fv = target_vel + integrate_velocity(t[i], t[i]+horizon) 
+                fa = ta(t[i]+horizon)
+                fj = np.zeros((3,1))
+
+            else:
+                bias = target_vel*(horizon) + 0.5*ta(t[i])*(horizon)**2
+                fv = target_vel + ta(t[i])*(horizon) 
+                fa = ta(t[i])
+                fj = np.zeros((3,1))
+
             goal = target_pos + bias
 
             waypoints = np.concatenate((x0[0:3], goal), 1)
 
-            spd_gain = 5
-            avg_spd = np.abs(np.linalg.norm(target_vel) + spd_gain*np.linalg.norm((x0[0:3]-target_pos)))
+            avg_spd = np.linalg.norm(target_vel) + spd_gain*np.linalg.norm((x0[0:3]-target_pos))
             avg_spd = np.minimum(avg_spd, 7)
-
-            #avg_spd = 10
 
             iv = x0[7:10]
             ia = np.zeros((3,1))
             ij = np.zeros((3,1))
             ic = np.concatenate([iv,ia,ij], 1).T
 
-            fv = target_vel + integrate_velocity(t[i], t[i]+update_period) 
-            fa = ta(t[i]+update_period)
-            fj = np.zeros((3,1))
-            fc = np.concatenate([fv,fa,fj], 1).T
+            fc = np.concatenate([fv,fa,fj], 1).T                
 
             traj_generator = MinimumSnap(waypoints, ic, fc, avg_spd)
 
@@ -376,10 +447,16 @@ if __name__ == "__main__":
         target_vel += integrate_velocity(t[i], t[i]+1/points_per_second)
         target_vel_save = np.append(target_vel_save, target_vel.T, 0)
 
-        target_pos += integrate_position(t[i], t[i]+1/points_per_second) + target_init_vel*(1/points_per_second)
+        target_pos += integrate_position(t[i], t[i]+1/points_per_second, target_init_vel)
         target_pos_save = np.append(target_pos_save, target_pos.T, 0)
 
+    print("\n")
 
+    pos_rmse = np.sqrt(np.mean((target_pos_save-state_save[:,0:3])**2))
+    vel_rmse = np.sqrt(np.mean((target_vel_save-state_save[:,7:10])**2))
+
+    print("Position RMSE: " + str(pos_rmse))
+    print("Velocity RMSE: " + str(vel_rmse))
 
     ax1 = plt.subplot(221)
     ax1.plot(t[:], state_save[:,0:3], t[:], target_pos_save)
@@ -406,11 +483,19 @@ if __name__ == "__main__":
     ax3.set_ylabel("Velocity [m/s]")
 
     ax4 = plt.subplot(224)
-    ax4.plot(state_save[:,7], state_save[:,8], target_vel_save[:,0], target_vel_save[:,1])
+    ax4.plot(t, np.linalg.norm((target_pos_save-state_save[:,0:3]), axis=1), linestyle='-')
+    ax4.plot(t, np.linalg.norm((target_vel_save-state_save[:,7:10]), axis=1), linestyle='--')
     ax4.grid(color='k', linestyle='-', linewidth=0.25)
-    ax4.legend(['Agent', 'Target'])
-    ax4.set_title("Velocity in the XY plane")
-    ax4.set_xlabel("vx [m/s]")
-    ax4.set_ylabel("vy [m/s]")
+    ax4.legend(['Position [m]', 'Velocity [m/s]'])
+    ax4.set_title("Error over time")
+    ax4.set_xlabel("t")
+    ax4.set_ylabel("e")
+
+    annotation = "Profile: " + profile + "\nKnown: " + str(known_model) + "\nHorizon [s]: " + str(horizon) + "\nSpeed gain: " + str(spd_gain) + "\nPos. RMSE: {prmse:5.3f}\nVel. RMSE: {vrmse:5.3f}"
+    at = mob.AnchoredText(annotation.format(prmse=pos_rmse, vrmse=vel_rmse), prop=dict(size=10), frameon=True, borderpad=0, loc='center')
+    at.patch.set_boxstyle("round, pad=0.5, rounding_size=0.2")
+    
+    ax4.add_artist(at)
+    #ax4.annotate(annotation.format(prmse=pos_rmse, vrmse=vel_rmse), xy=(15,4), bbox=)
 
     plt.show()
