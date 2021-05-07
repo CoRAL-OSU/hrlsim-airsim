@@ -94,7 +94,7 @@ class Target(Drone):
         super().setup_ros()
 
 
-    def generate_path(self, path_type: str, radius=18, height=-5) -> List[Vector3r]:
+    def generate_path(self, path_type: str, radius=20, height=-5) -> List[Vector3r]:
         """
         Generates a default path for the target to follow.
 

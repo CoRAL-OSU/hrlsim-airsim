@@ -907,6 +907,7 @@ sensor_msgs::Imu AirsimROSWrapper::get_imu_msg_from_airsim(const msr::airlib::Im
     imu_msg.angular_velocity.z = imu_data.angular_velocity.z();
 
     // meters/s2^m 
+
     imu_msg.linear_acceleration.x = imu_data.linear_acceleration.x();
     imu_msg.linear_acceleration.y = imu_data.linear_acceleration.y();
     imu_msg.linear_acceleration.z = imu_data.linear_acceleration.z();
@@ -1129,8 +1130,34 @@ void AirsimROSWrapper::publish_vehicle_state()
                 }
                 case SensorBase::SensorType::Imu:
                 {
-                    auto imu_data = airsim_client_->getImuData(sensor_publisher.sensor_name, vehicle_ros->vehicle_name);
-                    sensor_msgs::Imu imu_msg = get_imu_msg_from_airsim(imu_data);
+                    sensor_msgs::Imu imu_msg;
+
+                    if(airsim_mode_ == AIRSIM_MODE::DRONE) {
+                        auto drone = static_cast<MultiRotorROS*>(vehicle_ros.get());
+                        // imu_msg.header.frame_id = "/airsim/odom_local_ned";// todo multiple drones
+                        imu_msg.header.stamp = airsim_timestamp_to_ros(drone->curr_drone_state.timestamp);
+                        imu_msg.orientation.x = drone->curr_drone_state.kinematics_estimated.pose.orientation.x();
+                        imu_msg.orientation.y = drone->curr_drone_state.kinematics_estimated.pose.orientation.y();
+                        imu_msg.orientation.z = drone->curr_drone_state.kinematics_estimated.pose.orientation.z();
+                        imu_msg.orientation.w = drone->curr_drone_state.kinematics_estimated.pose.orientation.w();
+
+                        // todo radians per second
+                        imu_msg.angular_velocity.x = drone->curr_drone_state.kinematics_estimated.twist.angular.x();
+                        imu_msg.angular_velocity.y = drone->curr_drone_state.kinematics_estimated.twist.angular.y();
+                        imu_msg.angular_velocity.z = drone->curr_drone_state.kinematics_estimated.twist.angular.z();
+
+                        // meters/s2^m 
+
+                        imu_msg.linear_acceleration.x = drone->curr_drone_state.kinematics_estimated.accelerations.linear.x();
+                        imu_msg.linear_acceleration.y = drone->curr_drone_state.kinematics_estimated.accelerations.linear.y();
+                        imu_msg.linear_acceleration.z = drone->curr_drone_state.kinematics_estimated.accelerations.linear.z();
+
+                    }
+                    else {
+                        auto imu_data = airsim_client_->getImuData(sensor_publisher.sensor_name, vehicle_ros->vehicle_name);
+                        imu_msg = get_imu_msg_from_airsim(imu_data);
+                    }
+                    
                     imu_msg.header.frame_id = vehicle_ros->vehicle_name;
                     sensor_publisher.publisher.publish(imu_msg);
                     break;

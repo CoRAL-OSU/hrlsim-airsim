@@ -19,8 +19,8 @@ class LQR:
         """
         Constructs the intial LQR matrices
         """
-        self.Q: np.ndarray = np.diag([50, 50, 50, 1, 1, 1, 1, 10, 10, 10])
-        self.R: np.ndarray = np.diag([1e1, 1e1, 2e1, 2])
+        self.Q: np.ndarray = np.diag([100, 100, 100, 1, 1, 1, 1, 10, 10, 10])
+        self.R: np.ndarray = np.diag([1, 1, 2e1, 1.0])
 
         self.A: np.ndarray = np.zeros((10, 10))
         self.B: np.ndarray = np.zeros((10, 4))
@@ -29,7 +29,7 @@ class LQR:
         self.mass = 1  # kg
         self.max_thrust = 4.1794 * 4  # N
 
-        self.update_gain_period = 0.1  # seconds
+        self.update_gain_period = 0.025  # seconds
         self.prev_gain_time = time.time()
 
     def set_costs(self, Q: List[int] = None, R: List[int] = None) -> None:
@@ -89,7 +89,6 @@ class LQR:
         cp = math.cos(pitch)
         tp = math.tan(pitch)
 
-        # np.matrix is being depricated should move to np.ndarray
         R = np.array([[1, sr * tp, cr * tp], [0, cr, -sr], [0, sr / cp, cr / cp]])
 
         rpydot = np.array([[rpydot.y_val, -rpydot.x_val, rpydot.z_val]]).T

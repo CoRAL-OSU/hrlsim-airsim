@@ -298,7 +298,7 @@ if __name__ == "__main__":
     points_per_second = 100
     total_points = seconds*points_per_second
 
-    target_init_pos = np.array([[8,3,7]], dtype='float64').T
+    target_init_pos = np.array([[0,0,0]], dtype='float64').T
     target_pos = np.copy(target_init_pos)
 
     target_init_vel = np.array([[0.0,0.0,0.5]], dtype='float64').T
@@ -309,7 +309,6 @@ if __name__ == "__main__":
 
     x0 = np.zeros((10,1))
     x0[3] = 1
-
 
     fc = target_vel
 
@@ -324,7 +323,7 @@ if __name__ == "__main__":
 
     horizon = 1.0
     spd_gain = 0.25
-    profile = "piecewise"
+    profile = "sinusoidal"
     known_model = False
 
     ### ----------------- ###

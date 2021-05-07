@@ -142,7 +142,7 @@ class Drone(Process):
         self.client_lock = Lock()
         self.client = airsim.MultirotorClient()
 
-        self.freq = 20
+        self.freq = 80
         self.prev_loop_time = time.time()
         self.origin_geo_point = GPSYaw()
 
@@ -312,8 +312,15 @@ class Drone(Process):
         alx = msg.linear_acceleration.x
         aly = msg.linear_acceleration.y
         alz = msg.linear_acceleration.z
+        
+
+        qw = msg.orientation.w
+        qx = msg.orientation.x
+        qy = msg.orientation.y
+        qz = msg.orientation.z
 
         self.state.kinematics_estimated.linear_acceleration = airsim.Vector3r(alx,aly,alz)
+        self.state.kinematics_estimated.orientation = airsim.Quaternionr(qx, qy, qz, qw)
 
     def gps_cb(self, msg):
         """
@@ -343,14 +350,8 @@ class Drone(Process):
         vay = msg.twist.twist.angular.y
         vaz = msg.twist.twist.angular.z
 
-        qw = msg.pose.pose.orientation.w
-        qx = msg.pose.pose.orientation.x
-        qy = msg.pose.pose.orientation.y
-        qz = msg.pose.pose.orientation.z
-
         self.state.kinematics_estimated.linear_velocity = airsim.Vector3r(vlx,vly,vlz)
         self.state.kinematics_estimated.angular_velocity = airsim.Vector3r(vax,vay,vaz)
-        self.state.kinematics_estimated.orientation = airsim.Quaternionr(qx, qy, qz, qw)
 
 
     
