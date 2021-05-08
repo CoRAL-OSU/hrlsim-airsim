@@ -265,10 +265,14 @@ class Agent(Drone):
                 #waypoints = np.array([start_pos, pt]).T
                 waypoints = np.array([p, pt]).T
 
-                spd_gain = 0.25
-                avg_spd = np.linalg.norm(target_vel) + spd_gain*np.linalg.norm((p-pt))
+                d = np.linalg.norm((p-pt))
+
+                spd_gain = np.interp(d, [0, 23], [0, 0.25])
+                #spd_gain = 0.05
+
+                avg_spd = np.linalg.norm(target_vel) + d
                 avg_spd = np.minimum(avg_spd, 5)
-                avg_spd = np.maximum(avg_spd, 1)
+                #avg_spd = np.maximum(avg_spd, 1)
 
                 self.__controller.set_goals(waypoints, ic, fc, avg_spd)
 
