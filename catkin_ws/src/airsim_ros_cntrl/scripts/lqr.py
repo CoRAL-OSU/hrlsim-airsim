@@ -3,6 +3,7 @@ import numpy as np
 import math
 from typing import Any, List, Tuple
 from airsim import Vector3r, Quaternionr, MultirotorState
+import airsim
 import slycot
 import control
 
@@ -29,7 +30,9 @@ class LQR:
         self.mass = 1  # kg
         self.max_thrust = 4.1794 * 4  # N
 
-        self.update_gain_period = 0.025  # seconds
+        self.linearized_rotation = np.array([[10,10,10]]).T
+
+        self.update_gain_period = 1/20  # seconds
         self.prev_gain_time = time.time()
 
     def set_costs(self, Q: List[int] = None, R: List[int] = None) -> None:
@@ -104,20 +107,6 @@ class LQR:
         c = (9.8 - prev_accel_cmd) / (cr * cp)
 
         u = np.array([[omega[0,0], omega[1,0], omega[2,0], c]]).T
-        
-        self.__updateGains(x, u)
-        self.prev_gain_time = time.time()
-
-    def __updateGains(self, x: np.ndarray, u: np.ndarray) -> np.ndarray:
-        """
-        Updates the gains for the controller
-
-        Args:
-            x (np.ndarray): State, must be 10x1 state vector
-            u (np.ndarray): Goal Command, must be 4x1 control vector
-        """
-        assert np.shape(x) == (10, 1), "The state must be a 10x1 state vector"
-        assert np.shape(u) == (4, 1), "The goal command must be a 4x1 control vector"
 
         for i in range(0, 4):
             if abs(u[i]) < 0.001:
@@ -128,10 +117,10 @@ class LQR:
 
         self.K, _, _ = control.lqr(self.A, self.B, self.Q, self.R)
 
-        return self.K
+
 
     def computeControl(
-        self, t: float, state: MultirotorState, prev_accel_cmd: int
+        self, t: float, state: MultirotorState, prev_accel_cmd: int, drone_name
     ) -> Tuple[np.ndarray, np.ndarray, Any]:
         """
         Computes the control for a given state
@@ -153,7 +142,8 @@ class LQR:
         v = state.kinematics_estimated.linear_velocity
         v = np.array([[v.x_val, v.y_val, v.z_val]]).T
 
-        #roll, pitch, _ = LQR.quat2rpy(q)
+        pitch, roll, yaw = airsim.to_eularian_angles(state.kinematics_estimated.orientation)
+        r = np.array([[roll, pitch, yaw]]).T
 
         #cr = math.cos(roll)
         #sr = math.sin(roll)
@@ -167,10 +157,15 @@ class LQR:
 
         x0, u0 = self.traj_generator.compute(t, x)
 
-        if time.time() - self.prev_gain_time > self.update_gain_period:
+        if np.linalg.norm((r-self.linearized_rotation)) > math.pi/1000: #time.time() - self.prev_gain_time > self.update_gain_period:
             self.updateGains(
                 x, state.kinematics_estimated.angular_velocity, prev_accel_cmd
             )
+            
+            if drone_name == "Drone0":
+                print("Linearized: " + str(1/(time.time() - self.prev_gain_time)))
+
+            self.linearized_rotation = r
             self.prev_gain_time = time.time()
 
         u = np.zeros((4, 1))

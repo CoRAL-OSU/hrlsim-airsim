@@ -1,0 +1,23 @@
+digraph G {
+"world_ned" -> "Drone4"[label="Broadcaster: /airsim_node\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1620517983.452 sec old)\nBuffer length: 0.000 sec\n"];
+"world_ned" -> "Drone3"[label="Broadcaster: /airsim_node\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1620517983.452 sec old)\nBuffer length: 0.000 sec\n"];
+"world_ned" -> "Drone2"[label="Broadcaster: /airsim_node\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1620517983.452 sec old)\nBuffer length: 0.000 sec\n"];
+"world_ned" -> "Target0"[label="Broadcaster: /airsim_node\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1620517983.452 sec old)\nBuffer length: 0.000 sec\n"];
+"world_ned" -> "Drone0"[label="Broadcaster: /airsim_node\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1620517983.452 sec old)\nBuffer length: 0.000 sec\n"];
+"Drone0/odom_local_ned" -> "cam0_body/static"[label="Broadcaster: /airsim_node\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1620517983.452 sec old)\nBuffer length: 0.000 sec\n"];
+"Drone0" -> "Drone0/odom_local_ned"[label="Broadcaster: /airsim_node\nAverage rate: 83.583 Hz\nMost recent transform: 1620517983.150 ( 0.302 sec old)\nBuffer length: 4.977 sec\n"];
+"Drone0/odom_local_ned" -> "cam0_optical/static"[label="Broadcaster: /airsim_node\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1620517983.452 sec old)\nBuffer length: 0.000 sec\n"];
+"world_ned" -> "Drone1"[label="Broadcaster: /airsim_node\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1620517983.452 sec old)\nBuffer length: 0.000 sec\n"];
+"Drone4" -> "Drone4/odom_local_ned"[label="Broadcaster: /airsim_node\nAverage rate: 83.632 Hz\nMost recent transform: 1620517983.156 ( 0.296 sec old)\nBuffer length: 4.986 sec\n"];
+"Drone3" -> "Drone3/odom_local_ned"[label="Broadcaster: /airsim_node\nAverage rate: 83.683 Hz\nMost recent transform: 1620517983.156 ( 0.296 sec old)\nBuffer length: 4.983 sec\n"];
+"Drone2" -> "Drone2/odom_local_ned"[label="Broadcaster: /airsim_node\nAverage rate: 83.632 Hz\nMost recent transform: 1620517983.159 ( 0.293 sec old)\nBuffer length: 4.986 sec\n"];
+"Target0" -> "Target0/odom_local_ned"[label="Broadcaster: /airsim_node\nAverage rate: 83.632 Hz\nMost recent transform: 1620517983.159 ( 0.293 sec old)\nBuffer length: 4.986 sec\n"];
+"Drone1" -> "Drone1/odom_local_ned"[label="Broadcaster: /airsim_node\nAverage rate: 83.583 Hz\nMost recent transform: 1620517983.150 ( 0.302 sec old)\nBuffer length: 4.977 sec\n"];
+"Drone0" -> "cam0_body"[label="Broadcaster: /airsim_node\nAverage rate: 10.847 Hz\nMost recent transform: 1620517983.384 ( 0.068 sec old)\nBuffer length: 4.886 sec\n"];
+"Drone0" -> "cam0_optical"[label="Broadcaster: /airsim_node\nAverage rate: 10.847 Hz\nMost recent transform: 1620517983.384 ( 0.068 sec old)\nBuffer length: 4.886 sec\n"];
+"world_ned" -> "world_enu"[label="Broadcaster: /ned_to_enu_pub\nAverage rate: 10.189 Hz\nMost recent transform: 1620517983.517 ( -0.065 sec old)\nBuffer length: 4.907 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1620517983.452"[ shape=plaintext ] ;
+ }->"world_ned";
+}

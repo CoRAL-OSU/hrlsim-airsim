@@ -83,7 +83,7 @@ if __name__ == "__main__":
     #     CREATE DRONE/TEAM LISTS
 
     if ip != "":
-        vehicle_list = ["Drone0", "Target0"]
+        vehicle_list = ["Drone0", "Drone1", "Target0"]
         # vehicle_list = ["Drone0", "Drone1", "Drone2", "Target0", "Drone3", "Drone4", "Target1"]
     else:
         vehicle_list = getDroneListFromSettings()
@@ -105,9 +105,9 @@ if __name__ == "__main__":
             target_list[i],
             client,
             lock,
-            0.5,
+            0.75,
             #path=[tuple([20 + (3 * (-(1 ** i))), 0, -2])],
-            path_type="line"
+            path_type="square"
         )
         target_procs[target_list[i]].start()
 

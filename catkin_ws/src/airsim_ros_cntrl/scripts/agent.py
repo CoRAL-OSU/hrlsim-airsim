@@ -267,10 +267,10 @@ class Agent(Drone):
 
                 d = np.linalg.norm((p-pt))
 
-                spd_gain = np.interp(d, [0, 23], [0, 0.25])
-                #spd_gain = 0.05
+                spd_gain = np.interp(d, [0, 20], [0, 0.25])
+                #spd_gain = 0.1
 
-                avg_spd = np.linalg.norm(target_vel) + d
+                avg_spd = np.linalg.norm(target_vel+target_acc*update_object_location_period/2) + spd_gain*d
                 avg_spd = np.minimum(avg_spd, 5)
                 #avg_spd = np.maximum(avg_spd, 1)
 
@@ -356,7 +356,7 @@ class Agent(Drone):
             t (float): Time elapsed since beginning
             state (MultirotorState): Current Multirotor State
         """
-        x0, u = self.__controller.computeControl(t, state, self.prev_accel_cmd)
+        x0, u = self.__controller.computeControl(t, state, self.prev_accel_cmd, self.drone_name)
 
         for i in range(0, 3):
             if abs(u[i, 0]) > 2:
