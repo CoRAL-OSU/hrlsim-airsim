@@ -36,7 +36,6 @@ class Target(Process):
         self,
         swarmName: str,
         objectName: str,
-        speed: float,
         freq: int = 20,
         path: List[Tuple[float, float, float]] = [],
         ip="",
@@ -53,7 +52,6 @@ class Target(Process):
         """
         Process.__init__(self)
 
-        self.speed = speed
         self.swarm_name = swarmName
         self.freq = freq
         self.time_step = 1 / self.freq
