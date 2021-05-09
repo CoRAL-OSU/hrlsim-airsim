@@ -29,8 +29,7 @@ class Target(Process):
         droneName (str): The name of the drone itself.
         sim_client (airsim.MultirotorClient): The client to use to execture commands.
         client_lock (mp.Lock): The lock for the sim_client.
-        path (List[], optional): The path for the target to follow, if blank will be stationary. Defaults to [].
-        path_type (str, optional): Generates a path for the target to follow. Possible values are 'Circle', 'Triangle', 'Square' and 'Line'. Defaults to "".
+        path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. In format of linear velocity, angular velocity and time Defaults to [].
     """
 
     def __init__(
@@ -40,7 +39,6 @@ class Target(Process):
         speed: float,
         freq: int = 20,
         path: List[Tuple[float, float, float]] = [],
-        path_type: str = "",
         ip="",
     ) -> None:
         """
@@ -51,8 +49,7 @@ class Target(Process):
             droneName (str): The name of the drone itself.
             sim_client (airsim.MultirotorClient): The client to use to execture commands.
             client_lock (mp.Lock): The lock for the sim_client.
-            path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. Defaults to [].
-            path_type (str, optional): Generates a path for the target to follow. Possible values are 'Circle', 'Triangle', 'Square' and 'Line'. Defaults to "".
+            path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. In format of linear velocity, angular velocity and time Defaults to [].
         """
         Process.__init__(self)
 
@@ -65,9 +62,7 @@ class Target(Process):
         self.flag_lock = Lock()
         self.prev_loop_time = time.time()
         self.linear_acc_rate = 0.1
-        self.yaw_speed = 0.1
         self.ang_acc_rate = 0.08
-        self.ang_acc_dis = -pow(self.yaw_speed, 2) / (2 * -self.ang_acc_rate)
 
         self.client = MultirotorClient(ip)
         self.client.confirmConnection()
@@ -75,11 +70,7 @@ class Target(Process):
 
         print("NEW TARGET: " + self.object_name)
 
-        self.path = (
-            Target.modify_path(path)
-            if path_type == ""
-            else self.generate_path(path_type)
-        )
+        self.path = path
         self.path_index = 0
 
     def __setup_ros(self) -> None:
@@ -121,46 +112,6 @@ class Target(Process):
 
             print(self.object_name + " SHUTDOWN REQUEST HANDLED")
             return SetBoolResponse(True, "")
-
-    def generate_path(self, path_type: str, radius=15, height=0) -> List[Vector3r]:
-        """
-        Generates a default path for the target to follow.
-
-        Args:
-            path_type (str): Shape for a target to follow. Possible values are 'Circle', 'Triangle', 'Square' and 'Line'.
-            radius (int, optional): Radius of the shape. Defaults to 5.
-            height (int, optional): Height of the path. Defaults to -5.
-
-        Returns:
-            List[Vector3r]: List of Points in NED orientation for the drone to follow.
-        """
-        paths = {"circle": 12, "triangle": 3, "square": 4, "line": 2, "f": 0}
-        points = paths[path_type]
-        center = self.pos.position
-
-        path: List[Vector3r] = []
-        for i in range(points):
-            x = radius * cos(pi / points * i * 2) + center.x_val
-            y = radius * sin(pi / points * i * 2) + center.y_val
-            path.append(Vector3r(x, y, height))
-
-        return path
-
-    @staticmethod
-    def modify_path(path: List[Tuple[float, float, int]]) -> List[Vector3r]:
-        """
-        Static method to translate the path from tuple points into Vectors. Used to feed into the MoveOnPath.
-
-        Args:
-            path (List[Tuple[float, float, int]]): Path to translate
-
-        Returns:
-            List[Vector3r]: Vector Path
-        """
-        new_path: List[Vector3r] = []
-        for p in path:
-            new_path.append(Vector3r(*p))
-        return new_path
 
     def shutdown(self) -> None:
         """
@@ -220,20 +171,21 @@ class Target(Process):
             v = self.speed
         return (v, a)
 
-    def generate_angular_velocity(
-        self, current_velocity: float, yaw: float, way_yaw: float
+    def generate_velocity(
+        self, current_velocity: float, target_velocity: float, acceleration: float
     ):
-        d = abs(way_yaw - yaw)
-        ang_acc_dis = -pow(current_velocity, 2) / (2 * -self.ang_acc_rate)
-        if d <= ang_acc_dis:
-            a = -self.ang_acc_rate
-            v = current_velocity - self.ang_acc_rate * self.time_step
-        elif current_velocity < self.yaw_speed:
-            v = current_velocity + self.ang_acc_rate * self.time_step
-            a = self.ang_acc_rate
-        if current_velocity >= self.yaw_speed:
+        if current_velocity > target_velocity:
+            a = -acceleration
+        elif current_velocity < target_velocity:
+            a = acceleration
+        else:
             a = 0
-            v = self.yaw_speed
+        v = current_velocity + a * self.time_step
+        if (a < 0 and current_velocity < target_velocity) or (
+            a > 0 and current_velocity > target_velocity
+        ):
+            v = target_velocity
+
         return (v, a)
 
     def run(self) -> None:
@@ -245,7 +197,7 @@ class Target(Process):
         """
         self.__setup_ros()
 
-        # time.sleep(8)
+        time = 0
 
         rate = rospy.Rate(self.freq)
 
@@ -257,50 +209,40 @@ class Target(Process):
 
         linear_acc = 0
 
-        waypoint = self.path[self.path_index]
+        way_lin, way_ang, way_time = self.path[self.path_index]
 
         _, _, yaw = airsim.to_eularian_angles(self.pos.orientation)
-        d: Vector3r = waypoint - self.pos.position
-        way_yaw = atan2(d.y_val, d.x_val)
-        if abs(way_yaw - yaw) > abs(way_yaw - (yaw + 2 * pi)):
-            yaw += 2 * pi
-        elif abs(way_yaw - yaw) > abs(way_yaw - (yaw - 2 * pi)):
-            yaw -= 2 * pi
-        v = airsim.Vector3r(self.speed * cos(way_yaw), self.speed * sin(way_yaw), 0)
 
         while not rospy.is_shutdown() and self._shutdown == False:
             with self.flag_lock:
-                if self.shutdown == True:
+                if self._shutdown == True:
                     break
-            if abs(way_yaw - yaw) > 0.01:
-                print(way_yaw - yaw, way_yaw, yaw)
-                v_yaw, angular_acc = self.generate_angular_velocity(v_yaw, yaw, way_yaw)
-                yaw_iter = v_yaw * self.time_step
-                if way_yaw > yaw:
-                    yaw += yaw_iter
-                else:
-                    yaw -= yaw_iter
-                q = airsim.to_quaternion(0, 0, yaw)
-                q = q / q.get_length()
-                self.pos.orientation = q
-            elif waypoint.distance_to(self.pos.position) < 1:
+            if time is not None and time >= way_time:
                 self.path_index += 1
                 if self.path_index == len(self.path):
-                    break
-                waypoint = self.path[self.path_index]
-                d: Vector3r = waypoint - self.pos.position
-                way_yaw = atan2(d.y_val, d.x_val)
-                if abs(way_yaw - yaw) > abs(way_yaw - (yaw + 2 * pi)):
-                    yaw += 2 * pi
-                elif abs(way_yaw - yaw) > abs(way_yaw - (yaw - 2 * pi)):
-                    yaw -= 2 * pi
-            else:
-                print(waypoint.distance_to(self.pos.position))
-                speed, linear_acc = self.generate_linear_velocity(
-                    speed, self.pos.position, waypoint
-                )
-                v = airsim.Vector3r(speed * cos(yaw), speed * sin(yaw), 0)
-                self.pos.position = v * self.time_step + self.pos.position
+                    way_lin = 0
+                    way_ang = 0
+                    time = None
+                else:
+                    way_lin, way_ang, way_time = self.path[self.path_index]
+                    time = 0
+
+            v_yaw, angular_acc = self.generate_velocity(
+                v_yaw, way_ang, self.ang_acc_rate
+            )
+
+            yaw_iter = v_yaw * self.time_step
+            yaw += yaw_iter
+            q = airsim.to_quaternion(0, 0, yaw)
+            q = q / q.get_length()
+            self.pos.orientation = q
+
+            speed, linear_acc = self.generate_velocity(
+                speed, way_lin, self.linear_acc_rate
+            )
+            v = airsim.Vector3r(speed * cos(yaw), speed * sin(yaw), 0)
+            self.pos.position = v * self.time_step + self.pos.position
+
             self.client.simSetObjectPose(object_name=self.object_name, pose=self.pos)
 
             angular_acc_v = Vector3r(0, 0, angular_acc)
@@ -312,6 +254,11 @@ class Target(Process):
                 self.pos, v, v_yaw_v, linear_acc_v, angular_acc_v
             )
 
+            if speed == 0 and v_yaw == 0:
+                break
+
+            if time is not None:
+                time += self.time_step
             rate.sleep()
 
         print(self.object_name + " QUITTING")
@@ -323,9 +270,12 @@ if __name__ == "__main__":
     name = "African_Poacher_1_WalkwRifleLow_Anim2_2"
     pos = client.simGetObjectPose("African_Poacher_1_WalkwRifleLow_Anim2_2")
     pos.position = airsim.Vector3r(-235, -242, 0)
+    pos.orientation = airsim.Vector3r(0, 0, 0)
     client.simSetObjectPose(name, pos)
 
-    drone = Target("test", name, 2, path_type="circle", ip="192.168.1.2")
+    drone = Target(
+        "test", name, 2, path=[(2, -0.5, 15), (1, 0.5, 15)], ip="192.168.1.2"
+    )
     drone.start()
 
     drone.join()
