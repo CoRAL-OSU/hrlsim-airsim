@@ -1,5 +1,6 @@
 #! /usr/bin/python3
 
+from airsim.client import MultirotorClient
 from team import Team
 from target import Target
 
@@ -41,6 +42,12 @@ def getDroneListFromSettings(settingsFilePath: str = None) -> List[str]:
     return vehicle_list
 
 
+def setUpTargets(client: MultirotorClient, target_list: List):
+    for t in target_list:
+        pose = airsim.Pose(t[2], t[3])
+        client.simSetObjectPose(object_name=t[0], pose=pose)
+
+
 team_list = []
 
 
@@ -61,8 +68,8 @@ if __name__ == "__main__":
     #     SETUP PYTHON CLIENT
     #
 
-    #ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    ip = "10.0.0.3" #"192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
+    # ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
+    ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -89,25 +96,32 @@ if __name__ == "__main__":
         vehicle_list = getDroneListFromSettings()
 
     drone_list = []
-    target_list = []
+    target_list = [
+        (
+            "African_Poacher_1_WalkwRifleLow_Anim2_2",
+            [(2, 0, 45)],
+            airsim.Vector3r(-220, -226, 0),
+            airsim.to_quaternion(0, 0, 4.5),
+        ),
+        (
+            "African_Poacher_1_WalkwRifleLow_Anim3_11",
+            [(2, 0, 45)],
+            airsim.Vector3r(-220, -239, 0),
+            airsim.to_quaternion(0, 0, 4.2),
+        ),
+    ]
     team_list = []
     target_procs = dict()
 
     for v in vehicle_list:
         if "Drone" in v:
             drone_list.append(v)
-        elif "Target" in v:
-            target_list.append(v)
-            
+
+    setUpTargets(client, target_list)
+
     for i in range(len(target_list)):
         target_procs[target_list[i]] = Target(
-            "Team" + str(i),
-            target_list[i],
-            client,
-            lock,
-            0.75,
-            #path=[tuple([20 + (3 * (-(1 ** i))), 0, -2])],
-            path_type="square"
+            "Team" + str(i), target_list[i][0], ip=ip, path=target_list[i][1]
         )
         target_procs[target_list[i]].start()
 
@@ -151,13 +165,12 @@ if __name__ == "__main__":
     # team_list[1].track_object("Target1", 25, -10)
 
     for team in team_list:
-       team.wait()
+        team.wait()
 
-
-    #team_list[0].track_object("Target0", 5, 0)
+    # team_list[0].track_object("Target0", 5, 0)
     # team_list[1].track_object("Target1", 5, 0)
 
-    #for team in team_list:
+    # for team in team_list:
     #    team.wait()
 
     print("LANDING")
@@ -169,5 +182,8 @@ if __name__ == "__main__":
     print("SHUTDOWN")
     for team in team_list:
         team.shutdown()
+
+    for t in target_list:
+        t.shutdown()
 
     print("SIMULATION ENDED")

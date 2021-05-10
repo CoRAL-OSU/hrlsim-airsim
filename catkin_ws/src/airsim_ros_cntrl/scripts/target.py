@@ -1,30 +1,24 @@
 #! /usr/bin/python3
 
-from multiprocessing import Lock
+from multiprocessing import Lock, Process
 import time
-from math import cos, pi, sin
+from math import cos, pi, sin, atan2, pow
 from typing import List, Tuple
+from airsim.types import Quaternionr
+import sys
 
 from airsim.client import MultirotorClient
 from airsim import Vector3r
+import airsim
 import rospy
 
-from geometry_msgs.msg import (
-    TwistStamped,
-    PoseStamped,
-    Pose,
-    Point,
-    Quaternion,
-    Twist,
-    Vector3,
-    AccelStamped,
-    Accel,
-)
+from airsim_ros_cntrl.msg import Multirotor, State
+from geometry_msgs.msg import Twist, Pose, Accel
 from std_msgs.msg import Header, Float32
-from drone import Drone
+from std_srvs.srv import SetBool, SetBoolResponse, SetBoolRequest
 
 
-class Target(Drone):
+class Target(Process):
     """
     Class to handle trackable targets for a team.
     A target is a drone meant to emulate a trackable object used to simulate the team.
@@ -35,19 +29,16 @@ class Target(Drone):
         droneName (str): The name of the drone itself.
         sim_client (airsim.MultirotorClient): The client to use to execture commands.
         client_lock (mp.Lock): The lock for the sim_client.
-        path (List[], optional): The path for the target to follow, if blank will be stationary. Defaults to [].
-        path_type (str, optional): Generates a path for the target to follow. Possible values are 'Circle', 'Triangle', 'Square' and 'Line'. Defaults to "".
+        path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. In format of linear velocity, angular velocity and time Defaults to [].
     """
 
     def __init__(
         self,
         swarmName: str,
-        droneName: str,
-        sim_client: MultirotorClient,
-        client_lock: Lock,
-        speed: float,
+        objectName: str,
+        freq: int = 20,
         path: List[Tuple[float, float, float]] = [],
-        path_type: str = "",
+        ip="",
     ) -> None:
         """
         Constructs a new Target Process
@@ -57,20 +48,28 @@ class Target(Drone):
             droneName (str): The name of the drone itself.
             sim_client (airsim.MultirotorClient): The client to use to execture commands.
             client_lock (mp.Lock): The lock for the sim_client.
-            path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. Defaults to [].
-            path_type (str, optional): Generates a path for the target to follow. Possible values are 'Circle', 'Triangle', 'Square' and 'Line'. Defaults to "".
+            path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. In format of linear velocity, angular velocity and time Defaults to [].
         """
-        super().__init__(swarmName, droneName, sim_client, client_lock)
+        Process.__init__(self)
 
-        self.speed = speed
+        self.swarm_name = swarmName
+        self.freq = freq
+        self.time_step = 1 / self.freq
+        self.object_name = objectName
+        self._shutdown = False
+        self.flag_lock = Lock()
+        self.prev_loop_time = time.time()
+        self.linear_acc_rate = 0.1
+        self.ang_acc_rate = 0.08
 
+        self.client = MultirotorClient(ip)
+        self.client.confirmConnection()
+        self.pos = self.client.simGetObjectPose(self.object_name)
 
-        print("NEW TARGET: " + self.drone_name)
+        print("NEW TARGET: " + self.object_name)
 
-        with self.client_lock:
-            self.client.takeoffAsync(vehicle_name=self.drone_name)
-
-        self.__path = Target.modify_path(path) if path_type == "" else self.generate_path(path_type)
+        self.path = path
+        self.path_index = 0
 
     def __setup_ros(self) -> None:
         """
@@ -84,56 +83,108 @@ class Target(Drone):
             /pos (geometry_msgs.PoseStamped): Position of the target in global frame NED.
             /acc (geometry_msgs.AccelStamped): Acceleration of the target.
 
-        Services:
-            /takeoff (airsim_ros_pkgs.Takeoff): Service to takeoff the drone
-            /land (airsim_ros_pkgs.Land): Service to land the drone
-            /shutdown (std_srvs.SetBool): Service to shutdown process
+        Returns: None
+        """
+        rospy.init_node(self.object_name)
+        self.topic_prefix = "/" + self.swarm_name + "/" + self.object_name
+        shutdown_service_name = self.topic_prefix + "/shutdown"
+        state_topic = self.topic_prefix + "/multirotor"
+        rospy.on_shutdown(self.shutdown)
+
+        rospy.Service(shutdown_service_name, SetBool, self.__handle_shutdown)
+        self.multirotor_pub = rospy.Publisher(state_topic, Multirotor, queue_size=10)
+
+    def __handle_shutdown(self, req: SetBoolRequest) -> SetBoolResponse:
+        """
+        Callback for the /shutdown rosservice. Uses Python API to disarm drone
+
+        Args:
+            req (StdBoolRequest): Currently unused
+
+        Returns (StdBoolResponse): True on success
+        """
+
+        print(self.object_name + " SHUTDOWN REQUEST RECEIVED")
+        with self.flag_lock:
+            self._shutdown = True
+
+            print(self.object_name + " SHUTDOWN REQUEST HANDLED")
+            return SetBoolResponse(True, "")
+
+    def shutdown(self) -> None:
+        """
+        Handle improper rospy shutdown. Uses Python API to disarm drone
 
         Returns: None
         """
-        super().setup_ros()
+        with self.flag_lock:
+            self._shutdown = True
 
+        print(self.object_name + " QUITTING")
 
-    def generate_path(self, path_type: str, radius=10, height=-5) -> List[Vector3r]:
+    def publish_multirotor_state(
+        self,
+        pos: Pose,
+        vel: Vector3r,
+        ang_vel: Vector3r,
+        linear_acc: Vector3r,
+        ang_acc: Vector3r,
+    ) -> None:
         """
-        Generates a default path for the target to follow.
-
-        Args:
-            path_type (str): Shape for a target to follow. Possible values are 'Circle', 'Triangle', 'Square' and 'Line'.
-            radius (int, optional): Radius of the shape. Defaults to 5.
-            height (int, optional): Height of the path. Defaults to -5.
-
-        Returns:
-            List[Vector3r]: List of Points in NED orientation for the drone to follow.
+        Function to publish sensor/state information from the simulator
+        Returns: None
         """
-        paths = {"circle": 12, "triangle": 3, "square": 4, "line": 2, "f": 0}
-        points = paths[path_type]
-        center = self.state.kinematics_estimated.position
 
-        path: List[Vector3r] = []
-        for i in range(points):
-            x = radius * cos(pi / points * i * 2) + center.x_val
-            y = radius * sin(pi / points * i * 2) + center.y_val
-            path.append(Vector3r(x, y, height))
+        msg = Multirotor()
 
-        return path
+        msg.header = Header()
+        msg.header.stamp = rospy.Time.now()
 
-    @staticmethod
-    def modify_path(path: List[Tuple[float, float, int]]) -> List[Vector3r]:
-        """
-        Static method to translate the path from tuple points into Vectors. Used to feed into the MoveOnPath.
+        msg.looptime = Float32(time.time() - self.prev_loop_time)
+        self.prev_loop_time = time.time()
 
-        Args:
-            path (List[Tuple[float, float, int]]): Path to translate
+        twist = Twist(vel, ang_vel)
 
-        Returns:
-            List[Vector3r]: Vector Path
-        """
-        new_path: List[Vector3r] = []
-        for p in path:
-            new_path.append(Vector3r(*p))
-        return new_path
+        acc = Accel(linear_acc, ang_acc)
 
+        # Make state msg
+        msg.state = State(pos, twist, acc)
+
+        # Publish msg
+        self.multirotor_pub.publish(msg)
+
+    def generate_linear_velocity(
+        self, current_velocity: float, position: Vector3r, waypoint: Vector3r
+    ):
+        d = waypoint.distance_to(position)
+        linear_acc_dis = -pow(current_velocity, 2) / (2 * -self.linear_acc_rate)
+        if d <= linear_acc_dis:
+            a = -self.linear_acc_rate
+            v = current_velocity - self.linear_acc_rate * self.time_step
+        elif current_velocity < self.speed:
+            v = current_velocity + self.linear_acc_rate * self.time_step
+            a = self.linear_acc_rate
+        if current_velocity >= self.speed:
+            a = 0
+            v = self.speed
+        return (v, a)
+
+    def generate_velocity(
+        self, current_velocity: float, target_velocity: float, acceleration: float
+    ):
+        if current_velocity > target_velocity:
+            a = -acceleration
+        elif current_velocity < target_velocity:
+            a = acceleration
+        else:
+            a = 0
+        v = current_velocity + a * self.time_step
+        if (a < 0 and current_velocity < target_velocity) or (
+            a > 0 and current_velocity > target_velocity
+        ):
+            v = target_velocity
+
+        return (v, a)
 
     def run(self) -> None:
         """
@@ -144,28 +195,85 @@ class Target(Drone):
         """
         self.__setup_ros()
 
-        time.sleep(8)
+        time = 0
 
         rate = rospy.Rate(self.freq)
 
-        prev_time = time.time()
+        speed = 0
 
-        with self.client_lock:
-            self.client.moveOnPathAsync(self.__path, self.speed, vehicle_name=self.drone_name)
+        v_yaw = 0
+
+        angular_acc = 0
+
+        linear_acc = 0
+
+        way_lin, way_ang, way_time = self.path[self.path_index]
+
+        _, _, yaw = airsim.to_eularian_angles(self.pos.orientation)
 
         while not rospy.is_shutdown() and self._shutdown == False:
             with self.flag_lock:
                 if self._shutdown == True:
                     break
+            if time is not None and time >= way_time:
+                self.path_index += 1
+                if self.path_index == len(self.path):
+                    way_lin = 0
+                    way_ang = 0
+                    time = None
+                else:
+                    way_lin, way_ang, way_time = self.path[self.path_index]
+                    time = 0
 
-            state = self.state.kinematics_estimated
+            v_yaw, angular_acc = self.generate_velocity(
+                v_yaw, way_ang, self.ang_acc_rate
+            )
 
-            if (state.linear_velocity.get_length() < 0.2):
-                self.client.moveOnPathAsync(self.__path, self.speed, vehicle_name=self.drone_name)
+            yaw_iter = v_yaw * self.time_step
+            yaw += yaw_iter
+            q = airsim.to_quaternion(0, 0, yaw)
+            q = q / q.get_length()
+            self.pos.orientation = q
 
-        
-            self.publish_multirotor_state(self.state, self.sensors)
+            speed, linear_acc = self.generate_velocity(
+                speed, way_lin, self.linear_acc_rate
+            )
+            v = airsim.Vector3r(speed * cos(yaw), speed * sin(yaw), 0)
+            self.pos.position = v * self.time_step + self.pos.position
 
+            self.client.simSetObjectPose(object_name=self.object_name, pose=self.pos)
+
+            angular_acc_v = Vector3r(0, 0, angular_acc)
+            v_yaw_v = Vector3r(0, 0, v_yaw)
+            linear_acc_v = airsim.Vector3r(
+                linear_acc * cos(yaw), linear_acc * sin(yaw), 0
+            )
+            self.publish_multirotor_state(
+                self.pos, v, v_yaw_v, linear_acc_v, angular_acc_v
+            )
+
+            if speed == 0 and v_yaw == 0:
+                break
+
+            if time is not None:
+                time += self.time_step
             rate.sleep()
 
-        print(self.drone_name + " QUITTING")
+        print(self.object_name + " QUITTING")
+
+
+if __name__ == "__main__":
+
+    client = airsim.MultirotorClient()
+    name = "African_Poacher_1_WalkwRifleLow_Anim2_2"
+    pos = client.simGetObjectPose("African_Poacher_1_WalkwRifleLow_Anim2_2")
+    pos.position = airsim.Vector3r(-235, -242, 0)
+    pos.orientation = airsim.Vector3r(0, 0, 0)
+    client.simSetObjectPose(name, pos)
+
+    drone = Target(
+        "test", name, 2, path=[(2, -0.5, 15), (1, 0.5, 15)]
+    )
+    drone.start()
+
+    drone.join()
