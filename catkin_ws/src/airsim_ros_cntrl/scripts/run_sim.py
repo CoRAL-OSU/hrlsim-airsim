@@ -69,7 +69,7 @@ if __name__ == "__main__":
     #
 
     # ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    ip = "10.0.0.2"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
+    ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     #     CREATE DRONE/TEAM LISTS
 
     if ip != "":
-        vehicle_list = ["Drone0", "Drone1", "Target0"]
+        vehicle_list = ["Drone0", "Drone1"]
         # vehicle_list = ["Drone0", "Drone1", "Drone2", "Target0", "Drone3", "Drone4", "Target1"]
     else:
         vehicle_list = getDroneListFromSettings()
@@ -99,13 +99,13 @@ if __name__ == "__main__":
     target_list = [
         (
             "African_Poacher_1_WalkwRifleLow_Anim2_2",
-            [(2, 0, 45)],
+            [(1.5, 0, 45)],
             airsim.Vector3r(-220, -226, 0),
             airsim.to_quaternion(0, 0, 4.5),
         ),
         (
             "African_Poacher_1_WalkwRifleLow_Anim3_11",
-            [(2, 0, 45)],
+            [(1.5, 0, 45)],
             airsim.Vector3r(-220, -239, 0),
             airsim.to_quaternion(0, 0, 4.2),
         ),
@@ -161,17 +161,11 @@ if __name__ == "__main__":
     # team_list[0].wait()
 
     print("BEGIN TRACKING")
-    team_list[0].track_object(40, -4)
-    # team_list[1].track_object("Target1", 25, -10)
+    for team in team_list:
+        team.track_object(40,-4)
 
     for team in team_list:
         team.wait()
-
-    # team_list[0].track_object("Target0", 5, 0)
-    # team_list[1].track_object("Target1", 5, 0)
-
-    # for team in team_list:
-    #    team.wait()
 
     print("LANDING")
     for team in team_list:
@@ -184,6 +178,6 @@ if __name__ == "__main__":
         team.shutdown()
 
     for t in target_list:
-        target_procs[t[0]].start()
+        target_procs[t[0]].shutdown()
 
     print("SIMULATION ENDED")

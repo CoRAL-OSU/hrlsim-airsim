@@ -44,7 +44,7 @@ class Target(Process):
         self,
         swarmName: str,
         objectName: str,
-        freq: int = 20,
+        freq: int = 60,
         path: List[Tuple[float, float, float]] = [],
         ip="",
     ) -> None:
@@ -68,7 +68,7 @@ class Target(Process):
         self._shutdown = False
         self.flag_lock = Lock()
         self.prev_loop_time = time.time()
-        self.linear_acc_rate = 0.1
+        self.linear_acc_rate = 0.25
         self.ang_acc_rate = 0.08
 
         self.client = MultirotorClient(ip)
@@ -191,9 +191,9 @@ class Target(Process):
     def generate_velocity(
         self, current_velocity: float, target_velocity: float, acceleration: float
     ):
-        if current_velocity > target_velocity:
+        if current_velocity-target_velocity > 0.1:
             a = -acceleration
-        elif current_velocity < target_velocity:
+        elif current_velocity-target_velocity < -0.1:
             a = acceleration
         else:
             a = 0

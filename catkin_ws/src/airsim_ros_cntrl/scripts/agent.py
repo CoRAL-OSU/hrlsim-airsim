@@ -216,7 +216,7 @@ class Agent(Drone):
 
         print(self.drone_name + " ENTERING WHILE LOOP")
 
-        update_object_location_period = 3.0  # seconds
+        update_object_location_period = 1.0  # seconds
         prev_object_update_time = 0
 
         start_pos = self.state.kinematics_estimated.position.to_numpy_array()
@@ -238,6 +238,7 @@ class Agent(Drone):
 
             pos = self.state.kinematics_estimated.position.to_numpy_array()
             target_pose = self.__target_pose.kinematics_estimated
+            tp = target_pose.position.to_numpy_array()
 
             if time.time() - prev_object_update_time > update_object_location_period:
 
@@ -247,7 +248,6 @@ class Agent(Drone):
                 bias = target_vel*update_object_location_period + 0.5*target_acc*update_object_location_period**2
 
                 p = pos
-                tp = target_pose.position.to_numpy_array()
                 
                 v = self.state.kinematics_estimated.linear_velocity.to_numpy_array()
                 a = self.state.kinematics_estimated.linear_acceleration.to_numpy_array()
@@ -265,13 +265,16 @@ class Agent(Drone):
                 #waypoints = np.array([start_pos, pt]).T
                 waypoints = np.array([p, pt]).T
 
-                d = np.linalg.norm((p-pt))
+                d = np.linalg.norm((p-(tp+goal.offset)))
 
-                spd_gain = np.interp(d, [0, 20], [0, 0.25])
-                #spd_gain = 0.1
+                #spd_gain = np.interp(d, [0, 30], [0, 0.1])
+                spd_gain = 0.25
 
-                avg_spd = np.linalg.norm(target_vel+target_acc*update_object_location_period/2) + spd_gain*d
-                avg_spd = np.minimum(avg_spd, 5)
+                if d < 0.25:
+                    spd_gain = 0.0
+
+                avg_spd = np.linalg.norm(target_vel) + spd_gain*d
+                avg_spd = np.minimum(avg_spd, 2)
                 #avg_spd = np.maximum(avg_spd, 1)
 
                 self.__controller.set_goals(waypoints, ic, fc, avg_spd)
@@ -281,7 +284,7 @@ class Agent(Drone):
 
             self.moveByLQR(time.time()-prev_object_update_time, self.state)
 
-            feedback_vector = airsim.Vector3r(*pt) - self.state.kinematics_estimated.position
+            feedback_vector = airsim.Vector3r(*(tp+goal.offset)) - self.state.kinematics_estimated.position
 
             feedback.dist = []
             feedback.dist.append(feedback_vector.x_val)
@@ -307,7 +310,7 @@ class Agent(Drone):
             gimbal_msg.camera_name = "cam0"
             gimbal_msg.vehicle_name = self.drone_name
 
-            self.__gimbal_pub.publish(gimbal_msg)
+            #self.__gimbal_pub.publish(gimbal_msg)
                             
 
             self.__track_action.publish_feedback(feedback)

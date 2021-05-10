@@ -32,7 +32,7 @@ class LQR:
 
         self.linearized_rotation = np.array([[10,10,10]]).T
 
-        self.update_gain_period = 1/20  # seconds
+        self.update_gain_period = 1/40  # seconds
         self.prev_gain_time = time.time()
 
     def set_costs(self, Q: List[int] = None, R: List[int] = None) -> None:
@@ -157,16 +157,17 @@ class LQR:
 
         x0, u0 = self.traj_generator.compute(t, x)
 
-        if np.linalg.norm((r-self.linearized_rotation)) > math.pi/1000: #time.time() - self.prev_gain_time > self.update_gain_period:
-            self.updateGains(
-                x, state.kinematics_estimated.angular_velocity, prev_accel_cmd
-            )
-            
+        if time.time() - self.prev_gain_time > self.update_gain_period: #np.linalg.norm((r-self.linearized_rotation)) > math.pi/1000:          
             if drone_name == "Drone0":
                 print("Linearized: " + str(1/(time.time() - self.prev_gain_time)))
 
-            self.linearized_rotation = r
             self.prev_gain_time = time.time()
+
+            self.updateGains(
+                x, state.kinematics_estimated.angular_velocity, prev_accel_cmd
+            )
+
+            self.linearized_rotation = r
 
         u = np.zeros((4, 1))
 
