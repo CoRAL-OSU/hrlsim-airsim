@@ -13,9 +13,17 @@ import airsim
 import rospy
 
 from airsim_ros_cntrl.msg import Multirotor, State
-from geometry_msgs.msg import Twist, Pose, Accel
 from std_msgs.msg import Header, Float32
 from std_srvs.srv import SetBool, SetBoolResponse, SetBoolRequest
+
+from geometry_msgs.msg import (
+    Twist,
+    Pose,
+    Point,
+    Quaternion,
+    Accel,
+    Vector3
+)
 
 
 class Target(Process):
@@ -53,6 +61,7 @@ class Target(Process):
         Process.__init__(self)
 
         self.swarm_name = swarmName
+        self.drone_name = objectName
         self.freq = freq
         self.time_step = 1 / self.freq
         self.object_name = objectName
@@ -124,34 +133,44 @@ class Target(Process):
 
     def publish_multirotor_state(
         self,
-        pos: Pose,
-        vel: Vector3r,
-        ang_vel: Vector3r,
-        linear_acc: Vector3r,
-        ang_acc: Vector3r,
+        state: airsim.MultirotorState
     ) -> None:
         """
         Function to publish sensor/state information from the simulator
         Returns: None
         """
-
+        state = state.kinematics_estimated
         msg = Multirotor()
-
+        
         msg.header = Header()
         msg.header.stamp = rospy.Time.now()
 
         msg.looptime = Float32(time.time() - self.prev_loop_time)
         self.prev_loop_time = time.time()
 
-        twist = Twist(vel, ang_vel)
 
-        acc = Accel(linear_acc, ang_acc)
+        # Setup pose msg
+        pos = Point(*state.position.to_numpy_array())
+        q = Quaternion(*state.orientation.to_numpy_array())      
+        pose = Pose(pos,q)
+
+        # Setup twist msg
+        lin_vel = Vector3(*state.linear_velocity.to_numpy_array())
+        ang_vel = Vector3(*state.angular_velocity.to_numpy_array())
+        twist = Twist(lin_vel, ang_vel)
+
+        # Setup acc msg
+        lin_acc = Vector3(*state.linear_acceleration.to_numpy_array())
+        ang_acc = Vector3(*state.angular_acceleration.to_numpy_array())
+        acc = Accel(lin_acc, ang_acc)
 
         # Make state msg
-        msg.state = State(pos, twist, acc)
+        msg.state = State(pose, twist, acc)
 
         # Publish msg
         self.multirotor_pub.publish(msg)
+
+
 
     def generate_linear_velocity(
         self, current_velocity: float, position: Vector3r, waypoint: Vector3r
@@ -211,6 +230,8 @@ class Target(Process):
 
         _, _, yaw = airsim.to_eularian_angles(self.pos.orientation)
 
+        state = airsim.MultirotorState()
+
         while not rospy.is_shutdown() and self._shutdown == False:
             with self.flag_lock:
                 if self._shutdown == True:
@@ -248,9 +269,15 @@ class Target(Process):
             linear_acc_v = airsim.Vector3r(
                 linear_acc * cos(yaw), linear_acc * sin(yaw), 0
             )
-            self.publish_multirotor_state(
-                self.pos, v, v_yaw_v, linear_acc_v, angular_acc_v
-            )
+
+            state.kinematics_estimated.position = self.pos.position
+            state.kinematics_estimated.orientation = self.pos.orientation
+            state.kinematics_estimated.linear_velocity = v
+            state.kinematics_estimated.linear_acceleration = linear_acc_v
+            state.kinematics_estimated.angular_velocity = v_yaw_v
+            state.kinematics_estimated.angular_acceleration = angular_acc_v
+
+            self.publish_multirotor_state(state)
 
             if speed == 0 and v_yaw == 0:
                 break
@@ -264,7 +291,7 @@ class Target(Process):
 
 if __name__ == "__main__":
 
-    client = airsim.MultirotorClient(ip="192.168.1.2")
+    client = airsim.MultirotorClient()
     name = "African_Poacher_1_WalkwRifleLow_Anim2_2"
     pos = client.simGetObjectPose("African_Poacher_1_WalkwRifleLow_Anim2_2")
     pos.position = airsim.Vector3r(-235, -242, 0)
@@ -272,7 +299,7 @@ if __name__ == "__main__":
     client.simSetObjectPose(name, pos)
 
     drone = Target(
-        "test", name, 2, path=[(2, -0.5, 15), (1, 0.5, 15)], ip="192.168.1.2"
+        "test", name, 2, path=[(2, -0.5, 15), (1, 0.5, 15)]
     )
     drone.start()
 

@@ -266,7 +266,7 @@ class Team:
         for drone in self.vehicle_list:
             self.drones[drone].actions["move_to_location"].wait_for_result()
 
-    def track_object(self, object_name: str, timeout: float, z_offset: float) -> None:
+    def track_object(self, timeout: float, z_offset: float, object_name = "") -> None:
         """
         Commands the agents to track a target
 
@@ -275,6 +275,12 @@ class Team:
             timeout (float): timeout for the command
             z_offset (float): offset for the z axis
         """
+
+        if object_name == "":
+            target_name = self.target.name
+        else:
+            target_name = object_name
+
         # Track object in a circle configuration
 
         l = 8 * math.pi / 3
@@ -297,7 +303,7 @@ class Team:
 
             offset = (dx, dy, dz)
             goal = TrackObjectGoal(
-                object_name=object_name, timeout=timeout, offset=offset
+                object_name=target_name, timeout=timeout, offset=offset
             )
             self.drones[drone].actions["track"].send_goal(goal)
 
