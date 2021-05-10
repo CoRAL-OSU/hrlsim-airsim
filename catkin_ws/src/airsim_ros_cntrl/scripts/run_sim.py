@@ -132,7 +132,6 @@ if __name__ == "__main__":
             * len(drone_list)
             // len(target_list)
         ]
-        
         s = Team("Team" + str(i), sub_drone, target_procs[target_list[i][0]], client, lock)
         team_list.append(s)
 
@@ -185,6 +184,6 @@ if __name__ == "__main__":
         team.shutdown()
 
     for t in target_list:
-        t.shutdown()
+        target_procs[t[0]].start()
 
     print("SIMULATION ENDED")
