@@ -120,10 +120,10 @@ if __name__ == "__main__":
     setUpTargets(client, target_list)
 
     for i in range(len(target_list)):
-        target_procs[target_list[i]] = Target(
+        target_procs[target_list[i][0]] = Target(
             "Team" + str(i), target_list[i][0], ip=ip, path=target_list[i][1]
         )
-        target_procs[target_list[i]].start()
+        target_procs[target_list[i][0]].start()
 
         sub_drone = drone_list[
             i
@@ -132,7 +132,7 @@ if __name__ == "__main__":
             * len(drone_list)
             // len(target_list)
         ]
-        s = Team("Team" + str(i), sub_drone, target_procs[target_list[i]], client, lock)
+        s = Team("Team" + str(i), sub_drone, target_procs[target_list[i][0]], client, lock)
         team_list.append(s)
 
     ######################################
@@ -184,6 +184,6 @@ if __name__ == "__main__":
         team.shutdown()
 
     for t in target_list:
-        t.shutdown()
+        target_procs[t[0]].start()
 
     print("SIMULATION ENDED")
