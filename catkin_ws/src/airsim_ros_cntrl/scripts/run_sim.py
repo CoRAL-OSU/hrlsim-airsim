@@ -69,7 +69,7 @@ if __name__ == "__main__":
     #
 
     # ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
+    ip = "10.0.0.2"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -120,10 +120,10 @@ if __name__ == "__main__":
     setUpTargets(client, target_list)
 
     for i in range(len(target_list)):
-        target_procs[target_list[i]] = Target(
+        target_procs[target_list[i][0]] = Target(
             "Team" + str(i), target_list[i][0], ip=ip, path=target_list[i][1]
         )
-        target_procs[target_list[i]].start()
+        target_procs[target_list[i][0]].start()
 
         sub_drone = drone_list[
             i
@@ -132,7 +132,8 @@ if __name__ == "__main__":
             * len(drone_list)
             // len(target_list)
         ]
-        s = Team("Team" + str(i), sub_drone, target_procs[target_list[i]], client, lock)
+        
+        s = Team("Team" + str(i), sub_drone, target_procs[target_list[i][0]], client, lock)
         team_list.append(s)
 
     ######################################
@@ -161,7 +162,7 @@ if __name__ == "__main__":
     # team_list[0].wait()
 
     print("BEGIN TRACKING")
-    team_list[0].track_object("Target0", 40, -4)
+    team_list[0].track_object(40, -4)
     # team_list[1].track_object("Target1", 25, -10)
 
     for team in team_list:
