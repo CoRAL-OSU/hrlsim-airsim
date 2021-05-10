@@ -282,7 +282,7 @@ class Agent(Drone):
                 prev_object_update_time = time.time()
 
 
-            self.moveByLQR(time.time()-prev_object_update_time, self.state)
+            self.moveByLQR(prev_object_update_time, self.state)
 
             feedback_vector = airsim.Vector3r(*(tp+goal.offset)) - self.state.kinematics_estimated.position
 
@@ -351,7 +351,7 @@ class Agent(Drone):
     ###        LQR IMPLEMENATION        ###
     #######################################
 
-    def moveByLQR(self, t: float, state: MultirotorState) -> None:
+    def moveByLQR(self, t0: float, state: MultirotorState) -> None:
         """
         Moves the agent via LQR.
 
@@ -359,7 +359,7 @@ class Agent(Drone):
             t (float): Time elapsed since beginning
             state (MultirotorState): Current Multirotor State
         """
-        x0, u = self.__controller.computeControl(t, state, self.prev_accel_cmd, self.drone_name)
+        x0, u = self.__controller.computeControl(t0, state, self.prev_accel_cmd, self.drone_name)
 
         for i in range(0, 3):
             if abs(u[i, 0]) > 2:

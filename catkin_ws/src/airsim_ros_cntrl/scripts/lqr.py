@@ -120,7 +120,7 @@ class LQR:
 
 
     def computeControl(
-        self, t: float, state: MultirotorState, prev_accel_cmd: int, drone_name
+        self, t0: float, state: MultirotorState, prev_accel_cmd: int, drone_name
     ) -> Tuple[np.ndarray, np.ndarray, Any]:
         """
         Computes the control for a given state
@@ -155,8 +155,6 @@ class LQR:
         x = np.concatenate((p,q,v) , 0)
         x = LQR.ned2xyz(x)
 
-        x0, u0 = self.traj_generator.compute(t, x)
-
         if time.time() - self.prev_gain_time > self.update_gain_period: #np.linalg.norm((r-self.linearized_rotation)) > math.pi/1000:          
             if drone_name == "Drone0":
                 print("Linearized: " + str(1/(time.time() - self.prev_gain_time)))
@@ -168,6 +166,8 @@ class LQR:
             )
 
             self.linearized_rotation = r
+
+        x0, u0 = self.traj_generator.compute(time.time()-t0, x)
 
         u = np.zeros((4, 1))
 
