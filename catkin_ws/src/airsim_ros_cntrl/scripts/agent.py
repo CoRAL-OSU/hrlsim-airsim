@@ -274,7 +274,7 @@ class Agent(Drone):
                     spd_gain = 0.0
 
                 avg_spd = np.linalg.norm(target_vel) + spd_gain*d
-                avg_spd = np.minimum(avg_spd, 2)
+                avg_spd = np.minimum(avg_spd, 2.0)
                 #avg_spd = np.maximum(avg_spd, 1)
 
                 self.__controller.set_goals(waypoints, ic, fc, avg_spd)
@@ -292,6 +292,8 @@ class Agent(Drone):
             feedback.dist.append(feedback_vector.z_val)
             feedback.dist_mag = feedback_vector.get_length()
 
+
+            '''
             feedback_dir = feedback_vector/feedback_vector.get_length()
 
             normpos = self.state.kinematics_estimated.position/self.state.kinematics_estimated.position.get_length()
@@ -311,7 +313,7 @@ class Agent(Drone):
             gimbal_msg.vehicle_name = self.drone_name
 
             #self.__gimbal_pub.publish(gimbal_msg)
-                            
+            '''
 
             self.__track_action.publish_feedback(feedback)
 

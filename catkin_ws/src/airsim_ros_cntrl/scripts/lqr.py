@@ -32,7 +32,7 @@ class LQR:
 
         self.linearized_rotation = np.array([[10,10,10]]).T
 
-        self.update_gain_period = 1/40  # seconds
+        self.update_gain_period = 1/20  # seconds
         self.prev_gain_time = time.time()
 
     def set_costs(self, Q: List[int] = None, R: List[int] = None) -> None:

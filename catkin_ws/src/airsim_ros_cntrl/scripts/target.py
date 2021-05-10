@@ -44,7 +44,7 @@ class Target(Process):
         self,
         swarmName: str,
         objectName: str,
-        freq: int = 60,
+        freq: int = 30,
         path: List[Tuple[float, float, float]] = [],
         ip="",
     ) -> None:
