@@ -1,7 +1,6 @@
 #! /usr/bin/python3
 
 from multiprocessing import Lock, Process
-import time
 from math import cos, pi, sin, atan2, pow
 from typing import List, Tuple
 from airsim.types import Quaternionr
@@ -67,7 +66,7 @@ class Target(Process):
         self.object_name = objectName
         self._shutdown = False
         self.flag_lock = Lock()
-        self.prev_loop_time = time.time()
+        self.prev_loop_time = rospy.get_time()
         self.linear_acc_rate = 0.25
         self.ang_acc_rate = 0.08
 
@@ -145,8 +144,8 @@ class Target(Process):
         msg.header = Header()
         msg.header.stamp = rospy.Time.now()
 
-        msg.looptime = Float32(time.time() - self.prev_loop_time)
-        self.prev_loop_time = time.time()
+        msg.looptime = Float32(rospy.get_time() - self.prev_loop_time)
+        self.prev_loop_time = rospy.get_time()
 
 
         # Setup pose msg

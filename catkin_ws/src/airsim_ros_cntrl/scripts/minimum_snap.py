@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
-import time
 import numpy as np
+import rospy
 import scipy.integrate as integrate
 import math
 from typing import Tuple
@@ -40,7 +40,7 @@ class MinimumSnap:
         Args:
             waypoints (np.ndarray): Desired Waypoints
         """
-        self.t = time.time()
+        self.t = rospy.get_time()
         self.state = np.zeros((10, 1))
 
         d = waypoints[:, 1:] - waypoints[:, 0:-1]

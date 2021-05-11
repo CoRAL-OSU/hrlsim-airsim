@@ -1,7 +1,6 @@
 #! /usr/bin/python3
 
 from multiprocessing import Lock
-import time
 
 import math
 

@@ -1,6 +1,5 @@
 #! /usr/bin/python3
 
-import time
 from multiprocessing import Lock, Process
 import sys, os
 
@@ -143,7 +142,7 @@ class Drone(Process):
         self.client = airsim.MultirotorClient()
 
         self.freq = 80
-        self.prev_loop_time = time.time()
+        self.prev_loop_time = rospy.get_time()
         self.origin_geo_point = GPSYaw()
 
         self.cmd = None
@@ -238,7 +237,7 @@ class Drone(Process):
             if self.state.landed_state == LandedState.Flying:
                 return TakeoffResponse(True)
 
-            time_start = time.time()
+            time_start = rospy.get_time()
             with self.client_lock:
                 self.client.takeoffAsync(vehicle_name=self.drone_name)
 
@@ -247,9 +246,9 @@ class Drone(Process):
 
             while (
                 self.state.landed_state != LandedState.Flying
-                and time.time() - time_start < self.__service_timeout
+                and rospy.get_time() - time_start < self.__service_timeout
             ):
-                time.sleep(0.05)
+                rospy.sleep(0.05)
 
             if self.state.landed_state == LandedState.Flying:
                 return TakeoffResponse(True)
@@ -272,7 +271,7 @@ class Drone(Process):
             if self.state.landed_state == LandedState.Landed:
                 return LandResponse(True)
 
-            time_start = time.time()
+            time_start = rospy.get_time()
             #with self.client_lock:
             self.client.landAsync(vehicle_name=self.drone_name)
 
@@ -281,9 +280,9 @@ class Drone(Process):
 
             while (
                 self.state.landed_state != LandedState.Landed
-                and time.time() - time_start < self.__service_timeout
+                and rospy.get_time() - time_start < self.__service_timeout
             ):
-                time.sleep(0.05)
+                rospy.sleep(0.05)
 
             if self.state.landed_state == LandedState.Landed:
                 return LandResponse(True)
@@ -367,8 +366,8 @@ class Drone(Process):
         msg.header = Header()
         msg.header.stamp = rospy.Time.now()
 
-        msg.looptime = Float32(time.time() - self.prev_loop_time)
-        self.prev_loop_time = time.time()
+        msg.looptime = Float32(rospy.get_time() - self.prev_loop_time)
+        self.prev_loop_time = rospy.get_time()
 
 
         # Setup pose msg

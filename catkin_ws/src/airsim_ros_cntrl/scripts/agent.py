@@ -1,6 +1,5 @@
 #! /usr/bin/python3
 
-import time
 import multiprocessing as mp
 import numpy as np
 import math
@@ -187,7 +186,7 @@ class Agent(Drone):
 
         Returns (TrackObjectResult): The Result after tracking
         """
-        start_time = time.time()
+        start_time = rospy.get_time()
 
         success = True
         target_topic = self.swarm_name + "/" + goal.object_name + "/"
@@ -199,8 +198,8 @@ class Agent(Drone):
             queue_size=10,
         )
 
-        while self.__target_ready == False and time.time() - start_time < goal.timeout:
-            time.sleep(0.05)
+        while self.__target_ready == False and rospy.get_time() - start_time < goal.timeout:
+            rospy.sleep(0.05)
 
 
         target_pose = self.__target_pose.kinematics_estimated
@@ -220,18 +219,18 @@ class Agent(Drone):
         prev_object_update_time = 0
 
         start_pos = self.state.kinematics_estimated.position.to_numpy_array()
-        start_time = time.time()
+        start_time = rospy.get_time()
 
         graphviz = GraphvizOutput()
         graphviz.output_file = self.drone_name + "_pycallgraph.png"
 
 
-        prev_time = time.time()
+        prev_time = rospy.get_time()
         
         
         with PyCallGraph(output=graphviz):
 
-            while time.time() - start_time < goal.timeout:
+            while rospy.get_time() - start_time < goal.timeout:
                 if self.__track_action.is_preempt_requested():
                     rospy.loginfo("%s: Preempted" % self.__track_action_name)
                     self.__track_action.set_preempted()
@@ -242,7 +241,7 @@ class Agent(Drone):
                 target_pose = self.__target_pose.kinematics_estimated
                 tp = target_pose.position.to_numpy_array()
 
-                if time.time() - prev_object_update_time > update_object_location_period:
+                if rospy.get_time() - prev_object_update_time > update_object_location_period:
 
                     target_vel = target_pose.linear_velocity.to_numpy_array()
                     target_acc = target_pose.linear_acceleration.to_numpy_array()
@@ -281,7 +280,7 @@ class Agent(Drone):
 
                     self.__controller.set_goals(waypoints, ic, fc, avg_spd)
 
-                    prev_object_update_time = time.time()
+                    prev_object_update_time = rospy.get_time()
 
 
                 self.moveByLQR(prev_object_update_time, self.state)
@@ -323,8 +322,8 @@ class Agent(Drone):
                 np.append(feedback_pos_save, feedback_vector.to_numpy_array())
                 sleeper.sleep()
 
-                #print(self.drone_name + " track time: " + str(time.time()-prev_time))
-                prev_time = time.time()
+                #print(self.drone_name + " track time: " + str(rospy.get_time()-prev_time))
+                prev_time = rospy.get_time()
 
                 
         self.cmd = None

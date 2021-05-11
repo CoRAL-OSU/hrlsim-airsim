@@ -1,9 +1,9 @@
-import time
 import numpy as np
 import math
 from typing import Any, List, Tuple
 from airsim import Vector3r, Quaternionr, MultirotorState
 import airsim
+import rospy
 import slycot
 import control
 
@@ -33,7 +33,7 @@ class LQR:
         self.linearized_rotation = np.array([[10,10,10]]).T
 
         self.update_gain_period = 1/30  # seconds
-        self.prev_gain_time = time.time()
+        self.prev_gain_time = rospy.get_time()
 
     def set_costs(self, Q: List[int] = None, R: List[int] = None) -> None:
         """
@@ -155,11 +155,11 @@ class LQR:
         x = np.concatenate((p,q,v) , 0)
         x = LQR.ned2xyz(x)
 
-        if time.time() - self.prev_gain_time > self.update_gain_period: #np.linalg.norm((r-self.linearized_rotation)) > math.pi/1000:          
+        if rospy.get_time() - self.prev_gain_time > self.update_gain_period: #np.linalg.norm((r-self.linearized_rotation)) > math.pi/1000:          
             if drone_name == "Drone0":
-                print("Linearized: " + str(1/(time.time() - self.prev_gain_time)))
+                print("Linearized: " + str(1/(rospy.get_time() - self.prev_gain_time)))
 
-            self.prev_gain_time = time.time()
+            self.prev_gain_time = rospy.get_time()
 
             self.updateGains(
                 x, state.kinematics_estimated.angular_velocity, prev_accel_cmd
@@ -167,7 +167,7 @@ class LQR:
 
             self.linearized_rotation = r
 
-        x0, u0 = self.traj_generator.compute(time.time()-t0, x)
+        x0, u0 = self.traj_generator.compute(rospy.get_time()-t0, x)
 
         u = np.zeros((4, 1))
 
