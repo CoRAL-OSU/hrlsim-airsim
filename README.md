@@ -1,5 +1,5 @@
 # Airsim HLQR Simulator
-This repository contains an HLQR simulator based on Airsim. The current settings.json file prepares a simulation with 10 agents, 2 targets, and 1 camera drone at 1/10 real time. It should be executed in the Africa environment.
+This repository contains an HLQR simulator based on Airsim. The current [settings.json](/settings.json) file prepares a simulation with 10 agents, 2 targets, and 1 camera drone at 1/10 real time. It should be executed in the Africa environment.
 
 
 ## Build Procedures
