@@ -66,7 +66,7 @@ class Target(Process):
         self.object_name = objectName
         self._shutdown = False
         self.flag_lock = Lock()
-        self.prev_loop_time = rospy.get_time()
+        self.prev_loop_time = -999
         self.linear_acc_rate = 0.25
         self.ang_acc_rate = 0.08
 

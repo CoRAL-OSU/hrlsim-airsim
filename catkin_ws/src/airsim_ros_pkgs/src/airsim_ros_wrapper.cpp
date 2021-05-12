@@ -328,7 +328,7 @@ void AirsimROSWrapper::create_ros_pubs_from_settings_json()
 
     if (publish_clock_)
     {
-        clock_pub_ = nh_private_.advertise<rosgraph_msgs::Clock>("clock", 1);
+        clock_pub_ = nh_private_.advertise<rosgraph_msgs::Clock>("/clock", 1);
     }
 
     // if >0 cameras, add one more thread for img_request_timer_cb

@@ -142,7 +142,7 @@ class Drone(Process):
         self.client = airsim.MultirotorClient()
 
         self.freq = 80
-        self.prev_loop_time = rospy.get_time()
+        self.prev_loop_time = -999
         self.origin_geo_point = GPSYaw()
 
         self.cmd = None

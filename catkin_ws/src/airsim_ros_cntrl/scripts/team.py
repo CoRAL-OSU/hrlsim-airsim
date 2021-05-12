@@ -282,7 +282,7 @@ class Team:
 
         # Track object in a circle configuration
 
-        l = 8 * math.pi / 3
+        l = 4 * math.pi / 3
 
         delta_theta = 2 * math.pi / len(self.vehicle_list)
 

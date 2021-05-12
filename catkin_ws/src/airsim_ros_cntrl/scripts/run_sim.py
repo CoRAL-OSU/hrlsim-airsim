@@ -68,8 +68,8 @@ if __name__ == "__main__":
     #     SETUP PYTHON CLIENT
     #
 
-    ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    #ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
+    #ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
+    ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     else:
         vehicle_list = getDroneListFromSettings()
 
-    vehicle_list = ["Drone0", "Drone1"]
+    vehicle_list = ["Drone0", "Drone1", "Drone2", "Drone3", "Drone4", "Drone5", "Drone6", "Drone7", "Drone8", "Drone9"]
     drone_list = []
     target_list = [
         (
@@ -104,12 +104,12 @@ if __name__ == "__main__":
             airsim.Vector3r(-220, -226, 0),
             airsim.to_quaternion(0, 0, 4.5),
         ),
-        #(
-        #    "African_Poacher_1_WalkwRifleLow_Anim3_11",
-        #    [(1.5, 0, 45)],
-        #    airsim.Vector3r(-220, -239, 0),
-        #    airsim.to_quaternion(0, 0, 4.2),
-        #),
+        (
+            "African_Poacher_1_WalkwRifleLow_Anim3_11",
+            [(1.5, 0, 45)],
+            airsim.Vector3r(-220, -239, 0),
+            airsim.to_quaternion(0, 0, 4.2),
+        ),
     ]
     team_list = []
     target_procs = dict()
@@ -155,7 +155,7 @@ if __name__ == "__main__":
     for team in team_list:
         team.takeoff(False)
 
-    time.sleep(5)
+    rospy.sleep(5)
 
     # print("MOVE TO [0,0,-4]")
     # team_list[0].move_to_location(target=[10,10,-4], timeout=10, tolerance=0.5)
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     for team in team_list:
         team.land(False)
 
-    time.sleep(5)
+    rospy.sleep(5)
 
     print("SHUTDOWN")
     for team in team_list:

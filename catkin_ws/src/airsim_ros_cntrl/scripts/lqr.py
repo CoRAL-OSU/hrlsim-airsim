@@ -33,7 +33,7 @@ class LQR:
         self.linearized_rotation = np.array([[10,10,10]]).T
 
         self.update_gain_period = 1/30  # seconds
-        self.prev_gain_time = rospy.get_time()
+        self.prev_gain_time = -999
 
     def set_costs(self, Q: List[int] = None, R: List[int] = None) -> None:
         """
