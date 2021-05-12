@@ -1,0 +1,333 @@
+{
+  "ClockSpeed": 0.1, 
+  "SeeDocsAt": "https://github.com/Microsoft/AirSim/blob/master/docs/settings.md", 
+  "SettingsVersion": 1.2, 
+  "LocalHostIP": "192.168.1.199",
+  "SimMode": "Multirotor",
+  "ViewMode": "Manual",
+  "TimeOfDay": {
+    "Enabled": true,
+    "StartDateTime": "2021-05-10 20:00:00"
+  },  
+
+  "CameraDefaults": {
+    "CaptureSettings": [
+      {
+        "ImageType": 0,
+        "Width": 720,
+        "Height": 576,
+        "FOV_Degrees": 90,
+        "AutoExposureSpeed": 100,
+        "AutoExposureBias": 0,
+        "AutoExposureMaxBrightness": 0.64,
+        "AutoExposureMinBrightness": 0.03,
+        "MotionBlurAmount": 0,
+        "TargetGamma": 1.0,
+        "ProjectionMode": "",
+        "OrthoWidth": 5.12
+      }
+    ],
+    "NoiseSettings": [
+      {
+        "Enabled": false,
+        "ImageType": 0,
+
+        "RandContrib": 0.2,
+        "RandSpeed": 100000.0,
+        "RandSize": 500.0,
+        "RandDensity": 2,
+
+        "HorzWaveContrib":0.03,
+        "HorzWaveStrength": 0.08,
+        "HorzWaveVertSize": 1.0,
+        "HorzWaveScreenSize": 1.0,
+
+        "HorzNoiseLinesContrib": 1.0,
+        "HorzNoiseLinesDensityY": 0.01,
+        "HorzNoiseLinesDensityXY": 0.5,
+
+        "HorzDistortionContrib": 1.0,
+        "HorzDistortionStrength": 0.002
+      }
+    ],
+    "Gimbal": {
+        "Stabilization": 0.05,
+        "Pitch": -20, "Roll": 0
+    },
+    "X": 0, "Y": 0, "Z": 0.25,
+    "Pitch": 0, "Roll": 0, "Yaw": 0
+  },
+
+  "Vehicles": {
+    "A": {
+      "VehicleType": "SimpleFlight", 
+      "RC": {
+        "RemoteControlID": -1
+      },
+      "X": 0, 
+      "Y": 0, 
+      "Yaw": 0, 
+      "Z": 0
+    },
+
+    "Camera": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+
+      "AllowAPIAlways": false,
+      "RC": {
+        "RemoteControlID": 0
+      },
+
+      "Cameras": {
+        "cam0": {
+          "CaptureSettings": [
+            {
+              "ImageType": 0,
+              "Width": 750,
+              "Height": 700,
+              "FOV_Degrees": 90,
+              "AutoExposureSpeed": 100,
+              "AutoExposureBias": 0,
+              "AutoExposureMaxBrightness": 0.64,
+              "AutoExposureMinBrightness": 0.03,
+              "MotionBlurAmount": 0,
+              "TargetGamma": 1.0,
+              "ProjectionMode": "",
+              "OrthoWidth": 5.12
+            }
+          ],
+          "Gimbal": {
+              "Stabilization": 0.01,
+              "Pitch": -20, "Roll": 0
+          },
+          "X": 0, "Y": 0, "Z": 0.25,
+          "Pitch": -20, "Roll": 0, "Yaw": 0
+        }
+      },
+
+      "X": -235, 
+      "Y": -238, 
+      "Yaw": 0, 
+      "Z": 0
+    },
+
+    "Drone0": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+
+      "Sensors": {
+        "imu0": {
+          "SensorType": 2,
+          "Enabled": true
+        }
+      },
+      "RC": {
+        "RemoteControlID": -1
+      },
+
+      "X": -235.0, 
+      "Y": -240.0, 
+      "Yaw": 0, 
+      "Z": 0
+    },  
+
+    "Drone1": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+      
+      "Sensors": {
+        "imu0": {
+          "SensorType": 2,
+          "Enabled": true
+        }
+      },
+      "RC": {
+        "RemoteControlID": -1
+      },
+
+      "X": -233, 
+      "Y": -243, 
+      "Yaw": 0, 
+      "Z": 0
+    },
+    "Drone2": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+      
+      "Sensors": {
+        "imu0": {
+          "SensorType": 2,
+          "Enabled": true
+        }
+      },
+      "RC": {
+        "RemoteControlID": -1
+      },
+
+      "X": -230, 
+      "Y": -243, 
+      "Yaw": 0, 
+      "Z": 0
+    },
+    "Drone3": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+      
+      "Sensors": {
+        "imu0": {
+          "SensorType": 2,
+          "Enabled": true
+        }
+      },
+      "RC": {
+        "RemoteControlID": -1
+      },
+
+      "X": -228, 
+      "Y": -244, 
+      "Yaw": 0, 
+      "Z": 0
+    },
+    "Drone4": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+      
+      "Sensors": {
+        "imu0": {
+          "SensorType": 2,
+          "Enabled": true
+        }
+      },
+      "RC": {
+        "RemoteControlID": -1
+      },
+
+      "X": -231, 
+      "Y": -244, 
+      "Yaw": 0, 
+      "Z": 0
+    },
+    "Drone5": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+      
+      "Sensors": {
+        "imu0": {
+          "SensorType": 2,
+          "Enabled": true
+        }
+      },
+      "RC": {
+        "RemoteControlID": -1
+      },
+
+      "X": -225, 
+      "Y": -241, 
+      "Yaw": 0, 
+      "Z": 0
+    },
+    "Drone6": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+      
+      "Sensors": {
+        "imu0": {
+          "SensorType": 2,
+          "Enabled": true
+        }
+      },
+      "RC": {
+        "RemoteControlID": -1
+      },
+
+      "X": -225, 
+      "Y": -238, 
+      "Yaw": 0, 
+      "Z": 0
+    },
+    "Drone7": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+      
+      "Sensors": {
+        "imu0": {
+          "SensorType": 2,
+          "Enabled": true
+        }
+      },
+      "RC": {
+        "RemoteControlID": -1
+      },
+
+      "X": -227, 
+      "Y": -235, 
+      "Yaw": 0, 
+      "Z": 0
+    },
+    "Drone8": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+      
+      "Sensors": {
+        "imu0": {
+          "SensorType": 2,
+          "Enabled": true
+        }
+      },
+      "RC": {
+        "RemoteControlID": -1
+      },
+
+      "X": -225, 
+      "Y": -240, 
+      "Yaw": 0, 
+      "Z": 0
+    },
+    "Drone9": {
+      "Pitch": 0, 
+      "Roll": 0, 
+      "VehicleType": "SimpleFlight", 
+      
+      "Sensors": {
+        "imu0": {
+          "SensorType": 2,
+          "Enabled": true
+        }
+      },
+      "RC": {
+        "RemoteControlID": -1
+      },
+
+      "X": -228, 
+      "Y": -242, 
+      "Yaw": 0, 
+      "Z": 0
+    }
+  },
+
+  "Recording": {
+    "RecordInterval": 0.05,
+    "Enabled": false,
+    "Cameras": [
+        { "CameraName": "0", "ImageType": 0, "PixelsAsFloat": false,  "VehicleName": "Camera", "Compress": true },
+        { "CameraName": "0", "ImageType": 0, "PixelsAsFloat": false,  "VehicleName": "A", "Compress": true }
+    ]
+  },
+
+
+  "SubWindows": [
+    {"WindowID": 0, "CameraName": "0", "ImageType": 0, "VehicleName": "Camera", "Visible": true}
+  ]
+
+}

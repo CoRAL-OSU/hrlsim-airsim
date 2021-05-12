@@ -17,7 +17,7 @@ constexpr char AirsimROSWrapper::DMODEL_YML_NAME[];
 
 const std::unordered_map<int, std::string> AirsimROSWrapper::image_type_int_to_string_map_ = {
     { 0, "Scene" },
-    { 1, "DepthPlanner" },
+    { 1, "DepthPlanar" },
     { 2, "DepthPerspective" },
     { 3, "DepthVis" },
     { 4, "DisparityNormalized" },
@@ -104,7 +104,7 @@ void AirsimROSWrapper::initialize_ros()
     nh_private_.param("odom_frame_id", odom_frame_id_, odom_frame_id_);
     isENU_ = !(odom_frame_id_ == AIRSIM_ODOM_FRAME_ID);
     nh_private_.param("coordinate_system_enu", isENU_, isENU_);
-    vel_cmd_duration_ = 0.05; // todo rosparam
+    vel_cmd_duration_ = 0.25; // todo rosparam
     // todo enforce dynamics constraints in this node as well?
     // nh_.getParam("max_vert_vel_", max_vert_vel_);
     // nh_.getParam("max_horz_vel", max_horz_vel_)
@@ -165,6 +165,8 @@ void AirsimROSWrapper::create_ros_pubs_from_settings_json()
             
             // bind to a single callback. todo optimal subs queue length
             // bind multiple topics to a single callback, but keep track of which vehicle name it was by passing curr_vehicle_name as the 2nd argument 
+            drone->throttle_rates_cmd_sub = nh_private_.subscribe<geometry_msgs::Twist>(curr_vehicle_name + "/throttle_rates_cmd", 1,
+                boost::bind(&AirsimROSWrapper::throttle_rates_cmd_cb, this, _1, vehicle_ros->vehicle_name)); 
             drone->vel_cmd_body_frame_sub = nh_private_.subscribe<airsim_ros_pkgs::VelCmd>(curr_vehicle_name + "/vel_cmd_body_frame", 1, 
                 boost::bind(&AirsimROSWrapper::vel_cmd_body_frame_cb, this, _1, vehicle_ros->vehicle_name)); // todo ros::TransportHints().tcpNoDelay();
             drone->vel_cmd_world_frame_sub = nh_private_.subscribe<airsim_ros_pkgs::VelCmd>(curr_vehicle_name + "/vel_cmd_world_frame", 1, 
@@ -211,7 +213,7 @@ void AirsimROSWrapper::create_ros_pubs_from_settings_json()
                     {
                         current_image_request_vec.push_back(ImageRequest(curr_camera_name, curr_image_type, false, false));
                     }
-                    // if {DepthPlanner, DepthPerspective,DepthVis, DisparityNormalized}, get float image
+                    // if {DepthPlanar, DepthPerspective,DepthVis, DisparityNormalized}, get float image
                     else
                     {
                         current_image_request_vec.push_back(ImageRequest(curr_camera_name, curr_image_type, true));
@@ -326,7 +328,7 @@ void AirsimROSWrapper::create_ros_pubs_from_settings_json()
 
     if (publish_clock_)
     {
-        clock_pub_ = nh_private_.advertise<rosgraph_msgs::Clock>("clock", 1);
+        clock_pub_ = nh_private_.advertise<rosgraph_msgs::Clock>("/clock", 1);
     }
 
     // if >0 cameras, add one more thread for img_request_timer_cb
@@ -486,6 +488,21 @@ msr::airlib::Pose AirsimROSWrapper::get_airlib_pose(const float& x, const float&
 {
     return msr::airlib::Pose(msr::airlib::Vector3r(x, y, z), airlib_quat);
 }
+
+
+void AirsimROSWrapper::throttle_rates_cmd_cb(const geometry_msgs::Twist::ConstPtr& msg, const std::string& vehicle_name) {
+    std::lock_guard<std::mutex> guard(drone_control_mutex_);
+
+    auto drone = static_cast<MultiRotorROS*>(vehicle_name_ptr_map_[vehicle_name].get());
+
+    // airsim uses radians here
+    drone->throttle_rates_cmd.p = msg->angular.x;
+    drone->throttle_rates_cmd.q = msg->angular.y;
+    drone->throttle_rates_cmd.r = msg->angular.z;
+    drone->throttle_rates_cmd.throttle = msg->linear.z;
+    drone->has_throttle_rates_cmd = true;
+}
+
 
 // void AirsimROSWrapper::vel_cmd_body_frame_cb(const airsim_ros_pkgs::VelCmd& msg, const std::string& vehicle_name)
 void AirsimROSWrapper::vel_cmd_body_frame_cb(const airsim_ros_pkgs::VelCmd::ConstPtr& msg, const std::string& vehicle_name)
@@ -890,6 +907,7 @@ sensor_msgs::Imu AirsimROSWrapper::get_imu_msg_from_airsim(const msr::airlib::Im
     imu_msg.angular_velocity.z = imu_data.angular_velocity.z();
 
     // meters/s2^m 
+
     imu_msg.linear_acceleration.x = imu_data.linear_acceleration.x();
     imu_msg.linear_acceleration.y = imu_data.linear_acceleration.y();
     imu_msg.linear_acceleration.z = imu_data.linear_acceleration.z();
@@ -1112,8 +1130,34 @@ void AirsimROSWrapper::publish_vehicle_state()
                 }
                 case SensorBase::SensorType::Imu:
                 {
-                    auto imu_data = airsim_client_->getImuData(sensor_publisher.sensor_name, vehicle_ros->vehicle_name);
-                    sensor_msgs::Imu imu_msg = get_imu_msg_from_airsim(imu_data);
+                    sensor_msgs::Imu imu_msg;
+
+                    if(airsim_mode_ == AIRSIM_MODE::DRONE) {
+                        auto drone = static_cast<MultiRotorROS*>(vehicle_ros.get());
+                        // imu_msg.header.frame_id = "/airsim/odom_local_ned";// todo multiple drones
+                        imu_msg.header.stamp = airsim_timestamp_to_ros(drone->curr_drone_state.timestamp);
+                        imu_msg.orientation.x = drone->curr_drone_state.kinematics_estimated.pose.orientation.x();
+                        imu_msg.orientation.y = drone->curr_drone_state.kinematics_estimated.pose.orientation.y();
+                        imu_msg.orientation.z = drone->curr_drone_state.kinematics_estimated.pose.orientation.z();
+                        imu_msg.orientation.w = drone->curr_drone_state.kinematics_estimated.pose.orientation.w();
+
+                        // todo radians per second
+                        imu_msg.angular_velocity.x = drone->curr_drone_state.kinematics_estimated.twist.angular.x();
+                        imu_msg.angular_velocity.y = drone->curr_drone_state.kinematics_estimated.twist.angular.y();
+                        imu_msg.angular_velocity.z = drone->curr_drone_state.kinematics_estimated.twist.angular.z();
+
+                        // meters/s2^m 
+
+                        imu_msg.linear_acceleration.x = drone->curr_drone_state.kinematics_estimated.accelerations.linear.x();
+                        imu_msg.linear_acceleration.y = drone->curr_drone_state.kinematics_estimated.accelerations.linear.y();
+                        imu_msg.linear_acceleration.z = drone->curr_drone_state.kinematics_estimated.accelerations.linear.z();
+
+                    }
+                    else {
+                        auto imu_data = airsim_client_->getImuData(sensor_publisher.sensor_name, vehicle_ros->vehicle_name);
+                        imu_msg = get_imu_msg_from_airsim(imu_data);
+                    }
+                    
                     imu_msg.header.frame_id = vehicle_ros->vehicle_name;
                     sensor_publisher.publisher.publish(imu_msg);
                     break;
@@ -1172,6 +1216,14 @@ void AirsimROSWrapper::update_commands()
                     msr::airlib::DrivetrainType::MaxDegreeOfFreedom, drone->vel_cmd.yaw_mode, drone->vehicle_name);
             }
             drone->has_vel_cmd = false;
+
+            if (drone->has_throttle_rates_cmd)
+            {
+                std::lock_guard<std::mutex> guard(drone_control_mutex_);
+                static_cast<msr::airlib::MultirotorRpcLibClient*>(airsim_client_.get())->moveByAngleRatesThrottleAsync(drone->throttle_rates_cmd.p, drone->throttle_rates_cmd.q, drone->throttle_rates_cmd.r, 
+                    drone->throttle_rates_cmd.throttle, vel_cmd_duration_, drone->vehicle_name);
+            }
+            drone->has_throttle_rates_cmd = false;
         }
         else
         {
@@ -1190,7 +1242,7 @@ void AirsimROSWrapper::update_commands()
     if (has_gimbal_cmd_)
     {
         std::lock_guard<std::mutex> guard(drone_control_mutex_);
-        airsim_client_->simSetCameraPose(gimbal_cmd_.camera_name, get_airlib_pose(0, 0, 0, gimbal_cmd_.target_quat), gimbal_cmd_.vehicle_name);
+        airsim_client_->simSetCameraPose(gimbal_cmd_.camera_name, get_airlib_pose(0, 0, 0, gimbal_cmd_.target_quat));
     }
 
     has_gimbal_cmd_ = false;
@@ -1489,7 +1541,7 @@ void AirsimROSWrapper::process_and_publish_img_response(const std::vector<ImageR
         camera_info_msg_vec_[img_response_idx_internal].header.stamp = curr_ros_time;
         cam_info_pub_vec_[img_response_idx_internal].publish(camera_info_msg_vec_[img_response_idx_internal]);
 
-        // DepthPlanner / DepthPerspective / DepthVis / DisparityNormalized
+        // DepthPlanar / DepthPerspective / DepthVis / DisparityNormalized
         if (curr_img_response.pixels_as_float)
         {
             image_pub_vec_[img_response_idx_internal].publish(get_depth_img_msg_from_response(curr_img_response, 

@@ -1,266 +1,305 @@
 #! /usr/bin/python3
 
-import multiprocessing as mp
-import time
-from math import cos, pi, sin
+from multiprocessing import Lock, Process
+from math import cos, pi, sin, atan2, pow
 from typing import List, Tuple
+from airsim.types import Quaternionr
+import sys
+
 from airsim.client import MultirotorClient
-from airsim.types import MultirotorState
-import rospy, os
+from airsim import Vector3r
+import airsim
+import rospy
 
-from std_srvs.srv import SetBool, SetBoolResponse
-from geometry_msgs.msg import TwistStamped, PoseStamped, Pose, Point, Quaternion, Twist, Vector3, AccelStamped, Accel
-from std_msgs.msg import Header
-from std_msgs.msg import Float32
+from airsim_ros_cntrl.msg import Multirotor, State
+from std_msgs.msg import Header, Float32
+from std_srvs.srv import SetBool, SetBoolResponse, SetBoolRequest
 
-class Target(mp.Process):
-    def __init__(self, swarmName, droneName, sim_client, client_lock, path=[], path_type=""):
+from geometry_msgs.msg import (
+    Twist,
+    Pose,
+    Point,
+    Quaternion,
+    Accel,
+    Vector3
+)
+
+
+class Target(Process):
+    """
+    Class to handle trackable targets for a team.
+    A target is a drone meant to emulate a trackable object used to simulate the team.
+    Refer to Drone documentation for more info.
+
+    Args:
+        swarmName (str): The name of the team this drone is associated with.
+        droneName (str): The name of the drone itself.
+        sim_client (airsim.MultirotorClient): The client to use to execture commands.
+        client_lock (mp.Lock): The lock for the sim_client.
+        path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. In format of linear velocity, angular velocity and time Defaults to [].
+    """
+
+    def __init__(
+        self,
+        swarmName: str,
+        objectName: str,
+        freq: int = 30,
+        path: List[Tuple[float, float, float]] = [],
+        ip="",
+    ) -> None:
         """
-        Initialize a Drone process, spinup the ROS node, and setup topics/services/action servers
-        
-        All topic names are set up as /swarm_name/drone_name/major_cmd/minor_cmd. Eg. commanding the velocity
-        of drone1 in swarm1 would be: /swarm1/drones1/cmd/vel
+        Constructs a new Target Process
 
-        @param swarmName (string) Name of the UAV swarm
-        ---
-        @param droneName (string) Name of the UAV 
-        ---
-        @param sim_client (MultirotorClient) Airsim Python Client
-        ---
+        Args:
+            swarmName (str): The name of the team this drone is associated with.
+            droneName (str): The name of the drone itself.
+            sim_client (airsim.MultirotorClient): The client to use to execture commands.
+            client_lock (mp.Lock): The lock for the sim_client.
+            path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. In format of linear velocity, angular velocity and time Defaults to [].
         """
-        mp.Process.__init__(self)
+        Process.__init__(self)
 
-        self.__swarm_name = swarmName
-        self.__drone_name = droneName
+        self.swarm_name = swarmName
+        self.drone_name = objectName
+        self.freq = freq
+        self.time_step = 1 / self.freq
+        self.object_name = objectName
+        self._shutdown = False
+        self.flag_lock = Lock()
+        self.prev_loop_time = -999
+        self.linear_acc_rate = 0.25
+        self.ang_acc_rate = 0.08
 
-        self.__shutdown = False
-        self.__finished = False
+        self.client = MultirotorClient(ip)
+        self.client.confirmConnection()
+        self.pos = self.client.simGetObjectPose(self.object_name)
 
-        self.__client_lock = client_lock
-        self.__flag_lock = mp.Lock()
+        print("NEW TARGET: " + self.object_name)
 
-        self.freq = 20
+        self.path = path
+        self.path_index = 0
 
-        with self.__client_lock:
-            self.__client = sim_client
-            self.__client.confirmConnection()
-            self.__client.enableApiControl(True, vehicle_name=self.__drone_name)
-            self.__client.armDisarm(True, vehicle_name=self.__drone_name)
-            self.__path_future = self.__client.takeoffAsync(vehicle_name=self.__drone_name)
+    def __setup_ros(self) -> None:
+        """
+        @Override
+        Sets up the ros node for use during simulation.
+        Must be called during the run function since the handoff is not done from multiprocessing until after started.
 
-        self.__path = path if path_type == "" else self.generate_path(path_type)
-        self.__path_index = 0
+        Topics:
+            /looptime (Float32): The looptime of the drone
+            /vel (geometry_msgs.TwistStamped): Velocity of the target.
+            /pos (geometry_msgs.PoseStamped): Position of the target in global frame NED.
+            /acc (geometry_msgs.AccelStamped): Acceleration of the target.
 
-        self.__vehicle_state = self.get_state()
-
-    def __setup_ros(self):
-        rospy.init_node(self.__drone_name)
-
-        topic_prefix = "/" + self.__swarm_name + "/" + self.__drone_name
-        vel_topic  = topic_prefix + "/vel"
-        loop_time_topic = topic_prefix + "/looptime"
-        pos_topic = topic_prefix + "/pos"
-        acc_topic = topic_prefix + "/acc"
-
-        wait_service_name       = topic_prefix + "/wait"
-        shutdown_service_name   = topic_prefix + "/shutdown"
-
-        rospy.init_node(self.__drone_name)
+        Returns: None
+        """
+        rospy.init_node(self.object_name)
+        self.topic_prefix = "/" + self.swarm_name + "/" + self.object_name
+        shutdown_service_name = self.topic_prefix + "/shutdown"
+        state_topic = self.topic_prefix + "/multirotor"
         rospy.on_shutdown(self.shutdown)
 
-        self.__pos_pub = rospy.Publisher(pos_topic, PoseStamped, queue_size=10)
-        self.__vel_pub = rospy.Publisher(vel_topic, TwistStamped, queue_size=10)
-        self.__acc_pub = rospy.Publisher(acc_topic, AccelStamped, queue_size=10)        
-        self.__looptime_pub = rospy.Publisher(loop_time_topic, Float32, queue_size=10)
-
-        rospy.Service(wait_service_name, SetBool, self.__handle_wait) 
         rospy.Service(shutdown_service_name, SetBool, self.__handle_shutdown)
+        self.multirotor_pub = rospy.Publisher(state_topic, Multirotor, queue_size=10)
 
-    def __handle_wait(self, req):
-        """
-        Callback for the /wait rosservice. Waits for maximum of self.__pos_cmd_timeout
-
-        @param req (StdBoolRequest) Currently unused\n
-        @return (StdBoolResponse) True if command completed. False if timeout
-        """
-
-        with self.__flag_lock:
-            if self.__finished:
-                return SetBoolResponse(True, "")
-
-            while self.__finished == False and time.time() - self.__time_start <= self.__wait_timeout:
-                time.sleep(0.05)
-
-            if self.__finished:
-                return SetBoolResponse(True, "")
-            else:
-                return SetBoolResponse(False, "")
-
-    def __handle_shutdown(self, req):
+    def __handle_shutdown(self, req: SetBoolRequest) -> SetBoolResponse:
         """
         Callback for the /shutdown rosservice. Uses Python API to disarm drone
 
-        @param req (StdBoolRequest) Currently unused\n
-        @return (StdBoolResponse) True on success
+        Args:
+            req (StdBoolRequest): Currently unused
+
+        Returns (StdBoolResponse): True on success
         """
 
-        print("TARGET SHUTDOWN REQUEST RECEIVED")
+        print(self.object_name + " SHUTDOWN REQUEST RECEIVED")
+        with self.flag_lock:
+            self._shutdown = True
 
-        with self.__flag_lock:
-            self.__finished = False
-            self.__shutdown = True
-
-            with self.__client_lock:
-                self.__client.armDisarm(False, vehicle_name=self.__drone_name)
-                self.__client.enableApiControl(False, vehicle_name=self.__drone_name)
-
-            self.__finished = True
-
-
-            print("TARGET SHUTDOWN REQUEST HANDLED")
+            print(self.object_name + " SHUTDOWN REQUEST HANDLED")
             return SetBoolResponse(True, "")
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         """
         Handle improper rospy shutdown. Uses Python API to disarm drone
+
+        Returns: None
         """
-        with self.__flag_lock:
-            self.__shutdown = True
-            self.__finished = True
+        with self.flag_lock:
+            self._shutdown = True
 
-        print(self.__drone_name + " QUITTING")
+        print(self.object_name + " QUITTING")
 
-
-    def get_client(self):
-        return self.__client
-
-    def get_name(self):
-        return self.__drone_name
-
-    def get_state(self):
+    def publish_multirotor_state(
+        self,
+        state: airsim.MultirotorState
+    ) -> None:
         """
-        Return the state of the drone. Refer to MultirotorClient.getMultirotorState for more information
-
-        @return (MultirotorState)
+        Function to publish sensor/state information from the simulator
+        Returns: None
         """
+        state = state.kinematics_estimated
+        msg = Multirotor()
+        
+        msg.header = Header()
+        msg.header.stamp = rospy.Time.now()
 
-        with self.__client_lock:
-            # Try to get state thrice
-            error_count = 0
-            max_errors = 3
-            error = Exception()
+        msg.looptime = Float32(rospy.get_time() - self.prev_loop_time)
+        self.prev_loop_time = rospy.get_time()
 
-            for _ in range(0, max_errors):
-                try:
-                    self.__vehicle_state = self.__client.getMultirotorState(vehicle_name=self.__drone_name)
-                    break
 
-                except Exception as e:
-                    error = e
-                    error_count += 1
+        # Setup pose msg
+        pos = Point(*state.position.to_numpy_array())
+        q = Quaternion(*state.orientation.to_numpy_array())      
+        pose = Pose(pos,q)
 
-            if error_count == max_errors:
-                print(self.__drone_name + " Error from getMultirotorState API call: {0}" .format(error.message))
+        # Setup twist msg
+        lin_vel = Vector3(*state.linear_velocity.to_numpy_array())
+        ang_vel = Vector3(*state.angular_velocity.to_numpy_array())
+        twist = Twist(lin_vel, ang_vel)
 
-            for _ in range(0, max_errors):
-                try:
-                    pose = self.__client.simGetObjectPose(object_name=self.__drone_name)
-                    break
+        # Setup acc msg
+        lin_acc = Vector3(*state.linear_acceleration.to_numpy_array())
+        ang_acc = Vector3(*state.angular_acceleration.to_numpy_array())
+        acc = Accel(lin_acc, ang_acc)
 
-                except Exception as e:
-                    error = e
-                    error_count += 1
+        # Make state msg
+        msg.state = State(pose, twist, acc)
 
-            if error_count == max_errors:
-                print(self.__drone_name + " Error from getMultirotorState API call: {0}" .format(error.message))
+        # Publish msg
+        self.multirotor_pub.publish(msg)
 
-        return pose, self.__vehicle_state
 
-    def generate_path(self, path_type, radius=5, height=-5):
-        paths = {
-            "circle": 12,
-            "triangle": 3,
-            "square": 4,
-            "line": 2
-        }
-        points = paths[path_type]
-        center = self.get_state().kinematics_estimated.position
-        path = []
-        for i in range(points):
-            x = radius * cos(pi / points * i * 2) + center.x_val
-            y = radius * sin(pi / points * i * 2) + center.y_val
-            path.append((x, y, height))
-        return path
 
-    def run(self):
+    def generate_linear_velocity(
+        self, current_velocity: float, position: Vector3r, waypoint: Vector3r
+    ):
+        d = waypoint.distance_to(position)
+        linear_acc_dis = -pow(current_velocity, 2) / (2 * -self.linear_acc_rate)
+        if d <= linear_acc_dis:
+            a = -self.linear_acc_rate
+            v = current_velocity - self.linear_acc_rate * self.time_step
+        elif current_velocity < self.speed:
+            v = current_velocity + self.linear_acc_rate * self.time_step
+            a = self.linear_acc_rate
+        if current_velocity >= self.speed:
+            a = 0
+            v = self.speed
+        return (v, a)
+
+    def generate_velocity(
+        self, current_velocity: float, target_velocity: float, acceleration: float
+    ):
+        if current_velocity-target_velocity > 0.1:
+            a = -acceleration
+        elif current_velocity-target_velocity < -0.1:
+            a = acceleration
+        else:
+            a = 0
+        v = current_velocity + a * self.time_step
+        if (a < 0 and current_velocity < target_velocity) or (
+            a > 0 and current_velocity > target_velocity
+        ):
+            v = target_velocity
+
+        return (v, a)
+
+    def run(self) -> None:
+        """
+        @Override
+        Funciton to run when the process starts.
+
+        Returns: None
+        """
         self.__setup_ros()
 
-        time.sleep(8)
+        time = 0
 
         rate = rospy.Rate(self.freq)
-        
-        prev_time = time.time()
 
-        with self.__client_lock:
-            self.__path_future = self.__client.moveToPositionAsync(*self.__path[self.__path_index], 2, 20, vehicle_name=self.__drone_name)
-        self.__path_index += 1
-        if self.__path_index == len(self.__path):
-            self.__path_index = 0
+        speed = 0
 
-        while not rospy.is_shutdown():
-            with self.__flag_lock:
-                if self.__shutdown == True:
+        v_yaw = 0
+
+        angular_acc = 0
+
+        linear_acc = 0
+
+        way_lin, way_ang, way_time = self.path[self.path_index]
+
+        _, _, yaw = airsim.to_eularian_angles(self.pos.orientation)
+
+        state = airsim.MultirotorState()
+
+        while not rospy.is_shutdown() and self._shutdown == False:
+            with self.flag_lock:
+                if self._shutdown == True:
                     break
-            
-            '''
-            if self.__path_future._result is not None:
-                with self.__client_lock:
-                    self.__path_future = self.__client.moveToPositionAsync(self.__path[self.__path_index][0], self.__path[self.__path_index][1], self.__path[self.__path_index][2], 5)
-                self.__path_index += 1
-                if self.__path_index == len(self.__path):
-                    self.__path_index = 0
-            '''
+            if time is not None and time >= way_time:
+                self.path_index += 1
+                if self.path_index == len(self.path):
+                    way_lin = 0
+                    way_ang = 0
+                    time = None
+                else:
+                    way_lin, way_ang, way_time = self.path[self.path_index]
+                    time = 0
 
-            pose, state = self.get_state()
-            state = state.kinematics_estimated
+            v_yaw, angular_acc = self.generate_velocity(
+                v_yaw, way_ang, self.ang_acc_rate
+            )
 
-            if self.__pos_pub:
-                point = Point(pose.position.x_val, pose.position.y_val, pose.position.z_val)
-                quat = Quaternion(pose.orientation.x_val, pose.orientation.y_val, pose.orientation.z_val, pose.orientation.w_val)
-                pose = Pose(point, quat)
-                header = Header()
-                header.stamp = rospy.Time.now()
+            yaw_iter = v_yaw * self.time_step
+            yaw += yaw_iter
+            q = airsim.to_quaternion(0, 0, yaw)
+            q = q / q.get_length()
+            self.pos.orientation = q
 
-                msg = PoseStamped(header, pose)
-                self.__pos_pub.publish(msg)
+            speed, linear_acc = self.generate_velocity(
+                speed, way_lin, self.linear_acc_rate
+            )
+            v = airsim.Vector3r(speed * cos(yaw), speed * sin(yaw), 0)
+            self.pos.position = v * self.time_step + self.pos.position
 
-            if self.__vel_pub:
-                linear = Vector3(state.linear_velocity.x_val, state.linear_velocity.y_val, state.linear_velocity.z_val)
-                angular = Vector3(state.angular_velocity.x_val, state.angular_velocity.y_val, state.angular_velocity.z_val)
-                twist = Twist(linear, angular)
-                header = Header()
-                header.stamp = rospy.Time.now()
-                msg = TwistStamped(header, twist)
-                self.__vel_pub.publish(msg)
+            self.client.simSetObjectPose(object_name=self.object_name, pose=self.pos)
 
-            if self.__acc_pub:
-                linear = Vector3(state.linear_acceleration.x_val, state.linear_acceleration.y_val, state.linear_acceleration.z_val)
-                angular = Vector3(state.angular_acceleration.x_val, state.angular_acceleration.y_val, state.angular_acceleration.z_val)
-                accel = Accel(linear, angular)
-                header = Header()
-                header.stamp = rospy.Time.now()
-                msg = AccelStamped(header, accel)
-                self.__acc_pub.publish(msg)
+            angular_acc_v = Vector3r(0, 0, angular_acc)
+            v_yaw_v = Vector3r(0, 0, v_yaw)
+            linear_acc_v = airsim.Vector3r(
+                linear_acc * cos(yaw), linear_acc * sin(yaw), 0
+            )
 
-            if self.__looptime_pub:
-                elapsed_time = time.time() - prev_time
-                prev_time = time.time()
+            state.kinematics_estimated.position = self.pos.position
+            state.kinematics_estimated.orientation = self.pos.orientation
+            state.kinematics_estimated.linear_velocity = v
+            state.kinematics_estimated.linear_acceleration = linear_acc_v
+            state.kinematics_estimated.angular_velocity = v_yaw_v
+            state.kinematics_estimated.angular_acceleration = angular_acc_v
 
-                msg = Float32(elapsed_time)
-                self.__looptime_pub.publish(msg)
+            self.publish_multirotor_state(state)
 
+            if speed == 0 and v_yaw == 0:
+                break
+
+            if time is not None:
+                time += self.time_step
             rate.sleep()
 
-        #self.__path_future.join()
+        print(self.object_name + " QUITTING")
 
-        print(self.__drone_name + " QUITTING")
+
+if __name__ == "__main__":
+
+    client = airsim.MultirotorClient()
+    name = "African_Poacher_1_WalkwRifleLow_Anim2_2"
+    pos = client.simGetObjectPose("African_Poacher_1_WalkwRifleLow_Anim2_2")
+    pos.position = airsim.Vector3r(-235, -242, 0)
+    pos.orientation = airsim.Vector3r(0, 0, 0)
+    client.simSetObjectPose(name, pos)
+
+    drone = Target(
+        "test", name, 2, path=[(2, -0.5, 15), (1, 0.5, 15)]
+    )
+    drone.start()
+
+    drone.join()
