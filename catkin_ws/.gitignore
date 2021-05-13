@@ -1,0 +1,8 @@
+#CPython Files
+*.pyc
+
+#VsCode
+.vscode
+
+# PyCache
+__pycache__
