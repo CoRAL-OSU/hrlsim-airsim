@@ -91,6 +91,7 @@ class DroneInfo:
         self.subs = subs
         self.services = services
         self.actions = actions
+        self.state = Multirotor()
 
 
 class Drone(Process):

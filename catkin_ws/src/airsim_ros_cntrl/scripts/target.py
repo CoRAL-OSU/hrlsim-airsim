@@ -67,8 +67,8 @@ class Target(Process):
         self._shutdown = False
         self.flag_lock = Lock()
         self.prev_loop_time = -999
-        self.linear_acc_rate = 0.25
-        self.ang_acc_rate = 0.08
+        self.linear_acc_rate = 0.5
+        self.ang_acc_rate = 0.3
 
         self.client = MultirotorClient(ip)
         self.client.confirmConnection()
@@ -197,8 +197,9 @@ class Target(Process):
         else:
             a = 0
         v = current_velocity + a * self.time_step
-        if (a < 0 and current_velocity < target_velocity) or (
-            a > 0 and current_velocity > target_velocity
+
+        if (a == 0 and current_velocity < target_velocity) or (
+            a == 0 and current_velocity > target_velocity
         ):
             v = target_velocity
 
@@ -213,7 +214,11 @@ class Target(Process):
         """
         self.__setup_ros()
 
-        time = 0
+        rospy.sleep(1)
+
+        traj_init_time = rospy.get_time()
+        way_init_time = traj_init_time
+        time = traj_init_time
 
         rate = rospy.Rate(self.freq)
 
@@ -226,24 +231,29 @@ class Target(Process):
         linear_acc = 0
 
         way_lin, way_ang, way_time = self.path[self.path_index]
+        traj_time = sum(row[2] for row in self.path)
+
 
         _, _, yaw = airsim.to_eularian_angles(self.pos.orientation)
 
         state = airsim.MultirotorState()
 
-        while not rospy.is_shutdown() and self._shutdown == False:
+        print("Trajectory time: " + str(traj_time))
+
+        while not rospy.is_shutdown() and self._shutdown == False and time - traj_init_time < traj_time:
             with self.flag_lock:
                 if self._shutdown == True:
                     break
-            if time is not None and time >= way_time:
+
+
+            if time - way_init_time >= way_time:
                 self.path_index += 1
                 if self.path_index == len(self.path):
                     way_lin = 0
                     way_ang = 0
-                    time = None
                 else:
                     way_lin, way_ang, way_time = self.path[self.path_index]
-                    time = 0
+                    way_init_time = time
 
             v_yaw, angular_acc = self.generate_velocity(
                 v_yaw, way_ang, self.ang_acc_rate
@@ -278,28 +288,35 @@ class Target(Process):
 
             self.publish_multirotor_state(state)
 
-            if speed == 0 and v_yaw == 0:
-                break
-
-            if time is not None:
-                time += self.time_step
             rate.sleep()
+
+            self.time_step = rospy.get_time() - time
+            time = rospy.get_time()
 
         print(self.object_name + " QUITTING")
 
 
 if __name__ == "__main__":
 
-    client = airsim.MultirotorClient()
+    ip = "10.0.0.3"
+
+    client = airsim.MultirotorClient(ip=ip)
+    client.confirmConnection()
+
     name = "African_Poacher_1_WalkwRifleLow_Anim2_2"
     pos = client.simGetObjectPose("African_Poacher_1_WalkwRifleLow_Anim2_2")
     pos.position = airsim.Vector3r(-235, -242, 0)
     pos.orientation = airsim.Vector3r(0, 0, 0)
     client.simSetObjectPose(name, pos)
 
-    drone = Target(
-        "test", name, 2, path=[(2, -0.5, 15), (1, 0.5, 15)]
-    )
-    drone.start()
 
-    drone.join()
+    path = [(2,0,3),
+            (2,pi/10,2.5),
+            (2,0,30)]
+
+    target = Target(
+        "test", name, path=path, ip=ip
+    )
+    target.start()
+
+    target.join()

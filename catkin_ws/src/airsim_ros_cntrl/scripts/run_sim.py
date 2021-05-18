@@ -3,11 +3,13 @@
 from airsim.client import MultirotorClient
 from team import Team
 from target import Target
+from math import cos, pi, sin, atan2, pow
+import numpy as np
 
 import multiprocessing as mp
 import airsim, rospy
 from typing import List
-import os, sys, json, time
+import os, sys, json
 
 
 def getDroneListFromSettings(settingsFilePath: str = None) -> List[str]:
@@ -100,13 +102,13 @@ if __name__ == "__main__":
     target_list = [
         (
             "African_Poacher_1_WalkwRifleLow_Anim2_2",
-            [(1.5, 0, 45)],
+            [(1.5, 0, 3), (1.5, pi/2, 2.5), (2, 0, 10)],
             airsim.Vector3r(-220, -226, 0),
             airsim.to_quaternion(0, 0, 4.5),
         ),
         (
             "African_Poacher_1_WalkwRifleLow_Anim3_11",
-            [(1.5, 0, 45)],
+            [(1.5, 0, 3), (1.5, pi/2, 2.5), (2, 0, 10)],
             airsim.Vector3r(-220, -239, 0),
             airsim.to_quaternion(0, 0, 4.2),
         ),
@@ -155,15 +157,29 @@ if __name__ == "__main__":
     for team in team_list:
         team.takeoff(False)
 
+
+    rate = rospy.Rate(10)
+
+    t = rospy.get_time()
+
+    while rospy.get_time() - t < 10:
+        c = np.zeros((len(team_list), 3))
+        for i in range(0, len(team_list)):
+            c[i] = team_list[i].calculateCentroid()
+            
+        print("Centroid 1: " + str(c[0]) + "\tCentroid 2: " + str(c[1]))
+
+    '''
     rospy.sleep(5)
 
     # print("MOVE TO [0,0,-4]")
     # team_list[0].move_to_location(target=[10,10,-4], timeout=10, tolerance=0.5)
     # team_list[0].wait()
-
+    
     print("BEGIN TRACKING")
     for team in team_list:
-        team.track_object(40,-4)
+        team.track_object(20,-4)
+
 
     for team in team_list:
         team.wait()
@@ -173,6 +189,8 @@ if __name__ == "__main__":
         team.land(False)
 
     rospy.sleep(5)
+
+    '''
 
     print("SHUTDOWN")
     for team in team_list:

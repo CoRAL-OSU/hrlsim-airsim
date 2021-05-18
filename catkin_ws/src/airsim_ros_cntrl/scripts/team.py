@@ -3,6 +3,7 @@
 from multiprocessing import Lock
 
 import math
+import numpy as np
 
 from airsim.client import MultirotorClient
 
@@ -10,7 +11,8 @@ import rospy, actionlib
 
 from actionlib_msgs.msg import GoalStatus
 
-from geometry_msgs.msg import TwistStamped, PoseStamped
+from geometry_msgs.msg import TwistStamped, PoseStamped, Point
+from airsim_ros_cntrl.msg import Multirotor
 from airsim_ros_pkgs.srv import Takeoff, Land
 from actionlib_msgs.msg import GoalStatus
 
@@ -60,10 +62,10 @@ class Team:
         """
         self.client = client
         self.lock = lock
-
         self.team_name = teamName
-
         self.vehicle_list = vehicle_list
+        self.centroid_timer = None
+        self.goal = None
 
         self.drones: Dict[str, Agent] = dict()
 
@@ -87,20 +89,19 @@ class Team:
         Function to set up ros topics to talk to teams.
         The team itself does not have a node associated with it.
         """
+
+        self.centroid_des_pub = rospy.Publisher(
+            "/"+self.team_name+"/centroid_des", Multirotor, queue_size=10
+        )
+        self.centrodi_act_pub = rospy.Publisher(
+            "/"+self.team_name+"/centroid_act", Multirotor, queue_size=10
+        )
+
         for i in self.vehicle_list:
 
             prefix = "/" + self.team_name + "/" + i
 
-            cmd_vel_topic_name = prefix + "/cmd/vel"
-            cmd_pos_topic_name = prefix + "/cmd/pos"
-
             pubs = dict()
-            pubs["cmd_vel"] = rospy.Publisher(
-                cmd_vel_topic_name, TwistStamped, queue_size=10
-            )
-            pubs["cmd_pos"] = rospy.Publisher(
-                cmd_pos_topic_name, PoseStamped, queue_size=10
-            )
 
             takeoff_srv_name = prefix + "/takeoff"
             land_srv_name = prefix + "/land"
@@ -124,10 +125,8 @@ class Team:
             )
             actions["track"].wait_for_server()
 
-            # actions["move_to_location"] = actionlib.SimpleActionClient(
-            #    move_to_location_action_name, MoveToLocationAction
-            # )
-            # actions["move_to_location"].wait_for_server()
+            subs = dict()
+            subs["multirotor"] = rospy.Subscriber(prefix+"/multirotor", Multirotor, self.agent_cb, i)
 
             self.drones[i].pubs = pubs
             self.drones[i].services = srvs
@@ -143,6 +142,49 @@ class Team:
                     target_prefix + "/shutdown", SetBool
                 )
                 self.target.services = srvs
+
+    def agent_cb(self, msg: Multirotor, drone_name: str):
+        self.drones[drone_name].state = msg
+
+                
+    def calculateCentroid(self) -> np.ndarray:
+        centroid = np.zeros((1,3))
+        for drone in self.drones.values():
+            pos = drone.state.state.pose.position
+            centroid += np.array([[pos.x, pos.y, pos.z]])
+            
+
+        centroid /= len(self.drones.values())
+        return centroid
+
+    def activateAgents(self):
+        self.centroid_timer = rospy.Timer(rospy.Duration(1/80.0), self.centroid_timer_cb, oneshot=False)
+            
+
+    def deactivateAgents(self):
+        if self.centroid_timer != None:
+            self.centroid_timer.shutdown()
+
+
+    def centroid_timer_cb(self):
+        # Handle actual centroid
+        centroid = self.calculateCentroid()
+        msg = Multirotor()
+
+        msg.state.pose.position = Point(*centroid)
+        self.centroid_act_pub.publish(msg)
+
+        # Handle desired centroid
+        if self.goal == None:
+            self.centroid_des_pub.publish(msg)
+            return
+
+        elif type(self.goal) != Multirotor:
+            print("Unrecognized goal type: " + type(self.goal))
+            return
+
+        #! HANDLE MINIMUM SNAP TRACKING OF TRAGET WRT CENTROID OF TEAM
+
 
     def getDroneList(self) -> Dict[str, Agent]:
         """
@@ -192,32 +234,6 @@ class Team:
                 if action.get_state() != GoalStatus.LOST:
                     action.wait_for_result()
 
-    def cmd_pos(
-        self,
-        cmd: PoseStamped = None,
-        cmd_all: PoseStamped = None,
-        wait: bool = False,
-        drone_name: str = None,
-    ) -> None:
-        """
-        Send command to agents to move to position. Can either send same position to all via cmd_all or to one drone by specifying cmd and drone_name.
-
-        Args:
-            cmd (PoseStamped, optional): Command to send to a single agent. Must also specify drone_name. Defaults to None.
-            cmd_all (PoseStamped, optional): Command to send to all agents. Defaults to None.
-            wait (bool, optional): Toggle to wait for all drones to complete. Defaults to False.
-            drone_name (str, optional): Drone name to send a single command to. Defaults to None.
-        """
-        if cmd_all != None:
-            for i in self.vehicle_list:
-                self.drones[i].pubs["cmd_pos"].publish(cmd_all)
-
-        else:
-            self.drones[drone_name].pubs["cmd_pos"].publish(cmd)
-
-        # Doesn't Work?
-        if wait:
-            self.wait()
 
     def move_to_location(
         self, target: List[float], timeout: float, tolerance: float
