@@ -430,7 +430,7 @@ class Agent(Drone):
         rate = rospy.Rate(self.freq)
 
 
-        while not rospy.is_shutdown() and self.__shutdown == False:
+        while not rospy.is_shutdown() and self._shutdown == False:
             self.publish_multirotor_state(self.state, self.sensors)
 
             # Handle modeRequest from Team

@@ -93,7 +93,7 @@ class Team:
         self.centroid_des_pub = rospy.Publisher(
             "/"+self.team_name+"/centroid_des", Multirotor, queue_size=10
         )
-        self.centrodi_act_pub = rospy.Publisher(
+        self.centroid_act_pub = rospy.Publisher(
             "/"+self.team_name+"/centroid_act", Multirotor, queue_size=10
         )
 

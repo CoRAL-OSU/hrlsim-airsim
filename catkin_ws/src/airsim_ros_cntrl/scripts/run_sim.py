@@ -70,8 +70,8 @@ if __name__ == "__main__":
     #     SETUP PYTHON CLIENT
     #
 
-    #ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
+    ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
+    #ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -102,15 +102,15 @@ if __name__ == "__main__":
     target_list = [
         (
             "African_Poacher_1_WalkwRifleLow_Anim2_2",
-            [(1.5, 0, 3), (1.5, pi/2, 2.5), (2, 0, 10)],
-            airsim.Vector3r(-220, -226, 0),
-            airsim.to_quaternion(0, 0, 4.5),
+            [(1.5, 0, 3), (1.5, pi/10, 2.5), (1.5, 0, 10)],
+            airsim.Vector3r(-235, -242, 0),
+            airsim.to_quaternion(0, 0, 0),
         ),
         (
             "African_Poacher_1_WalkwRifleLow_Anim3_11",
-            [(1.5, 0, 3), (1.5, pi/2, 2.5), (2, 0, 10)],
-            airsim.Vector3r(-220, -239, 0),
-            airsim.to_quaternion(0, 0, 4.2),
+            [(1.5, 0, 3), (1.5, pi/10, 2.5), (1.5, 0, 10)],
+            airsim.Vector3r(-235, -239, 0),
+            airsim.to_quaternion(0, 0, 0),
         ),
     ]
     team_list = []
