@@ -432,9 +432,6 @@ class Drone(Process):
 
             rate.sleep()
 
-        with self.client_lock:
-            self.client.cancelLastTask(vehicle_name=self.drone_name)
-
         print(self.drone_name + " QUITTING")
 
 

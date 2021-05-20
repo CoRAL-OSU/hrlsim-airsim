@@ -69,6 +69,12 @@ class Agent(Drone):
 
         self.dstep = 20.0
 
+
+        self.mode = "DISABLED"
+        self.modeRequest = None
+
+        self.target = None
+
         self.__controller = lqr.LQR()
 
         self.rpydot = np.zeros((1, 3))
@@ -337,16 +343,7 @@ class Agent(Drone):
             result = feedback
             self.__track_action.set_succeeded(result)
 
-    def __cmd_pos_cb(self, msg: PoseStamped) -> None:
-        """
-        Callback for the /cmd/pos ROS topic
-        
-        Args:
-            msg (geometry_msgs.PoseStamped)
-        """
 
-        with self.flag_lock:
-            self.cmd = msg
 
 
     ##
@@ -419,3 +416,46 @@ class Agent(Drone):
         desired_vel_msg.linear = Vector3(*vDes)
         desired_vel_msg.angular = Vector3(*u[0:3,0])
         self.__desired_vel_pub.publish(desired_vel_msg)
+
+
+
+
+    ##                                   ##
+    ###        Main loop                ###
+    #######################################
+
+    def run(self) -> None:
+        self.setup_ros()
+
+        rate = rospy.Rate(self.freq)
+
+
+        while not rospy.is_shutdown() and self.__shutdown == False:
+            self.publish_multirotor_state(self.state, self.sensors)
+
+            # Handle modeRequest from Team
+            if self.modeRequest != None:
+                self.mode = self.modeRequest
+
+
+            if self.mode == "DISABLED":
+                pass
+
+            elif self.mode == "TAKEOFF":
+                pass
+
+            elif self.mode == "LAND":
+                pass
+
+            elif self.mode == "TRACK_TARGET":
+                pass
+
+            elif self.mode == "POSITION_CNTRL":
+                pass
+
+            elif self.mode == "VELOCITY_CNTRL":
+                pass
+
+            rate.sleep()
+
+        print(self.drone_name + " QUITTING")
