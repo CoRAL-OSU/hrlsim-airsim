@@ -1,10 +1,10 @@
 {
-  "ClockSpeed": 0.1, 
+  "ClockSpeed": 0.05, 
   "SeeDocsAt": "https://github.com/Microsoft/AirSim/blob/master/docs/settings.md", 
   "SettingsVersion": 1.2, 
   "LocalHostIP": "192.168.1.199",
   "SimMode": "Multirotor",
-  "ViewMode": "Manual",
+  "ViewMode": "",
   "TimeOfDay": {
     "Enabled": true,
     "StartDateTime": "2021-05-10 20:00:00"
@@ -14,12 +14,12 @@
     "CaptureSettings": [
       {
         "ImageType": 0,
-        "Width": 720,
-        "Height": 576,
+        "Width": 100,
+        "Height": 100,
         "FOV_Degrees": 90,
         "AutoExposureSpeed": 100,
         "AutoExposureBias": 0,
-        "AutoExposureMaxBrightness": 0.64,
+        "AutoExposureMaxBrightness": 1.0,
         "AutoExposureMinBrightness": 0.03,
         "MotionBlurAmount": 0,
         "TargetGamma": 1.0,
@@ -75,9 +75,10 @@
       "Roll": 0, 
       "VehicleType": "SimpleFlight", 
 
-      "AllowAPIAlways": false,
+      "DefaultVehicleState": "Armed",
+      "AllowAPIAlways": true,
       "RC": {
-        "RemoteControlID": 0
+        "RemoteControlID": -1
       },
 
       "Cameras": {
@@ -85,32 +86,30 @@
           "CaptureSettings": [
             {
               "ImageType": 0,
-              "Width": 750,
-              "Height": 700,
+              "Width": 1080,
+              "Height": 1080,
               "FOV_Degrees": 90,
               "AutoExposureSpeed": 100,
               "AutoExposureBias": 0,
-              "AutoExposureMaxBrightness": 0.64,
+              "AutoExposureMaxBrightness": 2.0,
               "AutoExposureMinBrightness": 0.03,
               "MotionBlurAmount": 0,
-              "TargetGamma": 1.0,
-              "ProjectionMode": "",
-              "OrthoWidth": 5.12
+              "TargetGamma": 1.0
             }
           ],
           "Gimbal": {
-              "Stabilization": 0.01,
+              "Stabilization": 0.85,
               "Pitch": -20, "Roll": 0
           },
-          "X": 0, "Y": 0, "Z": 0.25,
+          "X": 0, "Y": 0, "Z": 0.5,
           "Pitch": -20, "Roll": 0, "Yaw": 0
         }
       },
 
-      "X": -235, 
-      "Y": -238, 
-      "Yaw": 0, 
-      "Z": 0
+      "X": -280, 
+      "Y": -343, 
+      "Yaw": 90, 
+      "Z": -5
     },
 
     "Drone0": {
@@ -128,8 +127,8 @@
         "RemoteControlID": -1
       },
 
-      "X": -235.0, 
-      "Y": -240.0, 
+      "X": -240, 
+      "Y": -250, 
       "Yaw": 0, 
       "Z": 0
     },  
@@ -149,8 +148,8 @@
         "RemoteControlID": -1
       },
 
-      "X": -233, 
-      "Y": -243, 
+      "X": -240, 
+      "Y": -252, 
       "Yaw": 0, 
       "Z": 0
     },
@@ -169,8 +168,8 @@
         "RemoteControlID": -1
       },
 
-      "X": -230, 
-      "Y": -243, 
+      "X": -240, 
+      "Y": -254, 
       "Yaw": 0, 
       "Z": 0
     },
@@ -189,8 +188,8 @@
         "RemoteControlID": -1
       },
 
-      "X": -228, 
-      "Y": -244, 
+      "X": -242, 
+      "Y": -250, 
       "Yaw": 0, 
       "Z": 0
     },
@@ -209,8 +208,8 @@
         "RemoteControlID": -1
       },
 
-      "X": -231, 
-      "Y": -244, 
+      "X": -242, 
+      "Y": -252, 
       "Yaw": 0, 
       "Z": 0
     },
@@ -229,8 +228,8 @@
         "RemoteControlID": -1
       },
 
-      "X": -225, 
-      "Y": -241, 
+      "X": -242, 
+      "Y": -254, 
       "Yaw": 0, 
       "Z": 0
     },
@@ -249,8 +248,8 @@
         "RemoteControlID": -1
       },
 
-      "X": -225, 
-      "Y": -238, 
+      "X": -244, 
+      "Y": -250, 
       "Yaw": 0, 
       "Z": 0
     },
@@ -269,8 +268,8 @@
         "RemoteControlID": -1
       },
 
-      "X": -227, 
-      "Y": -235, 
+      "X": -244, 
+      "Y": -252, 
       "Yaw": 0, 
       "Z": 0
     },
@@ -289,8 +288,8 @@
         "RemoteControlID": -1
       },
 
-      "X": -225, 
-      "Y": -240, 
+      "X": -244, 
+      "Y": -254, 
       "Yaw": 0, 
       "Z": 0
     },
@@ -309,8 +308,8 @@
         "RemoteControlID": -1
       },
 
-      "X": -228, 
-      "Y": -242, 
+      "X": -246, 
+      "Y": -252, 
       "Yaw": 0, 
       "Z": 0
     }
@@ -327,7 +326,7 @@
 
 
   "SubWindows": [
-    {"WindowID": 0, "CameraName": "0", "ImageType": 0, "VehicleName": "Camera", "Visible": true}
+    {"WindowID": 0, "CameraName": "cam0", "ImageType": 0, "VehicleName": "Camera", "Visible": true}
   ]
 
 }

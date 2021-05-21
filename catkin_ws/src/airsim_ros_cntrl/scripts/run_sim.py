@@ -6,6 +6,7 @@ from target import Target
 from math import cos, pi, sin, atan2, pow
 import numpy as np
 
+from camera import Camera
 
 import multiprocessing as mp
 import airsim, rospy
@@ -105,15 +106,15 @@ if __name__ == "__main__":
     target_list = [
         (
             "African_Poacher_1_WalkwRifleLow_Anim2_2",
-            [(1.5, 0, 7), (1.5, pi/10, 2.5), (1.5, 0, 25)],
-            airsim.Vector3r(-265, -275, 0),
-            airsim.to_quaternion(0, 0, 0),
+            [(0,0,19), (0,0,7), (1.5, 0, 3.5), (1.5, -pi/10, 3), (1.5, -0.01, 10), (1.5,pi/5,1), (1.5, 0, 15)],
+            airsim.Vector3r(-250, -312, 0),
+            airsim.to_quaternion(0, 0, 2.32),
         ),
         (
             "African_Poacher_1_WalkwRifleLow_Anim3_11",
-            [(1.5, 0, 7), (1.5, pi/10, 2.5), (1.5, 0, 25)],
-            airsim.Vector3r(-265, -280, 0),
-            airsim.to_quaternion(0, 0, 0),
+            [(0,0,19), (1.5, 0, 8), (1.5, -pi/10, 3.5), (1.5, -0.01, 10), (1.5,-pi/10,1), (1.5,0,15)],
+            airsim.Vector3r(-259, -318, 0),
+            airsim.to_quaternion(0, 0, 2.32),
         ),
     ]
     target_procs = dict()
