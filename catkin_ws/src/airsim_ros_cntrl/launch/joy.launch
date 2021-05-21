@@ -9,12 +9,14 @@
 <!--node name="joy" pkg="joy" type="joy_node" >
     <param name="autorepeat_rate" value="$(arg autorepeat_rate)" />
     <param name="deadzone" value="$(arg deadzone)" />
-</node-->
+</node>
 
-<node name="teleop" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" >
+<node name="teleop" pkg="teleop_twist_joy" type="teleop_twist_joy.py" >
     <param name="scale_linear" value="$(arg scale_linear)" />
     <param name="scale_angular" value="$(arg scale_angular)" />
-</node>
+</node-->
+
+<node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop" output="screen" />
 <node name="remap" pkg="topic_tools" type="transform" args="/cmd_vel /airsim_node/Camera/vel_cmd_body_frame airsim_ros_pkgs/VelCmd 'geometry_msgs.msg.Twist(linear=geometry_msgs.msg.Vector3(x=m.linear.x, y=-m.linear.y, z=-m.linear.z), angular=geometry_msgs.msg.Vector3(x=m.angular.x, y=m.angular.y, z=-m.angular.z))' --import geometry_msgs" output="screen"/>
 
 

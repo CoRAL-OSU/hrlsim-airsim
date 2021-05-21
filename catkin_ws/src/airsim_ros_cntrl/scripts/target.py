@@ -12,6 +12,9 @@ import airsim
 import rospy
 
 from airsim_ros_cntrl.msg import Multirotor, State
+from airsim_ros_pkgs.msg import VelCmd
+from airsim_ros_pkgs.srv import Takeoff, Land
+
 from std_msgs.msg import Header, Float32
 from std_srvs.srv import SetBool, SetBoolResponse, SetBoolRequest
 
@@ -23,7 +26,6 @@ from geometry_msgs.msg import (
     Accel,
     Vector3
 )
-
 
 class Target(Process):
     """
@@ -300,23 +302,43 @@ if __name__ == "__main__":
 
     ip = "10.0.0.3"
 
+    run_camera = True
+
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
 
-    name = "African_Poacher_1_WalkwRifleLow_Anim2_2"
-    pos = client.simGetObjectPose("African_Poacher_1_WalkwRifleLow_Anim2_2")
-    pos.position = airsim.Vector3r(-235, -242, 0)
-    pos.orientation = airsim.Vector3r(0, 0, 0)
-    client.simSetObjectPose(name, pos)
+
+    target_list = [
+        (
+            "African_Poacher_1_WalkwRifleLow_Anim2_2",
+            [(0,0,19), (0,0,7), (1.5, 0, 3.5), (1.5, -pi/10, 3), (1.5, -0.01, 10), (1.5,pi/5,1), (1.5, 0, 15)],
+            airsim.Vector3r(-250, -312, 0),
+            airsim.to_quaternion(0, 0, 2.32),
+        ),
+        (
+            "African_Poacher_1_WalkwRifleLow_Anim3_11",
+            [(0,0,19), (1.5, 0, 8), (1.5, -pi/10, 3.5), (1.5, -0.01, 10), (1.5,-pi/10,1), (1.5,0,15)],
+            airsim.Vector3r(-259, -318, 0),
+            airsim.to_quaternion(0, 0, 2.32),
+        ),
+    ]
+
+    target_procs = []
+    for t in target_list:
+        client.simSetObjectPose(t[0], airsim.Pose(t[2],t[3]))
+        target_procs.append(Target("test", t[0], path=t[1], ip=ip))
+        target_procs[-1].start()
+
+    if run_camera:
+        from camera import Camera
+
+        rospy.init_node("target_test")
+        rospy.sleep(1)
+        
+        camera = Camera("Camera")
+        camera.start()
+        camera.join()
 
 
-    path = [(2,0,3),
-            (2,pi/10,2.5),
-            (2,0,30)]
-
-    target = Target(
-        "test", name, path=path, ip=ip
-    )
-    target.start()
-
-    target.join()
+    for t in target_procs:
+        t.join()

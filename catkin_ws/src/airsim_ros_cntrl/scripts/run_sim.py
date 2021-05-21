@@ -6,10 +6,13 @@ from target import Target
 from math import cos, pi, sin, atan2, pow
 import numpy as np
 
+
 import multiprocessing as mp
 import airsim, rospy
 from typing import List
 import os, sys, json
+
+
 
 
 def getDroneListFromSettings(settingsFilePath: str = None) -> List[str]:
@@ -70,8 +73,8 @@ if __name__ == "__main__":
     #     SETUP PYTHON CLIENT
     #
 
-    ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    #ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
+    #ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
+    ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -102,18 +105,17 @@ if __name__ == "__main__":
     target_list = [
         (
             "African_Poacher_1_WalkwRifleLow_Anim2_2",
-            [(1.5, 0, 3), (1.5, pi/10, 2.5), (1.5, 0, 10)],
-            airsim.Vector3r(-235, -242, 0),
+            [(1.5, 0, 7), (1.5, pi/10, 2.5), (1.5, 0, 25)],
+            airsim.Vector3r(-265, -275, 0),
             airsim.to_quaternion(0, 0, 0),
         ),
         (
             "African_Poacher_1_WalkwRifleLow_Anim3_11",
-            [(1.5, 0, 3), (1.5, pi/10, 2.5), (1.5, 0, 10)],
-            airsim.Vector3r(-235, -239, 0),
+            [(1.5, 0, 7), (1.5, pi/10, 2.5), (1.5, 0, 25)],
+            airsim.Vector3r(-265, -280, 0),
             airsim.to_quaternion(0, 0, 0),
         ),
     ]
-    team_list = []
     target_procs = dict()
 
     for v in vehicle_list:
@@ -153,44 +155,38 @@ if __name__ == "__main__":
     #
     #     RUN SIMULATION
 
+
+    rospy.sleep(1)
+    camera = Camera("Camera")
+    camera.start()
+
     print("TAKING OFF")
     for team in team_list:
         team.takeoff(False)
 
-
-    rate = rospy.Rate(10)
-
-    t = rospy.get_time()
-
-    while rospy.get_time() - t < 10:
-        c = np.zeros((len(team_list), 3))
-        for i in range(0, len(team_list)):
-            c[i] = team_list[i].calculateCentroid()
-            
-        print("Centroid 1: " + str(c[0]) + "\tCentroid 2: " + str(c[1]))
-
-    '''
     rospy.sleep(5)
 
     # print("MOVE TO [0,0,-4]")
     # team_list[0].move_to_location(target=[10,10,-4], timeout=10, tolerance=0.5)
     # team_list[0].wait()
+
+
     
     print("BEGIN TRACKING")
     for team in team_list:
-        team.track_object(20,-4)
-
+        team.track_object(40,-4)
 
     for team in team_list:
         team.wait()
+
+
+
 
     print("LANDING")
     for team in team_list:
         team.land(False)
 
     rospy.sleep(5)
-
-    '''
 
     print("SHUTDOWN")
     for team in team_list:
