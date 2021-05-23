@@ -1,20 +1,15 @@
 #! /usr/bin/python3
 
-from multiprocessing import Lock, Process
-import sys, os
+from multiprocessing import Process
+import numpy as np
 
-import airsim, pymap3d
-from airsim.client import MultirotorClient
-from airsim.types import MultirotorState, LandedState
-import rospy
-
-from pycallgraph import PyCallGraph
-from pycallgraph.output import GraphvizOutput
+import pymap3d, rospy, actionlib, sys
+from airsim.types import MultirotorState, Vector3r, Quaternionr
 
 from actionlib import SimpleActionClient
 from typing import Dict
 
-from airsim_ros_pkgs.msg import Environment, GPSYaw
+from airsim_ros_pkgs.msg import GPSYaw, VelCmd
 from airsim_ros_pkgs.srv import (
     Takeoff,
     TakeoffRequest,
@@ -26,7 +21,11 @@ from airsim_ros_pkgs.srv import (
 from airsim_ros_cntrl.msg import (
     Multirotor,
     Sensors,
-    State
+    State,
+    MoveToLocationAction,
+    MoveToLocationFeedback,
+    MoveToLocationGoal,
+    MoveToLocationResult    
 )
 
 from sensor_msgs.msg import (
@@ -47,8 +46,9 @@ from geometry_msgs.msg import (
 
 from nav_msgs.msg import Odometry
 from std_srvs.srv import SetBool, SetBoolResponse, SetBoolRequest
-
 from std_msgs.msg import Float32, Header
+
+import lqr
 
 
 class DroneInfo:
@@ -102,21 +102,15 @@ class Drone(Process):
     All topic names are set up as /swarm_name/drone_name/major_cmd/minor_cmd. Eg. commanding the velocity
     of drone1 in swarm1 would be: /swarm1/drones1/cmd/vel
 
-    All commands are executed through a singluar sim_client that all drones share, therefore, you must aquire the client_lock before using the client.
-
     Args:
         swarmName (str): The name of the swarm this drone is associated with.
         droneName (str): The name of the drone itself.
-        sim_client (airsim.MultirotorClient): The client to use to execture commands.
-        client_lock (mp.Lock): The lock for the sim_client.
     """
 
     def __init__(
         self,
         swarmName: str,
-        droneName: str,
-        sim_client: MultirotorClient,
-        client_lock: Lock,
+        droneName: str
     ) -> None:
         """
         Constructs a new Drone Process.
@@ -124,8 +118,6 @@ class Drone(Process):
         Args:
             swarmName (str): The name of the swarm this drone is associated with.
             droneName (str): The name of the drone itself.
-            sim_client (airsim.MultirotorClient): The client to use to execture commands.
-            client_lock (mp.Lock): The lock for the sim_client.
         """
         Process.__init__(self)
 
@@ -136,27 +128,21 @@ class Drone(Process):
         self._shutdown = False
         self.__service_timeout = 5.0  # SECONDS
 
-        #self.client_lock = client_lock
-        self.flag_lock = Lock()
-
-        self.client_lock = Lock()
-        self.client = airsim.MultirotorClient()
-
         self.freq = 80
         self.prev_loop_time = -999
         self.origin_geo_point = GPSYaw()
 
-        self.cmd = None
+        self.stop_msg = VelCmd()
 
-        with self.client_lock:
-            self.client = sim_client
-            self.client.confirmConnection()
-            self.client.enableApiControl(True, vehicle_name=self.drone_name)
-            self.client.armDisarm(True, vehicle_name=self.drone_name)
+        self.cmd = None
+        self.cmd_timeout = 0.1
+
+        self.controller = lqr.LQR()
+        self.prev_accel_cmd = 0
 
         #(self.state, self.sensors) = self.get_state()
 
-        self.state = airsim.MultirotorState()
+        self.state = MultirotorState()
         self.sensors = dict()
         
 
@@ -176,14 +162,14 @@ class Drone(Process):
         Returns: None
         """
         rospy.init_node(self.drone_name)
-        self.topic_prefix = "/" + self.swarm_name + "/" + self.drone_name
-        loop_time_topic = self.topic_prefix + "/looptime"
+        topic_prefix = "/" + self.swarm_name + "/" + self.drone_name
+        loop_time_topic = topic_prefix + "/looptime"
 
-        takeoff_service_name = self.topic_prefix + "/takeoff"
-        land_service_name = self.topic_prefix + "/land"
-        shutdown_service_name = self.topic_prefix + "/shutdown"
+        takeoff_service_name = topic_prefix + "/takeoff"
+        land_service_name = topic_prefix + "/land"
+        shutdown_service_name = topic_prefix + "/shutdown"
 
-        state_topic = self.topic_prefix + "/multirotor"
+        state_topic = topic_prefix + "/multirotor"
         lqr_cmd_topic = "/airsim_node/" + self.drone_name + "/throttle_rates_cmd"
 
         rospy.on_shutdown(self.shutdown)
@@ -192,115 +178,67 @@ class Drone(Process):
         rospy.Subscriber("/airsim_node/" + self.drone_name + "/imu/imu0", Imu, callback=self.imu_cb)
         rospy.Subscriber("/airsim_node/" + self.drone_name + "/global_gps", NavSatFix, callback=self.gps_cb)
         rospy.Subscriber("/airsim_node/" + self.drone_name + "/odom_local_ned", Odometry, callback=self.odom_cb)
+        rospy.Subscriber(topic_prefix + "/vel_cmd_body_frame", VelCmd, callback=self.vel_cmd_body_frame_cb, queue_size=1)
 
+        self.moveToLocationActionServer = actionlib.SimpleActionServer(
+            topic_prefix + "/move_to_location",
+            MoveToLocationAction,
+            execute_cb=self.move_to_location_cb,
+            auto_start=False,
+        )
+        self.moveToLocationActionServer.start()
 
-        self.multirotor_pub = rospy.Publisher(state_topic, Multirotor, queue_size=10)
-        self.throttle_rates_cmd_pub = rospy.Publisher(lqr_cmd_topic, Twist, queue_size=1)
+        self.vel_cmd_pub = rospy.Publisher("/airsim_node/" + self.drone_name + "/vel_cmd_body_frame", VelCmd, queue_size=2)
+        self.multirotor_pub = rospy.Publisher(state_topic, Multirotor, queue_size=2)
+        self.throttle_rates_cmd_pub = rospy.Publisher(lqr_cmd_topic, Twist, queue_size=2)
+        self.__desired_pose_pub = rospy.Publisher(topic_prefix +"lqr/desired_pose", Pose, queue_size=2)
+        self.__desired_vel_pub = rospy.Publisher(topic_prefix +"lqr/desired_vel", Twist, queue_size=2)
 
+        rospy.Service(shutdown_service_name, SetBool, self.shutdown_cb)
+        rospy.Service(takeoff_service_name, Takeoff, self.takeoff_cb)
+        rospy.Service(land_service_name, Land, self.land_cb)
 
-        rospy.Service(shutdown_service_name, SetBool, self.__handle_shutdown)
-        rospy.Service(takeoff_service_name, Takeoff, self.__handle_takeoff)
-        rospy.Service(land_service_name, Land, self.__handle_land)
+        self.takeoff = rospy.ServiceProxy("/airsim_node/" + self.drone_name + "/takeoff", Takeoff)
+        self.land = rospy.ServiceProxy("/airsim_node/" + self.drone_name + "/land", Land)
 
-    def __handle_shutdown(self, req: SetBoolRequest) -> SetBoolResponse:
+        self.cmd_timer = rospy.Timer(rospy.Duration(self.cmd_timeout), self.cmd_timer_cb, oneshot=True)
+
+    def cmd_timer_cb(self, event) -> None:
         """
-        Callback for the /shutdown rosservice. Uses Python API to disarm drone
-
-        Args:
-            req (StdBoolRequest): Currently unused
-
-        Returns (StdBoolResponse): True on success
+        Callback for the cmd timer. Sets cmd to None
         """
+        self.cmd = None
+        rospy.loginfo(self.drone_name + ": CMD_TIMER_CB FIRED")
 
-        print(self.drone_name + " SHUTDOWN REQUEST RECEIVED")
-        with self.flag_lock:
-            self._shutdown = True
 
-            with self.client_lock:
-                self.client.armDisarm(False, vehicle_name=self.drone_name)
-                self.client.enableApiControl(False, vehicle_name=self.drone_name)
-
-            print(self.drone_name + " SHUTDOWN REQUEST HANDLED")
-            return SetBoolResponse(True, "")
-
-    def __handle_takeoff(self, req: TakeoffRequest) -> TakeoffResponse:
+    def shutdown_cb(self, req: SetBoolRequest) -> SetBoolResponse:
         """
-        Callback for the rosservice /takeoff. Uses the Python API to takeoff the drone
-
-        Args:
-            req (TakeoffRequest): Request on rosservice
-
-        Returns (TakeoffResponse): True on successfuly takeoff. Else false.
+        Callback for the /shutdown rosservice. Calls process shutdown() method
         """
-        with self.flag_lock:
-            self.cmd = None
+        self.cmd_timer.shutdown()
+        self.shutdown()
 
-            if self.state.landed_state == LandedState.Flying:
-                return TakeoffResponse(True)
-
-            time_start = rospy.get_time()
-            with self.client_lock:
-                self.client.takeoffAsync(vehicle_name=self.drone_name)
-
-            if req.waitOnLastTask == False:
-                return TakeoffResponse(False)
-
-            while (
-                self.state.landed_state != LandedState.Flying
-                and rospy.get_time() - time_start < self.__service_timeout
-            ):
-                rospy.sleep(0.05)
-
-            if self.state.landed_state == LandedState.Flying:
-                return TakeoffResponse(True)
-            else:
-                return TakeoffResponse(False)
-
-    def __handle_land(self, req: LandRequest) -> LandResponse:
+    def takeoff_cb(self, req: TakeoffRequest) -> TakeoffResponse:
         """
-        Callback for the rosservice /land. Uses the Python API to land the drone.
-
-        Args:
-            req (LandRequest): Request on rosservice
-        
-        Returns (LandResponse): True of succesfully landed. Else false
+        Callback for the rosservice /takeoff. Passes to AirSim ROS Wrapper
         """
+        self.cmd_timer.shutdown()
+        self.cmd = Takeoff
 
-        with self.flag_lock:
-            self.cmd = None
-
-            if self.state.landed_state == LandedState.Landed:
-                return LandResponse(True)
-
-            time_start = rospy.get_time()
-            #with self.client_lock:
-            self.client.landAsync(vehicle_name=self.drone_name)
-
-            if req.waitOnLastTask == False:
-                return LandResponse(False)
-
-            while (
-                self.state.landed_state != LandedState.Landed
-                and rospy.get_time() - time_start < self.__service_timeout
-            ):
-                rospy.sleep(0.05)
-
-            if self.state.landed_state == LandedState.Landed:
-                return LandResponse(True)
-            else:
-                return LandResponse(False)
+    def land_cb(self, req: LandRequest) -> LandResponse:
+        """
+        Callback for the rosservice /land. Passes to AirSim ROS Wrapper
+        """
+        self.cmd_time.shutdown()
+        self.cmd = Land
 
     def shutdown(self) -> None:
         """
-        Handle improper rospy shutdown. Uses Python API to disarm drone
-
-        Returns: None
+        Handle improper rospy shutdown.
         """
-        with self.flag_lock:
-            self._shutdown = True
-
-        print(self.drone_name + " QUITTING")
-
+        self.cmd_timer.shutdown()
+        self.cmd = None
+        self.vel_cmd_pub.publish(self.stop_msg)
 
     def get_origin(self, msg):
         self.origin_geo_point = msg
@@ -319,8 +257,8 @@ class Drone(Process):
         qy = msg.orientation.y
         qz = msg.orientation.z
 
-        self.state.kinematics_estimated.linear_acceleration = airsim.Vector3r(alx,aly,alz)
-        self.state.kinematics_estimated.orientation = airsim.Quaternionr(qx, qy, qz, qw)
+        self.state.kinematics_estimated.linear_acceleration = Vector3r(alx,aly,alz)
+        self.state.kinematics_estimated.orientation = Quaternionr(qx, qy, qz, qw)
 
     def gps_cb(self, msg):
         """
@@ -336,7 +274,7 @@ class Drone(Process):
 
         (n,e,d) = pymap3d.geodetic2ned(lat, lon, alt, lat0, lon0, alt0)
 
-        self.state.kinematics_estimated.position = airsim.Vector3r(n,e,d)
+        self.state.kinematics_estimated.position = Vector3r(n,e,d)
 
     def odom_cb(self, msg):
         """
@@ -350,11 +288,73 @@ class Drone(Process):
         vay = msg.twist.twist.angular.y
         vaz = msg.twist.twist.angular.z
 
-        self.state.kinematics_estimated.linear_velocity = airsim.Vector3r(vlx,vly,vlz)
-        self.state.kinematics_estimated.angular_velocity = airsim.Vector3r(vax,vay,vaz)
+        self.state.kinematics_estimated.linear_velocity = Vector3r(vlx,vly,vlz)
+        self.state.kinematics_estimated.angular_velocity = Vector3r(vax,vay,vaz)
+
+    def vel_cmd_body_frame_cb(self, msg):
+        """
+        Handle velocity command in the body frame. Currently just passes to AirSim ROS Wrapper. ROS timer 
+        sets self.cmd to None after elapsed period
+        """
+        self.cmd = msg
+        self.cmd_timer.shutdown()
+        self.cmd_timer = rospy.Timer(rospy.Duration(self.cmd_timeout), self.cmd_timer_cb, oneshot=True)
+
+    def move_to_location_cb(self, goal: MoveToLocationGoal) -> MoveToLocationResult:
+        """
+        Handle position command in the world frame
+        """
+        self.cmd_timer.shutdown()
+
+        pt = np.array(goal.target)
+        p = self.state.kinematics_estimated.position.to_numpy_array()
+
+        waypoints = np.array([p,pt]).T
+        
+        v = self.state.kinematics_estimated.linear_velocity.to_numpy_array()
+        a = self.state.kinematics_estimated.linear_acceleration.to_numpy_array()
+        j = np.zeros(3)
+        ic = np.array([v, a, j])
+
+        fv = np.array(goal.fvel)
+        fa = np.array(goal.facc)
+        fj = np.array(goal.fjrk)
+        fc = np.array([fv,fa,fj])
+
+        self.controller.set_goals(waypoints, ic, fc, goal.speed)
+
+        d = np.linalg.norm(pt-p)
+        t0 = rospy.get_time()
+
+        self.t0 = t0
+
+        feedback = MoveToLocationFeedback()
+
+        self.cmd = goal
+
+        r = rospy.Rate(self.freq)
+        while d > goal.tolerance and rospy.get_time() - t0 < goal.timeout and not self.moveToLocationActionServer.is_preempt_requested() and isinstance(self.cmd, MoveToLocationGoal):
+            p = self.state.kinematics_estimated.position.to_numpy_array()
+            d = np.linalg.norm(pt-p)
+
+            for i in range(0,len(p)):
+                feedback.location[i] = p[i]
+
+            feedback.error = d
+            feedback.time_left = rospy.get_time() - t0
+
+            r.sleep()
+
+        self.cmd = None
+
+        if d < goal.tolerance:
+            self.moveToLocationActionServer.set_succeeded(feedback)
+            rospy.loginfo(self.drone_name + ": MOVE_TO_LOCATION SUCCESSFUL")
+        else:
+            rospy.logwarn(self.drone_name + ": MOVE_TO_LOCATION FAILED")
 
 
-    
+
     def publish_multirotor_state(self, state, sensors) -> None:
         """
         Function to publish sensor/state information from the simulator
@@ -415,10 +415,65 @@ class Drone(Process):
         # Publish msg
         self.multirotor_pub.publish(msg)
     
+    ##                                   ##
+    ###        LQR IMPLEMENATION        ###
+    #######################################
+
+    def moveByLQR(self, t0: float, state: MultirotorState) -> None:
+        """
+        Moves the agent via LQR.
+
+        Args:
+            t (float): Time elapsed since beginning
+            state (MultirotorState): Current Multirotor State
+        """
+        x0, u = self.controller.computeControl(t0, state, self.prev_accel_cmd, self.drone_name)
+
+        for i in range(0, 3):
+            u[i, 0] = max(-3, u[i, 0])
+            u[i, 0] = min(3, u[i, 0])
+
+        if u[3, 0] > 1.0:
+            u[3, 0] = 1.0
+
+        roll_rate  = u[0, 0]
+        pitch_rate = u[1, 0]
+        yaw_rate   = u[2, 0]
+        throttle   = u[3, 0]
+
+        accel = self.controller.thrust2world(state, throttle)
+
+        self.prev_acceleration_cmd = accel[2]
+
+        throttle_rates_cmd = Twist()
+        throttle_rates_cmd.linear.z = throttle
+        throttle_rates_cmd.angular.x = roll_rate
+        throttle_rates_cmd.angular.y = pitch_rate
+        throttle_rates_cmd.angular.z = yaw_rate
+
+        self.throttle_rates_cmd_pub.publish(throttle_rates_cmd)
+
+        
+        (pDes, qDes, vDes) = lqr.LQR.get_state(x0)
+        desired_pose_msg = Pose()
+        desired_pose_msg.position = Point(*pDes)
+        desired_pose_msg.orientation = Quaternion(w=qDes[0], x=qDes[1], y=qDes[2], z=qDes[3])
+        self.__desired_pose_pub.publish(desired_pose_msg)
+
+        desired_vel_msg = Twist()
+        desired_vel_msg.linear = Vector3(*vDes)
+        desired_vel_msg.angular = Vector3(*u[0:3,0])
+        self.__desired_vel_pub.publish(desired_vel_msg)
+
+
+
+    ##                                   ##
+    ###        Main loop                ###
+    #######################################
 
     def run(self) -> None:
         """
-        Funciton to run when the process starts.
+        Function to run when the process starts.
 
         Returns: None
         """
@@ -430,10 +485,26 @@ class Drone(Process):
             # (self.state, self.sensors) = self.get_state()
             self.publish_multirotor_state(self.state, self.sensors)
 
+            if self.cmd == None:
+                self.vel_cmd_pub.publish(self.stop_msg)
+
+            elif isinstance(self.cmd, VelCmd):
+                self.vel_cmd_pub.publish(self.cmd)
+
+            elif isinstance(self.cmd, Takeoff):
+                self.takeoff()
+                self.cmd == None
+
+            elif isinstance(self.cmd, Land):
+                self.land()
+                self.cmd == None
+
+            elif isinstance(self.cmd, MoveToLocationGoal):
+                self.moveByLQR(self.t0, self.state)
+
             rate.sleep()
 
         print(self.drone_name + " QUITTING")
-
 
 
 
@@ -445,9 +516,6 @@ if __name__ == "__main__":
     else:
         drone_name = str(sys.argv[1])
 
-    client = airsim.MultirotorClient(ip="192.168.1.96")
-    lock = Lock()
-
-    drone = Drone("swarm", drone_name, client, lock)
+    drone = Drone("swarm", drone_name)
     drone.start()
     drone.join()

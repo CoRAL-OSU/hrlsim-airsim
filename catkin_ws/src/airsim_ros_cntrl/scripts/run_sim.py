@@ -6,7 +6,7 @@ from target import Target
 from math import cos, pi, sin, atan2, pow
 import numpy as np
 
-from camera import Camera
+from camera import Camerak
 
 import multiprocessing as mp
 import airsim, rospy

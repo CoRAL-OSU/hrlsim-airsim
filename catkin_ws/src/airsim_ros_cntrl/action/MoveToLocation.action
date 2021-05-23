@@ -2,6 +2,11 @@
 float32[3] target
 float32 timeout
 float32 tolerance
+float32 speed
+
+float32[3] fvel  # final velocity
+float32[3] facc  # final acceleration
+float32[3] fjrk  # final jerk
 
 string yaw_frame
 float32 yaw

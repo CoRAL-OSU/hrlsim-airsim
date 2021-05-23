@@ -155,9 +155,9 @@ class LQR:
         x = np.concatenate((p,q,v) , 0)
         x = LQR.ned2xyz(x)
 
-        if rospy.get_time() - self.prev_gain_time > self.update_gain_period: #np.linalg.norm((r-self.linearized_rotation)) > math.pi/1000:          
-            if drone_name == "Drone0":
-                print("Linearized: " + str(1/(rospy.get_time() - self.prev_gain_time)))
+        if np.linalg.norm((r-self.linearized_rotation)) > math.pi/1000:  # rospy.get_time() - self.prev_gain_time > self.update_gain_period: #
+            #if drone_name == "Drone0":
+            #    print("Linearized: " + str(1/(rospy.get_time() - self.prev_gain_time)))
 
             self.prev_gain_time = rospy.get_time()
 
