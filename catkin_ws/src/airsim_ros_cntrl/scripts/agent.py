@@ -162,10 +162,10 @@ class Agent(drone.Drone):
         start_time = rospy.get_time()
 
         success = True
-        target_topic = self.swarm_name + "/" + goal.object_name + "/"
+        target_topic = self.swarm_name + "/" + goal.object_name
 
         target_state_sub = rospy.Subscriber(
-            target_topic + "multirotor",
+            target_topic,
             Multirotor,
             callback=self.__target_state_cb,
             queue_size=10,
@@ -178,16 +178,17 @@ class Agent(drone.Drone):
 
 
         feedback = TrackObjectFeedback()
-        feedback_pos_save = np.empty((0,3))
-        feedback_vel_save = np.empty((0,3))
-
         print(self.drone_name + " ENTERING WHILE LOOP")
 
         update_object_location_period = 1.0  # seconds
         prev_object_update_time = 0
-        prev_time = rospy.get_time()
-        
-        while rospy.get_time() - start_time < goal.timeout:
+
+        if goal.timeout > 0:
+            runforever = False
+        else:
+            runforever = True
+
+        while runforever == True or rospy.get_time() - start_time < goal.timeout:
             if self.__track_action.is_preempt_requested():
                 rospy.loginfo("%s: Preempted" % self.__track_action_name)
                 self.__track_action.set_preempted()
@@ -207,9 +208,17 @@ class Agent(drone.Drone):
 
                 pt = tp + goal.offset + bias
 
-                at = target_acc
-                vt = target_vel + target_acc*update_object_location_period
-                jt = np.zeros(3)
+                waypoints = np.array([p,pt]).T
+
+                fa = target_acc
+                fv = target_vel + target_acc*update_object_location_period
+                fj = np.zeros(3)
+                fc = np.array([fv,fa,fj])
+
+                ia = self.state.kinematics_estimated.linear_acceleration.to_numpy_array()
+                iv = self.state.kinematics_estimated.linear_velocity.to_numpy_array()
+                ij = np.zeros(3)
+                ic = np.array([iv, ia, ij])
 
                 d = np.linalg.norm((p-(tp+goal.offset)))
 
@@ -222,15 +231,17 @@ class Agent(drone.Drone):
                 avg_spd = np.linalg.norm(target_vel) + spd_gain*d
                 avg_spd = np.minimum(avg_spd, 4.0)
 
+                self.controller.set_goals(waypoints, ic, fc, avg_spd)
+
                 cmd = MoveToLocationGoal()
                 cmd.target = pt
                 cmd.timeout = 1/self.freq * 2
                 cmd.tolerance = 0.1
                 cmd.speed = avg_spd
 
-                cmd.fvel = vt
-                cmd.facc = at
-                cmd.fjrk = jt
+                cmd.fvel = fv
+                cmd.facc = fa
+                cmd.fjrk = fj
 
                 cmd.yaw_frame = "world"
                 cmd.yaw = 0
@@ -238,6 +249,7 @@ class Agent(drone.Drone):
                 self.cmd = cmd
 
                 prev_object_update_time = rospy.get_time()
+                self.t0 = prev_object_update_time
 
 
             feedback_vector = Vector3r(*(tp+goal.offset)) - self.state.kinematics_estimated.position
@@ -273,9 +285,6 @@ class Agent(drone.Drone):
 
             self.__track_action.publish_feedback(feedback)
             sleeper.sleep()
-
-            prev_time = rospy.get_time()
-
             
         self.cmd = None
 

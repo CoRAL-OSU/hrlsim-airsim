@@ -5,13 +5,11 @@ from multiprocessing import Lock
 import math
 import numpy as np
 
-from airsim.client import MultirotorClient
-
 import rospy, actionlib
 
 from actionlib_msgs.msg import GoalStatus
 
-from geometry_msgs.msg import TwistStamped, PoseStamped, Point
+from geometry_msgs.msg import Point, Vector3
 from airsim_ros_cntrl.msg import Multirotor
 from airsim_ros_pkgs.srv import Takeoff, Land
 from actionlib_msgs.msg import GoalStatus
@@ -32,6 +30,7 @@ from target import Target
 
 from drone import DroneInfo
 from agent import Agent
+from minimum_snap import MinimumSnap
 
 
 class Team:
@@ -45,9 +44,7 @@ class Team:
         self,
         teamName: str,
         vehicle_list: List[str],
-        target: Target,
-        client: MultirotorClient,
-        lock: Lock,
+        target: Target
     ) -> None:
         """
         Contructs a team object.
@@ -57,11 +54,7 @@ class Team:
             teamName (str): The name of the team
             vehicle_list (List[str]): List of agent names
             target (Target): The target to track
-            client (MultirotorClient): The client to use
-            lock (Lock): The client lock
         """
-        self.client = client
-        self.lock = lock
         self.team_name = teamName
         self.vehicle_list = vehicle_list
         self.centroid_timer = None
@@ -77,7 +70,7 @@ class Team:
         self.__shutdown = False
 
         for i in self.vehicle_list:
-            proc = Agent(self.team_name, i, self.client, self.lock)
+            proc = Agent(self.team_name, i)
 
             self.drones[i] = DroneInfo(i, proc)
             self.drones[i].process.start()
@@ -91,10 +84,10 @@ class Team:
         """
 
         self.centroid_des_pub = rospy.Publisher(
-            "/"+self.team_name+"/centroid_des", Multirotor, queue_size=10
+            "/"+self.team_name+"/centroid_des", Multirotor, queue_size=2
         )
         self.centroid_act_pub = rospy.Publisher(
-            "/"+self.team_name+"/centroid_act", Multirotor, queue_size=10
+            "/"+self.team_name+"/centroid_act", Multirotor, queue_size=2
         )
 
         for i in self.vehicle_list:
@@ -117,13 +110,18 @@ class Team:
             srvs["shutdown"] = rospy.ServiceProxy(shutdown_srv_name, SetBool)
 
             track_object_action_name = prefix + "/track_object"
-            # move_to_location_action_name = prefix + "/move_to_location"
+            move_to_location_action_name = prefix + "/move_to_location"
 
             actions = dict()
             actions["track"] = actionlib.SimpleActionClient(
                 track_object_action_name, TrackObjectAction
             )
             actions["track"].wait_for_server()
+
+            actions["move_to_location"] = actionlib.SimpleActionClient(
+                move_to_location_action_name, MoveToLocationAction
+            )
+            actions["move_to_location"].wait_for_server()
 
             subs = dict()
             subs["multirotor"] = rospy.Subscriber(prefix+"/multirotor", Multirotor, self.agent_cb, i)
@@ -134,9 +132,7 @@ class Team:
 
             if self.target != None:
                 target_prefix = "/" + self.team_name + "/" + self.target.name
-                # subs = dict()
-                # subs['pos'] = rospy.Subscriber(target_prefix+"/pos", PoseStamped, )
-
+ 
                 srvs = dict()
                 srvs["shutdown"] = rospy.ServiceProxy(
                     target_prefix + "/shutdown", SetBool
@@ -147,44 +143,67 @@ class Team:
         self.drones[drone_name].state = msg
 
                 
-    def calculateCentroid(self) -> np.ndarray:
-        centroid = np.zeros((1,3))
+    def calculateCentroid(self) -> Multirotor:
+        centroidPos = np.zeros(3)
+        centroidVel = np.zeros(3)
         for drone in self.drones.values():
             pos = drone.state.state.pose.position
-            centroid += np.array([[pos.x, pos.y, pos.z]])
+            vel = drone.state.state.vel.linear
+            centroidPos += np.array([pos.x, pos.y, pos.z])
+            centroidVel += np.array([vel.x, vel.y, vel.z])
             
 
-        centroid /= len(self.drones.values())
+        centroidPos /= len(self.drones.values()) 
+        centroidVel /= len(self.drones.values())
+
+        centroid = Multirotor()
+        centroid.state.pose.position = Point(*centroidPos)
+        centroid.state.vel.linear = Vector3(*centroidVel)
         return centroid
 
     def activateAgents(self):
-        self.centroid_timer = rospy.Timer(rospy.Duration(1/80.0), self.centroid_timer_cb, oneshot=False)
-            
+        c = self.calculateCentroid().state.pose.position
+        curr_centroid = np.array([[c.x, c.y, c.z]]).T
+        ic = np.zeros((3,3))
+        fc = np.zeros((3,3))
+
+        goal = curr_centroid + np.array([[0,0,-5]]).T
+        waypoints = np.concatenate((curr_centroid, goal), 1)
+        avg_spd = 1
+
+        self.traj = MinimumSnap(waypoints, ic, fc, avg_spd)
+        self.t0 = rospy.get_time()
+
+        self.centroid_timer = rospy.Timer(rospy.Duration(0.01), self.centroid_timer_cb, oneshot=False)
+        self.track_object(timeout=-1, z_offset=0, object_name="centroid_des")
 
     def deactivateAgents(self):
         if self.centroid_timer != None:
             self.centroid_timer.shutdown()
+        
+        self.centroid_timer = None
 
 
-    def centroid_timer_cb(self):
-        # Handle actual centroid
-        centroid = self.calculateCentroid()
+    def centroid_timer_cb(self, event):
+        # Handle desired centroid
+        (desiredState, _) = self.traj.compute(rospy.get_time()-self.t0, np.zeros((10,1)))
+
         msg = Multirotor()
 
-        msg.state.pose.position = Point(*centroid)
-        self.centroid_act_pub.publish(msg)
+        msg.state.pose.position = Point(*desiredState[0:3])
+        msg.state.vel.linear = Vector3(*desiredState[7:10])
 
-        # Handle desired centroid
+        self.centroid_des_pub.publish(msg)
+
+        # Handle actual centroid
+        msg = self.calculateCentroid()
         if self.goal == None:
-            self.centroid_des_pub.publish(msg)
+            self.centroid_act_pub.publish(msg)
             return
 
         elif type(self.goal) != Multirotor:
             print("Unrecognized goal type: " + type(self.goal))
             return
-
-        #! HANDLE MINIMUM SNAP TRACKING OF TRAGET WRT CENTROID OF TEAM
-
 
     def getDroneList(self) -> Dict[str, Agent]:
         """
@@ -236,7 +255,7 @@ class Team:
 
 
     def move_to_location(
-        self, target: List[float], timeout: float, tolerance: float
+        self, target: List[float], speed: float, timeout: float, tolerance: float
     ) -> None:
         """
         Move agents to location in a circle configuration.
@@ -247,7 +266,7 @@ class Team:
             tolerance (float): the tolerance for the final position
         """
 
-        l = 8 * math.pi / 3
+        l = 4 * math.pi / 3
 
         delta_theta = 2 * math.pi / len(self.vehicle_list)
 
@@ -272,9 +291,10 @@ class Team:
             goal = MoveToLocationGoal(
                 target=position,
                 timeout=timeout,
+                speed = speed,
                 tolerance=tolerance,
                 yaw_frame=yaw_frame,
-                yaw=yaw,
+                yaw=yaw
             )
             self.drones[drone].actions["move_to_location"].send_goal(goal)
 
@@ -346,5 +366,26 @@ class Team:
             except rospy.ServiceException as e:
                 print("Service call failed: %s" % e)
 
-        with self.lock:
-            self.client.cancelLastTask()
+
+if __name__ == "__main__":
+
+    team = Team("team", ["Drone0", "Drone1"], None)
+
+    ######################################
+    #
+    #     SETUP ROS
+
+    rospy.init_node("swarm")
+    rospy.on_shutdown(team.shutdown)
+
+    team.setup_ros()
+    rospy.sleep(1)
+
+
+    team.move_to_location([-240,-250,-5], speed=2, timeout=10, tolerance=0.1)
+    team.activateAgents()
+
+    rospy.sleep(20)
+
+
+    team.shutdown()

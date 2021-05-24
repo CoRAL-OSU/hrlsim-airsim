@@ -215,8 +215,8 @@ class Drone(Process):
         """
         Callback for the /shutdown rosservice. Calls process shutdown() method
         """
-        self.cmd_timer.shutdown()
         self.shutdown()
+        return SetBoolResponse(True, "True")
 
     def takeoff_cb(self, req: TakeoffRequest) -> TakeoffResponse:
         """
@@ -224,6 +224,7 @@ class Drone(Process):
         """
         self.cmd_timer.shutdown()
         self.cmd = Takeoff
+        return TakeoffResponse(True)
 
     def land_cb(self, req: LandRequest) -> LandResponse:
         """
@@ -231,6 +232,7 @@ class Drone(Process):
         """
         self.cmd_time.shutdown()
         self.cmd = Land
+        return LandResponse(True)
 
     def shutdown(self) -> None:
         """
@@ -239,6 +241,7 @@ class Drone(Process):
         self.cmd_timer.shutdown()
         self.cmd = None
         self.vel_cmd_pub.publish(self.stop_msg)
+        self._shutdown = True
 
     def get_origin(self, msg):
         self.origin_geo_point = msg
