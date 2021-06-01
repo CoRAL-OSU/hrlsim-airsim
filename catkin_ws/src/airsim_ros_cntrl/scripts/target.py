@@ -12,6 +12,9 @@ import airsim
 import rospy
 
 from airsim_ros_cntrl.msg import Multirotor, State
+from airsim_ros_pkgs.msg import VelCmd
+from airsim_ros_pkgs.srv import Takeoff, Land
+
 from std_msgs.msg import Header, Float32
 from std_srvs.srv import SetBool, SetBoolResponse, SetBoolRequest
 
@@ -23,7 +26,6 @@ from geometry_msgs.msg import (
     Accel,
     Vector3
 )
-
 
 class Target(Process):
     """
@@ -67,8 +69,8 @@ class Target(Process):
         self._shutdown = False
         self.flag_lock = Lock()
         self.prev_loop_time = -999
-        self.linear_acc_rate = 0.25
-        self.ang_acc_rate = 0.08
+        self.linear_acc_rate = 0.5
+        self.ang_acc_rate = 0.3
 
         self.client = MultirotorClient(ip)
         self.client.confirmConnection()
@@ -197,8 +199,9 @@ class Target(Process):
         else:
             a = 0
         v = current_velocity + a * self.time_step
-        if (a < 0 and current_velocity < target_velocity) or (
-            a > 0 and current_velocity > target_velocity
+
+        if (a == 0 and current_velocity < target_velocity) or (
+            a == 0 and current_velocity > target_velocity
         ):
             v = target_velocity
 
@@ -213,7 +216,11 @@ class Target(Process):
         """
         self.__setup_ros()
 
-        time = 0
+        rospy.sleep(1)
+
+        traj_init_time = rospy.get_time()
+        way_init_time = traj_init_time
+        time = traj_init_time
 
         rate = rospy.Rate(self.freq)
 
@@ -226,24 +233,29 @@ class Target(Process):
         linear_acc = 0
 
         way_lin, way_ang, way_time = self.path[self.path_index]
+        traj_time = sum(row[2] for row in self.path)
+
 
         _, _, yaw = airsim.to_eularian_angles(self.pos.orientation)
 
         state = airsim.MultirotorState()
 
-        while not rospy.is_shutdown() and self._shutdown == False:
+        print("Trajectory time: " + str(traj_time))
+
+        while not rospy.is_shutdown() and self._shutdown == False and time - traj_init_time < traj_time:
             with self.flag_lock:
                 if self._shutdown == True:
                     break
-            if time is not None and time >= way_time:
+
+
+            if time - way_init_time >= way_time:
                 self.path_index += 1
                 if self.path_index == len(self.path):
                     way_lin = 0
                     way_ang = 0
-                    time = None
                 else:
                     way_lin, way_ang, way_time = self.path[self.path_index]
-                    time = 0
+                    way_init_time = time
 
             v_yaw, angular_acc = self.generate_velocity(
                 v_yaw, way_ang, self.ang_acc_rate
@@ -278,28 +290,55 @@ class Target(Process):
 
             self.publish_multirotor_state(state)
 
-            if speed == 0 and v_yaw == 0:
-                break
-
-            if time is not None:
-                time += self.time_step
             rate.sleep()
+
+            self.time_step = rospy.get_time() - time
+            time = rospy.get_time()
 
         print(self.object_name + " QUITTING")
 
 
 if __name__ == "__main__":
 
-    client = airsim.MultirotorClient()
-    name = "African_Poacher_1_WalkwRifleLow_Anim2_2"
-    pos = client.simGetObjectPose("African_Poacher_1_WalkwRifleLow_Anim2_2")
-    pos.position = airsim.Vector3r(-235, -242, 0)
-    pos.orientation = airsim.Vector3r(0, 0, 0)
-    client.simSetObjectPose(name, pos)
+    ip = "10.0.0.3"
 
-    drone = Target(
-        "test", name, 2, path=[(2, -0.5, 15), (1, 0.5, 15)]
-    )
-    drone.start()
+    run_camera = True
 
-    drone.join()
+    client = airsim.MultirotorClient(ip=ip)
+    client.confirmConnection()
+
+
+    target_list = [
+        (
+            "African_Poacher_1_WalkwRifleLow_Anim2_2",
+            [(0,0,19), (0,0,7), (1.5, 0, 3.5), (1.5, -pi/10, 3), (1.5, -0.01, 10), (1.5,pi/5,1), (1.5, 0, 15)],
+            airsim.Vector3r(-250, -312, 0),
+            airsim.to_quaternion(0, 0, 2.32),
+        ),
+        (
+            "African_Poacher_1_WalkwRifleLow_Anim3_11",
+            [(0,0,19), (1.5, 0, 8), (1.5, -pi/10, 3.5), (1.5, -0.01, 10), (1.5,-pi/10,1), (1.5,0,15)],
+            airsim.Vector3r(-259, -318, 0),
+            airsim.to_quaternion(0, 0, 2.32),
+        ),
+    ]
+
+    target_procs = []
+    for t in target_list:
+        client.simSetObjectPose(t[0], airsim.Pose(t[2],t[3]))
+        target_procs.append(Target("test", t[0], path=t[1], ip=ip))
+        target_procs[-1].start()
+
+    if run_camera:
+        from camera import Camera
+
+        rospy.init_node("target_test")
+        rospy.sleep(1)
+        
+        camera = Camera("Camera")
+        camera.start()
+        camera.join()
+
+
+    for t in target_procs:
+        t.join()

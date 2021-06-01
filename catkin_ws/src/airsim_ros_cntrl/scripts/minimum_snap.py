@@ -134,13 +134,14 @@ class MinimumSnap:
 
 
 
-    def compute(self, t: float, state: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    def compute(self, t: float, state: np.ndarray, compute_control=True) -> Tuple[np.ndarray, np.ndarray]:
         """
         Computes the next trajectory from time and state
 
         Args:
             t (float): The current time
             state (np.ndarray): the state list
+            compute_control (bool): if true, return control as second value. else, return linear acceleration
 
         Returns:
             Tuple[np.ndarray, np.ndarray]: Tuple of lists
@@ -265,6 +266,10 @@ class MinimumSnap:
         u0 = np.zeros((4, 1))
 
         omega_r = cr * cp * desired_state.yawdot
+
+        if not compute_control:
+            return x0, desired_state.acc
+
         u0[2] = omega_r
 
         R_BA = np.array(
