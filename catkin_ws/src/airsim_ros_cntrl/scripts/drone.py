@@ -223,15 +223,15 @@ class Drone(Process):
         Callback for the rosservice /takeoff. Passes to AirSim ROS Wrapper
         """
         self.cmd_timer.shutdown()
-        self.cmd = Takeoff
+        self.cmd = Takeoff()
         return TakeoffResponse(True)
 
     def land_cb(self, req: LandRequest) -> LandResponse:
         """
         Callback for the rosservice /land. Passes to AirSim ROS Wrapper
         """
-        self.cmd_time.shutdown()
-        self.cmd = Land
+        self.cmd_timer.shutdown()
+        self.cmd = Land()
         return LandResponse(True)
 
     def shutdown(self) -> None:

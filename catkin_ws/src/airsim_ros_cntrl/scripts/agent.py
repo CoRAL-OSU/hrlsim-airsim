@@ -163,6 +163,7 @@ class Agent(drone.Drone):
 
         success = True
         target_topic = self.swarm_name + "/" + goal.object_name
+        print(target_topic)
 
         target_state_sub = rospy.Subscriber(
             target_topic,
@@ -188,6 +189,8 @@ class Agent(drone.Drone):
         else:
             runforever = True
 
+
+        first = True
         while runforever == True or rospy.get_time() - start_time < goal.timeout:
             if self.__track_action.is_preempt_requested():
                 rospy.loginfo("%s: Preempted" % self.__track_action_name)
@@ -222,16 +225,21 @@ class Agent(drone.Drone):
 
                 d = np.linalg.norm((p-(tp+goal.offset)))
 
-                #spd_gain = np.interp(d, [0, 30], [0, 0.1])
-                spd_gain = 0.125
+                target_spd = np.linalg.norm(target_vel)
 
                 if d < 0.25:
-                    spd_gain = 0.0
+                    spd_gain = 0
+                else:
+                    spd_gain = 0.5
+                
+                avg_spd = target_spd + spd_gain*d
+                avg_spd = np.minimum(avg_spd, 3.0)
+                avg_spd = np.maximum(avg_spd, 0.1)
 
-                avg_spd = np.linalg.norm(target_vel) + spd_gain*d
-                avg_spd = np.minimum(avg_spd, 4.0)
-
-                self.controller.set_goals(waypoints, ic, fc, avg_spd)
+                if target_spd != 0 or first:
+                    self.controller.set_goals(waypoints, ic, fc, avg_spd)
+                    prev_object_update_time = rospy.get_time()
+                    self.t0 = prev_object_update_time
 
                 cmd = MoveToLocationGoal()
                 cmd.target = pt
@@ -248,8 +256,9 @@ class Agent(drone.Drone):
 
                 self.cmd = cmd
 
-                prev_object_update_time = rospy.get_time()
-                self.t0 = prev_object_update_time
+
+
+                first = False
 
 
             feedback_vector = Vector3r(*(tp+goal.offset)) - self.state.kinematics_estimated.position

@@ -6,7 +6,7 @@ from target import Target
 from math import cos, pi, sin, atan2, pow
 import numpy as np
 
-from camera import Camerak
+from camera import Camera
 
 import multiprocessing as mp
 import airsim, rospy
@@ -74,8 +74,8 @@ if __name__ == "__main__":
     #     SETUP PYTHON CLIENT
     #
 
-    #ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
-    ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
+    ip = ""  # UNCOMMENT TO RUN ON LOCALHOST
+    #ip = "10.0.0.3"  # "192.168.1.129"         # UNCOMMENT TO RUN ON REMOTE HOST
 
     client = airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
@@ -102,17 +102,19 @@ if __name__ == "__main__":
         vehicle_list = getDroneListFromSettings()
 
     vehicle_list = ["Drone0", "Drone1", "Drone2", "Drone3", "Drone4", "Drone5", "Drone6", "Drone7", "Drone8", "Drone9"]
+    #vehicle_list = ["Drone0", "Drone1", "Drone2", "Drone3"]
+
     drone_list = []
     target_list = [
         (
             "African_Poacher_1_WalkwRifleLow_Anim2_2",
-            [(0,0,19), (0,0,7), (1.5, 0, 3.5), (1.5, -pi/10, 3), (1.5, -0.01, 10), (1.5,pi/5,1), (1.5, 0, 15)],
+            [(0,0,19), (0,0,7), (1.5, 0, 3.5), (1.5, -pi/10, 3), (1.5, -0.01, 10), (1.5,pi/5,1), (1.5, 0, 15), (1.5,-pi/5,1), (1.5,-0.02,30)],
             airsim.Vector3r(-250, -312, 0),
             airsim.to_quaternion(0, 0, 2.32),
         ),
         (
             "African_Poacher_1_WalkwRifleLow_Anim3_11",
-            [(0,0,19), (1.5, 0, 8), (1.5, -pi/10, 3.5), (1.5, -0.01, 10), (1.5,-pi/10,1), (1.5,0,15)],
+            [(0,0,19), (1.5, 0, 8), (1.5, -pi/10, 3.5), (1.5, -0.01, 10), (1.5,-pi/10,1), (1.5,0,15), (1.5,pi/10,1), (1.5,-0.02,30)],
             airsim.Vector3r(-259, -318, 0),
             airsim.to_quaternion(0, 0, 2.32),
         ),
@@ -138,7 +140,7 @@ if __name__ == "__main__":
             * len(drone_list)
             // len(target_list)
         ]
-        s = Team("Team" + str(i), sub_drone, target_procs[target_list[i][0]], client, lock)
+        s = Team("Team" + str(i), sub_drone, target_procs[target_list[i][0]])
         team_list.append(s)
 
     ######################################
@@ -161,11 +163,31 @@ if __name__ == "__main__":
     camera = Camera("Camera")
     camera.start()
 
+    
     print("TAKING OFF")
     for team in team_list:
-        team.takeoff(False)
+        team.takeoff()
 
     rospy.sleep(5)
+    team_list[0].activateAgents(-5)
+    team_list[1].activateAgents(-10)
+
+    team_list[0].moveInFormation([-245,-255,-5], 2)
+    team_list[1].moveInFormation([-240,-255,-10],2)
+    
+    #for team in team_list:
+    #    #team.takeoff()
+    #    team.activateAgents(-5)
+    
+
+    rospy.sleep(10)
+
+    #team.moveInFormation([-250,-250,-5], 1.5)
+    #rospy.sleep(10)
+    
+    #team.trackTargetInFormation(20, -10)
+
+    #rospy.sleep(20)
 
     # print("MOVE TO [0,0,-4]")
     # team_list[0].move_to_location(target=[10,10,-4], timeout=10, tolerance=0.5)
@@ -174,24 +196,28 @@ if __name__ == "__main__":
 
     
     print("BEGIN TRACKING")
-    for team in team_list:
-        team.track_object(40,-4)
-
+    team_list[0].track_object(90, -5)
+    team_list[1].track_object(90,-10)
+    
+    #for team in team_list:
+    #    team.track_object(40,-4)
+    
     for team in team_list:
         team.wait()
-
+    
 
 
 
     print("LANDING")
     for team in team_list:
-        team.land(False)
+        team.land()
 
     rospy.sleep(5)
-
+    
     print("SHUTDOWN")
     for team in team_list:
         team.shutdown()
+    
 
     for t in target_list:
         target_procs[t[0]].shutdown()

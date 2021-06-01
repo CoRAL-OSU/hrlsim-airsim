@@ -57,8 +57,8 @@ class Camera(th.Thread):
         self.moveAtVelAsync(vel, 5).join()
 
         vel.twist.linear.z = 0
-        vel.twist.angular.z = -0.01
-        self.moveAtVelAsync(vel, 40).join()       
+        vel.twist.angular.z = -0.0075
+        self.moveAtVelAsync(vel, 65).join()       
 
 
 if __name__ == "__main__":
