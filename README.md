@@ -21,7 +21,6 @@ To build run `catkin_make` in the `catkin_ws`
 ## Launch Procedures
 ```sh
 roscd airsim_ros_cntrl/scripts
-roslaunch airsim_ros_pkgs airsim_node.launch host:=<ip> publish_clock:=True
-rosparam set /use_sim_time True
+roslaunch airsim_ros_pkgs airsim_node.launch host:=<ip> publish_clock:=True &
 ./run_sim.py 
 ```
