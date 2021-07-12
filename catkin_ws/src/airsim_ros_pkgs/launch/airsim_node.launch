@@ -2,10 +2,14 @@
 	<arg name="output" default="log"/>
 	<arg name="publish_clock" default="true"/>
 	<arg name="is_vulkan" default="false"/>
-	<arg name="host" default="10.0.0.3" />
+	<arg name="host" default="127.0.0.1" />
 	<arg name="update_period" default="0.01"/>
 	<arg name="image_update_period" default="0.025"/>
 
+
+
+	<!-- Initialize /use_sim_time to False -->
+	<param name="/use_sim_time" value="False" />
 
 	<node name="airsim_node" pkg="airsim_ros_pkgs" type="airsim_node" output="$(arg output)">
 		<param name="is_vulkan" type="bool" value="$(arg is_vulkan)" /> 
@@ -19,4 +23,10 @@
 
 	<!-- Static transforms -->
 	<include file="$(find airsim_ros_pkgs)/launch/static_transforms.launch"/>
+	
+	<!-- Wait a second and set /use_sim_time to True -->
+	<node name="sim_time_setter" pkg="airsim_ros_cntrl" type="set_sim_time.sh" />
+
+
+
 </launch>

@@ -121,6 +121,8 @@ void AirsimROSWrapper::create_ros_pubs_from_settings_json()
     gimbal_angle_euler_cmd_sub_ = nh_private_.subscribe("gimbal_angle_euler_cmd", 50, &AirsimROSWrapper::gimbal_angle_euler_cmd_cb, this);
     origin_geo_point_pub_ = nh_private_.advertise<airsim_ros_pkgs::GPSYaw>("origin_geo_point", 10);       
 
+    set_wind_vel_sub_ = nh_private_.subscribe("set_wind_velocity", 50, &AirsimROSWrapper::set_wind_velocity_cb, this);
+
     airsim_img_request_vehicle_name_pair_vec_.clear();
     image_pub_vec_.clear();
     cam_info_pub_vec_.clear();
@@ -165,7 +167,7 @@ void AirsimROSWrapper::create_ros_pubs_from_settings_json()
             
             // bind to a single callback. todo optimal subs queue length
             // bind multiple topics to a single callback, but keep track of which vehicle name it was by passing curr_vehicle_name as the 2nd argument 
-            drone->throttle_rates_cmd_sub = nh_private_.subscribe<geometry_msgs::Twist>(curr_vehicle_name + "/throttle_rates_cmd", 1,
+            drone->throttle_rates_cmd_sub = nh_private_.subscribe<geometry_msgs::TwistStamped>(curr_vehicle_name + "/throttle_rates_cmd", 1,
                 boost::bind(&AirsimROSWrapper::throttle_rates_cmd_cb, this, _1, vehicle_ros->vehicle_name)); 
             drone->vel_cmd_body_frame_sub = nh_private_.subscribe<airsim_ros_pkgs::VelCmd>(curr_vehicle_name + "/vel_cmd_body_frame", 1, 
                 boost::bind(&AirsimROSWrapper::vel_cmd_body_frame_cb, this, _1, vehicle_ros->vehicle_name)); // todo ros::TransportHints().tcpNoDelay();
@@ -325,7 +327,7 @@ void AirsimROSWrapper::create_ros_pubs_from_settings_json()
 
     // todo add per vehicle reset in AirLib API
     reset_srvr_ = nh_private_.advertiseService("reset",&AirsimROSWrapper::reset_srv_cb, this);
-
+    enable_api_srvr_ = nh_private_.advertiseService("enable_api", &AirsimROSWrapper::enable_api_srv_cb, this);
     if (publish_clock_)
     {
         clock_pub_ = nh_private_.advertise<rosgraph_msgs::Clock>("/clock", 1);
@@ -454,6 +456,13 @@ bool AirsimROSWrapper::reset_srv_cb(airsim_ros_pkgs::Reset::Request& request, ai
     return true; //todo
 }
 
+bool AirsimROSWrapper::enable_api_srv_cb(std_srvs::SetBool::Request& request, std_srvs::SetBool::Response& response) {
+    std::lock_guard<std::mutex> guard(drone_control_mutex_);
+
+    airsim_client_->enableApiControl(request.data);
+    return true;
+}
+
 tf2::Quaternion AirsimROSWrapper::get_tf2_quat(const msr::airlib::Quaternionr& airlib_quat) const
 {
     return tf2::Quaternion(airlib_quat.x(), airlib_quat.y(), airlib_quat.z(), airlib_quat.w());
@@ -491,16 +500,16 @@ msr::airlib::Pose AirsimROSWrapper::get_airlib_pose(const float& x, const float&
 }
 
 
-void AirsimROSWrapper::throttle_rates_cmd_cb(const geometry_msgs::Twist::ConstPtr& msg, const std::string& vehicle_name) {
+void AirsimROSWrapper::throttle_rates_cmd_cb(const geometry_msgs::TwistStamped::ConstPtr& msg, const std::string& vehicle_name) {
     std::lock_guard<std::mutex> guard(drone_control_mutex_);
 
     auto drone = static_cast<MultiRotorROS*>(vehicle_name_ptr_map_[vehicle_name].get());
 
     // airsim uses radians here
-    drone->throttle_rates_cmd.p = msg->angular.x;
-    drone->throttle_rates_cmd.q = msg->angular.y;
-    drone->throttle_rates_cmd.r = msg->angular.z;
-    drone->throttle_rates_cmd.throttle = msg->linear.z;
+    drone->throttle_rates_cmd.p = msg->twist.angular.x;
+    drone->throttle_rates_cmd.q = msg->twist.angular.y;
+    drone->throttle_rates_cmd.r = msg->twist.angular.z;
+    drone->throttle_rates_cmd.throttle = msg->twist.linear.z;
     drone->has_throttle_rates_cmd = true;
 }
 
@@ -625,6 +634,12 @@ void AirsimROSWrapper::vel_cmd_all_world_frame_cb(const airsim_ros_pkgs::VelCmd&
         drone->vel_cmd.yaw_mode.yaw_or_rate = math_common::rad2deg(msg.twist.angular.z);
         drone->has_vel_cmd = true;
     }
+}
+
+
+void AirsimROSWrapper::set_wind_velocity_cb(const geometry_msgs::Vector3::ConstPtr& msg) {
+    msr::airlib::Vector3r wind = msr::airlib::Vector3r(msg->x, msg->y, msg->z);
+    airsim_client_->simSetWind(wind);
 }
 
 // todo support multiple gimbal commands

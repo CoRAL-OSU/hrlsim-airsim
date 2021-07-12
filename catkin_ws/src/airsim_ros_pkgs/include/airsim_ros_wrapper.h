@@ -32,6 +32,7 @@ STRICT_MODE_ON
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <geometry_msgs/Twist.h>
+#include <geometry_msgs/TwistStamped.h>
 #include <image_transport/image_transport.h>
 #include <iostream>
 #include <math.h>
@@ -53,6 +54,7 @@ STRICT_MODE_ON
 #include <sensor_msgs/Range.h>
 #include <rosgraph_msgs/Clock.h>
 #include <std_srvs/Empty.h>
+#include <std_srvs/SetBool.h>
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
@@ -228,7 +230,7 @@ private:
     void lidar_timer_cb(const ros::TimerEvent& event);
 
     /// ROS subscriber callbacks
-    void throttle_rates_cmd_cb(const geometry_msgs::Twist::ConstPtr& msg, const std::string& vehicle_name);
+    void throttle_rates_cmd_cb(const geometry_msgs::TwistStamped::ConstPtr& msg, const std::string& vehicle_name);
     void vel_cmd_world_frame_cb(const airsim_ros_pkgs::VelCmd::ConstPtr& msg, const std::string& vehicle_name);
     void vel_cmd_body_frame_cb(const airsim_ros_pkgs::VelCmd::ConstPtr& msg, const std::string& vehicle_name);
 
@@ -241,6 +243,8 @@ private:
     // void vel_cmd_body_frame_cb(const airsim_ros_pkgs::VelCmd& msg, const std::string& vehicle_name);
     void gimbal_angle_quat_cmd_cb(const airsim_ros_pkgs::GimbalAngleQuatCmd& gimbal_angle_quat_cmd_msg);
     void gimbal_angle_euler_cmd_cb(const airsim_ros_pkgs::GimbalAngleEulerCmd& gimbal_angle_euler_cmd_msg);
+
+    void set_wind_velocity_cb(const geometry_msgs::Vector3::ConstPtr& msg);
 
     // commands
     void car_cmd_cb(const airsim_ros_pkgs::CarControls::ConstPtr& msg, const std::string& vehicle_name);
@@ -259,7 +263,7 @@ private:
     bool land_group_srv_cb(airsim_ros_pkgs::LandGroup::Request& request, airsim_ros_pkgs::LandGroup::Response& response);
     bool land_all_srv_cb(airsim_ros_pkgs::Land::Request& request, airsim_ros_pkgs::Land::Response& response);
     bool reset_srv_cb(airsim_ros_pkgs::Reset::Request& request, airsim_ros_pkgs::Reset::Response& response);
-
+    bool enable_api_srv_cb(std_srvs::SetBool::Request& request, std_srvs::SetBool::Response& response);
     /// ROS tf broadcasters
     void publish_camera_tf(const ImageResponse& img_response, const ros::Time& ros_time, const std::string& frame_id, const std::string& child_frame_id);
     void publish_odom_tf(const nav_msgs::Odometry& odom_msg);
@@ -312,8 +316,11 @@ private:
     // subscriber / services for ALL robots
     ros::Subscriber vel_cmd_all_body_frame_sub_;
     ros::Subscriber vel_cmd_all_world_frame_sub_;
+    ros::Subscriber set_wind_vel_sub_;
+
     ros::ServiceServer takeoff_all_srvr_;
     ros::ServiceServer land_all_srvr_;
+    ros::ServiceServer enable_api_srvr_;
 
     // todo - subscriber / services for a GROUP of robots, which is defined by a list of `vehicle_name`s passed in the ros msg / srv request
     ros::Subscriber vel_cmd_group_body_frame_sub_;

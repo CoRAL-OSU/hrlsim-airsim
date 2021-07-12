@@ -73,7 +73,6 @@ class Target(Process):
         self.ang_acc_rate = 0.3
 
         self.client = MultirotorClient(ip)
-        self.client.confirmConnection()
         self.pos = self.client.simGetObjectPose(self.object_name)
 
         print("NEW TARGET: " + self.object_name)
@@ -113,12 +112,8 @@ class Target(Process):
 
         Returns (StdBoolResponse): True on success
         """
-
-        print(self.object_name + " SHUTDOWN REQUEST RECEIVED")
         with self.flag_lock:
             self._shutdown = True
-
-            print(self.object_name + " SHUTDOWN REQUEST HANDLED")
             return SetBoolResponse(True, "")
 
     def shutdown(self) -> None:
@@ -294,8 +289,6 @@ class Target(Process):
 
             self.time_step = rospy.get_time() - time
             time = rospy.get_time()
-
-        print(self.object_name + " QUITTING")
 
 
 if __name__ == "__main__":

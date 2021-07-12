@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-/home/cthornton/projects/arl/sims/airsim/catkin_ws/devel/./cmake.lock 23
-=======
-/media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/./cmake.lock 12
+/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/./cmake.lock 6
+/media/cthornton/Data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/./cmake.lock 10
 /home/cthornton/projects/arl/sims/airsim/catkin_ws/devel/./cmake.lock 17
->>>>>>> 64496de0692f122469f4e5adeb07bfeb3ec577a0
+/media/storage/local/college/research/arl/sims/airsim/catkin_ws/devel/./cmake.lock 12

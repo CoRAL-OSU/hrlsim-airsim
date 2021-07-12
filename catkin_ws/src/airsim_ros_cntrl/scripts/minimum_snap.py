@@ -11,6 +11,8 @@ import matplotlib.offsetbox as mob
 
 import lqr
 
+import airsim
+
 
 class DesiredState:
     """
@@ -233,7 +235,7 @@ class MinimumSnap:
         dx = self.waypoints0[0, -1] - state[0, 0]
         dy = self.waypoints0[1, -1] - state[1, 0]
 
-        _, _, cyaw = lqr.LQR.quat2rpy(state[3:7])
+        _, _, cyaw = airsim.to_eularian_angles(airsim.Quaternionr(state[4], state[5], state[6], state[3]))
 
         if dx ** 2 + dy ** 2 < 1:
             desired_state.yaw = cyaw  # 0
@@ -261,7 +263,10 @@ class MinimumSnap:
         cp = math.cos(pitch)
         sp = math.sin(pitch)
 
-        x0[3:7] = np.array([lqr.LQR.rpy2quat(roll, pitch, yaw)]).T
+        q = airsim.to_quaternion(pitch, roll, yaw).to_numpy_array()
+        x0[3,0] = q[3]
+        x0[4:7,0] = q[0:3]
+
 
         u0 = np.zeros((4, 1))
 
@@ -298,6 +303,7 @@ class MinimumSnap:
 
 if __name__ == "__main__":
 
+    rospy.init_node("minimum_snap_test")
 
     seconds = 30
     points_per_second = 100

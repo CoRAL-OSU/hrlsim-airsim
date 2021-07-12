@@ -104,7 +104,7 @@ class Team:
 
         for i in self.vehicle_list:
 
-            prefix = "/" + self.team_name + "/" + i
+            prefix = self.team_name + "/" + i
 
             pubs = dict()
 
@@ -176,7 +176,7 @@ class Team:
 
         goal = curr_centroid + np.array([[0,0,altitude]]).T
         waypoints = np.concatenate((curr_centroid, goal), 1)
-        avg_spd = 1
+        avg_spd = 1.0
 
         self.traj = MinimumSnap(waypoints, ic, fc, avg_spd)
         self.t0 = rospy.get_time()
@@ -334,7 +334,7 @@ class Team:
 
 
     def move_to_location(
-        self, target: List[float], speed: float, timeout: float, tolerance: float
+        self, target: List[float], speed: float, timeout: float, tolerance: float, position_frame = MoveToLocationGoal.GLOBAL_FRAME, yaw_frame = MoveToLocationGoal.GLOBAL_FRAME
     ) -> None:
         """
         Move agents to location in a circle configuration.
@@ -343,6 +343,8 @@ class Team:
             target (List[float]): the center location to move the agents to
             timeout (float): the timeout to stop moving
             tolerance (float): the tolerance for the final position
+            position_frame (int16): frame of reference for posiion command
+            yaw_frame (int16): frame of reference for yaw command
         """
 
         l = 4 * math.pi / 3
@@ -362,13 +364,13 @@ class Team:
             position.append(target[1] - r * math.sin(delta_theta * i))
             position.append(target[2])
 
-            yaw_frame = "local"
             yaw = 0.0
 
             i += 1
 
             goal = MoveToLocationGoal(
                 target=position,
+                position_frame=position_frame,
                 timeout=timeout,
                 speed = speed,
                 tolerance=tolerance,
@@ -425,8 +427,6 @@ class Team:
         """
         Shuts down the swarm
         """
-        print("SHUTDOWN SWARM")
-
         if self.__shutdown == True:
             return
 

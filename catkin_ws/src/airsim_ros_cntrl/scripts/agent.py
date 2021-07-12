@@ -1,33 +1,23 @@
 #! /usr/bin/python3
 
-import math, airsim, rospy, actionlib, sys
+import rospy, actionlib, sys
 
 import numpy as np
 
 import drone
 
-from airsim.types import MultirotorState, Vector3r, Quaternionr
+from airsim.types import MultirotorState, Vector3r
 from airsim_ros_cntrl.msg import (
     Multirotor,
-    Sensors,
-    State,
     TrackObjectAction,
     TrackObjectFeedback,
     TrackObjectResult,
     TrackObjectGoal,
-    MoveToLocationAction,
-    MoveToLocationFeedback,
     MoveToLocationGoal,
-    MoveToLocationResult  
 )
 
 from airsim_ros_pkgs.msg import GimbalAngleEulerCmd, GimbalAngleQuatCmd
 
-from geometry_msgs.msg import (
-    Twist,
-    Pose,
-    Quaternion
-)
 class Agent(drone.Drone):
     """
     Class to handle individual agents of a team.
@@ -80,14 +70,6 @@ class Agent(drone.Drone):
         Returns: None
         """
         drone.Drone.setup_ros(self)
-
-        target_topic = self.swarm_name + "/Target0/"
-        target_state_sub = rospy.Subscriber(
-            target_topic + "multirotor",
-            Multirotor,
-            callback=self.__target_state_cb,
-            queue_size=10,
-        )
 
         prefix = self.swarm_name + "/" + self.drone_name + "/"
 
@@ -240,6 +222,7 @@ class Agent(drone.Drone):
                     self.controller.set_goals(waypoints, ic, fc, avg_spd)
                     prev_object_update_time = rospy.get_time()
                     self.t0 = prev_object_update_time
+                    first = False
 
                 cmd = MoveToLocationGoal()
                 cmd.target = pt
@@ -255,11 +238,6 @@ class Agent(drone.Drone):
                 cmd.yaw = 0
 
                 self.cmd = cmd
-
-
-
-                first = False
-
 
             feedback_vector = Vector3r(*(tp+goal.offset)) - self.state.kinematics_estimated.position
 

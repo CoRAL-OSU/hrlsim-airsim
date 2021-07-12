@@ -4,7 +4,6 @@ from typing import Any, List, Tuple
 from airsim import Vector3r, Quaternionr, MultirotorState
 import airsim
 import rospy
-import slycot
 import control
 
 import minimum_snap
@@ -23,16 +22,14 @@ class LQR:
         self.Q: np.ndarray = np.diag([100, 100, 100, 1, 1, 1, 1, 10, 10, 10])
         self.R: np.ndarray = np.diag([1, 1, 2e1, 1.0])
 
-        self.A: np.ndarray = np.zeros((10, 10))
-        self.B: np.ndarray = np.zeros((10, 4))
         self.K: np.ndarray = np.zeros((10, 10))
 
         self.mass = 1  # kg
         self.max_thrust = 4.1794 * 4  # N
 
-        self.linearized_rotation = np.array([[10,10,10]]).T
+        self.linearized_rotation = airsim.to_quaternion(0,0,0)
+        self.first = True
 
-        self.update_gain_period = 1/30  # seconds
         self.prev_gain_time = -999
 
     def set_costs(self, Q: List[int] = None, R: List[int] = None) -> None:
@@ -76,51 +73,38 @@ class LQR:
 
         self.traj_generator = minimum_snap.MinimumSnap(waypoints, ic, fc, scaling_factor)
 
-    def updateGains(self, x: np.ndarray, rpydot: Vector3r, prev_accel_cmd: int) -> None:
+    def updateGains(self, x: np.ndarray, omega: Vector3r, body_z_accel: float) -> None:
         """
         Updates the gains for the controller
 
         Args:
             x (np.ndarray): State, must be 10x1 state vector
             rpydot (Vector3r): Angular Vector 
-            prev_accel_cmd (int): Previous Acceleration
+            body_z_accel (int): Previous Acceleration
         """
-        roll, pitch, _ = LQR.quat2rpy(x[3:7])
-
-        cr = math.cos(roll)
-        sr = math.sin(roll)
-        cp = math.cos(pitch)
-        tp = math.tan(pitch)
-
-        R = np.array([[1, sr * tp, cr * tp], [0, cr, -sr], [0, sr / cp, cr / cp]])
-
-        rpydot = np.array([[rpydot.y_val, -rpydot.x_val, rpydot.z_val]]).T
-        omega = np.linalg.inv(R) * rpydot
-        #omega = omega[0, 0], omega[1, 0], omega[2, 0]]
-
         # c = (9.8-state.kinematics_estimated.linear_acceleration.z_val)/(cr*cp)
         # Compute thrust from command -> this is dangerous as there are unknown thrusts
         #   - start with open-loop from previous command
         #   - work to get motor thrust directly from AirSim
         #   - another option includes using nominal thrust, or 9.8/(cr*cp)
 
-        c = (9.8 - prev_accel_cmd) / (cr * cp)
+        pitch, roll, _ = airsim.to_eularian_angles(airsim.Quaternionr(x[4], x[5], x[6], x[3]))
+        c = (9.8-body_z_accel)/(math.cos(roll)*math.cos(pitch))
 
-        u = np.array([[omega[0,0], omega[1,0], omega[2,0], c]]).T
+        u = np.array([[omega[0], omega[1], omega[2], c]]).T
 
         for i in range(0, 4):
             if abs(u[i]) < 0.001:
                 u[i] = 0.001
 
-        self.A = self.__updateA(x, u)
-        self.B = self.__updateB(x)
+        A, B = self.computeLinearization(x, u)
 
-        self.K, _, _ = control.lqr(self.A, self.B, self.Q, self.R)
+        self.K, _, _ = control.lqr(A, B, self.Q, self.R)
 
 
 
     def computeControl(
-        self, t0: float, state: MultirotorState, prev_accel_cmd: int, drone_name
+        self, t0: float, state: MultirotorState, body_z_accel: int, drone_name
     ) -> Tuple[np.ndarray, np.ndarray, Any]:
         """
         Computes the control for a given state
@@ -128,7 +112,7 @@ class LQR:
         Args:
             t (float): the time
             state (MultirotorState): the state of the drone
-            prev_accel_cmd (int): previous acceleration
+            body_z_accel (int): previous acceleration
 
         Returns:
             Tuple[np.ndarray, np.ndarray, np.matrix]: Tuple representing
@@ -142,30 +126,22 @@ class LQR:
         v = state.kinematics_estimated.linear_velocity
         v = np.array([[v.x_val, v.y_val, v.z_val]]).T
 
-        pitch, roll, yaw = airsim.to_eularian_angles(state.kinematics_estimated.orientation)
-        r = np.array([[roll, pitch, yaw]]).T
-
-        #cr = math.cos(roll)
-        #sr = math.sin(roll)
-        #cp = math.cos(pitch)
-        #tp = math.tan(pitch)
-
-        #R = np.matrix([[1, sr * tp, cr * tp], [0, cr, -sr], [0, sr / cp, cr / cp]])
-
         x = np.concatenate((p,q,v) , 0)
         x = LQR.ned2xyz(x)
 
-        if rospy.get_time() - self.prev_gain_time > self.update_gain_period: #np.linalg.norm((r-self.linearized_rotation)) > math.pi/1000:  # 
-            #if drone_name == "Drone0":
-            #    print("Linearized: " + str(rospy.get_time() - self.prev_gain_time))
+        rotation = (state.kinematics_estimated.orientation*self.linearized_rotation.inverse()).to_numpy_array()
+
+        if 2*math.atan2(np.linalg.norm(rotation[0:3]), rotation[3]) > np.deg2rad(10) or self.first: 
+            rospy.loginfo(str(drone_name) + " linearized: " + str(rospy.get_time() - self.prev_gain_time))
 
             self.prev_gain_time = rospy.get_time()
 
             self.updateGains(
-                x, state.kinematics_estimated.angular_velocity, prev_accel_cmd
+                x, state.kinematics_estimated.angular_velocity.to_numpy_array(), body_z_accel
             )
 
-            self.linearized_rotation = r
+            self.linearized_rotation = state.kinematics_estimated.orientation
+            self.first = False
 
         x0, u0 = self.traj_generator.compute(rospy.get_time()-t0, x)
 
@@ -181,8 +157,6 @@ class LQR:
 
         u[3, 0] = abs(u[3, 0]) * self.mass / self.max_thrust
 
-        #u[0:3] = R * u[0:3]
-
         x0 = LQR.xyz2ned(x0)
         return x0, u
 
@@ -197,10 +171,7 @@ class LQR:
         Returns:
             np.ndarray: Acceleration vector
         """
-        q = state.kinematics_estimated.orientation
-        q = [q.w_val, q.x_val, q.y_val, q.z_val]
-
-        roll, pitch, yaw = LQR.quat2rpy(q)
+        pitch, roll, yaw = airsim.to_eularian_angles(state.kinematics_estimated.orientation)
 
         cr = math.cos(roll)
         sr = math.sin(roll)
@@ -218,52 +189,6 @@ class LQR:
 
         return accel
 
-    @staticmethod
-    def quat2rpy(q: List[float]) -> Tuple[float, float, float]:
-        """
-        Convert Quaterion to Roll, Pitch, Yaw 
-
-        Args:
-            q (List[float, float, float, float]): Quaterion in [W, X, Y, Z]
-
-        Returns:
-            Tuple[float, float, float]: Roll, Pitch, Yaw
-        """
-        roll = math.atan2(
-            2 * (q[0] * q[1] + q[2] * q[3]), 1 - 2 * (q[1]) * q[1] + q[2] * q[2]
-        )
-        pitch = math.asin(2 * (q[0] * q[2] - q[3] * q[1]))
-        yaw = math.atan2(
-            2 * (q[0] * q[3] + q[1] * q[2]), 1 - 2 * (q[2] * q[2] + q[3] * q[3])
-        )
-        return roll, pitch, yaw
-
-    @staticmethod
-    def rpy2quat(roll: float, pitch: float, yaw: float) -> List[float]:
-        """
-        Converts Roll, Pitch, Yaw to Quaterion
-
-        Args:
-            roll (float): roll
-            pitch (float): pitch
-            yaw (float): yaw
-
-        Returns:
-            List[float, float, float, float]: Quaterion
-        """
-        cr = math.cos(roll / 2)
-        sr = math.sin(roll / 2)
-        cp = math.cos(pitch / 2)
-        sp = math.sin(pitch / 2)
-        cy = math.cos(yaw / 2)
-        sy = math.sin(yaw / 2)
-        q = [
-            cr * cp * cy + sr * sp * sy,
-            sr * cp * cy - cr * sp * sy,
-            cr * sp * cy + sr * cp * sy,
-            cr * cp * sy - sr * sp * cy,
-        ]
-        return q
 
     @staticmethod
     def xyz2ned(x: np.ndarray) -> np.ndarray:
@@ -284,14 +209,12 @@ class LQR:
         xnew[1] = x[0]
         xnew[2] = -x[2]
 
-        q1 = Quaternionr(x[4], x[5], x[6], x[7])
+        q1 = Quaternionr(x[4], x[5], x[6], x[3])
         q_rot = Quaternionr(math.sqrt(2)/2, -math.sqrt(2)/2, 0, 0)
 
-        qnew = q1.rotate(q_rot)
-        xnew[3] = qnew.w_val
-        xnew[4] = qnew.x_val
-        xnew[5] = qnew.y_val
-        xnew[6] = qnew.z_val
+        qnew = (q1.rotate(q_rot)).to_numpy_array()
+        xnew[4:7] = qnew[0:3]
+        xnew[3] = qnew[3]
         
         xnew[7] = x[8]
         xnew[8] = x[7]
@@ -312,38 +235,25 @@ class LQR:
             np.ndarray: X, Y, Z
         """
         assert np.shape(x) == (10, 1), "The state must be a 10x1 vector"
-        # tp = np.matrix([[0,1,0],[1,0,0],[0,0,-1]])
-        # tq = np.block([[1,0,0,0],[0,0,1,0],[0,1,0,0],[0,0,0,-1]])
-
-        # T = np.block([[ tp, np.zeros((3,4)), np.zeros((3,3)) ],
-        #              [ np.zeros((4,3)), tq, np.zeros((4,3)) ],
-        #              [ np.zeros((3,3)), np.zeros((3,4)), tp ]])
-
         xnew = np.zeros((10, 1))
 
         xnew[0] = x[1]
         xnew[1] = x[0]
         xnew[2] = -x[2]
 
-        # Apply quaternion rotation to  translate. Don't swap axis
-        # R =[1 0 0 ; 0 -1 0; 0 0 -1]
         q1 = Quaternionr(x[4], x[5], x[6], x[3])
         q_rot = Quaternionr(math.sqrt(2) / 2, math.sqrt(2) / 2, 0, 0)
 
-        qnew = q1.rotate(q_rot)
-        qnew = qnew.to_numpy_array()
+        qnew = (q1.rotate(q_rot)).to_numpy_array()
 
         xnew[3] = qnew[3]
-        xnew[4] = qnew[0]
-        xnew[5] = qnew[1]
-        xnew[6] = qnew[2]
+        xnew[4:7] = qnew[0:3]
 
         xnew[7] = x[8]
         xnew[8] = x[7]
         xnew[9] = -x[9]
 
-        x = xnew  # np.matmul(T,x)
-        return x
+        return xnew
 
     @staticmethod
     def get_state(x: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -374,8 +284,7 @@ class LQR:
         return u[0:3], u[3][0]
 
 
-    @staticmethod
-    def __updateA(x: np.ndarray, u: np.ndarray) -> np.ndarray:
+    def computeLinearization(self, x: np.ndarray, u: np.ndarray) -> np.ndarray:
         """
         Updates A maxtrix from state and command lists
 
@@ -384,135 +293,71 @@ class LQR:
             u (np.ndarray): The command list
 
         Returns:
-            np.ndarray: Updated A Matrix
+            np.ndarray: A matrix
+            np.ndarray: B matrix
         """
         _, q, _ = LQR.get_state(x)
         omega, c = LQR.get_command(u)
+
+
+        ### COMPUTE PARTIAL DERIVATIVES ###
+        #
+
+        # Compute qdotq
+        Q = np.array([[0.0, -omega[0,0], -omega[1,0], -omega[2,0]],
+                      [omega[0,0], 0.0, omega[2,0], -omega[1,0]],
+                      [omega[1,0], -omega[2,0], 0.0, omega[0,0]],
+                      [omega[2,0], omega[1,0], -omega[0,0], 0.0]])
+
+        qnorm = np.linalg.norm(q)
+        qdotq =  0.5 * np.matmul(
+            Q, (np.identity(4) - (math.pow(qnorm, -2) * q * q.T)) / qnorm
+        )
+
+
+
+        # Compute vdotq
+        Q = np.array([[ q[2,0], q[3,0], q[0,0], q[1,0]],
+                      [-q[1,0], -q[0,0], q[3,0], q[2,0]],
+                      [ q[0,0], -q[1,0], -q[2,0], q[3,0]]])
+
+        qnorm = np.linalg.norm(q)
+        vdotq = (2.0*c*np.matmul(Q, (np.identity(4) - (math.pow(qnorm, -2) * q * q.T)) / qnorm))
+
+
+
+        # Compute qdotomega
+        qdotomega = 0.5*np.array([[-q[1,0], -q[2,0], -q[3,0]],
+                            [ q[0,0], -q[3,0], -q[2,0]],
+                            [ q[3,0],  q[0,0],  q[1,0]],
+                            [-q[2,0],  q[1,0],  q[0,0]]])
+
+
+        # Compute vdotc
+        vdotc = np.array([[q[0,0] * q[2,0] + q[1,0] * q[3,0]],
+                          [q[2,0] * q[3,0] - q[0,0] * q[1,0]],
+                          [q[0,0] * q[0,0] - q[1,0] * q[1,0] - q[2,0] * q[2,0] + q[3,0] * q[3,0]]])
+
+
+        #### USE PARTIALS TO COMPUTE LINEARIZATION ###
+        #
 
         # 10x10 block matrix
         A = np.block(
             [
                 [np.zeros((3, 3)), np.zeros((3, 4)), np.identity(3)],
-                [np.zeros((4, 3)), LQR.__qdotq(omega, q), np.zeros((4, 3))],
-                [np.zeros((3, 3)), LQR.__vdotq(c, q), np.zeros((3, 3))],
+                [np.zeros((4, 3)), qdotq, np.zeros((4, 3))],
+                [np.zeros((3, 3)), vdotq, np.zeros((3, 3))],
             ]
         )
-        return A
-
-    @staticmethod
-    def __updateB(x: np.ndarray) -> np.ndarray:
-        """
-        Updates B from state list
-
-        Args:
-            x (np.ndarray): the state list
-
-        Returns:
-            np.ndarray: Updated B Matrix
-        """
-        _, q, _ = LQR.get_state(x)
 
         # 10x4 block matrix
         B = np.block(
             [
                 [np.zeros((3, 3)), np.zeros((3, 1))],
-                [LQR.__qdotomega(q), np.zeros((4, 1))],
-                [np.zeros((3, 3)), LQR.__vdotc(q)],
-            ]
-        )
-        return B
-
-    @staticmethod
-    def __qdotq(omega: np.ndarray, q: np.ndarray) -> np.ndarray:
-        """
-        Takes the dot product of the omega and Q arrays
-
-        Args:
-            omega (np.ndarray): Omega
-            q (np.ndarray): Q
-
-        Returns:
-            np.ndarray: Dot Product
-        """
-        y = np.array(
-            [
-                [0.0, -omega[0,0], -omega[1,0], -omega[2,0]],
-                [omega[0,0], 0.0, omega[2,0], -omega[1,0]],
-                [omega[1,0], -omega[2,0], 0.0, omega[0,0]],
-                [omega[2,0], omega[1,0], -omega[0,0], 0.0],
+                [qdotomega, np.zeros((4, 1))],
+                [np.zeros((3, 3)), vdotc],
             ]
         )
 
-        qnorm = np.linalg.norm(q)
-        return 0.5 * np.matmul(
-            y, (np.identity(4) - (math.pow(qnorm, -2) * q * q.T)) / qnorm
-        )
-
-    @staticmethod
-    def __vdotq(c: np.ndarray, q: np.ndarray) -> np.ndarray:
-        """
-        Takes the dot product of the omega and Q arrays
-
-        Args:
-            c (np.ndarray): c
-            q (np.ndarray): q
-
-        Returns:
-            np.ndarray: Dot Product
-        """
-        y = np.array(
-            [
-                [q[2,0], q[3,0], q[0,0], q[1,0]],
-                [-q[1,0], -q[0,0], q[3,0], q[2,0]],
-                [q[0,0], -q[1,0], -q[2,0], q[3,0]],
-            ]
-        )
-
-        qnorm = np.linalg.norm(q)
-
-        return (
-            2.0
-            * c
-            * np.matmul(y, (np.identity(4) - (math.pow(qnorm, -2) * q * q.T)) / qnorm)
-        )
-
-    @staticmethod
-    def __qdotomega(q: np.ndarray) -> np.ndarray:
-        """
-        Takes the dot product of Q and Omega
-
-        Args:
-            q (np.ndarray): q
-
-        Returns:
-            np.ndarray: Dot Product
-        """
-        y = np.array(
-            [
-                [-q[1,0], -q[2,0], -q[3,0]],
-                [q[0,0], -q[3,0], -q[2,0]],
-                [q[3,0], q[0,0], q[1,0]],
-                [-q[2,0], q[1,0], q[0,0]],
-            ]
-        )
-        return 0.5 * y
-
-    @staticmethod
-    def __vdotc(q: np.ndarray) -> np.ndarray:
-        """
-        Takes the dot product of V and C
-
-        Args:
-            q (np.ndarray): q
-
-        Returns:
-            np.ndarray: Dot Product
-        """
-        y = np.array(
-            [
-                [q[0,0] * q[2,0] + q[1,0] * q[3,0]],
-                [q[2,0] * q[3,0] - q[0,0] * q[1,0]],
-                [q[0,0] * q[0,0] - q[1,0] * q[1,0] - q[2,0] * q[2,0] + q[3,0] * q[3,0]],
-            ]
-        )
-        return y
+        return A, B

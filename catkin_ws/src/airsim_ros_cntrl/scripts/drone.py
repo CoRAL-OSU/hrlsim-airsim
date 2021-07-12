@@ -20,7 +20,6 @@ from airsim_ros_pkgs.srv import (
 )
 from airsim_ros_cntrl.msg import (
     Multirotor,
-    Sensors,
     State,
     MoveToLocationAction,
     MoveToLocationFeedback,
@@ -31,13 +30,12 @@ from airsim_ros_cntrl.msg import (
 from sensor_msgs.msg import (
     NavSatFix,
     NavSatStatus,
-    MagneticField,
     Imu
 )
 
 from geometry_msgs.msg import (
-    Twist,
-    Pose,
+    Twist, TwistStamped,
+    Pose,  PoseStamped,
     Point,
     Quaternion,
     Accel,
@@ -128,7 +126,7 @@ class Drone(Process):
         self._shutdown = False
         self.__service_timeout = 5.0  # SECONDS
 
-        self.freq = 80
+        self.freq = 20
         self.prev_loop_time = -999
         self.origin_geo_point = GPSYaw()
 
@@ -139,8 +137,6 @@ class Drone(Process):
 
         self.controller = lqr.LQR()
         self.prev_accel_cmd = 0
-
-        #(self.state, self.sensors) = self.get_state()
 
         self.state = MultirotorState()
         self.sensors = dict()
@@ -162,7 +158,7 @@ class Drone(Process):
         Returns: None
         """
         rospy.init_node(self.drone_name)
-        topic_prefix = "/" + self.swarm_name + "/" + self.drone_name
+        topic_prefix = self.swarm_name + "/" + self.drone_name
         loop_time_topic = topic_prefix + "/looptime"
 
         takeoff_service_name = topic_prefix + "/takeoff"
@@ -190,9 +186,9 @@ class Drone(Process):
 
         self.vel_cmd_pub = rospy.Publisher("/airsim_node/" + self.drone_name + "/vel_cmd_body_frame", VelCmd, queue_size=2)
         self.multirotor_pub = rospy.Publisher(state_topic, Multirotor, queue_size=2)
-        self.throttle_rates_cmd_pub = rospy.Publisher(lqr_cmd_topic, Twist, queue_size=2)
-        self.__desired_pose_pub = rospy.Publisher(topic_prefix +"lqr/desired_pose", Pose, queue_size=2)
-        self.__desired_vel_pub = rospy.Publisher(topic_prefix +"lqr/desired_vel", Twist, queue_size=2)
+        self.throttle_rates_cmd_pub = rospy.Publisher(lqr_cmd_topic, TwistStamped, queue_size=2)
+        self.__desired_pose_pub = rospy.Publisher(topic_prefix +"/lqr/desired_pose", PoseStamped, queue_size=2)
+        self.__desired_vel_pub = rospy.Publisher(topic_prefix +"/lqr/desired_vel", TwistStamped, queue_size=2)
 
         rospy.Service(shutdown_service_name, SetBool, self.shutdown_cb)
         rospy.Service(takeoff_service_name, Takeoff, self.takeoff_cb)
@@ -253,6 +249,10 @@ class Drone(Process):
         alx = msg.linear_acceleration.x
         aly = msg.linear_acceleration.y
         alz = msg.linear_acceleration.z
+
+        vax = msg.angular_velocity.x
+        vay = msg.angular_velocity.y
+        vaz = msg.angular_velocity.z
         
 
         qw = msg.orientation.w
@@ -262,6 +262,7 @@ class Drone(Process):
 
         self.state.kinematics_estimated.linear_acceleration = Vector3r(alx,aly,alz)
         self.state.kinematics_estimated.orientation = Quaternionr(qx, qy, qz, qw)
+        self.state.kinematics_estimated.angular_velocity = Vector3r(vax, vay, vaz)
 
     def gps_cb(self, msg):
         """
@@ -287,12 +288,7 @@ class Drone(Process):
         vly = msg.twist.twist.linear.y
         vlz = msg.twist.twist.linear.z
 
-        vax = msg.twist.twist.angular.x
-        vay = msg.twist.twist.angular.y
-        vaz = msg.twist.twist.angular.z
-
         self.state.kinematics_estimated.linear_velocity = Vector3r(vlx,vly,vlz)
-        self.state.kinematics_estimated.angular_velocity = Vector3r(vax,vay,vaz)
 
     def vel_cmd_body_frame_cb(self, msg):
         """
@@ -311,6 +307,11 @@ class Drone(Process):
 
         pt = np.array(goal.target)
         p = self.state.kinematics_estimated.position.to_numpy_array()
+
+        if goal.position_frame == MoveToLocationGoal.GLOBAL_FRAME:
+            pass
+        elif goal.position_frame == MoveToLocationGoal.LOCAL_FRAME:
+            pt += p
 
         waypoints = np.array([p,pt]).T
         
@@ -354,6 +355,7 @@ class Drone(Process):
             self.moveToLocationActionServer.set_succeeded(feedback)
             rospy.loginfo(self.drone_name + ": MOVE_TO_LOCATION SUCCESSFUL")
         else:
+            self.moveToLocationActionServer.set_aborted(feedback)
             rospy.logwarn(self.drone_name + ": MOVE_TO_LOCATION FAILED")
 
 
@@ -391,7 +393,6 @@ class Drone(Process):
 
         # Make state msg
         msg.state = State(pose, twist, acc)
-
 
         if self.get_sensor_data:
             # Setup imu msg
@@ -436,8 +437,7 @@ class Drone(Process):
             u[i, 0] = max(-3, u[i, 0])
             u[i, 0] = min(3, u[i, 0])
 
-        if u[3, 0] > 1.0:
-            u[3, 0] = 1.0
+        u[3, 0] = min(u[3, 0], 1)
 
         roll_rate  = u[0, 0]
         pitch_rate = u[1, 0]
@@ -446,26 +446,29 @@ class Drone(Process):
 
         accel = self.controller.thrust2world(state, throttle)
 
-        self.prev_acceleration_cmd = accel[2]
+        self.prev_acceleration_cmd = throttle
 
-        throttle_rates_cmd = Twist()
-        throttle_rates_cmd.linear.z = throttle
-        throttle_rates_cmd.angular.x = roll_rate
-        throttle_rates_cmd.angular.y = pitch_rate
-        throttle_rates_cmd.angular.z = yaw_rate
+        throttle_rates_cmd = TwistStamped()
+        throttle_rates_cmd.header.stamp = rospy.Time.now()
+        throttle_rates_cmd.twist.linear.z = throttle
+        throttle_rates_cmd.twist.angular.x = roll_rate
+        throttle_rates_cmd.twist.angular.y = pitch_rate
+        throttle_rates_cmd.twist.angular.z = yaw_rate
 
         self.throttle_rates_cmd_pub.publish(throttle_rates_cmd)
 
         
         (pDes, qDes, vDes) = lqr.LQR.get_state(x0)
-        desired_pose_msg = Pose()
-        desired_pose_msg.position = Point(*pDes)
-        desired_pose_msg.orientation = Quaternion(w=qDes[0], x=qDes[1], y=qDes[2], z=qDes[3])
+        desired_pose_msg = PoseStamped()
+        desired_pose_msg.header.stamp = rospy.Time.now()
+        desired_pose_msg.pose.position = Point(*pDes)
+        desired_pose_msg.pose.orientation = Quaternion(w=qDes[0], x=qDes[1], y=qDes[2], z=qDes[3])
         self.__desired_pose_pub.publish(desired_pose_msg)
 
-        desired_vel_msg = Twist()
-        desired_vel_msg.linear = Vector3(*vDes)
-        desired_vel_msg.angular = Vector3(*u[0:3,0])
+        desired_vel_msg = TwistStamped()
+        desired_vel_msg.header.stamp = rospy.Time.now()
+        desired_vel_msg.twist.linear = Vector3(*vDes)
+        desired_vel_msg.twist.angular = Vector3(*u[0:3,0])
         self.__desired_vel_pub.publish(desired_vel_msg)
 
 
@@ -485,7 +488,6 @@ class Drone(Process):
         rate = rospy.Rate(self.freq)
 
         while not rospy.is_shutdown() and self._shutdown == False:
-            # (self.state, self.sensors) = self.get_state()
             self.publish_multirotor_state(self.state, self.sensors)
 
             if self.cmd == None:
@@ -519,6 +521,6 @@ if __name__ == "__main__":
     else:
         drone_name = str(sys.argv[1])
 
-    drone = Drone("swarm", drone_name)
+    drone = Drone("Team0", drone_name)
     drone.start()
     drone.join()
