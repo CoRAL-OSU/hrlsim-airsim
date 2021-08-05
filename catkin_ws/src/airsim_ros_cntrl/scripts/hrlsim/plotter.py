@@ -7,10 +7,12 @@ from matplotlib.pyplot import style
 from importlib import import_module
 import numpy as np
 
-import rospy, threading
+import rospy
 from std_srvs.srv import SetBool, SetBoolRequest, SetBoolResponse
 
 from operator import attrgetter
+
+import multiprocessing as mp
 
 class TopicContainer:
     def __init__(self):
@@ -27,8 +29,9 @@ class PlotContanier:
         self.topicContainers = []
         self.ax = ""
 
-class Plotter:
+class Plotter(mp.Process):
     def __init__(self, nrows, ncols, title=None, subtitles=None, xlabels=None, ylabels=None, style_name="seaborn-whitegrid", windowSize=60, maxPoints=300):
+        mp.Process.__init__(self)
         style.use(style_name)
         self.windowSize = windowSize
         self.maxPoints = maxPoints
@@ -40,12 +43,8 @@ class Plotter:
         self._binary_sub = dict()
         self._binary_sub_id = 0
 
-        
         self.figure, self.axs = plt.subplots(nrows,ncols)
         self.axs = np.reshape(self.axs, (nrows,ncols))
-
-        rospy.Service("plotter/reset_time", SetBool, self.resetTimeCB)
-        rospy.Service("plotter/clear_data", SetBool, self.clearDataCB)
 
         if title != None:
             self.figure.suptitle(title)
@@ -68,10 +67,6 @@ class Plotter:
                     assert len(subtitles) == nrows*ncols, "Number of axis subtitles must be equal to number of subplots"
                     self.plots[r,c].ax.set_title(subtitles[pos-1])
 
-        self.ani = animation.FuncAnimation(self.figure, self.drawPlot, interval=50)
-        
-        self.init_time = rospy.get_time()
-        self.prevTime = rospy.get_time()
 
     def resetTimeCB(self, req: SetBoolRequest) -> SetBoolResponse:
         """
@@ -172,7 +167,7 @@ class Plotter:
 
             if(index[0].size == 0):
                 rospy.logwarn("Plotter waiting for topic <" + str(topicName) + "> to be published")
-                rospy.wait_for_message(topicName, rospy.AnyMsg)
+                #rospy.wait_for_message(topicName, rospy.AnyMsg)
 
             publishedList = np.append(publishedList, topic_list[index[0],:], 0)
 
@@ -197,8 +192,10 @@ class Plotter:
                     idx = np.round(np.linspace(0, len(x)-1, self.maxPoints)).astype('int')
                     xs = x[idx]
                     
-                    miny = min(miny, np.min(cont.y)-1)
-                    maxy = max(maxy, np.max(cont.y)+1)
+                    my = np.min(cont.y)
+                    My = np.max(cont.y)
+                    miny = min(miny, my-1)
+                    maxy = max(maxy, My+1)
                     minx = min(minx, xs[0])
                     maxx = max(maxx, max(xs[-1], window))
 
@@ -217,26 +214,13 @@ class Plotter:
         self.prevTime = time
         plt.draw()
 
-
-
-
-
-if __name__ == "__main__":
-
-    rospy.init_node("plotter")
-
- 
-
-
-
-    plotter = Plotter(nrows=1, ncols=2, windowSize=45, title="Trajectory components", subtitles=["X & Y Components", "X Component"], xlabels=["t (Seconds)", "t (Seconds)"], ylabels=["m (Meters)", "m (Meters)"])
-
-    
-    #th = threading.Thread(target=plt.show(), daemon=True)
-    #th.start()
-
-    plotter.plotTopics(pos=1, topics=[dict(name="/Team0/Drone0/multirotor",fields=["state.pose.position.x","state.pose.position.y"], styles=["-k","-b"], labels=["x","y"]),
-                                      dict(name="/Team0/Drone0/lqr/desired_pose",fields=["pose.position.x","pose.position.y"], styles=["--k", "--b"], labels=["x0","y0"])])
-    plotter.plotTopics(pos=2, topics=[dict(name="/Team0/Drone0/multirotor",fields=["state.pose.position.z"], styles=["-k"], labels=["z"]),
-                                      dict(name="/Team0/Drone0/lqr/desired_pose",fields=["pose.position.z"], styles=["--k"], labels=["z0"])])
-    plt.show()
+    def run(self):
+        rospy.init_node("plotter")
+        rospy.Service("plotter/reset_time", SetBool, self.resetTimeCB)
+        rospy.Service("plotter/clear_data", SetBool, self.clearDataCB)
+        
+        self.ani = animation.FuncAnimation(self.figure, self.drawPlot, interval=50)
+        
+        self.init_time = rospy.get_time()
+        self.prevTime = rospy.get_time()
+        plt.show()

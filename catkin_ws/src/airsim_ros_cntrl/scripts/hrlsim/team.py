@@ -1,11 +1,7 @@
 #! /usr/bin/python3
 
-from multiprocessing import Lock
-
-import math
 import numpy as np
-
-import rospy, actionlib
+import rospy, actionlib, math
 
 from actionlib_msgs.msg import GoalStatus
 
@@ -26,11 +22,78 @@ from airsim_ros_cntrl.msg import (
 )
 
 from typing import List, Dict
-from target import Target
 
-from drone import DroneInfo
-from agent import Agent
-from minimum_snap import MinimumSnap
+import hrlsim
+
+
+
+
+def setUpTargets(client: hrlsim.airsim.MultirotorClient, target_list: List):
+    for t in target_list:
+        pose = hrlsim.airsim.Pose(t[2], t[3])
+        client.simSetObjectPose(object_name=t[0], pose=pose)
+
+
+def createDroneTeamLists(client, ip, setupTargets=True):
+    if ip != "":
+        vehicle_list = ["Drone0"]
+        # vehicle_list = ["Drone0", "Drone1", "Drone2", "Target0", "Drone3", "Drone4", "Target1"]
+    else:
+        vehicle_list = hrlsim.utility.getDroneListFromSettings()
+
+    #vehicle_list = ["Drone0", "Drone1", "Drone2", "Drone3", "Drone4", "Drone5", "Drone6", "Drone7", "Drone8", "Drone9"]
+    #vehicle_list = ["Drone0", "Drone1", "Drone2", "Drone3"]
+
+    drone_list = []
+    team_list = []
+    target_list = []
+    target_procs = []
+    
+
+    for v in vehicle_list:
+        if "Drone" in v:
+            drone_list.append(v)
+
+    if setupTargets:
+        target_procs = dict()
+        target_list = [
+            (
+                "African_Poacher_1_WalkwRifleLow_Anim2_2",
+                [(0,0,19), (0,0,7), (1.5, 0, 3.5), (1.5, -math.pi/10, 3), (1.5, -0.01, 10), (1.5,math.pi/5,1), (1.5, 0, 15), (1.5,-math.pi/5,1), (1.5,-0.02,30)],
+                hrlsim.airsim.Vector3r(-250, -312, 0),
+                hrlsim.airsim.to_quaternion(0, 0, 2.32),
+            ),
+        ]
+        if(len(drone_list) > 1):    
+            target_list.append([
+                "African_Poacher_1_WalkwRifleLow_Anim3_11",
+                [(0,0,19), (1.5, 0, 8), (1.5, -math.pi/10, 3.5), (1.5, -0.01, 10), (1.5,-math.pi/10,1), (1.5,0,15), (1.5,math.pi/10,1), (1.5,-0.02,30)],
+                hrlsim.airsim.Vector3r(-259, -318, 0),
+                hrlsim.airsim.to_quaternion(0, 0, 2.32),
+            ]
+        )
+        setUpTargets(client, target_list)
+
+        for i in range(len(target_list)):
+            target_procs[target_list[i][0]] = hrlsim.Target(
+                "Team" + str(i), target_list[i][0], ip=ip, path=target_list[i][1]
+            )
+            target_procs[target_list[i][0]].start()
+
+            sub_drone = drone_list[
+                i
+                * len(drone_list)
+                // len(target_list) : (i + 1)
+                * len(drone_list)
+                // len(target_list)
+            ]
+            s = Team("Team" + str(i), sub_drone, target_procs[target_list[i][0]])
+            team_list.append(s)
+    
+    else:
+        team_list.append(Team("Team0", drone_list, None))
+
+    return team_list, drone_list, target_list, target_procs
 
 
 class Team:
@@ -42,9 +105,10 @@ class Team:
 
     def __init__(
         self,
+        trajType: hrlsim.traj.Trajectory,
         teamName: str,
         vehicle_list: List[str],
-        target: Target
+        target: hrlsim.Target
     ) -> None:
         """
         Contructs a team object.
@@ -59,20 +123,21 @@ class Team:
         self.vehicle_list = vehicle_list
         self.centroid_timer = None
         self.goal = None
+        self.traj = trajType()
 
-        self.drones: Dict[str, Agent] = dict()
+        self.drones: Dict[str, hrlsim.drone.Agent] = dict()
 
         if target != None:
-            self.target = DroneInfo(target.drone_name, target)
+            self.target = hrlsim.drone.DroneInfo(target.drone_name, target)
         else:
             self.target = None
 
         self.__shutdown = False
 
         for i in self.vehicle_list:
-            proc = Agent(self.team_name, i)
+            proc = hrlsim.drone.Agent(self.team_name, i)
 
-            self.drones[i] = DroneInfo(i, proc)
+            self.drones[i] = hrlsim.drone.DroneInfo(i, proc)
             self.drones[i].process.start()
 
         print("SWARM CREATED WITH %d DRONES" % len(self.drones))
@@ -178,7 +243,7 @@ class Team:
         waypoints = np.concatenate((curr_centroid, goal), 1)
         avg_spd = 1.0
 
-        self.traj = MinimumSnap(waypoints, ic, fc, avg_spd)
+        self.traj.generate(waypoints, ic, fc, avg_spd)
         self.t0 = rospy.get_time()
 
         self.centroid_timer = rospy.Timer(rospy.Duration(0.01), self.centroid_timer_cb, oneshot=False)
@@ -194,7 +259,7 @@ class Team:
         waypoints = np.concatenate((curr_centroid, goal), 1)
         avg_spd = avg_spd
 
-        self.traj = MinimumSnap(waypoints, ic, fc, avg_spd)
+        self.traj.generate(waypoints, ic, fc, avg_spd)
         self.t0 = rospy.get_time()
 
         self.track_object(timeout=-1, z_offset=0, object_name="centroid_des")
@@ -251,7 +316,7 @@ class Team:
 
             fc = np.concatenate([fv,fa,fj], 1).T                
 
-            self.traj = MinimumSnap(waypoints, ic, fc, avg_spd)
+            self.traj.generate(waypoints, ic, fc, avg_spd)
             sleeper.sleep()
         
 
@@ -284,7 +349,7 @@ class Team:
             print("Unrecognized goal type: " + type(self.goal))
             return
 
-    def getDroneList(self) -> Dict[str, Agent]:
+    def getDroneList(self) -> Dict[str, hrlsim.drone.Agent]:
         """
         Gets the dictionary of Agents where key is drone name and value is the agent process
 

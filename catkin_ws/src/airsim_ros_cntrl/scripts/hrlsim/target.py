@@ -1,19 +1,12 @@
 #! /usr/bin/python3
 
 from multiprocessing import Lock, Process
-from math import cos, pi, sin, atan2, pow
+from math import cos, pi, sin, pow
 from typing import List, Tuple
-from airsim.types import Quaternionr
-import sys
 
-from airsim.client import MultirotorClient
-from airsim import Vector3r
-import airsim
 import rospy
 
 from airsim_ros_cntrl.msg import Multirotor, State
-from airsim_ros_pkgs.msg import VelCmd
-from airsim_ros_pkgs.srv import Takeoff, Land
 
 from std_msgs.msg import Header, Float32
 from std_srvs.srv import SetBool, SetBoolResponse, SetBoolRequest
@@ -27,6 +20,8 @@ from geometry_msgs.msg import (
     Vector3
 )
 
+import hrlsim
+
 class Target(Process):
     """
     Class to handle trackable targets for a team.
@@ -36,7 +31,7 @@ class Target(Process):
     Args:
         swarmName (str): The name of the team this drone is associated with.
         droneName (str): The name of the drone itself.
-        sim_client (airsim.MultirotorClient): The client to use to execture commands.
+        sim_client (MultirotorClient): The client to use to execture commands.
         client_lock (mp.Lock): The lock for the sim_client.
         path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. In format of linear velocity, angular velocity and time Defaults to [].
     """
@@ -55,7 +50,7 @@ class Target(Process):
         Args:
             swarmName (str): The name of the team this drone is associated with.
             droneName (str): The name of the drone itself.
-            sim_client (airsim.MultirotorClient): The client to use to execture commands.
+            sim_client (MultirotorClient): The client to use to execture commands.
             client_lock (mp.Lock): The lock for the sim_client.
             path (List[Tuple[float, float, float]], optional): The path for the target to follow, if blank will be stationary. In format of linear velocity, angular velocity and time Defaults to [].
         """
@@ -72,7 +67,7 @@ class Target(Process):
         self.linear_acc_rate = 0.5
         self.ang_acc_rate = 0.3
 
-        self.client = MultirotorClient(ip)
+        self.client = hrlsim.airsim.MultirotorClient(ip)
         self.pos = self.client.simGetObjectPose(self.object_name)
 
         print("NEW TARGET: " + self.object_name)
@@ -129,7 +124,7 @@ class Target(Process):
 
     def publish_multirotor_state(
         self,
-        state: airsim.MultirotorState
+        state: hrlsim.airsim.MultirotorState
     ) -> None:
         """
         Function to publish sensor/state information from the simulator
@@ -169,7 +164,7 @@ class Target(Process):
 
 
     def generate_linear_velocity(
-        self, current_velocity: float, position: Vector3r, waypoint: Vector3r
+        self, current_velocity: float, position: hrlsim.airsim.Vector3r, waypoint: hrlsim.airsim.Vector3r
     ):
         d = waypoint.distance_to(position)
         linear_acc_dis = -pow(current_velocity, 2) / (2 * -self.linear_acc_rate)
@@ -231,9 +226,9 @@ class Target(Process):
         traj_time = sum(row[2] for row in self.path)
 
 
-        _, _, yaw = airsim.to_eularian_angles(self.pos.orientation)
+        _, _, yaw = hrlsim.airsim.to_eularian_angles(self.pos.orientation)
 
-        state = airsim.MultirotorState()
+        state = MultirotorState()
 
         print("Trajectory time: " + str(traj_time))
 
@@ -258,21 +253,21 @@ class Target(Process):
 
             yaw_iter = v_yaw * self.time_step
             yaw += yaw_iter
-            q = airsim.to_quaternion(0, 0, yaw)
+            q = hrlsim.airsim.to_quaternion(0, 0, yaw)
             q = q / q.get_length()
             self.pos.orientation = q
 
             speed, linear_acc = self.generate_velocity(
                 speed, way_lin, self.linear_acc_rate
             )
-            v = airsim.Vector3r(speed * cos(yaw), speed * sin(yaw), 0)
+            v = hrlsim.airsim.Vector3r(speed * cos(yaw), speed * sin(yaw), 0)
             self.pos.position = v * self.time_step + self.pos.position
 
             self.client.simSetObjectPose(object_name=self.object_name, pose=self.pos)
 
-            angular_acc_v = Vector3r(0, 0, angular_acc)
-            v_yaw_v = Vector3r(0, 0, v_yaw)
-            linear_acc_v = airsim.Vector3r(
+            angular_acc_v = hrlsim.airsim.Vector3r(0, 0, angular_acc)
+            v_yaw_v = hrlsim.airsim.Vector3r(0, 0, v_yaw)
+            linear_acc_v = hrlsim.airsim.Vector3r(
                 linear_acc * cos(yaw), linear_acc * sin(yaw), 0
             )
 
@@ -297,7 +292,7 @@ if __name__ == "__main__":
 
     run_camera = True
 
-    client = airsim.MultirotorClient(ip=ip)
+    client = hrlsim.airsim.MultirotorClient(ip=ip)
     client.confirmConnection()
 
 
@@ -305,25 +300,25 @@ if __name__ == "__main__":
         (
             "African_Poacher_1_WalkwRifleLow_Anim2_2",
             [(0,0,19), (0,0,7), (1.5, 0, 3.5), (1.5, -pi/10, 3), (1.5, -0.01, 10), (1.5,pi/5,1), (1.5, 0, 15)],
-            airsim.Vector3r(-250, -312, 0),
-            airsim.to_quaternion(0, 0, 2.32),
+            hrlsim.airsim.Vector3r(-250, -312, 0),
+            hrlsim.airsim.to_quaternion(0, 0, 2.32),
         ),
         (
             "African_Poacher_1_WalkwRifleLow_Anim3_11",
             [(0,0,19), (1.5, 0, 8), (1.5, -pi/10, 3.5), (1.5, -0.01, 10), (1.5,-pi/10,1), (1.5,0,15)],
-            airsim.Vector3r(-259, -318, 0),
-            airsim.to_quaternion(0, 0, 2.32),
+            hrlsim.airsim.Vector3r(-259, -318, 0),
+            hrlsim.airsim.to_quaternion(0, 0, 2.32),
         ),
     ]
 
     target_procs = []
     for t in target_list:
-        client.simSetObjectPose(t[0], airsim.Pose(t[2],t[3]))
+        client.simSetObjectPose(t[0], hrlsim.airsim.Pose(t[2],t[3]))
         target_procs.append(Target("test", t[0], path=t[1], ip=ip))
         target_procs[-1].start()
 
     if run_camera:
-        from camera import Camera
+        from hrlsim.drone import Camera
 
         rospy.init_node("target_test")
         rospy.sleep(1)

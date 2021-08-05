@@ -1,18 +1,13 @@
 #! /usr/bin/python3
 
-from team import Team
-from target import Target
-
-from camera import Camera
-
-import multiprocessing as mp
+from drone.camera import Camera
 import airsim, rospy
 
 from std_srvs.srv import SetBool
 from geometry_msgs.msg import Vector3
 from airsim_ros_cntrl.msg import MoveToLocationGoal
 
-from utilities import createDroneTeamLists
+from utilities.utility import createDroneTeamLists
 
 
 
@@ -80,7 +75,7 @@ if __name__ == "__main__":
     #
     #     SET WIND
 
-    windMsg = Vector3(0,0,0)
+    windMsg = Vector3(5,0,0)
     windPub.publish(windMsg) # n,e,d
     print("SET WIND TO [n:{:.1f},e:{:.1f},d:{:.1f}]".format(windMsg.x, windMsg.y, windMsg.z))
     
@@ -105,7 +100,7 @@ if __name__ == "__main__":
 
 
     print("MOVE TO LOCATION")
-    team_list[0].move_to_location([-10,-8,-5], 2, 30, 0.1)
+    team_list[0].move_to_location([0,0,-3], 2, 30, 0.001)
     #team_list[0].moveInFormation([-245,-255,-5], 2)
     #team_list[1].moveInFormation([-240,-255,-10],2)
     
@@ -130,7 +125,7 @@ if __name__ == "__main__":
 
     print("LANDING")
     for team in team_list:
-        team.move_to_location([0,0,5],2,20,0.2, position_frame=MoveToLocationGoal.LOCAL_FRAME)
+        team.move_to_location([0,0,3],2,20,0.2, position_frame=MoveToLocationGoal.LOCAL_FRAME)
         
     for team in team_list:
         team.land()
