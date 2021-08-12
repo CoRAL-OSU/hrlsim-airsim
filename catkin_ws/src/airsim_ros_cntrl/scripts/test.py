@@ -13,7 +13,7 @@ if __name__ == "__main__":
         drone_name = str(sys.argv[1])
 
 
-
+    '''
     zoo = hrlsim.opt.ZOO(eta=5e-4*np.ones((2,1)), delta=1e-3)
 
     def f(x):
@@ -28,11 +28,11 @@ if __name__ == "__main__":
         (x, step) = zoo.computeStep(f(x), x)
         if np.linalg.norm(step) > 10:
             break
-
+    '''
 
 
     drone = hrlsim.drone.Agent("Team0", drone_name, controllerType=hrlsim.controller.LQR, trajType=hrlsim.traj.MinimumSnap)
-    #drone.start()
+    drone.start()
 
     #plotter = hrlsim.Plotter(nrows=1, ncols=2, windowSize=15, title="Trajectory components", subtitles=["X & Y Components", "Z Component"], xlabels=["t (Seconds)", "t (Seconds)"], ylabels=["m (Meters)", "m (Meters)"])
     
