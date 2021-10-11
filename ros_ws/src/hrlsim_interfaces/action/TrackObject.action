@@ -1,0 +1,12 @@
+#goal definition
+string object_name
+float32 timeout
+float32[3] offset
+---
+#result definition
+float32[3] dist      # x, y, z
+float32 dist_mag
+---
+#feedback
+float32[3] dist      # x, y, z
+float32 dist_mag

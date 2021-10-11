@@ -16,25 +16,25 @@ Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catk
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/include/airsim_ros_cntrl/TrackObjectGoal.h
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/include/airsim_ros_cntrl/TrackObjectResult.h
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/pkgconfig/airsim_ros_cntrl.pc
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/__init__.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationAction.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionFeedback.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionGoal.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionResult.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationFeedback.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationGoal.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationResult.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_Multirotor.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_Sensors.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_State.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectAction.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionFeedback.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionGoal.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionResult.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectFeedback.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectGoal.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectResult.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/__init__.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/__init__.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationAction.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionFeedback.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionGoal.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionResult.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationFeedback.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationGoal.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationResult.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_Multirotor.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_Sensors.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_State.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_TrackObjectAction.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionFeedback.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionGoal.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionResult.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_TrackObjectFeedback.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_TrackObjectGoal.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/_TrackObjectResult.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_cntrl/msg/__init__.py
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/airsim_ros_cntrl/cmake/airsim_ros_cntrl-msg-extras.cmake
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/airsim_ros_cntrl/cmake/airsim_ros_cntrl-msg-paths.cmake
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/airsim_ros_cntrl/cmake/airsim_ros_cntrlConfig-version.cmake
@@ -53,7 +53,7 @@ Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catk
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/airsim_ros_cntrl/msg/TrackObjectFeedback.msg
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/airsim_ros_cntrl/msg/TrackObjectGoal.msg
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/airsim_ros_cntrl/msg/TrackObjectResult.msg
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/_package.lisp
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/TrackObjectResult.lisp
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/airsim_ros_cntrl-msg.asd
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/MoveToLocationAction.lisp
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/MoveToLocationActionFeedback.lisp
@@ -71,7 +71,7 @@ Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catk
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/TrackObjectActionResult.lisp
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/TrackObjectFeedback.lisp
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/TrackObjectGoal.lisp
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/TrackObjectResult.lisp
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/_package.lisp
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/_package_MoveToLocationAction.lisp
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/_package_MoveToLocationActionFeedback.lisp
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/common-lisp/ros/airsim_ros_cntrl/msg/_package_MoveToLocationActionGoal.lisp
@@ -126,3 +126,60 @@ Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catk
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/roseus/ros/airsim_ros_cntrl/msg/TrackObjectFeedback.l
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/roseus/ros/airsim_ros_cntrl/msg/TrackObjectGoal.l
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/roseus/ros/airsim_ros_cntrl/msg/TrackObjectResult.l
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/__init__.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/__init__.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationAction.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationAction.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionFeedback.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionFeedback.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionGoal.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionGoal.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionResult.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionResult.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationFeedback.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationFeedback.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationGoal.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationGoal.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationResult.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationResult.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_Multirotor.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_Multirotor.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_Sensors.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_Sensors.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_State.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_State.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectAction.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectAction.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionFeedback.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionFeedback.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionGoal.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionGoal.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionResult.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionResult.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectFeedback.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectFeedback.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectGoal.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectGoal.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectResult.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectResult.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_cntrl/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/__init__.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/__init__.py)
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/__init__.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationAction.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionFeedback.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionGoal.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationActionResult.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationFeedback.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationGoal.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_MoveToLocationResult.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_Multirotor.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_Sensors.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_State.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectAction.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionFeedback.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionGoal.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectActionResult.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectFeedback.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectGoal.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/_TrackObjectResult.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_cntrl/msg/__init__.py
+Already unlinked: {}

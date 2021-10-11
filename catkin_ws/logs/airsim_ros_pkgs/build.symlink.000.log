@@ -34,25 +34,25 @@ Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catk
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/airsim_ros_pkgs/airsim_node
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/airsim_ros_pkgs/pd_position_controller_simple_node
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/pkgconfig/airsim_ros_pkgs.pc
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/__init__.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_Altimeter.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_CarControls.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_CarState.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_Environment.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GimbalAngleEulerCmd.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GimbalAngleQuatCmd.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GPSYaw.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_VelCmd.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_VelCmdGroup.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/__init__.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Land.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_LandGroup.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Reset.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_SetGPSPosition.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_SetLocalPosition.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Takeoff.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_TakeoffGroup.py
-Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/__init__.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/__init__.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/msg/_Altimeter.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/msg/_CarControls.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/msg/_CarState.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/msg/_Environment.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/msg/_GimbalAngleEulerCmd.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/msg/_GimbalAngleQuatCmd.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/msg/_GPSYaw.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/msg/_VelCmd.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/msg/_VelCmdGroup.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/msg/__init__.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/srv/_Land.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/srv/_LandGroup.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/srv/_Reset.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/srv/_SetGPSPosition.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/srv/_SetLocalPosition.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/srv/_Takeoff.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/srv/_TakeoffGroup.py
+Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python3/dist-packages/airsim_ros_pkgs/srv/__init__.py
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/airsim_ros_pkgs/cmake/airsim_ros_pkgs-msg-extras.cmake
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/airsim_ros_pkgs/cmake/airsim_ros_pkgs-msg-paths.cmake
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/airsim_ros_pkgs/cmake/airsim_ros_pkgsConfig-version.cmake
@@ -129,3 +129,66 @@ Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catk
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/roseus/ros/airsim_ros_pkgs/srv/SetLocalPosition.l
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/roseus/ros/airsim_ros_pkgs/srv/Takeoff.l
 Symlinking /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/share/roseus/ros/airsim_ros_pkgs/srv/TakeoffGroup.l
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/.fuse_hidden0000047000000001, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/.fuse_hidden0000047000000001)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/airsim_ros_pkgs/.fuse_hidden0000043a00000002, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/airsim_ros_pkgs/.fuse_hidden0000043a00000002)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/__init__.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/__init__.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_Altimeter.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_Altimeter.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_CarControls.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_CarControls.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_CarState.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_CarState.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_Environment.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_Environment.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GimbalAngleEulerCmd.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GimbalAngleEulerCmd.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GimbalAngleQuatCmd.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GimbalAngleQuatCmd.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GPSYaw.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GPSYaw.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_VelCmd.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_VelCmd.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_VelCmdGroup.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_VelCmdGroup.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/__init__.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/__init__.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Land.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Land.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_LandGroup.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_LandGroup.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Reset.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Reset.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_SetGPSPosition.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_SetGPSPosition.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_SetLocalPosition.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_SetLocalPosition.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Takeoff.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Takeoff.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_TakeoffGroup.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_TakeoffGroup.py)
+Cleaning: (/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/.private/airsim_ros_pkgs/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/__init__.py, /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/__init__.py)
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/.fuse_hidden0000047000000001
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/airsim_ros_pkgs/.fuse_hidden0000043a00000002
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/__init__.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_Altimeter.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_CarControls.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_CarState.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_Environment.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GimbalAngleEulerCmd.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GimbalAngleQuatCmd.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_GPSYaw.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_VelCmd.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/_VelCmdGroup.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/msg/__init__.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Land.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_LandGroup.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Reset.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_SetGPSPosition.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_SetLocalPosition.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_Takeoff.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/_TakeoffGroup.py
+Already unlinked: {}
+Unlinking: /home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/devel/lib/python2.7/dist-packages/airsim_ros_pkgs/srv/__init__.py
+Already unlinked: {}

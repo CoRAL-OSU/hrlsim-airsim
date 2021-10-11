@@ -1,0 +1,26 @@
+int16 LOCAL_FRAME=0
+int16 GLOBAL_FRAME=1
+
+#goal definition
+float32[3] target
+float32 timeout
+float32 tolerance
+float32 speed
+int16 position_frame
+
+float32[3] fvel  # final velocity
+float32[3] facc  # final acceleration
+float32[3] fjrk  # final jerk
+
+int16 yaw_frame
+float32 yaw
+---
+#result definition
+float32[3] location
+float32 error
+float32 time_left
+---
+#feedback
+float32[3] location
+float32 error
+float32 time_left

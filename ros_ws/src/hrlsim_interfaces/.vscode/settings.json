@@ -1,0 +1,9 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages",
+        "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrl_interfaces/lib/python3.8/site-packages",
+        "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib/python3.8/site-packages",
+        "/home/cthornton/Documents/vela/catkin_ws/devel/lib/python2.7/dist-packages",
+        "/opt/ros/foxy/lib/python3.8/site-packages"
+    ]
+}
