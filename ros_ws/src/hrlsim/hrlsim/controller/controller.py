@@ -32,7 +32,7 @@ class Controller(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def computeControl(self, t0:float, dt: float, state: hrlsim.airsim.MultirotorState, drone_name: AnyStr) -> Tuple[np.ndarray, np.ndarray]:
+    def computeControl(self, t:float, t0:float, dt: float, state: hrlsim.airsim.MultirotorState, drone_name: AnyStr) -> Tuple[np.ndarray, np.ndarray]:
         """
         Computes the control for a given state
 

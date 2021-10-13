@@ -5,6 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+            "justMyCode": false
+        },
+        {
             "name": "ROS: Launch",
             "type": "ros",
             "request": "launch",
@@ -15,7 +23,6 @@
             "type": "ros",
             "request": "attach"
         },
-
         {
             "name": "clang++-8 - Build and debug active file",
             "type": "cppdbg",

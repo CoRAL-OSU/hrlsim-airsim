@@ -4,8 +4,10 @@ from typing import List, Tuple
 import control
 
 from . import controller
-import hrlsim
 
+import hrlsim
+import hrlsim.airsim
+import hrlsim.utility
 
 class LQR(controller.Controller):
     """
@@ -23,20 +25,20 @@ class LQR(controller.Controller):
         """
         super().__init__(trajType, maxThrust, mass)
 
-        self.Qa: np.ndarray = np.diag([100, 100, 100, 1, 1, 1, 1, 10, 10, 10,5,5,10])
-        self.R: np.ndarray = np.diag([1, 1, 2e1, 1.0])
-        self.C: np.ndarray = np.block([[np.eye(3), np.zeros((3,7))]])
+        self.Qa = np.diag([100.0, 100.0, 100.0, 1.0, 1.0, 1.0, 1.0, 10.0, 10.0, 10.0,5.0,5.0,10.0])
+        self.R = np.diag([1.0, 1.0, 2.0e1, 1.0])
+        self.C = np.block([[np.eye(3.0), np.zeros((3,7))]])
 
-        self.Kstar: np.ndarray = np.zeros((4, 10))
-        self.Ki: np.ndarray = np.zeros((4,3))
-        self.Ktilde: np.ndarray = np.zeros((4,3))
+        self.Kstar = np.zeros((4, 10), dtype=np.float64)
+        self.Ki = np.zeros((4,3), dtype=np.float64)
+        self.Ktilde = np.zeros((4,3), dtype=np.float64)
 
-        self.xi = np.ndarray = np.zeros((3,1))
+        self.xi = np.zeros((3,1), dtype=np.float64)
 
         self.mass = mass
         self.max_thrust = maxThrust
 
-        self.linearized_rotation = hrlsim.airsim.to_quaternion(0,0,0)
+        self.linearized_rotation = hrlsim.airsim.to_quaternion(0.0,0.0,0.0)
         self.first = True
 
         self.prev_gain_time = -999
@@ -68,7 +70,7 @@ class LQR(controller.Controller):
         fc[:,2] = -fc[:,2]
 
         self.traj_generator.generate(waypoints, ic, fc, avg_spd)
-        self.xi = np.zeros((3,1))
+        self.xi = np.zeros((3,1), dtype=np.float64)
 
     def computeControl(
         self, t: float, t0: float, dt: float, state: hrlsim.airsim.MultirotorState, drone_name
@@ -84,7 +86,9 @@ class LQR(controller.Controller):
         Returns:
             Tuple[np.ndarray, np.ndarray, np.matrix]: Tuple representing
         """
-        p = state.kinematics_estirospyimated.linear_velocity.to_numpy_array()
+        p = state.kinematics_estimated.linear_velocity.to_numpy_array()
+        q = state.kinematics_estimated.orientation.to_numpy_array()
+        v = state.kinematics_estimated.linear_velocity.to_numpy_array()
 
         body_z_accel = -state.kinematics_estimated.linear_acceleration.z_val
 
@@ -207,25 +211,25 @@ class LQR(controller.Controller):
 
 
         # Compute vdotq
-        Q = np.array([[ q[2,0],  q[3,0],  q[0,0], q[1,0]],
-                      [-q[1,0], -q[0,0],  q[3,0], q[2,0]],
-                      [ q[0,0], -q[1,0], -q[2,0], q[3,0]]])
+        Q = np.array([[ q[2],  q[3],  q[0], q[1]],
+                      [-q[1], -q[0],  q[3], q[2]],
+                      [ q[0], -q[1], -q[2], q[3]]])
 
         qnorm = np.linalg.norm(q)
         vdotq = (2.0*c*np.matmul(Q, (np.identity(4) - (math.pow(qnorm,-2)*q*q.T))/qnorm))
 
 
         # Compute qdotomega
-        qdotomega = 0.5*np.array([[-q[1,0], -q[2,0], -q[3,0]],
-                                  [ q[0,0], -q[3,0], -q[2,0]],
-                                  [ q[3,0],  q[0,0],  q[1,0]],
-                                  [-q[2,0],  q[1,0],  q[0,0]]])
+        qdotomega = 0.5*np.array([[-q[1], -q[2], -q[3]],
+                                  [ q[0], -q[3], -q[2]],
+                                  [ q[3],  q[0],  q[1]],
+                                  [-q[2],  q[1],  q[0]]])
 
 
         # Compute vdotc
-        vdotc = np.array([[q[0,0]*q[2,0] + q[1,0]*q[3,0]],
-                          [q[2,0]*q[3,0] - q[0,0]*q[1,0]],
-                          [q[0,0]*q[0,0] - q[1,0]*q[1,0] - q[2,0]*q[2,0] + q[3,0]*q[3,0]]])
+        vdotc = np.array([[q[0]*q[2] + q[1]*q[3]],
+                          [q[2]*q[3] - q[0]*q[1]],
+                          [q[0]*q[0] - q[1]*q[1] - q[2]*q[2] + q[3]*q[3]]])
 
 
         #### USE PARTIALS TO COMPUTE LINEARIZATION ###
