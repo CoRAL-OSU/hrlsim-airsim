@@ -1,3 +1,6 @@
 [submodule "AirSim2"]
 	path = AirSim2
 	url = https://github.com/alonfaraj/AirSim.git
+[submodule "AirSim"]
+	path = AirSim
+	url = https://github.com/ARL-UAV-Simulator/AirSim.git
