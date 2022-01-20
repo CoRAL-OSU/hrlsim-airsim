@@ -1,0 +1,26 @@
+[0.258s] Invoking command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/hrlsim': PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/hrlsim build --build-base /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build install --prefix /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim --record /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log --single-version-externally-managed
+[0.467s] running egg_info
+[0.467s] writing ../../build/hrlsim/hrlsim.egg-info/PKG-INFO
+[0.468s] writing dependency_links to ../../build/hrlsim/hrlsim.egg-info/dependency_links.txt
+[0.468s] writing entry points to ../../build/hrlsim/hrlsim.egg-info/entry_points.txt
+[0.468s] writing requirements to ../../build/hrlsim/hrlsim.egg-info/requires.txt
+[0.468s] writing top-level names to ../../build/hrlsim/hrlsim.egg-info/top_level.txt
+[0.503s] reading manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+[0.505s] writing manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+[0.505s] running build
+[0.505s] running build_py
+[0.507s] copying hrlsim/controller/lqr.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller
+[0.508s] copying hrlsim/drone/drone.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone
+[0.510s] running install
+[0.511s] running install_lib
+[0.513s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller/lqr.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller
+[0.514s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone/drone.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone
+[0.517s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller/lqr.py to lqr.cpython-38.pyc
+[0.520s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone/drone.py to drone.cpython-38.pyc
+[0.523s] running install_data
+[0.524s] running install_egg_info
+[0.526s] removing '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim-0.0.0-py3.8.egg-info' (and everything under it)
+[0.526s] Copying ../../build/hrlsim/hrlsim.egg-info to /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim-0.0.0-py3.8.egg-info
+[0.528s] running install_scripts
+[0.544s] writing list of installed files to '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log'
+[0.559s] Invoked command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/hrlsim' returned '0': PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/hrlsim build --build-base /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build install --prefix /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim --record /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log --single-version-externally-managed

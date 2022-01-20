@@ -1,0 +1,10 @@
+prefix=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs
+exec_prefix=
+libdir=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib
+includedir=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include
+
+Name: rpclib
+Description: rpclib is a msgpack-rpc library written using modern C++
+Version: 2.3.0
+Libs: -L${libdir} -l
+Cflags: -I${includedir} rpclib_cflags-NOTFOUND

@@ -1,0 +1,27 @@
+running egg_info
+creating ../../build/hrlsim/hrlsim.egg-info
+writing ../../build/hrlsim/hrlsim.egg-info/PKG-INFO
+writing dependency_links to ../../build/hrlsim/hrlsim.egg-info/dependency_links.txt
+writing entry points to ../../build/hrlsim/hrlsim.egg-info/entry_points.txt
+writing requirements to ../../build/hrlsim/hrlsim.egg-info/requires.txt
+writing top-level names to ../../build/hrlsim/hrlsim.egg-info/top_level.txt
+writing manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+package init file 'hrlsim/__init__.py' not found (or not a regular file)
+reading manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+writing manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+warning: install_lib: '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib' does not exist -- no Python modules to install
+
+running install_data
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/share/ament_index
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/share/ament_index/resource_index
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/share/ament_index/resource_index/packages
+copying resource/hrlsim -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/share/ament_index/resource_index/packages
+copying package.xml -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/share/hrlsim
+running install_egg_info
+Copying ../../build/hrlsim/hrlsim.egg-info to /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim-0.0.0-py3.8.egg-info
+running install_scripts
+writing list of installed files to '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log'

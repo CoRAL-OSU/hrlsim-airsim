@@ -1,0 +1,3 @@
+[submodule "AirSim2"]
+	path = AirSim2
+	url = https://github.com/alonfaraj/AirSim.git

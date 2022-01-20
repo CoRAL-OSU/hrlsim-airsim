@@ -1,0 +1,19 @@
+[ 42%] Built target MavLinkCom
+[ 48%] Built target MavLinkTest
+[ 69%] Built target rpc
+[35m[1mConsolidate compiler generated dependencies of target AirLib[0m
+[ 85%] Built target AirLib
+[35m[1mConsolidate compiler generated dependencies of target airsim_settings_parser[0m
+[35m[1mConsolidate compiler generated dependencies of target pd_position_controller_simple[0m
+[ 88%] Built target airsim_settings_parser
+[35m[1mConsolidate compiler generated dependencies of target airsim_ros[0m
+[ 91%] Built target pd_position_controller_simple
+[ 92%] [32mBuilding CXX object CMakeFiles/airsim_ros.dir/src/airsim_ros_wrapper.cpp.o[0m
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:36:10:[m[K [01;31m[Kfatal error: [m[Kgeometry_msgs/msg/twist_samped.hpp: No such file or directory
+   36 | #include [01;31m[K<geometry_msgs/msg/twist_samped.hpp>[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+make[2]: *** [CMakeFiles/airsim_ros.dir/build.make:76: CMakeFiles/airsim_ros.dir/src/airsim_ros_wrapper.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:350: CMakeFiles/airsim_ros.dir/all] Error 2
+make: *** [Makefile:146: all] Error 2

@@ -1,0 +1,1075 @@
+[0.019s] Invoking command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs': CMAKE_PREFIX_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim:/opt/ros/foxy:/home/cthornton/Documents/vela/catkin_ws/devel:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs LD_LIBRARY_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib:/home/cthornton/Documents/vela/catkin_ws/devel/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib/python3.8/site-packages:/home/cthornton/Documents/vela/catkin_ws/devel/lib/python2.7/dist-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages /home/cthornton/.local/bin/cmake --build /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs -- -j12 -l12
+[0.144s] [ 42%] Built target MavLinkCom
+[0.168s] [ 48%] Built target MavLinkTest
+[0.180s] [ 69%] Built target rpc
+[0.245s] [ 85%] Built target AirLib
+[0.281s] [ 88%] Built target airsim_settings_parser
+[0.285s] [ 91%] Built target pd_position_controller_simple
+[0.300s] [35m[1mConsolidate compiler generated dependencies of target airsim_ros[0m
+[0.442s] [ 92%] [32mBuilding CXX object CMakeFiles/airsim_ros.dir/src/airsim_ros_wrapper.cpp.o[0m
+[1.592s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+[1.592s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[1.592s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[1.592s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:6[m[K,
+[1.593s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[1.593s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[1.593s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+[1.593s]   656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+[1.593s]       |                                  [01;35m[K^[m[K
+[1.593s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+[1.593s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+[1.593s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+[1.593s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+[1.594s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+[1.594s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[1.594s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[1.594s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[1.594s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[1.594s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:6[m[K,
+[1.594s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[1.594s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+[1.594s]    23 | struct [01;36m[Kobject[m[K : v1::object {
+[1.594s]       |        [01;36m[K^~~~~~[m[K
+[2.911s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.911s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.911s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.912s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::AirSimSettings::CameraSetting::CameraSetting()[m[K’:
+[2.912s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:197:13:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.912s]   197 |             [01;35m[K{[m[K
+[2.912s]       |             [01;35m[K^[m[K
+[2.912s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:121:29:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.913s]   121 |             static Rotation [01;35m[KnanRotation[m[K()
+[2.913s]       |                             [01;35m[K^~~~~~~~~~~[m[K
+[2.917s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::AirSimSettings::AirSimSettings()[m[K’:
+[2.917s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:414:9:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.918s]   414 |         [01;35m[K{[m[K
+[2.918s]       |         [01;35m[K^[m[K
+[2.918s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:121:29:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.918s]   121 |             static Rotation [01;35m[KnanRotation[m[K()
+[2.919s]       |                             [01;35m[K^~~~~~~~~~~[m[K
+[2.919s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:414:9:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.919s]   414 |         [01;35m[K{[m[K
+[2.919s]       |         [01;35m[K^[m[K
+[2.920s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.920s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.920s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.920s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.920s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.920s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.921s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.921s]       |                        [01;35m[K^~~[m[K
+[2.943s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.944s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.944s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.944s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In static member function ‘[01m[Kstatic void msr::airlib::AirSimSettings::initializeCaptureSettings(std::map<int, msr::airlib::AirSimSettings::CaptureSetting>&)[m[K’:
+[2.944s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.944s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.944s]       |                                                      [01;35m[K^[m[K
+[2.944s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.945s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.945s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.945s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.945s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.945s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.945s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.946s]       |                        [01;35m[K^~~[m[K
+[2.946s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.946s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.946s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.946s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.946s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.946s]       |                                                      [01;35m[K^[m[K
+[2.947s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.947s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.947s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.947s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.947s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.948s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.948s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.948s]       |                        [01;35m[K^~~[m[K
+[2.948s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.949s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.949s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.949s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.949s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.949s]       |                                                      [01;35m[K^[m[K
+[2.949s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.950s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.950s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.950s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.950s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.950s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.950s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.950s]       |                        [01;35m[K^~~[m[K
+[2.950s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.951s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.951s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.951s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.951s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.951s]       |                                                      [01;35m[K^[m[K
+[2.951s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.951s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.952s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.952s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.952s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.952s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.952s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.952s]       |                        [01;35m[K^~~[m[K
+[2.953s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.953s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.953s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.953s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.954s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.954s]       |                                                      [01;35m[K^[m[K
+[2.954s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.954s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.954s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.954s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.955s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.955s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.955s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.955s]       |                        [01;35m[K^~~[m[K
+[2.955s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.955s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.956s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.956s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.956s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.956s]       |                                                      [01;35m[K^[m[K
+[2.956s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.956s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.956s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.956s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.957s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.957s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.957s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.957s]       |                        [01;35m[K^~~[m[K
+[2.957s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.957s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.957s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.957s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.957s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.958s]       |                                                      [01;35m[K^[m[K
+[2.958s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.958s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.958s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.958s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.958s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.958s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.958s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.959s]       |                        [01;35m[K^~~[m[K
+[2.959s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.959s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.959s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.960s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.960s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.960s]       |                                                      [01;35m[K^[m[K
+[2.960s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.960s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.960s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.960s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.961s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.961s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.962s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.962s]       |                        [01;35m[K^~~[m[K
+[2.962s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.962s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.962s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.962s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.962s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.962s]       |                                                      [01;35m[K^[m[K
+[2.963s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.963s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.963s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.963s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.963s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.963s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.963s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.963s]       |                        [01;35m[K^~~[m[K
+[2.964s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.964s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.964s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.964s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.964s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.964s]       |                                                      [01;35m[K^[m[K
+[2.964s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.964s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.965s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.965s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.965s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.965s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.965s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.965s]       |                        [01;35m[K^~~[m[K
+[2.965s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.966s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.966s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.966s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.966s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.966s]       |                                                      [01;35m[K^[m[K
+[2.967s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.967s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.967s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.967s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.967s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.967s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.968s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.968s]       |                        [01;35m[K^~~[m[K
+[2.968s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.968s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.968s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.968s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.968s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.968s]       |                                                      [01;35m[K^[m[K
+[2.969s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.969s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.969s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.969s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+[2.969s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[2.970s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.970s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.970s]       |                        [01;35m[K^~~[m[K
+[3.745s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/SensorFactory.hpp:9[m[K,
+[3.745s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarApiBase.hpp:13[m[K,
+[3.745s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarRpcLibClient.hpp:10[m[K,
+[3.745s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:16[m[K,
+[3.745s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[3.745s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/imu/ImuSimple.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::ImuSimple::ImuSimple(const msr::airlib::AirSimSettings::ImuSetting&)[m[K’:
+[3.745s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/imu/ImuSimple.hpp:21:42:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kconstexpr float std::sqrt(float)[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[3.745s]    21 |             : ImuBase(setting.sensor_name[01;35m[K)[m[K
+[3.746s]       |                                          [01;35m[K^[m[K
+[3.772s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/magnetometer/MagnetometerSimple.hpp:12[m[K,
+[3.773s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/SensorFactory.hpp:10[m[K,
+[3.773s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarApiBase.hpp:13[m[K,
+[3.773s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarRpcLibClient.hpp:10[m[K,
+[3.773s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:16[m[K,
+[3.773s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[3.773s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/FrequencyLimiter.hpp:[m[K In member function ‘[01m[Kvirtual void msr::airlib::FrequencyLimiter::failResetUpdateOrdering(std::string)[m[K’:
+[3.773s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/FrequencyLimiter.hpp:49:58:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kerr[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+[3.773s]    49 |         virtual void failResetUpdateOrdering([01;35m[Kstd::string err[m[K) override
+[3.773s]       |                                              [01;35m[K~~~~~~~~~~~~^~~[m[K
+[56.770s] [ 94%] [32m[1mLinking CXX static library libairsim_ros.a[0m
+[57.769s] [ 94%] Built target airsim_ros
+[57.810s] [ 95%] [32m[1mLinking CXX executable pd_position_controller_simple_node[0m
+[57.810s] [ 97%] [32m[1mLinking CXX executable airsim_node[0m
+[58.319s] [ 98%] Built target pd_position_controller_simple_node
+[59.731s] [100%] Built target airsim_node
+[59.739s] Invoked command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs' returned '0': CMAKE_PREFIX_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim:/opt/ros/foxy:/home/cthornton/Documents/vela/catkin_ws/devel:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs LD_LIBRARY_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib:/home/cthornton/Documents/vela/catkin_ws/devel/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib/python3.8/site-packages:/home/cthornton/Documents/vela/catkin_ws/devel/lib/python2.7/dist-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages /home/cthornton/.local/bin/cmake --build /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs -- -j12 -l12
+[59.801s] Invoking command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs': CMAKE_PREFIX_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim:/opt/ros/foxy:/home/cthornton/Documents/vela/catkin_ws/devel:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs LD_LIBRARY_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib:/home/cthornton/Documents/vela/catkin_ws/devel/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib/python3.8/site-packages:/home/cthornton/Documents/vela/catkin_ws/devel/lib/python2.7/dist-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages /home/cthornton/.local/bin/cmake --install /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs
+[59.828s] -- Install configuration: "Debug"
+[59.829s] -- Installing: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/airsim_ros_pkgs/airsim_node
+[60.117s] -- Set runtime path of "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/airsim_ros_pkgs/airsim_node" to ""
+[60.117s] -- Installing: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/airsim_ros_pkgs/pd_position_controller_simple_node
+[60.179s] -- Set runtime path of "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/airsim_ros_pkgs/pd_position_controller_simple_node" to ""
+[60.179s] -- Installing: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/libairsim_ros.a
+[60.577s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/libpd_position_controller_simple.a
+[60.578s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/README.md
+[60.578s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch
+[60.578s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/airsim_all.launch
+[60.578s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/airsim_car_with_joy_control.launch
+[60.579s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/airsim_car_with_joy_control_auto.launch
+[60.579s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/airsim_node.launch.py
+[60.579s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/airsim_with_simple_PD_position_controller.launch.py
+[60.579s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/dynamic_constraints.launch.py
+[60.579s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/position_controller_simple.launch.py
+[60.579s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/rviz.launch.py
+[60.580s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/static_transforms.launch.py
+[60.580s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/__pycache__
+[60.580s] -- Installing: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/launch/__pycache__/airsim_node.launch.cpython-38.pyc
+[60.581s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/rviz
+[60.581s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/rviz/default.rviz
+[60.581s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/environment/library_path.sh
+[60.581s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/environment/library_path.dsv
+[60.582s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/ament_index/resource_index/package_run_dependencies/airsim_ros_pkgs
+[60.582s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/ament_index/resource_index/parent_prefix_path/airsim_ros_pkgs
+[60.582s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/environment/ament_prefix_path.sh
+[60.582s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/environment/ament_prefix_path.dsv
+[60.582s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/environment/path.sh
+[60.582s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/environment/path.dsv
+[60.583s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/local_setup.bash
+[60.583s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/local_setup.sh
+[60.583s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/local_setup.zsh
+[60.583s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/local_setup.dsv
+[60.584s] -- Installing: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/package.dsv
+[60.584s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/ament_index/resource_index/packages/airsim_ros_pkgs
+[60.584s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/cmake/ament_cmake_export_dependencies-extras.cmake
+[60.584s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/cmake/ament_cmake_export_include_directories-extras.cmake
+[60.584s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/cmake/ament_cmake_export_libraries-extras.cmake
+[60.585s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/cmake/airsim_ros_pkgsConfig.cmake
+[60.585s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/cmake/airsim_ros_pkgsConfig-version.cmake
+[60.585s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/share/airsim_ros_pkgs/package.xml
+[60.586s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/librpc.a
+[60.586s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include
+[60.586s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc
+[60.586s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/client.h
+[60.586s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/client.inl
+[60.587s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/compatibility.h
+[60.587s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/config.h
+[60.588s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail
+[60.588s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/all.h
+[60.588s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/any.h
+[60.588s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/async_writer.h
+[60.588s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/bool.h
+[60.588s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/call.h
+[60.588s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/client_error.h
+[60.589s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/constant.h
+[60.589s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/dev_utils.h
+[60.589s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/func_tools.h
+[60.589s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/func_traits.h
+[60.589s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/if.h
+[60.589s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/invoke.h
+[60.590s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/is_specialization_of.h
+[60.590s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/log.h
+[60.590s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/make_unique.h
+[60.590s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/not.h
+[60.590s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/pimpl.h
+[60.590s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/response.h
+[60.590s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/server_session.h
+[60.591s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/thread_group.h
+[60.591s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/detail/util.h
+[60.591s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/dispatcher.h
+[60.591s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/dispatcher.inl
+[60.591s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack
+[60.591s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/pack.hpp
+[60.592s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor
+[60.592s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/fixint_decl.hpp
+[60.592s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/adaptor_base.hpp
+[60.592s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp
+[60.592s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/array_ref.hpp
+[60.592s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/array_ref_decl.hpp
+[60.592s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/bool.hpp
+[60.593s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/boost
+[60.593s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/boost/fusion.hpp
+[60.593s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/boost/msgpack_variant.hpp
+[60.593s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/boost/msgpack_variant_decl.hpp
+[60.593s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/boost/optional.hpp
+[60.593s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/boost/string_ref.hpp
+[60.593s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/boost/string_view.hpp
+[60.594s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/carray.hpp
+[60.594s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/char_ptr.hpp
+[60.594s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/check_container_size.hpp
+[60.594s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/check_container_size_decl.hpp
+[60.594s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11
+[60.595s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11/array.hpp
+[60.595s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11/array_char.hpp
+[60.595s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11/array_unsigned_char.hpp
+[60.595s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11/forward_list.hpp
+[60.595s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11/reference_wrapper.hpp
+[60.595s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11/shared_ptr.hpp
+[60.595s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11/tuple.hpp
+[60.596s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11/unique_ptr.hpp
+[60.596s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11/unordered_map.hpp
+[60.596s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp11/unordered_set.hpp
+[60.596s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp17
+[60.596s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp17/optional.hpp
+[60.596s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/cpp17/string_view.hpp
+[60.596s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/define.hpp
+[60.596s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/define_decl.hpp
+[60.597s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/deque.hpp
+[60.597s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/ext.hpp
+[60.597s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/ext_decl.hpp
+[60.597s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/fixint.hpp
+[60.597s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/float.hpp
+[60.598s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/int.hpp
+[60.598s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/int_decl.hpp
+[60.598s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/list.hpp
+[60.598s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/map.hpp
+[60.599s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/map_decl.hpp
+[60.599s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/msgpack_tuple.hpp
+[60.599s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/msgpack_tuple_decl.hpp
+[60.599s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/nil.hpp
+[60.599s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/nil_decl.hpp
+[60.599s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/pair.hpp
+[60.599s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/raw.hpp
+[60.599s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/raw_decl.hpp
+[60.600s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/set.hpp
+[60.600s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/size_equal_only.hpp
+[60.600s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/size_equal_only_decl.hpp
+[60.600s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/string.hpp
+[60.600s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/tr1
+[60.600s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/tr1/unordered_map.hpp
+[60.600s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/tr1/unordered_set.hpp
+[60.600s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/v4raw.hpp
+[60.601s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/v4raw_decl.hpp
+[60.601s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/vector.hpp
+[60.601s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/vector_bool.hpp
+[60.601s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/vector_char.hpp
+[60.601s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/adaptor/vector_unsigned_char.hpp
+[60.601s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/cpp_config.hpp
+[60.601s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/cpp_config_decl.hpp
+[60.601s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/fbuffer.h
+[60.602s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/fbuffer.hpp
+[60.602s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/fbuffer_decl.hpp
+[60.602s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/gcc_atomic.h
+[60.602s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/gcc_atomic.hpp
+[60.602s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/iterator.hpp
+[60.602s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/iterator_decl.hpp
+[60.602s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/meta.hpp
+[60.602s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/meta_decl.hpp
+[60.603s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/object.h
+[60.603s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/object.hpp
+[60.603s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/object_decl.hpp
+[60.603s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/object_fwd.hpp
+[60.603s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/object_fwd_decl.hpp
+[60.603s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/pack.h
+[60.603s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/pack_decl.hpp
+[60.603s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/pack_define.h
+[60.604s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/pack_template.h
+[60.604s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/parse_return.hpp
+[60.604s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef
+[60.604s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture
+[60.604s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/alpha.h
+[60.604s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/arm.h
+[60.604s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/blackfin.h
+[60.605s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/convex.h
+[60.605s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/ia64.h
+[60.605s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/m68k.h
+[60.605s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/mips.h
+[60.605s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/parisc.h
+[60.605s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/ppc.h
+[60.605s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/pyramid.h
+[60.605s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/rs6k.h
+[60.606s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/sparc.h
+[60.606s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/superh.h
+[60.606s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/sys370.h
+[60.606s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/sys390.h
+[60.606s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/x86
+[60.606s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/x86/32.h
+[60.606s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/x86/64.h
+[60.606s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/x86.h
+[60.607s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture/z.h
+[60.607s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/architecture.h
+[60.607s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler
+[60.607s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/borland.h
+[60.607s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/clang.h
+[60.607s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/comeau.h
+[60.607s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/compaq.h
+[60.608s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/diab.h
+[60.608s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/digitalmars.h
+[60.608s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/dignus.h
+[60.608s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/edg.h
+[60.608s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/ekopath.h
+[60.608s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/gcc.h
+[60.608s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/gcc_xml.h
+[60.609s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/greenhills.h
+[60.609s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/hp_acc.h
+[60.609s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/iar.h
+[60.609s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/ibm.h
+[60.609s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/intel.h
+[60.609s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/kai.h
+[60.609s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/llvm.h
+[60.609s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/metaware.h
+[60.610s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/metrowerks.h
+[60.610s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/microtec.h
+[60.610s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/mpw.h
+[60.610s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/palm.h
+[60.610s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/pgi.h
+[60.610s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/sgi_mipspro.h
+[60.610s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/sunpro.h
+[60.611s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/tendra.h
+[60.611s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/visualc.h
+[60.611s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler/watcom.h
+[60.611s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/compiler.h
+[60.611s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/detail
+[60.611s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/detail/comp_detected.h
+[60.611s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/detail/endian_compat.h
+[60.612s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/detail/os_detected.h
+[60.612s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/detail/platform_detected.h
+[60.612s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/detail/test.h
+[60.612s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/detail/test_def.h
+[60.612s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/detail/_cassert.h
+[60.612s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/detail/_exception.h
+[60.612s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware
+[60.612s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd
+[60.613s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/arm
+[60.613s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/arm/versions.h
+[60.613s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/arm.h
+[60.613s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/ppc
+[60.613s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/ppc/versions.h
+[60.613s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/ppc.h
+[60.613s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/x86
+[60.613s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/x86/versions.h
+[60.614s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/x86.h
+[60.614s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/x86_amd
+[60.614s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/x86_amd/versions.h
+[60.614s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd/x86_amd.h
+[60.614s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware/simd.h
+[60.614s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/hardware.h
+[60.615s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/language
+[60.615s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/language/objc.h
+[60.615s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/language/stdc.h
+[60.615s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/language/stdcpp.h
+[60.615s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/language.h
+[60.615s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library
+[60.615s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/c
+[60.615s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/c/gnu.h
+[60.616s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/c/uc.h
+[60.616s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/c/vms.h
+[60.616s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/c/zos.h
+[60.616s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/c/_prefix.h
+[60.616s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/c.h
+[60.616s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std
+[60.616s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/cxx.h
+[60.616s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/dinkumware.h
+[60.617s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/libcomo.h
+[60.617s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/modena.h
+[60.617s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/msl.h
+[60.617s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/roguewave.h
+[60.617s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/sgi.h
+[60.617s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/stdcpp3.h
+[60.617s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/stlport.h
+[60.617s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/vacpp.h
+[60.618s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std/_prefix.h
+[60.618s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library/std.h
+[60.618s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/library.h
+[60.618s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/make.h
+[60.618s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os
+[60.618s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/aix.h
+[60.618s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/amigaos.h
+[60.619s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/android.h
+[60.619s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/beos.h
+[60.619s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/bsd
+[60.619s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/bsd/bsdi.h
+[60.619s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/bsd/dragonfly.h
+[60.619s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/bsd/free.h
+[60.619s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/bsd/net.h
+[60.620s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/bsd/open.h
+[60.620s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/bsd.h
+[60.620s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/cygwin.h
+[60.620s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/haiku.h
+[60.620s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/hpux.h
+[60.620s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/ios.h
+[60.620s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/irix.h
+[60.621s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/linux.h
+[60.621s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/macos.h
+[60.621s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/os400.h
+[60.621s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/qnxnto.h
+[60.621s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/solaris.h
+[60.621s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/unix.h
+[60.621s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/vms.h
+[60.621s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os/windows.h
+[60.622s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/os.h
+[60.622s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/other
+[60.622s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/other/endian.h
+[60.622s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/other.h
+[60.622s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/platform
+[60.622s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/platform/mingw.h
+[60.622s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/platform/windows_desktop.h
+[60.622s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/platform/windows_phone.h
+[60.623s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/platform/windows_runtime.h
+[60.623s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/platform/windows_store.h
+[60.623s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/platform.h
+[60.623s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/version.h
+[60.623s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef/version_number.h
+[60.623s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/predef.h
+[60.623s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor
+[60.623s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/enum.hpp
+[60.624s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list
+[60.624s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/adt.hpp
+[60.624s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/append.hpp
+[60.624s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/at.hpp
+[60.624s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/cat.hpp
+[60.624s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/detail
+[60.624s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/detail/dmc
+[60.624s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/detail/dmc/fold_left.hpp
+[60.625s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/detail/edg
+[60.625s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/detail/edg/fold_left.hpp
+[60.625s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/detail/edg/fold_right.hpp
+[60.625s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/detail/fold_left.hpp
+[60.625s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/detail/fold_right.hpp
+[60.625s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/enum.hpp
+[60.625s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/filter.hpp
+[60.625s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/first_n.hpp
+[60.626s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/fold_left.hpp
+[60.626s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/fold_right.hpp
+[60.626s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/for_each.hpp
+[60.626s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/for_each_i.hpp
+[60.626s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/for_each_product.hpp
+[60.626s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/rest_n.hpp
+[60.626s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/reverse.hpp
+[60.627s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/size.hpp
+[60.627s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/to_array.hpp
+[60.627s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/to_seq.hpp
+[60.627s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/to_tuple.hpp
+[60.627s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list/transform.hpp
+[60.627s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic
+[60.627s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic/add.hpp
+[60.628s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic/dec.hpp
+[60.628s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic/detail
+[60.628s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic/detail/div_base.hpp
+[60.628s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic/div.hpp
+[60.628s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic/inc.hpp
+[60.628s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic/mod.hpp
+[60.628s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic/mul.hpp
+[60.628s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic/sub.hpp
+[60.628s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/arithmetic.hpp
+[60.629s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array
+[60.629s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/data.hpp
+[60.629s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/detail
+[60.629s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/detail/get_data.hpp
+[60.629s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/elem.hpp
+[60.629s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/enum.hpp
+[60.629s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/insert.hpp
+[60.630s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/pop_back.hpp
+[60.630s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/pop_front.hpp
+[60.630s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/push_back.hpp
+[60.630s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/push_front.hpp
+[60.630s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/remove.hpp
+[60.630s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/replace.hpp
+[60.630s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/reverse.hpp
+[60.630s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/size.hpp
+[60.631s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/to_list.hpp
+[60.631s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/to_seq.hpp
+[60.631s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array/to_tuple.hpp
+[60.631s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/array.hpp
+[60.631s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/assert_msg.hpp
+[60.631s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/cat.hpp
+[60.631s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/comma.hpp
+[60.632s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/comma_if.hpp
+[60.632s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/comparison
+[60.632s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/comparison/equal.hpp
+[60.632s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/comparison/greater.hpp
+[60.632s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/comparison/greater_equal.hpp
+[60.632s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/comparison/less.hpp
+[60.632s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/comparison/less_equal.hpp
+[60.632s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/comparison/not_equal.hpp
+[60.633s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/comparison.hpp
+[60.633s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/config
+[60.633s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/config/config.hpp
+[60.633s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/config/limits.hpp
+[60.633s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control
+[60.634s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/deduce_d.hpp
+[60.634s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/detail
+[60.634s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/detail/dmc
+[60.634s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/detail/dmc/while.hpp
+[60.634s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/detail/edg
+[60.634s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/detail/edg/while.hpp
+[60.634s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/detail/msvc
+[60.635s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/detail/msvc/while.hpp
+[60.635s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/detail/while.hpp
+[60.635s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/expr_if.hpp
+[60.635s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/expr_iif.hpp
+[60.635s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/if.hpp
+[60.635s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/iif.hpp
+[60.635s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control/while.hpp
+[60.636s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/control.hpp
+[60.636s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/debug
+[60.636s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/debug/assert.hpp
+[60.636s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/debug/error.hpp
+[60.636s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/debug/line.hpp
+[60.636s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/debug.hpp
+[60.636s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/dec.hpp
+[60.636s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/detail
+[60.637s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/detail/auto_rec.hpp
+[60.637s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/detail/check.hpp
+[60.637s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/detail/dmc
+[60.637s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/detail/dmc/auto_rec.hpp
+[60.637s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/detail/is_binary.hpp
+[60.637s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/detail/is_nullary.hpp
+[60.637s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/detail/is_unary.hpp
+[60.638s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/detail/null.hpp
+[60.638s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/detail/split.hpp
+[60.638s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/empty.hpp
+[60.638s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/enum_params.hpp
+[60.638s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/enum_params_with_a_default.hpp
+[60.638s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/enum_params_with_defaults.hpp
+[60.638s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/enum_shifted.hpp
+[60.638s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/enum_shifted_params.hpp
+[60.639s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/expand.hpp
+[60.639s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/expr_if.hpp
+[60.639s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities
+[60.639s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/apply.hpp
+[60.639s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/detail
+[60.639s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/detail/is_empty.hpp
+[60.639s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/empty.hpp
+[60.639s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/expand.hpp
+[60.640s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/identity.hpp
+[60.640s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/intercept.hpp
+[60.640s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/is_1.hpp
+[60.640s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/is_empty.hpp
+[60.640s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/is_empty_or_1.hpp
+[60.640s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/is_empty_variadic.hpp
+[60.640s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities/overload.hpp
+[60.640s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/facilities.hpp
+[60.641s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/for.hpp
+[60.641s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/identity.hpp
+[60.641s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/if.hpp
+[60.641s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/inc.hpp
+[60.641s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iterate.hpp
+[60.641s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration
+[60.641s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail
+[60.641s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds
+[60.642s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds/lower1.hpp
+[60.642s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds/lower2.hpp
+[60.642s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds/lower3.hpp
+[60.642s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds/lower4.hpp
+[60.642s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds/lower5.hpp
+[60.642s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds/upper1.hpp
+[60.642s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds/upper2.hpp
+[60.643s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds/upper3.hpp
+[60.643s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds/upper4.hpp
+[60.643s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/bounds/upper5.hpp
+[60.643s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/finish.hpp
+[60.643s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter
+[60.643s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter/forward1.hpp
+[60.643s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter/forward2.hpp
+[60.644s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter/forward3.hpp
+[60.644s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter/forward4.hpp
+[60.644s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter/forward5.hpp
+[60.644s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter/reverse1.hpp
+[60.644s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter/reverse2.hpp
+[60.644s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter/reverse3.hpp
+[60.644s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter/reverse4.hpp
+[60.645s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/iter/reverse5.hpp
+[60.645s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/local.hpp
+[60.645s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/rlocal.hpp
+[60.645s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/self.hpp
+[60.645s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/detail/start.hpp
+[60.645s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/iterate.hpp
+[60.645s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/local.hpp
+[60.645s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration/self.hpp
+[60.646s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/iteration.hpp
+[60.646s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/library.hpp
+[60.646s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/limits.hpp
+[60.646s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/list.hpp
+[60.646s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical
+[60.646s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/and.hpp
+[60.646s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/bitand.hpp
+[60.647s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/bitnor.hpp
+[60.647s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/bitor.hpp
+[60.647s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/bitxor.hpp
+[60.647s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/bool.hpp
+[60.647s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/compl.hpp
+[60.647s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/nor.hpp
+[60.648s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/not.hpp
+[60.648s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/or.hpp
+[60.648s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical/xor.hpp
+[60.648s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/logical.hpp
+[60.648s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/max.hpp
+[60.648s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/min.hpp
+[60.648s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/punctuation
+[60.648s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/punctuation/comma.hpp
+[60.649s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/punctuation/comma_if.hpp
+[60.649s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/punctuation/detail
+[60.649s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/punctuation/detail/is_begin_parens.hpp
+[60.649s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/punctuation/is_begin_parens.hpp
+[60.649s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/punctuation/paren.hpp
+[60.649s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/punctuation/paren_if.hpp
+[60.649s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/punctuation/remove_parens.hpp
+[60.649s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/punctuation.hpp
+[60.650s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repeat.hpp
+[60.650s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repeat_2nd.hpp
+[60.650s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repeat_3rd.hpp
+[60.650s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repeat_from_to.hpp
+[60.650s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repeat_from_to_2nd.hpp
+[60.650s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repeat_from_to_3rd.hpp
+[60.650s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition
+[60.651s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/deduce_r.hpp
+[60.651s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/deduce_z.hpp
+[60.651s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/detail
+[60.651s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/detail/dmc
+[60.651s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/detail/dmc/for.hpp
+[60.651s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/detail/edg
+[60.651s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/detail/edg/for.hpp
+[60.652s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/detail/for.hpp
+[60.652s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/detail/msvc
+[60.652s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/detail/msvc/for.hpp
+[60.652s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum.hpp
+[60.652s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum_binary_params.hpp
+[60.652s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum_params.hpp
+[60.652s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum_params_with_a_default.hpp
+[60.653s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum_params_with_defaults.hpp
+[60.653s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum_shifted.hpp
+[60.653s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum_shifted_binary_params.hpp
+[60.653s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum_shifted_params.hpp
+[60.653s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum_trailing.hpp
+[60.653s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum_trailing_binary_params.hpp
+[60.653s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/enum_trailing_params.hpp
+[60.653s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/for.hpp
+[60.653s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/repeat.hpp
+[60.654s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition/repeat_from_to.hpp
+[60.654s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/repetition.hpp
+[60.654s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/selection
+[60.654s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/selection/max.hpp
+[60.654s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/selection/min.hpp
+[60.654s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/selection.hpp
+[60.654s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq
+[60.655s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/cat.hpp
+[60.655s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/detail
+[60.655s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/detail/binary_transform.hpp
+[60.655s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/detail/is_empty.hpp
+[60.655s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/detail/split.hpp
+[60.655s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/elem.hpp
+[60.655s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/enum.hpp
+[60.655s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/filter.hpp
+[60.655s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/first_n.hpp
+[60.656s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/fold_left.hpp
+[60.656s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/fold_right.hpp
+[60.656s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/for_each.hpp
+[60.656s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/for_each_i.hpp
+[60.656s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/for_each_product.hpp
+[60.656s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/insert.hpp
+[60.657s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/pop_back.hpp
+[60.657s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/pop_front.hpp
+[60.657s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/push_back.hpp
+[60.657s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/push_front.hpp
+[60.657s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/remove.hpp
+[60.657s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/replace.hpp
+[60.657s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/rest_n.hpp
+[60.658s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/reverse.hpp
+[60.658s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/seq.hpp
+[60.658s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/size.hpp
+[60.658s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/subseq.hpp
+[60.658s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/to_array.hpp
+[60.658s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/to_list.hpp
+[60.658s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/to_tuple.hpp
+[60.658s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/transform.hpp
+[60.659s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq/variadic_seq_to_seq.hpp
+[60.659s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/seq.hpp
+[60.659s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot
+[60.659s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/counter.hpp
+[60.659s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/detail
+[60.659s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/detail/counter.hpp
+[60.659s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/detail/def.hpp
+[60.660s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/detail/shared.hpp
+[60.660s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/detail/slot1.hpp
+[60.660s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/detail/slot2.hpp
+[60.660s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/detail/slot3.hpp
+[60.660s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/detail/slot4.hpp
+[60.660s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/detail/slot5.hpp
+[60.660s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot/slot.hpp
+[60.661s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/slot.hpp
+[60.661s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/stringize.hpp
+[60.661s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple
+[60.661s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/detail
+[60.661s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/detail/is_single_return.hpp
+[60.661s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/eat.hpp
+[60.661s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/elem.hpp
+[60.662s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/enum.hpp
+[60.662s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/insert.hpp
+[60.662s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/pop_back.hpp
+[60.662s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/pop_front.hpp
+[60.662s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/push_back.hpp
+[60.662s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/push_front.hpp
+[60.662s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/rem.hpp
+[60.662s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/remove.hpp
+[60.663s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/replace.hpp
+[60.663s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/reverse.hpp
+[60.663s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/size.hpp
+[60.663s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/to_array.hpp
+[60.663s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/to_list.hpp
+[60.663s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple/to_seq.hpp
+[60.664s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/tuple.hpp
+[60.664s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/variadic
+[60.664s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/variadic/detail
+[60.664s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/variadic/detail/is_single_return.hpp
+[60.664s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/variadic/elem.hpp
+[60.664s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/variadic/size.hpp
+[60.664s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/variadic/to_array.hpp
+[60.664s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/variadic/to_list.hpp
+[60.665s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/variadic/to_seq.hpp
+[60.665s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/variadic/to_tuple.hpp
+[60.665s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/variadic.hpp
+[60.665s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/while.hpp
+[60.665s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor/wstringize.hpp
+[60.665s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/preprocessor.hpp
+[60.665s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/sbuffer.h
+[60.665s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/sbuffer.hpp
+[60.666s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/sbuffer_decl.hpp
+[60.666s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/sysdep.h
+[60.666s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/type.hpp
+[60.666s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/unpack.h
+[60.666s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/unpack.hpp
+[60.666s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/unpack_decl.hpp
+[60.666s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/unpack_define.h
+[60.666s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/unpack_exception.hpp
+[60.666s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/unpack_template.h
+[60.667s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/util.h
+[60.667s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1
+[60.667s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor
+[60.667s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/fixint.hpp
+[60.667s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/adaptor_base.hpp
+[60.667s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp
+[60.667s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/array_ref.hpp
+[60.667s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/array_ref_decl.hpp
+[60.668s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/bool.hpp
+[60.668s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/boost
+[60.668s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/boost/fusion.hpp
+[60.668s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/boost/msgpack_variant.hpp
+[60.668s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/boost/msgpack_variant_decl.hpp
+[60.668s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/boost/optional.hpp
+[60.668s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/boost/string_ref.hpp
+[60.668s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/boost/string_view.hpp
+[60.669s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/carray.hpp
+[60.669s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/char_ptr.hpp
+[60.669s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/check_container_size.hpp
+[60.669s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/check_container_size_decl.hpp
+[60.669s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11
+[60.669s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11/array.hpp
+[60.669s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11/array_char.hpp
+[60.670s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11/array_unsigned_char.hpp
+[60.670s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11/forward_list.hpp
+[60.670s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11/reference_wrapper.hpp
+[60.670s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11/shared_ptr.hpp
+[60.670s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11/tuple.hpp
+[60.670s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11/unique_ptr.hpp
+[60.671s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11/unordered_map.hpp
+[60.671s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp11/unordered_set.hpp
+[60.671s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp17
+[60.671s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp17/optional.hpp
+[60.671s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/cpp17/string_view.hpp
+[60.671s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/define.hpp
+[60.671s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/define_decl.hpp
+[60.671s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/deque.hpp
+[60.671s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail
+[60.672s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp03_define_array.hpp
+[60.672s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp03_define_array_decl.hpp
+[60.672s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp03_define_map.hpp
+[60.672s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp03_define_map_decl.hpp
+[60.672s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp03_msgpack_tuple.hpp
+[60.672s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp03_msgpack_tuple_decl.hpp
+[60.672s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp11_define_array.hpp
+[60.672s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp11_define_array_decl.hpp
+[60.673s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp11_define_map.hpp
+[60.673s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp11_define_map_decl.hpp
+[60.673s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp11_msgpack_tuple.hpp
+[60.673s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/detail/cpp11_msgpack_tuple_decl.hpp
+[60.673s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/ext.hpp
+[60.673s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/ext_decl.hpp
+[60.673s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/fixint_decl.hpp
+[60.673s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/float.hpp
+[60.674s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/int.hpp
+[60.674s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/int_decl.hpp
+[60.674s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/list.hpp
+[60.674s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/map.hpp
+[60.674s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/map_decl.hpp
+[60.674s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/msgpack_tuple.hpp
+[60.674s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/msgpack_tuple_decl.hpp
+[60.674s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/nil.hpp
+[60.674s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/nil_decl.hpp
+[60.675s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/pair.hpp
+[60.675s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/raw.hpp
+[60.675s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/raw_decl.hpp
+[60.675s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/set.hpp
+[60.675s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/size_equal_only.hpp
+[60.675s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/size_equal_only_decl.hpp
+[60.676s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/string.hpp
+[60.676s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/tr1
+[60.676s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/tr1/unordered_map.hpp
+[60.676s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/tr1/unordered_set.hpp
+[60.677s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/v4raw.hpp
+[60.677s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/v4raw_decl.hpp
+[60.677s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/vector.hpp
+[60.677s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/vector_bool.hpp
+[60.677s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/vector_char.hpp
+[60.677s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/adaptor/vector_unsigned_char.hpp
+[60.678s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/cpp_config.hpp
+[60.678s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/cpp_config_decl.hpp
+[60.678s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/detail
+[60.678s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/detail/cpp03_zone.hpp
+[60.678s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/detail/cpp03_zone_decl.hpp
+[60.678s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/detail/cpp11_zone.hpp
+[60.679s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/detail/cpp11_zone_decl.hpp
+[60.679s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/fbuffer.hpp
+[60.679s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/fbuffer_decl.hpp
+[60.679s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/iterator.hpp
+[60.679s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/iterator_decl.hpp
+[60.679s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/meta.hpp
+[60.679s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/meta_decl.hpp
+[60.679s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/object.hpp
+[60.680s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/object_decl.hpp
+[60.680s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/object_fwd.hpp
+[60.680s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/object_fwd_decl.hpp
+[60.680s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/pack.hpp
+[60.680s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/pack_decl.hpp
+[60.680s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/parse_return.hpp
+[60.681s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/preprocessor.hpp
+[60.681s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/sbuffer.hpp
+[60.681s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/sbuffer_decl.hpp
+[60.681s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/unpack.hpp
+[60.681s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/unpack_decl.hpp
+[60.681s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/unpack_exception.hpp
+[60.681s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/version.hpp
+[60.681s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/versioning.hpp
+[60.682s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/vrefbuffer.hpp
+[60.682s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/vrefbuffer_decl.hpp
+[60.682s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/zbuffer.hpp
+[60.682s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/zbuffer_decl.hpp
+[60.682s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/zone.hpp
+[60.682s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v1/zone_decl.hpp
+[60.682s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2
+[60.682s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor
+[60.683s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/adaptor_base.hpp
+[60.683s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/adaptor_base_decl.hpp
+[60.684s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/array_ref_decl.hpp
+[60.685s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/boost
+[60.685s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/boost/msgpack_variant_decl.hpp
+[60.685s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/check_container_size_decl.hpp
+[60.685s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/define_decl.hpp
+[60.685s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/detail
+[60.686s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/detail/cpp03_define_array_decl.hpp
+[60.686s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/detail/cpp03_define_map_decl.hpp
+[60.686s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/detail/cpp03_msgpack_tuple_decl.hpp
+[60.686s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/detail/cpp11_define_array_decl.hpp
+[60.686s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/detail/cpp11_define_map_decl.hpp
+[60.686s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/detail/cpp11_msgpack_tuple_decl.hpp
+[60.687s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/ext_decl.hpp
+[60.687s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/fixint_decl.hpp
+[60.687s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/int_decl.hpp
+[60.687s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/map_decl.hpp
+[60.687s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/msgpack_tuple_decl.hpp
+[60.688s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/nil_decl.hpp
+[60.688s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/raw_decl.hpp
+[60.688s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/size_equal_only_decl.hpp
+[60.688s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/adaptor/v4raw_decl.hpp
+[60.688s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/cpp_config_decl.hpp
+[60.688s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/create_object_visitor.hpp
+[60.689s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/detail
+[60.689s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/detail/cpp03_zone_decl.hpp
+[60.689s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/detail/cpp11_zone_decl.hpp
+[60.689s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/fbuffer_decl.hpp
+[60.689s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/iterator_decl.hpp
+[60.689s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/meta_decl.hpp
+[60.689s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/null_visitor.hpp
+[60.690s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/object.hpp
+[60.690s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/object_decl.hpp
+[60.690s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/object_fwd.hpp
+[60.690s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/object_fwd_decl.hpp
+[60.690s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/pack_decl.hpp
+[60.691s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/parse.hpp
+[60.691s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/parse_return.hpp
+[60.691s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/sbuffer_decl.hpp
+[60.691s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/unpack.hpp
+[60.691s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/unpack_decl.hpp
+[60.691s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/vrefbuffer_decl.hpp
+[60.692s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/x3_parse.hpp
+[60.692s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/x3_unpack.hpp
+[60.692s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/zbuffer_decl.hpp
+[60.692s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/v2/zone_decl.hpp
+[60.692s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/version.h
+[60.692s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/version.hpp
+[60.693s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/versioning.hpp
+[60.693s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/version_master.h
+[60.693s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/vrefbuffer.h
+[60.693s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/vrefbuffer.hpp
+[60.693s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/vrefbuffer_decl.hpp
+[60.693s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/zbuffer.h
+[60.694s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/zbuffer.hpp
+[60.694s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/zbuffer_decl.hpp
+[60.694s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/zone.h
+[60.694s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/zone.hpp
+[60.694s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack/zone_decl.hpp
+[60.694s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/msgpack.hpp
+[60.695s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/nonstd
+[60.695s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/nonstd/optional.hpp
+[60.695s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/rpc_error.h
+[60.695s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/server.h
+[60.695s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/this_handler.h
+[60.695s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/this_handler.inl
+[60.695s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/this_server.h
+[60.695s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/this_session.h
+[60.696s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/include/rpc/version.h
+[60.696s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/cmake/rpclib/rpclibTargets.cmake
+[60.696s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/cmake/rpclib/rpclibTargets-debug.cmake
+[60.696s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/cmake/rpclib/rpclibConfig.cmake
+[60.696s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/cmake/rpclib/rpclibConfigVersion.cmake
+[60.696s] -- Up-to-date: /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib/pkgconfig/rpclib.pc
+[60.696s] Invoked command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs' returned '0': CMAKE_PREFIX_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim:/opt/ros/foxy:/home/cthornton/Documents/vela/catkin_ws/devel:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs LD_LIBRARY_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib:/home/cthornton/Documents/vela/catkin_ws/devel/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib/python3.8/site-packages:/home/cthornton/Documents/vela/catkin_ws/devel/lib/python2.7/dist-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages /home/cthornton/.local/bin/cmake --install /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs

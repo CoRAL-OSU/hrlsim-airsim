@@ -1,0 +1,11 @@
+[ 42%] Built target MavLinkCom
+[ 48%] Built target MavLinkTest
+[ 69%] Built target rpc
+[35m[1mConsolidate compiler generated dependencies of target AirLib[0m
+[ 85%] Built target AirLib
+[35m[1mConsolidate compiler generated dependencies of target airsim_settings_parser[0m
+[35m[1mConsolidate compiler generated dependencies of target pd_position_controller_simple[0m
+[ 88%] Built target airsim_settings_parser
+[35m[1mConsolidate compiler generated dependencies of target airsim_ros[0m
+[ 91%] Built target pd_position_controller_simple
+[ 92%] [32mBuilding CXX object CMakeFiles/airsim_ros.dir/src/airsim_ros_wrapper.cpp.o[0m

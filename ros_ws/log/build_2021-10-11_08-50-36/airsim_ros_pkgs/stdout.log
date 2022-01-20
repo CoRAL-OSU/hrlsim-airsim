@@ -1,0 +1,23 @@
+-- Found rclcpp: 2.4.0 (/opt/ros/foxy/share/rclcpp/cmake)
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found nav_msgs: 2.0.4 (/opt/ros/foxy/share/nav_msgs/cmake)
+-- Found geographic_msgs: 1.0.4 (/opt/ros/foxy/share/geographic_msgs/cmake)
+-- Found std_srvs: 2.0.4 (/opt/ros/foxy/share/std_srvs/cmake)
+-- Found tf2_ros: 0.13.12 (/opt/ros/foxy/share/tf2_ros/cmake)
+-- Found tf2_sensor_msgs: 0.13.12 (/opt/ros/foxy/share/tf2_sensor_msgs/cmake)
+-- Found rclpy: 1.0.7 (/opt/ros/foxy/share/rclpy/cmake)
+-- Found image_transport: 2.3.0 (/opt/ros/foxy/share/image_transport/cmake)
+-- Found cv_bridge: 2.2.1 (/opt/ros/foxy/share/cv_bridge/cmake)
+-- Found tf2_geometry_msgs: 0.13.12 (/opt/ros/foxy/share/tf2_geometry_msgs/cmake)
+-- Found mavros_msgs: 2.0.3 (/opt/ros/foxy/share/mavros_msgs/cmake)
+-- Found rosidl_default_generators: 1.0.1 (/opt/ros/foxy/share/rosidl_default_generators/cmake)
+-- Found airsim_interfaces: 0.1.0 (/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/share/airsim_interfaces/cmake)
+-- found RPC_LIB_INCLUDES= /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/../../..//external/rpclib/rpclib-2.3.0/include
+-- Configuring incomplete, errors occurred!
+See also "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs/CMakeFiles/CMakeOutput.log".
+See also "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs/CMakeFiles/CMakeError.log".

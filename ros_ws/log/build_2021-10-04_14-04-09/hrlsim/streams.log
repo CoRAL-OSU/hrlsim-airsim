@@ -1,0 +1,23 @@
+[0.247s] Invoking command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/hrlsim': PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/hrlsim build --build-base /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build install --prefix /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim --record /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log --single-version-externally-managed
+[0.440s] running egg_info
+[0.441s] writing ../../build/hrlsim/hrlsim.egg-info/PKG-INFO
+[0.441s] writing dependency_links to ../../build/hrlsim/hrlsim.egg-info/dependency_links.txt
+[0.441s] writing entry points to ../../build/hrlsim/hrlsim.egg-info/entry_points.txt
+[0.441s] writing requirements to ../../build/hrlsim/hrlsim.egg-info/requires.txt
+[0.442s] writing top-level names to ../../build/hrlsim/hrlsim.egg-info/top_level.txt
+[0.469s] package init file 'hrlsim/__init__.py' not found (or not a regular file)
+[0.469s] reading manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+[0.470s] writing manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+[0.470s] running build
+[0.471s] running build_py
+[0.471s] running install
+[0.471s] running install_lib
+[0.472s] warning: install_lib: '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib' does not exist -- no Python modules to install
+[0.472s] 
+[0.472s] running install_data
+[0.472s] running install_egg_info
+[0.473s] removing '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim-0.0.0-py3.8.egg-info' (and everything under it)
+[0.474s] Copying ../../build/hrlsim/hrlsim.egg-info to /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim-0.0.0-py3.8.egg-info
+[0.476s] running install_scripts
+[0.489s] writing list of installed files to '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log'
+[0.506s] Invoked command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/hrlsim' returned '0': PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/hrlsim build --build-base /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build install --prefix /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim --record /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log --single-version-externally-managed

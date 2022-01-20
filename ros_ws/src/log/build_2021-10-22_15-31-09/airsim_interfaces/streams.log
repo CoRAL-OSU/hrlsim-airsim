@@ -1,0 +1,36 @@
+[0.043s] Invoking command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/build/airsim_interfaces': CMAKE_PREFIX_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim:/opt/ros/foxy:${CMAKE_PREFIX_PATH} /home/cthornton/.local/bin/cmake /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_interfaces -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/install/airsim_interfaces
+[0.189s] -- The C compiler identification is GNU 9.3.0
+[0.325s] -- The CXX compiler identification is GNU 9.3.0
+[0.335s] -- Detecting C compiler ABI info
+[0.417s] -- Detecting C compiler ABI info - done
+[0.434s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.434s] -- Detecting C compile features
+[0.435s] -- Detecting C compile features - done
+[0.441s] -- Detecting CXX compiler ABI info
+[0.535s] -- Detecting CXX compiler ABI info - done
+[0.547s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.547s] -- Detecting CXX compile features
+[0.548s] -- Detecting CXX compile features - done
+[0.561s] -- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.606s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[0.606s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.969s] -- Found rosidl_default_generators: 1.0.1 (/opt/ros/foxy/share/rosidl_default_generators/cmake)
+[0.978s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.993s] -- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[1.106s] Traceback (most recent call last):
+[1.106s]   File "/home/cthornton/.local/bin/cmake", line 8, in <module>
+[1.107s]     sys.exit(cmake())
+[1.107s]   File "/home/cthornton/.local/lib/python3.8/site-packages/cmake/__init__.py", line 47, in cmake
+[1.108s]     raise SystemExit(_program('cmake', sys.argv[1:]))
+[1.108s]   File "/home/cthornton/.local/lib/python3.8/site-packages/cmake/__init__.py", line 43, in _program
+[1.109s]     return subprocess.call([os.path.join(CMAKE_BIN_DIR, name)] + args)
+[1.109s]   File "/usr/lib/python3.8/subprocess.py", line 342, in call
+[1.109s]     return p.wait(timeout=timeout)
+[1.109s]   File "/usr/lib/python3.8/subprocess.py", line 1083, in wait
+[1.110s]     return self._wait(timeout=timeout)
+[1.110s]   File "/usr/lib/python3.8/subprocess.py", line 1806, in _wait
+[1.110s]     (pid, sts) = self._try_wait(0)
+[1.110s]   File "/usr/lib/python3.8/subprocess.py", line 1764, in _try_wait
+[1.111s]     (pid, sts) = os.waitpid(self.pid, wait_flags)
+[1.111s] KeyboardInterrupt
+[1.114s] Invoked command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/build/airsim_interfaces' returned '-2': CMAKE_PREFIX_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim:/opt/ros/foxy:${CMAKE_PREFIX_PATH} /home/cthornton/.local/bin/cmake /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_interfaces -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/install/airsim_interfaces

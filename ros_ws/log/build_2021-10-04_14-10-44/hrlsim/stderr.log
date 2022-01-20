@@ -1,0 +1,6 @@
+/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/utility.py:126: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+  assert(p.shape == (3,1) or p.shape == (3,), "Position vector must be (3x1) or(3,)")
+/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/utility.py:127: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+  assert(q.shape == (4,1) or q.shape == (4,), "Orientation vector must be (4x1) or (4,)")
+/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/utility.py:128: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+  assert(v.shape == (3,1) or v.shape == (3,), "Velocity vector must be (3x1) or(3,)")

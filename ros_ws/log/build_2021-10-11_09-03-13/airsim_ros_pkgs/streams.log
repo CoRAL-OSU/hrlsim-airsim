@@ -1,0 +1,80 @@
+[0.018s] Invoking command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs': CMAKE_PREFIX_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim:/opt/ros/foxy:/home/cthornton/Documents/vela/catkin_ws/devel:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs LD_LIBRARY_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib:/home/cthornton/Documents/vela/catkin_ws/devel/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib/python3.8/site-packages:/home/cthornton/Documents/vela/catkin_ws/devel/lib/python2.7/dist-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages /home/cthornton/.local/bin/cmake --build /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs -- -j12 -l12
+[0.064s] -- Found rclcpp: 2.4.0 (/opt/ros/foxy/share/rclcpp/cmake)
+[0.087s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.275s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.277s] -- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[0.365s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.401s] -- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[0.403s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.498s] -- Found nav_msgs: 2.0.4 (/opt/ros/foxy/share/nav_msgs/cmake)
+[0.574s] -- Found geographic_msgs: 1.0.4 (/opt/ros/foxy/share/geographic_msgs/cmake)
+[0.651s] -- Found std_srvs: 2.0.4 (/opt/ros/foxy/share/std_srvs/cmake)
+[0.657s] -- Found tf2_ros: 0.13.12 (/opt/ros/foxy/share/tf2_ros/cmake)
+[0.866s] -- Found tf2_sensor_msgs: 0.13.12 (/opt/ros/foxy/share/tf2_sensor_msgs/cmake)
+[0.931s] -- Found rclpy: 1.0.7 (/opt/ros/foxy/share/rclpy/cmake)
+[0.932s] -- Found image_transport: 2.3.0 (/opt/ros/foxy/share/image_transport/cmake)
+[0.953s] -- Found cv_bridge: 2.2.1 (/opt/ros/foxy/share/cv_bridge/cmake)
+[0.961s] -- Found tf2_geometry_msgs: 0.13.12 (/opt/ros/foxy/share/tf2_geometry_msgs/cmake)
+[0.983s] -- Found mavros_msgs: 2.0.3 (/opt/ros/foxy/share/mavros_msgs/cmake)
+[1.175s] -- Found rosidl_default_generators: 1.0.1 (/opt/ros/foxy/share/rosidl_default_generators/cmake)
+[1.182s] -- Found airsim_interfaces: 0.1.0 (/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/share/airsim_interfaces/cmake)
+[1.295s] [31mCMake Error at CMakeLists.txt:28 (add_subdirectory):
+[1.295s]   add_subdirectory given source
+[1.295s]   "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/../../../AirSim2/cmake/rpclib_wrapper"
+[1.296s]   which is not an existing directory.
+[1.296s] 
+[1.296s] [0m
+[1.296s] [31mCMake Error at CMakeLists.txt:29 (add_subdirectory):
+[1.296s]   add_subdirectory given source
+[1.296s]   "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/../../../AirSim2/cmake/AirLib"
+[1.296s]   which is not an existing directory.
+[1.296s] 
+[1.296s] [0m
+[1.297s] [31mCMake Error at CMakeLists.txt:30 (add_subdirectory):
+[1.297s]   add_subdirectory given source
+[1.297s]   "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/../../../AirSim2/cmake/MavLinkCom"
+[1.297s]   which is not an existing directory.
+[1.297s] 
+[1.297s] [0m
+[1.297s] -- found RPC_LIB_INCLUDES= /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/../../../AirSim2/external/rpclib/rpclib-2.3.0/include
+[1.307s] [33mCMake Warning at /opt/ros/foxy/share/ament_cmake_export_include_directories/cmake/ament_export_include_directories.cmake:44 (message):
+[1.307s]   ament_export_include_directories() package 'airsim_ros_pkgs' exports the
+[1.307s]   include directory
+[1.307s]   '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/../../../AirSim2/AirLib/deps/eigen3'
+[1.307s]   which doesn't exist
+[1.307s] Call Stack (most recent call first):
+[1.308s]   CMakeLists.txt:132 (ament_export_include_directories)
+[1.308s] 
+[1.308s] [0m
+[1.308s] [33mCMake Warning at /opt/ros/foxy/share/ament_cmake_export_include_directories/cmake/ament_export_include_directories.cmake:44 (message):
+[1.308s]   ament_export_include_directories() package 'airsim_ros_pkgs' exports the
+[1.308s]   include directory
+[1.308s]   '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/../../../AirSim2/AirLib/include'
+[1.308s]   which doesn't exist
+[1.308s] Call Stack (most recent call first):
+[1.309s]   CMakeLists.txt:132 (ament_export_include_directories)
+[1.309s] 
+[1.309s] [0m
+[1.309s] [33mCMake Warning at /opt/ros/foxy/share/ament_cmake_export_include_directories/cmake/ament_export_include_directories.cmake:44 (message):
+[1.309s]   ament_export_include_directories() package 'airsim_ros_pkgs' exports the
+[1.309s]   include directory
+[1.309s]   '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/../../../AirSim2/MavLinkCom/include'
+[1.309s]   which doesn't exist
+[1.309s] Call Stack (most recent call first):
+[1.310s]   CMakeLists.txt:132 (ament_export_include_directories)
+[1.310s] 
+[1.310s] [0m
+[1.310s] [33mCMake Warning at /opt/ros/foxy/share/ament_cmake_export_include_directories/cmake/ament_export_include_directories.cmake:44 (message):
+[1.310s]   ament_export_include_directories() package 'airsim_ros_pkgs' exports the
+[1.310s]   include directory
+[1.310s]   '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/../../../AirSim2/MavLinkCom/common_utils'
+[1.310s]   which doesn't exist
+[1.310s] Call Stack (most recent call first):
+[1.310s]   CMakeLists.txt:132 (ament_export_include_directories)
+[1.311s] 
+[1.311s] [0m
+[1.356s] -- Configuring incomplete, errors occurred!
+[1.356s] See also "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs/CMakeFiles/CMakeOutput.log".
+[1.356s] See also "/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs/CMakeFiles/CMakeError.log".
+[1.361s] make: *** [Makefile:487: cmake_check_build_system] Error 1
+[1.366s] Invoked command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs' returned '2': CMAKE_PREFIX_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim:/opt/ros/foxy:/home/cthornton/Documents/vela/catkin_ws/devel:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs LD_LIBRARY_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib:/home/cthornton/Documents/vela/catkin_ws/devel/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib/python3.8/site-packages:/home/cthornton/Documents/vela/catkin_ws/devel/lib/python2.7/dist-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages /home/cthornton/.local/bin/cmake --build /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs -- -j12 -l12

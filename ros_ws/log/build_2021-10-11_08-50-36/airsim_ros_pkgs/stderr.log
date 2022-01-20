@@ -1,0 +1,25 @@
+[31mCMake Error at CMakeLists.txt:28 (add_subdirectory):
+  The source directory
+
+    /home/cthornton/data/local/college/research/arl/code/sims/airsim/cmake/rpclib_wrapper
+
+  does not contain a CMakeLists.txt file.
+
+[0m
+[31mCMake Error at CMakeLists.txt:29 (add_subdirectory):
+  The source directory
+
+    /home/cthornton/data/local/college/research/arl/code/sims/airsim/cmake/AirLib
+
+  does not contain a CMakeLists.txt file.
+
+[0m
+[31mCMake Error at CMakeLists.txt:30 (add_subdirectory):
+  The source directory
+
+    /home/cthornton/data/local/college/research/arl/code/sims/airsim/cmake/MavLinkCom
+
+  does not contain a CMakeLists.txt file.
+
+[0m
+make: *** [Makefile:487: cmake_check_build_system] Error 1

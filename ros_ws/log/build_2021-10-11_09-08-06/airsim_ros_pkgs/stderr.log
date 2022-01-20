@@ -1,0 +1,814 @@
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/server.h:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/src/api/RpcLibServerBase.cpp:24[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+  656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+      |                                  [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/server.h:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/src/api/RpcLibServerBase.cpp:24[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+   23 | struct [01;36m[Kobject[m[K : v1::object {
+      |        [01;36m[K^~~~~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/server.h:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/src/vehicles/multirotor/api/MultirotorRpcLibServer.cpp:24[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+  656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+      |                                  [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/server.h:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/src/vehicles/multirotor/api/MultirotorRpcLibServer.cpp:24[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+   23 | struct [01;36m[Kobject[m[K : v1::object {
+      |        [01;36m[K^~~~~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/server.h:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/src/vehicles/car/api/CarRpcLibServer.cpp:24[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+  656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+      |                                  [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/server.h:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/src/vehicles/car/api/CarRpcLibServer.cpp:24[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+   23 | struct [01;36m[Kobject[m[K : v1::object {
+      |        [01;36m[K^~~~~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/client.h:11[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/src/vehicles/car/api/CarRpcLibClient.cpp:28[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+  656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+      |                                  [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/client.h:11[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/src/vehicles/car/api/CarRpcLibClient.cpp:28[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+   23 | struct [01;36m[Kobject[m[K : v1::object {
+      |        [01;36m[K^~~~~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+  656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+      |                                  [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+   23 | struct [01;36m[Kobject[m[K : v1::object {
+      |        [01;36m[K^~~~~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/pd_position_controller_simple.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/pd_position_controller_simple.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+  656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+      |                                  [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/pd_position_controller_simple.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/pd_position_controller_simple.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+   23 | struct [01;36m[Kobject[m[K : v1::object {
+      |        [01;36m[K^~~~~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::AirSimSettings::CameraSetting::CameraSetting()[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:197:13:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  197 |             [01;35m[K{[m[K
+      |             [01;35m[K^[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:121:29:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  121 |             static Rotation [01;35m[KnanRotation[m[K()
+      |                             [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::AirSimSettings::AirSimSettings()[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:414:9:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |         [01;35m[K{[m[K
+      |         [01;35m[K^[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:121:29:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  121 |             static Rotation [01;35m[KnanRotation[m[K()
+      |                             [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:414:9:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |         [01;35m[K{[m[K
+      |         [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In static member function ‘[01m[Kstatic void msr::airlib::AirSimSettings::initializeCaptureSettings(std::map<int, msr::airlib::AirSimSettings::CaptureSetting>&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/pd_position_controller_simple.h:25[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/pd_position_controller_simple.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/geodetic_conv.hpp:[m[K At global scope:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/geodetic_conv.hpp:16:15:[m[K [01;35m[Kwarning: [m[K‘[01m[Kgeodetic_converter::kFlattening[m[K’ defined but not used [[01;35m[K-Wunused-variable[m[K]
+   16 | static double [01;35m[KkFlattening[m[K = 1 / 298.257223563;
+      |               [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:6[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+  656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+      |                                  [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:6[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+   23 | struct [01;36m[Kobject[m[K : v1::object {
+      |        [01;36m[K^~~~~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::AirSimSettings::CameraSetting::CameraSetting()[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:197:13:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  197 |             [01;35m[K{[m[K
+      |             [01;35m[K^[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:121:29:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  121 |             static Rotation [01;35m[KnanRotation[m[K()
+      |                             [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::AirSimSettings::AirSimSettings()[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:414:9:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |         [01;35m[K{[m[K
+      |         [01;35m[K^[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:121:29:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  121 |             static Rotation [01;35m[KnanRotation[m[K()
+      |                             [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:414:9:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |         [01;35m[K{[m[K
+      |         [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In static member function ‘[01m[Kstatic void msr::airlib::AirSimSettings::initializeCaptureSettings(std::map<int, msr::airlib::AirSimSettings::CaptureSetting>&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/SensorFactory.hpp:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarApiBase.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarRpcLibClient.hpp:10[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/imu/ImuSimple.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::ImuSimple::ImuSimple(const msr::airlib::AirSimSettings::ImuSetting&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/imu/ImuSimple.hpp:21:42:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kconstexpr float std::sqrt(float)[m[K’ [[01;35m[K-Wnoexcept[m[K]
+   21 |             : ImuBase(setting.sensor_name[01;35m[K)[m[K
+      |                                          [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/magnetometer/MagnetometerSimple.hpp:12[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/SensorFactory.hpp:10[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarApiBase.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarRpcLibClient.hpp:10[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/FrequencyLimiter.hpp:[m[K In member function ‘[01m[Kvirtual void msr::airlib::FrequencyLimiter::failResetUpdateOrdering(std::string)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/FrequencyLimiter.hpp:49:58:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kerr[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+   49 |         virtual void failResetUpdateOrdering([01;35m[Kstd::string err[m[K) override
+      |                                              [01;35m[K~~~~~~~~~~~~^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/pd_position_controller_simple.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/pd_position_controller_simple_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+  656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+      |                                  [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/pd_position_controller_simple.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/pd_position_controller_simple_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+   23 | struct [01;36m[Kobject[m[K : v1::object {
+      |        [01;36m[K^~~~~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:6[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+  656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+      |                                  [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:6[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+   23 | struct [01;36m[Kobject[m[K : v1::object {
+      |        [01;36m[K^~~~~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::AirSimSettings::CameraSetting::CameraSetting()[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:197:13:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  197 |             [01;35m[K{[m[K
+      |             [01;35m[K^[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:121:29:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  121 |             static Rotation [01;35m[KnanRotation[m[K()
+      |                             [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::AirSimSettings::AirSimSettings()[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:414:9:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |         [01;35m[K{[m[K
+      |         [01;35m[K^[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:121:29:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  121 |             static Rotation [01;35m[KnanRotation[m[K()
+      |                             [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:414:9:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |         [01;35m[K{[m[K
+      |         [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In static member function ‘[01m[Kstatic void msr::airlib::AirSimSettings::initializeCaptureSettings(std::map<int, msr::airlib::AirSimSettings::CaptureSetting>&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+  701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+  414 |     static constexpr T [01;35m[Knan[m[K()
+      |                        [01;35m[K^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/SensorFactory.hpp:9[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarApiBase.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarRpcLibClient.hpp:10[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/imu/ImuSimple.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::ImuSimple::ImuSimple(const msr::airlib::AirSimSettings::ImuSetting&)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/imu/ImuSimple.hpp:21:42:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kconstexpr float std::sqrt(float)[m[K’ [[01;35m[K-Wnoexcept[m[K]
+   21 |             : ImuBase(setting.sensor_name[01;35m[K)[m[K
+      |                                          [01;35m[K^[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/magnetometer/MagnetometerSimple.hpp:12[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/sensors/SensorFactory.hpp:10[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarApiBase.hpp:13[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/car/api/CarRpcLibClient.hpp:10[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:16[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/FrequencyLimiter.hpp:[m[K In member function ‘[01m[Kvirtual void msr::airlib::FrequencyLimiter::failResetUpdateOrdering(std::string)[m[K’:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/FrequencyLimiter.hpp:49:58:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kerr[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+   49 |         virtual void failResetUpdateOrdering([01;35m[Kstd::string err[m[K) override
+      |                                              [01;35m[K~~~~~~~~~~~~^~~[m[K
+In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/pd_position_controller_simple.h:25[m[K,
+                 from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/pd_position_controller_simple_node.cpp:2[m[K:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/geodetic_conv.hpp:[m[K At global scope:
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/geodetic_conv.hpp:16:15:[m[K [01;35m[Kwarning: [m[K‘[01m[Kgeodetic_converter::kFlattening[m[K’ defined but not used [[01;35m[K-Wunused-variable[m[K]
+   16 | static double [01;35m[KkFlattening[m[K = 1 / 298.257223563;
+      |               [01;35m[K^~~~~~~~~~~[m[K

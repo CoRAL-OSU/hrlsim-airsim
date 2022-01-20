@@ -1,0 +1,1174 @@
+[0.022s] Invoking command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs': CMAKE_PREFIX_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim:/opt/ros/foxy:/home/cthornton/Documents/vela/catkin_ws/devel:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs LD_LIBRARY_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib:/home/cthornton/Documents/vela/catkin_ws/devel/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib/python3.8/site-packages:/home/cthornton/Documents/vela/catkin_ws/devel/lib/python2.7/dist-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages /home/cthornton/.local/bin/cmake --build /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs -- -j12 -l12
+[0.183s] [ 42%] Built target MavLinkCom
+[0.216s] [ 48%] Built target MavLinkTest
+[0.224s] [ 69%] Built target rpc
+[0.304s] [ 85%] Built target AirLib
+[0.351s] [ 88%] Built target pd_position_controller_simple
+[0.352s] [ 89%] [32mBuilding CXX object CMakeFiles/airsim_settings_parser.dir/src/airsim_settings_parser.cpp.o[0m
+[0.913s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:3:2:[m[K [01;31m[Kerror: [m[Kinvalid preprocessing directive #incude; did you mean #include?
+[0.913s]     3 | #[01;31m[Kincude[m[K <stdio>
+[0.913s]       |  [01;31m[K^~~~~~[m[K
+[0.913s]       |  [32m[Kinclude[m[K
+[1.256s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:15[m[K,
+[1.256s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[1.256s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[1.256s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[1.257s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[1.257s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:[m[K In function ‘[01m[Kvoid clmdep_msgpack::v1::operator<<(clmdep_msgpack::v2::object&, const msgpack_object&)[m[K’:
+[1.257s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object.hpp:656:34:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvoid* memcpy(void*, const void*, size_t)[m[K’ copying an object of non-trivial type ‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ from an array of ‘[01m[Kconst msgpack_object[m[K’ {aka ‘[01m[Kconst struct msgpack_object[m[K’} [[01;35m[K-Wclass-memaccess[m[K]
+[1.257s]   656 |     std::memcpy(&o, &v, sizeof(v)[01;35m[K)[m[K;
+[1.258s]       |                                  [01;35m[K^[m[K
+[1.258s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_fwd.hpp:17[m[K,
+[1.258s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/adaptor/adaptor_base_decl.hpp:14[m[K,
+[1.258s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base_decl.hpp:13[m[K,
+[1.259s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/adaptor/adaptor_base.hpp:13[m[K,
+[1.259s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:16[m[K,
+[1.259s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[1.259s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[1.259s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[1.260s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[1.260s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[1.260s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[1.260s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v2/object_fwd.hpp:23:8:[m[K [01;36m[Knote: [m[K‘[01m[Kstruct clmdep_msgpack::v2::object[m[K’ declared here
+[1.261s]    23 | struct [01;36m[Kobject[m[K : v1::object {
+[1.261s]       |        [01;36m[K^~~~~~[m[K
+[2.619s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.620s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.620s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::AirSimSettings::CameraSetting::CameraSetting()[m[K’:
+[2.620s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:197:13:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.620s]   197 |             [01;35m[K{[m[K
+[2.621s]       |             [01;35m[K^[m[K
+[2.621s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:121:29:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.621s]   121 |             static Rotation [01;35m[KnanRotation[m[K()
+[2.621s]       |                             [01;35m[K^~~~~~~~~~~[m[K
+[2.626s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In constructor ‘[01m[Kmsr::airlib::AirSimSettings::AirSimSettings()[m[K’:
+[2.626s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:414:9:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.626s]   414 |         [01;35m[K{[m[K
+[2.626s]       |         [01;35m[K^[m[K
+[2.626s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:121:29:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic msr::airlib::AirSimSettings::Rotation msr::airlib::AirSimSettings::Rotation::nanRotation()[m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.627s]   121 |             static Rotation [01;35m[KnanRotation[m[K()
+[2.627s]       |                             [01;35m[K^~~~~~~~~~~[m[K
+[2.627s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:414:9:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.627s]   414 |         [01;35m[K{[m[K
+[2.627s]       |         [01;35m[K^[m[K
+[2.627s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.627s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.628s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.628s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.628s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.628s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.628s]       |                        [01;35m[K^~~[m[K
+[2.645s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.646s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.646s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:[m[K In static member function ‘[01m[Kstatic void msr::airlib::AirSimSettings::initializeCaptureSettings(std::map<int, msr::airlib::AirSimSettings::CaptureSetting>&)[m[K’:
+[2.646s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.646s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.646s]       |                                                      [01;35m[K^[m[K
+[2.647s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.647s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.647s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.647s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.647s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.648s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.648s]       |                        [01;35m[K^~~[m[K
+[2.648s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.648s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.648s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.649s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.649s]       |                                                      [01;35m[K^[m[K
+[2.649s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.649s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.650s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.650s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.650s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.650s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.650s]       |                        [01;35m[K^~~[m[K
+[2.651s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.651s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.651s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.651s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.651s]       |                                                      [01;35m[K^[m[K
+[2.652s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.652s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.652s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.652s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.652s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.652s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.653s]       |                        [01;35m[K^~~[m[K
+[2.653s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.653s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.653s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.653s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.653s]       |                                                      [01;35m[K^[m[K
+[2.654s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.654s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.654s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.654s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.654s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.655s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.655s]       |                        [01;35m[K^~~[m[K
+[2.655s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.655s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.655s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.655s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.655s]       |                                                      [01;35m[K^[m[K
+[2.656s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.656s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.656s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.656s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.656s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.656s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.656s]       |                        [01;35m[K^~~[m[K
+[2.656s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.657s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.657s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.657s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.657s]       |                                                      [01;35m[K^[m[K
+[2.657s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.657s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.658s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.658s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.658s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.658s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.658s]       |                        [01;35m[K^~~[m[K
+[2.658s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.658s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.659s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.659s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.659s]       |                                                      [01;35m[K^[m[K
+[2.659s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.659s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.659s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.659s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.660s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.660s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.660s]       |                        [01;35m[K^~~[m[K
+[2.660s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.660s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.660s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.661s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.661s]       |                                                      [01;35m[K^[m[K
+[2.661s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.661s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.661s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.661s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.662s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.662s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.662s]       |                        [01;35m[K^~~[m[K
+[2.662s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.663s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.663s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.663s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.663s]       |                                                      [01;35m[K^[m[K
+[2.663s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.664s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.664s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.664s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.664s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.665s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.665s]       |                        [01;35m[K^~~[m[K
+[2.665s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.665s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.666s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.666s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.666s]       |                                                      [01;35m[K^[m[K
+[2.667s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.667s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.667s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.667s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.667s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.668s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.668s]       |                        [01;35m[K^~~[m[K
+[2.668s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.668s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.668s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.668s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.669s]       |                                                      [01;35m[K^[m[K
+[2.669s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.669s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.669s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.669s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.670s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.670s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.670s]       |                        [01;35m[K^~~[m[K
+[2.670s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:13[m[K,
+[2.671s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.671s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/AirSimSettings.hpp:701:54:[m[K [01;35m[Kwarning: [m[Knoexcept-expression evaluates to ‘[01m[Kfalse[m[K’ because of a call to ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.671s]   701 |                 capture_settings[i] = CaptureSetting([01;35m[K)[m[K;
+[2.671s]       |                                                      [01;35m[K^[m[K
+[2.671s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.672s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.672s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.672s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.672s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:414:24:[m[K [01;35m[Kwarning: [m[Kbut ‘[01m[Kstatic constexpr T common_utils::Utils::nan() [with T = float][m[K’ does not throw; perhaps it should be declared ‘[01m[Knoexcept[m[K’ [[01;35m[K-Wnoexcept[m[K]
+[2.673s]   414 |     static constexpr T [01;35m[Knan[m[K()
+[2.673s]       |                        [01;35m[K^~~[m[K
+[2.691s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:[m[K In member function ‘[01m[Kbool AirSimSettingsParser::getSettingsText(std::string&) const[m[K’:
+[2.692s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:19:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator<<[m[K’ (operand types are ‘[01m[Kstd::ostream[m[K’ {aka ‘[01m[Kstd::basic_ostream<char>[m[K’} and ‘[01m[Krpc::rpc_error[m[K’)
+[2.693s]    25 |         [32m[Kstd::cout[m[K [01;31m[K<<[m[K [34m[Ke[m[K << std::endl;
+[2.693s]       |         [32m[K~~~~~~~~~[m[K [01;31m[K^~[m[K [34m[K~[m[K
+[2.694s]       |              [32m[K|[m[K       [34m[K|[m[K
+[2.695s]       |              [32m[K|[m[K       [34m[Krpc::rpc_error[m[K
+[2.695s]       |              [32m[Kstd::ostream {aka std::basic_ostream<char>}[m[K
+[2.696s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.696s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.696s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.696s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.696s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.696s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.697s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.697s] [01m[K/usr/include/c++/9/ostream:108:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__ostream_type& (*)(std::basic_ostream<_CharT, _Traits>::__ostream_type&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.697s]   108 |       [01;36m[Koperator[m[K<<(__ostream_type& (*__pf)(__ostream_type&))
+[2.697s]       |       [01;36m[K^~~~~~~~[m[K
+[2.697s] [01m[K/usr/include/c++/9/ostream:108:36:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kstd::basic_ostream<char>::__ostream_type& (*)(std::basic_ostream<char>::__ostream_type&)[m[K’ {aka ‘[01m[Kstd::basic_ostream<char>& (*)(std::basic_ostream<char>&)[m[K’}
+[2.697s]   108 |       operator<<([01;36m[K__ostream_type& (*__pf)(__ostream_type&)[m[K)
+[2.697s]       |                  [01;36m[K~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.698s] [01m[K/usr/include/c++/9/ostream:117:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__ios_type& (*)(std::basic_ostream<_CharT, _Traits>::__ios_type&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>; std::basic_ostream<_CharT, _Traits>::__ios_type = std::basic_ios<char>][m[K’
+[2.698s]   117 |       [01;36m[Koperator[m[K<<(__ios_type& (*__pf)(__ios_type&))
+[2.698s]       |       [01;36m[K^~~~~~~~[m[K
+[2.698s] [01m[K/usr/include/c++/9/ostream:117:32:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kstd::basic_ostream<char>::__ios_type& (*)(std::basic_ostream<char>::__ios_type&)[m[K’ {aka ‘[01m[Kstd::basic_ios<char>& (*)(std::basic_ios<char>&)[m[K’}
+[2.698s]   117 |       operator<<([01;36m[K__ios_type& (*__pf)(__ios_type&)[m[K)
+[2.699s]       |                  [01;36m[K~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~[m[K
+[2.699s] [01m[K/usr/include/c++/9/ostream:127:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::ios_base& (*)(std::ios_base&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.699s]   127 |       [01;36m[Koperator[m[K<<(ios_base& (*__pf) (ios_base&))
+[2.699s]       |       [01;36m[K^~~~~~~~[m[K
+[2.699s] [01m[K/usr/include/c++/9/ostream:127:30:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kstd::ios_base& (*)(std::ios_base&)[m[K’
+[2.700s]   127 |       operator<<([01;36m[Kios_base& (*__pf) (ios_base&)[m[K)
+[2.700s]       |                  [01;36m[K~~~~~~~~~~~~^~~~~~~~~~~~~~~~~[m[K
+[2.700s] [01m[K/usr/include/c++/9/ostream:166:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.701s]   166 |       [01;36m[Koperator[m[K<<(long __n)
+[2.701s]       |       [01;36m[K^~~~~~~~[m[K
+[2.701s] [01m[K/usr/include/c++/9/ostream:166:23:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Klong int[m[K’
+[2.701s]   166 |       operator<<([01;36m[Klong __n[m[K)
+[2.701s]       |                  [01;36m[K~~~~~^~~[m[K
+[2.701s] [01m[K/usr/include/c++/9/ostream:170:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.701s]   170 |       [01;36m[Koperator[m[K<<(unsigned long __n)
+[2.702s]       |       [01;36m[K^~~~~~~~[m[K
+[2.702s] [01m[K/usr/include/c++/9/ostream:170:32:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Klong unsigned int[m[K’
+[2.702s]   170 |       operator<<([01;36m[Kunsigned long __n[m[K)
+[2.702s]       |                  [01;36m[K~~~~~~~~~~~~~~^~~[m[K
+[2.702s] [01m[K/usr/include/c++/9/ostream:174:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(bool) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.702s]   174 |       [01;36m[Koperator[m[K<<(bool __n)
+[2.703s]       |       [01;36m[K^~~~~~~~[m[K
+[2.703s] [01m[K/usr/include/c++/9/ostream:174:23:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kbool[m[K’
+[2.703s]   174 |       operator<<([01;36m[Kbool __n[m[K)
+[2.703s]       |                  [01;36m[K~~~~~^~~[m[K
+[2.703s] In file included from [01m[K/usr/include/c++/9/ostream:702[m[K,
+[2.704s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.704s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.704s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.704s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.704s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.704s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.704s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.705s] [01m[K/usr/include/c++/9/bits/ostream.tcc:91:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(short int) [with _CharT = char; _Traits = std::char_traits<char>][m[K’
+[2.705s]    91 |     [01;36m[Kbasic_ostream<_CharT, _Traits>[m[K::
+[2.705s]       |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.705s] [01m[K/usr/include/c++/9/bits/ostream.tcc:92:22:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kshort int[m[K’
+[2.705s]    92 |     operator<<([01;36m[Kshort __n[m[K)
+[2.705s]       |                [01;36m[K~~~~~~^~~[m[K
+[2.706s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.706s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.706s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.706s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.706s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.706s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.707s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.707s] [01m[K/usr/include/c++/9/ostream:181:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(short unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.707s]   181 |       [01;36m[Koperator[m[K<<(unsigned short __n)
+[2.707s]       |       [01;36m[K^~~~~~~~[m[K
+[2.707s] [01m[K/usr/include/c++/9/ostream:181:33:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kshort unsigned int[m[K’
+[2.707s]   181 |       operator<<([01;36m[Kunsigned short __n[m[K)
+[2.708s]       |                  [01;36m[K~~~~~~~~~~~~~~~^~~[m[K
+[2.708s] In file included from [01m[K/usr/include/c++/9/ostream:702[m[K,
+[2.708s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.708s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.708s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.708s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.709s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.709s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.709s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.709s] [01m[K/usr/include/c++/9/bits/ostream.tcc:105:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(int) [with _CharT = char; _Traits = std::char_traits<char>][m[K’
+[2.710s]   105 |     [01;36m[Kbasic_ostream<_CharT, _Traits>[m[K::
+[2.710s]       |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.710s] [01m[K/usr/include/c++/9/bits/ostream.tcc:106:20:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kint[m[K’
+[2.710s]   106 |     operator<<([01;36m[Kint __n[m[K)
+[2.710s]       |                [01;36m[K~~~~^~~[m[K
+[2.710s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.711s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.711s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.711s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.711s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.711s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.711s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.712s] [01m[K/usr/include/c++/9/ostream:192:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.712s]   192 |       [01;36m[Koperator[m[K<<(unsigned int __n)
+[2.712s]       |       [01;36m[K^~~~~~~~[m[K
+[2.712s] [01m[K/usr/include/c++/9/ostream:192:31:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kunsigned int[m[K’
+[2.712s]   192 |       operator<<([01;36m[Kunsigned int __n[m[K)
+[2.713s]       |                  [01;36m[K~~~~~~~~~~~~~^~~[m[K
+[2.713s] [01m[K/usr/include/c++/9/ostream:201:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.713s]   201 |       [01;36m[Koperator[m[K<<(long long __n)
+[2.713s]       |       [01;36m[K^~~~~~~~[m[K
+[2.713s] [01m[K/usr/include/c++/9/ostream:201:28:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Klong long int[m[K’
+[2.714s]   201 |       operator<<([01;36m[Klong long __n[m[K)
+[2.714s]       |                  [01;36m[K~~~~~~~~~~^~~[m[K
+[2.714s] [01m[K/usr/include/c++/9/ostream:205:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.714s]   205 |       [01;36m[Koperator[m[K<<(unsigned long long __n)
+[2.714s]       |       [01;36m[K^~~~~~~~[m[K
+[2.714s] [01m[K/usr/include/c++/9/ostream:205:37:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Klong long unsigned int[m[K’
+[2.715s]   205 |       operator<<([01;36m[Kunsigned long long __n[m[K)
+[2.715s]       |                  [01;36m[K~~~~~~~~~~~~~~~~~~~^~~[m[K
+[2.715s] [01m[K/usr/include/c++/9/ostream:220:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(double) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.715s]   220 |       [01;36m[Koperator[m[K<<(double __f)
+[2.716s]       |       [01;36m[K^~~~~~~~[m[K
+[2.716s] [01m[K/usr/include/c++/9/ostream:220:25:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kdouble[m[K’
+[2.716s]   220 |       operator<<([01;36m[Kdouble __f[m[K)
+[2.716s]       |                  [01;36m[K~~~~~~~^~~[m[K
+[2.717s] [01m[K/usr/include/c++/9/ostream:224:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(float) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.717s]   224 |       [01;36m[Koperator[m[K<<(float __f)
+[2.717s]       |       [01;36m[K^~~~~~~~[m[K
+[2.717s] [01m[K/usr/include/c++/9/ostream:224:24:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kfloat[m[K’
+[2.717s]   224 |       operator<<([01;36m[Kfloat __f[m[K)
+[2.718s]       |                  [01;36m[K~~~~~~^~~[m[K
+[2.718s] [01m[K/usr/include/c++/9/ostream:232:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long double) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.718s]   232 |       [01;36m[Koperator[m[K<<(long double __f)
+[2.718s]       |       [01;36m[K^~~~~~~~[m[K
+[2.718s] [01m[K/usr/include/c++/9/ostream:232:30:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Klong double[m[K’
+[2.719s]   232 |       operator<<([01;36m[Klong double __f[m[K)
+[2.719s]       |                  [01;36m[K~~~~~~~~~~~~^~~[m[K
+[2.719s] [01m[K/usr/include/c++/9/ostream:245:7:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(const void*) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>][m[K’
+[2.719s]   245 |       [01;36m[Koperator[m[K<<(const void* __p)
+[2.719s]       |       [01;36m[K^~~~~~~~[m[K
+[2.720s] [01m[K/usr/include/c++/9/ostream:245:30:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kconst void*[m[K’
+[2.720s]   245 |       operator<<([01;36m[Kconst void* __p[m[K)
+[2.720s]       |                  [01;36m[K~~~~~~~~~~~~^~~[m[K
+[2.720s] In file included from [01m[K/usr/include/c++/9/ostream:702[m[K,
+[2.721s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.721s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.721s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.721s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.721s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.722s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.722s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.722s] [01m[K/usr/include/c++/9/bits/ostream.tcc:119:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__streambuf_type*) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__streambuf_type = std::basic_streambuf<char>][m[K’
+[2.722s]   119 |     [01;36m[Kbasic_ostream<_CharT, _Traits>[m[K::
+[2.723s]       |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.723s] [01m[K/usr/include/c++/9/bits/ostream.tcc:120:34:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kstd::basic_ostream<char>::__streambuf_type*[m[K’ {aka ‘[01m[Kstd::basic_streambuf<char>*[m[K’}
+[2.723s]   120 |     operator<<([01;36m[K__streambuf_type* __sbin[m[K)
+[2.723s]       |                [01;36m[K~~~~~~~~~~~~~~~~~~^~~~~~[m[K
+[2.723s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.724s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.724s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.724s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:66:26:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::ostream& msr::airlib::operator<<(std::ostream&, const Quaternionr&)[m[K’
+[2.724s]    66 |     inline std::ostream& [01;36m[Koperator[m[K<<(std::ostream& os, Quaternionr const& q)
+[2.724s]       |                          [01;36m[K^~~~~~~~[m[K
+[2.725s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:66:74:[m[K [01;36m[Knote: [m[K  no known conversion for argument 2 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kconst Quaternionr&[m[K’ {aka ‘[01m[Kconst Eigen::Quaternion<float, 2>&[m[K’}
+[2.725s]    66 |     inline std::ostream& operator<<(std::ostream& os, [01;36m[KQuaternionr const& q[m[K)
+[2.725s]       |                                                       [01;36m[K~~~~~~~~~~~~~~~~~~~^[m[K
+[2.725s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:73:26:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kstd::ostream& msr::airlib::operator<<(std::ostream&, const Vector3r&)[m[K’
+[2.726s]    73 |     inline std::ostream& [01;36m[Koperator[m[K<<(std::ostream& os, Vector3r const& vec)
+[2.726s]       |                          [01;36m[K^~~~~~~~[m[K
+[2.726s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:73:71:[m[K [01;36m[Knote: [m[K  no known conversion for argument 2 from ‘[01m[Krpc::rpc_error[m[K’ to ‘[01m[Kconst Vector3r&[m[K’ {aka ‘[01m[Kconst Eigen::Matrix<float, 3, 1>&[m[K’}
+[2.726s]    73 |     inline std::ostream& operator<<(std::ostream& os, [01;36m[KVector3r const& vec[m[K)
+[2.727s]       |                                                       [01;36m[K~~~~~~~~~~~~~~~~^~~[m[K
+[2.727s] In file included from [01m[K/usr/include/c++/9/string:55[m[K,
+[2.727s]                  from [01m[K/usr/include/c++/9/stdexcept:39[m[K,
+[2.727s]                  from [01m[K/usr/include/c++/9/system_error:41[m[K,
+[2.727s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:7[m[K,
+[2.728s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.728s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.728s] [01m[K/usr/include/c++/9/bits/basic_string.h:6416:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits, class _Alloc> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)[m[K’
+[2.728s]  6416 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os,
+[2.729s]       |     [01;36m[K^~~~~~~~[m[K
+[2.729s] [01m[K/usr/include/c++/9/bits/basic_string.h:6416:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.729s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::__cxx11::basic_string<_CharT, _Traits, _Alloc>[m[K’
+[2.729s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.730s]       |                      [01;36m[K^[m[K
+[2.730s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:7[m[K,
+[2.730s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.730s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.730s] [01m[K/usr/include/c++/9/system_error:217:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::error_code&)[m[K’
+[2.731s]   217 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os, const error_code& __e)
+[2.731s]       |     [01;36m[K^~~~~~~~[m[K
+[2.731s] [01m[K/usr/include/c++/9/system_error:217:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.731s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kconst std::error_code&[m[K’
+[2.731s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.732s]       |                      [01;36m[K^[m[K
+[2.732s] In file included from [01m[K/usr/include/c++/9/memory:81[m[K,
+[2.732s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/cpp_config_decl.hpp:98[m[K,
+[2.732s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/cpp_config_decl.hpp:13[m[K,
+[2.732s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/cpp_config.hpp:13[m[K,
+[2.733s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/pack_decl.hpp:14[m[K,
+[2.733s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/pack_decl.hpp:13[m[K,
+[2.733s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/pack.hpp:13[m[K,
+[2.733s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:14[m[K,
+[2.733s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.734s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.734s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.734s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.734s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.734s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.735s] [01m[K/usr/include/c++/9/bits/shared_ptr.h:66:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Ch, class _Tr, class _Tp, __gnu_cxx::_Lock_policy _Lp> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::__shared_ptr<_Tp, _Lp>&)[m[K’
+[2.735s]    66 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_Ch, _Tr>& __os,
+[2.735s]       |     [01;36m[K^~~~~~~~[m[K
+[2.735s] [01m[K/usr/include/c++/9/bits/shared_ptr.h:66:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.735s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::__shared_ptr<_Tp, _Lp>[m[K’
+[2.736s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.736s]       |                      [01;36m[K^[m[K
+[2.736s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.736s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.736s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.737s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.737s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.737s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.737s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.737s] [01m[K/usr/include/c++/9/ostream:506:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, _CharT)[m[K’
+[2.738s]   506 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __out, _CharT __c)
+[2.738s]       |     [01;36m[K^~~~~~~~[m[K
+[2.738s] [01m[K/usr/include/c++/9/ostream:506:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.738s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  deduced conflicting types for parameter ‘[01m[K_CharT[m[K’ (‘[01m[Kchar[m[K’ and ‘[01m[Krpc::rpc_error[m[K’)
+[2.739s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.739s]       |                      [01;36m[K^[m[K
+[2.739s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.739s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.739s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.740s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.740s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.740s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.740s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.740s] [01m[K/usr/include/c++/9/ostream:511:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, char)[m[K’
+[2.741s]   511 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __out, char __c)
+[2.741s]       |     [01;36m[K^~~~~~~~[m[K
+[2.741s] [01m[K/usr/include/c++/9/ostream:511:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.741s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kchar[m[K’
+[2.742s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.742s]       |                      [01;36m[K^[m[K
+[2.742s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.742s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.742s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.742s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.743s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.743s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.743s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.743s] [01m[K/usr/include/c++/9/ostream:517:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, char)[m[K’
+[2.743s]   517 |     [01;36m[Koperator[m[K<<(basic_ostream<char, _Traits>& __out, char __c)
+[2.744s]       |     [01;36m[K^~~~~~~~[m[K
+[2.744s] [01m[K/usr/include/c++/9/ostream:517:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.744s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kchar[m[K’
+[2.744s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.744s]       |                      [01;36m[K^[m[K
+[2.745s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.745s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.745s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.745s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.745s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.746s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.746s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.746s] [01m[K/usr/include/c++/9/ostream:523:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, signed char)[m[K’
+[2.746s]   523 |     [01;36m[Koperator[m[K<<(basic_ostream<char, _Traits>& __out, signed char __c)
+[2.746s]       |     [01;36m[K^~~~~~~~[m[K
+[2.746s] [01m[K/usr/include/c++/9/ostream:523:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.747s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Ksigned char[m[K’
+[2.747s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.747s]       |                      [01;36m[K^[m[K
+[2.747s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.747s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.747s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.748s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.748s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.748s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.748s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.749s] [01m[K/usr/include/c++/9/ostream:528:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, unsigned char)[m[K’
+[2.749s]   528 |     [01;36m[Koperator[m[K<<(basic_ostream<char, _Traits>& __out, unsigned char __c)
+[2.749s]       |     [01;36m[K^~~~~~~~[m[K
+[2.749s] [01m[K/usr/include/c++/9/ostream:528:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.749s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kunsigned char[m[K’
+[2.750s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.750s]       |                      [01;36m[K^[m[K
+[2.750s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.750s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.750s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.751s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.751s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.751s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.751s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.751s] [01m[K/usr/include/c++/9/ostream:548:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const _CharT*)[m[K’
+[2.752s]   548 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __out, const _CharT* __s)
+[2.752s]       |     [01;36m[K^~~~~~~~[m[K
+[2.752s] [01m[K/usr/include/c++/9/ostream:548:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.752s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  mismatched types ‘[01m[Kconst _CharT*[m[K’ and ‘[01m[Krpc::rpc_error[m[K’
+[2.753s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.753s]       |                      [01;36m[K^[m[K
+[2.753s] In file included from [01m[K/usr/include/c++/9/ostream:702[m[K,
+[2.753s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.753s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.753s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.754s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.754s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.754s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.754s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.754s] [01m[K/usr/include/c++/9/bits/ostream.tcc:321:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const char*)[m[K’
+[2.754s]   321 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __out, const char* __s)
+[2.754s]       |     [01;36m[K^~~~~~~~[m[K
+[2.755s] [01m[K/usr/include/c++/9/bits/ostream.tcc:321:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.755s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kconst char*[m[K’
+[2.755s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.755s]       |                      [01;36m[K^[m[K
+[2.755s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.755s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.755s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.756s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.756s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.756s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.756s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.756s] [01m[K/usr/include/c++/9/ostream:565:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const char*)[m[K’
+[2.756s]   565 |     [01;36m[Koperator[m[K<<(basic_ostream<char, _Traits>& __out, const char* __s)
+[2.757s]       |     [01;36m[K^~~~~~~~[m[K
+[2.757s] [01m[K/usr/include/c++/9/ostream:565:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.757s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kconst char*[m[K’
+[2.757s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.757s]       |                      [01;36m[K^[m[K
+[2.757s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.757s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.758s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.758s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.758s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.758s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.759s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.759s] [01m[K/usr/include/c++/9/ostream:578:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const signed char*)[m[K’
+[2.759s]   578 |     [01;36m[Koperator[m[K<<(basic_ostream<char, _Traits>& __out, const signed char* __s)
+[2.759s]       |     [01;36m[K^~~~~~~~[m[K
+[2.759s] [01m[K/usr/include/c++/9/ostream:578:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.759s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kconst signed char*[m[K’
+[2.760s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.760s]       |                      [01;36m[K^[m[K
+[2.760s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.760s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.760s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.760s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.761s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.761s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.761s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.761s] [01m[K/usr/include/c++/9/ostream:583:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const unsigned char*)[m[K’
+[2.761s]   583 |     [01;36m[Koperator[m[K<<(basic_ostream<char, _Traits>& __out, const unsigned char* __s)
+[2.761s]       |     [01;36m[K^~~~~~~~[m[K
+[2.762s] [01m[K/usr/include/c++/9/ostream:583:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.762s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kconst unsigned char*[m[K’
+[2.762s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.762s]       |                      [01;36m[K^[m[K
+[2.762s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:22[m[K,
+[2.762s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.762s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.763s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.763s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.763s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.763s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.763s] [01m[K/usr/include/c++/9/ostream:691:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Ostream, class _Tp> typename std::enable_if<std::__and_<std::__not_<std::is_lvalue_reference<_Tp> >, std::__is_convertible_to_basic_ostream<_Ostream>, std::__is_insertable<typename std::__is_convertible_to_basic_ostream<_Tp>::__ostream_type, const _Tp&, void> >::value, typename std::__is_convertible_to_basic_ostream<_Tp>::__ostream_type>::type std::operator<<(_Ostream&&, const _Tp&)[m[K’
+[2.764s]   691 |     [01;36m[Koperator[m[K<<(_Ostream&& __os, const _Tp& __x)
+[2.764s]       |     [01;36m[K^~~~~~~~[m[K
+[2.764s] [01m[K/usr/include/c++/9/ostream:691:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.764s] /usr/include/c++/9/ostream: In substitution of ‘[01m[Ktemplate<class _Ostream, class _Tp> typename std::enable_if<std::__and_<std::__not_<std::is_lvalue_reference<_Tp> >, std::__is_convertible_to_basic_ostream<_Ostream>, std::__is_insertable<typename std::__is_convertible_to_basic_ostream<_Tp>::__ostream_type, const _Tp&, void> >::value, typename std::__is_convertible_to_basic_ostream<_Tp>::__ostream_type>::type std::operator<<(_Ostream&&, const _Tp&) [with _Ostream = std::basic_ostream<char>&; _Tp = rpc::rpc_error][m[K’:
+[2.764s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K   required from here
+[2.765s] [01m[K/usr/include/c++/9/ostream:691:5:[m[K [01;31m[Kerror: [m[Kno type named ‘[01m[Ktype[m[K’ in ‘[01m[Kstruct std::enable_if<false, std::basic_ostream<char>&>[m[K’
+[2.765s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:24[m[K,
+[2.765s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.765s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.765s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.765s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.765s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.766s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.766s] [01m[K/usr/include/c++/9/iomanip:79:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, std::_Resetiosflags)[m[K’
+[2.766s]    79 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os, _Resetiosflags __f)
+[2.766s]       |     [01;36m[K^~~~~~~~[m[K
+[2.766s] [01m[K/usr/include/c++/9/iomanip:79:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.766s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kstd::_Resetiosflags[m[K’
+[2.767s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.767s]       |                      [01;36m[K^[m[K
+[2.767s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:24[m[K,
+[2.767s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.767s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.768s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.768s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.768s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.768s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.768s] [01m[K/usr/include/c++/9/iomanip:109:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, std::_Setiosflags)[m[K’
+[2.768s]   109 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os, _Setiosflags __f)
+[2.769s]       |     [01;36m[K^~~~~~~~[m[K
+[2.769s] [01m[K/usr/include/c++/9/iomanip:109:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.769s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kstd::_Setiosflags[m[K’
+[2.769s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.769s]       |                      [01;36m[K^[m[K
+[2.769s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:24[m[K,
+[2.770s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.770s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.770s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.770s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.770s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.771s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.771s] [01m[K/usr/include/c++/9/iomanip:143:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, std::_Setbase)[m[K’
+[2.771s]   143 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os, _Setbase __f)
+[2.771s]       |     [01;36m[K^~~~~~~~[m[K
+[2.771s] [01m[K/usr/include/c++/9/iomanip:143:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.771s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kstd::_Setbase[m[K’
+[2.772s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.772s]       |                      [01;36m[K^[m[K
+[2.772s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:24[m[K,
+[2.772s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.772s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.772s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.773s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.773s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.773s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.773s] [01m[K/usr/include/c++/9/iomanip:178:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, std::_Setfill<_CharT>)[m[K’
+[2.773s]   178 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os, _Setfill<_CharT> __f)
+[2.773s]       |     [01;36m[K^~~~~~~~[m[K
+[2.774s] [01m[K/usr/include/c++/9/iomanip:178:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.774s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kstd::_Setfill<_CharT>[m[K’
+[2.774s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.774s]       |                      [01;36m[K^[m[K
+[2.774s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:24[m[K,
+[2.774s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.774s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.775s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.775s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.775s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.775s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.775s] [01m[K/usr/include/c++/9/iomanip:208:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, std::_Setprecision)[m[K’
+[2.775s]   208 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os, _Setprecision __f)
+[2.776s]       |     [01;36m[K^~~~~~~~[m[K
+[2.776s] [01m[K/usr/include/c++/9/iomanip:208:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.776s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kstd::_Setprecision[m[K’
+[2.776s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.776s]       |                      [01;36m[K^[m[K
+[2.776s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:24[m[K,
+[2.776s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.777s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.777s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.777s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.777s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.777s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.777s] [01m[K/usr/include/c++/9/iomanip:238:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, std::_Setw)[m[K’
+[2.778s]   238 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os, _Setw __f)
+[2.778s]       |     [01;36m[K^~~~~~~~[m[K
+[2.778s] [01m[K/usr/include/c++/9/iomanip:238:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.778s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kstd::_Setw[m[K’
+[2.778s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.778s]       |                      [01;36m[K^[m[K
+[2.779s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:24[m[K,
+[2.779s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.779s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.779s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.779s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.779s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.779s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.780s] [01m[K/usr/include/c++/9/iomanip:311:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits, class _MoneyT> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, std::_Put_money<_MoneyT>)[m[K’
+[2.780s]   311 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os, _Put_money<_MoneyT> __f)
+[2.780s]       |     [01;36m[K^~~~~~~~[m[K
+[2.780s] [01m[K/usr/include/c++/9/iomanip:311:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.780s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kstd::_Put_money<_MoneyT>[m[K’
+[2.780s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.780s]       |                      [01;36m[K^[m[K
+[2.781s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/v1/object_decl.hpp:24[m[K,
+[2.781s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object_decl.hpp:14[m[K,
+[2.781s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack/object.hpp:13[m[K,
+[2.781s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/msgpack.hpp:23[m[K,
+[2.781s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/external/rpclib/rpclib-2.3.0/include/rpc/rpc_error.h:9[m[K,
+[2.781s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:6[m[K,
+[2.782s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.782s] [01m[K/usr/include/c++/9/iomanip:363:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, std::_Put_time<_CharT>)[m[K’
+[2.782s]   363 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os, _Put_time<_CharT> __f)
+[2.782s]       |     [01;36m[K^~~~~~~~[m[K
+[2.782s] [01m[K/usr/include/c++/9/iomanip:363:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.782s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kstd::_Put_time<_CharT>[m[K’
+[2.783s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.783s]       |                      [01;36m[K^[m[K
+[2.783s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:9[m[K,
+[2.783s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.783s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.783s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.784s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.784s] [01m[K/usr/include/c++/9/thread:322:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, std::thread::id)[m[K’
+[2.784s]   322 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __out, thread::id __id)
+[2.784s]       |     [01;36m[K^~~~~~~~[m[K
+[2.784s] [01m[K/usr/include/c++/9/thread:322:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.784s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kstd::thread::id[m[K’
+[2.784s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.785s]       |                      [01;36m[K^[m[K
+[2.785s] In file included from [01m[K/usr/include/c++/9/random:49[m[K,
+[2.785s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.785s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.785s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.785s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.785s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.786s] [01m[K/usr/include/c++/9/bits/random.h:1298:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RandomNumberEngine, long unsigned int __w, class _UIntType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::independent_bits_engine<_RandomNumberEngine, __w, _UIntType>&)[m[K’
+[2.786s]  1298 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.786s]       |     [01;36m[K^~~~~~~~[m[K
+[2.786s] [01m[K/usr/include/c++/9/bits/random.h:1298:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.786s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::independent_bits_engine<_RandomNumberEngine, __w, _UIntType>[m[K’
+[2.786s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.787s]       |                      [01;36m[K^[m[K
+[2.787s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.787s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.787s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.787s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.787s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.788s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.788s] [01m[K/usr/include/c++/9/bits/random.tcc:877:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _IntType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::uniform_int_distribution<_IntType>&)[m[K’
+[2.788s]   877 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.788s]       |     [01;36m[K^~~~~~~~[m[K
+[2.788s] [01m[K/usr/include/c++/9/bits/random.tcc:877:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.788s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::uniform_int_distribution<_IntType>[m[K’
+[2.788s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.789s]       |                      [01;36m[K^[m[K
+[2.789s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.789s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.789s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.789s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.789s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.790s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.790s] [01m[K/usr/include/c++/9/bits/random.tcc:936:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::uniform_real_distribution<_IntType>&)[m[K’
+[2.790s]   936 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.790s]       |     [01;36m[K^~~~~~~~[m[K
+[2.790s] [01m[K/usr/include/c++/9/bits/random.tcc:936:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.791s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::uniform_real_distribution<_IntType>[m[K’
+[2.791s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.791s]       |                      [01;36m[K^[m[K
+[2.791s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.792s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.792s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.792s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.792s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.792s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.792s] [01m[K/usr/include/c++/9/bits/random.tcc:2133:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::cauchy_distribution<_RealType>&)[m[K’
+[2.792s]  2133 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.793s]       |     [01;36m[K^~~~~~~~[m[K
+[2.793s] [01m[K/usr/include/c++/9/bits/random.tcc:2133:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.793s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::cauchy_distribution<_RealType>[m[K’
+[2.793s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.793s]       |                      [01;36m[K^[m[K
+[2.793s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.794s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.794s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.794s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.794s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.794s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.794s] [01m[K/usr/include/c++/9/bits/random.tcc:998:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::bernoulli_distribution&)[m[K’
+[2.795s]   998 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.795s]       |     [01;36m[K^~~~~~~~[m[K
+[2.795s] [01m[K/usr/include/c++/9/bits/random.tcc:998:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.795s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  cannot convert ‘[01m[Ke[m[K’ (type ‘[01m[Krpc::rpc_error[m[K’) to type ‘[01m[Kconst std::bernoulli_distribution&[m[K’
+[2.795s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.795s]       |                      [01;36m[K^[m[K
+[2.796s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.796s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.796s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.796s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.796s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.796s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.797s] [01m[K/usr/include/c++/9/bits/random.tcc:1080:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _IntType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::geometric_distribution<_IntType>&)[m[K’
+[2.797s]  1080 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.797s]       |     [01;36m[K^~~~~~~~[m[K
+[2.797s] [01m[K/usr/include/c++/9/bits/random.tcc:1080:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.797s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::geometric_distribution<_IntType>[m[K’
+[2.797s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.798s]       |                      [01;36m[K^[m[K
+[2.798s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.798s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.798s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.798s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.798s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.799s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.799s] [01m[K/usr/include/c++/9/bits/random.tcc:1737:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::exponential_distribution<_RealType>&)[m[K’
+[2.799s]  1737 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.799s]       |     [01;36m[K^~~~~~~~[m[K
+[2.799s] [01m[K/usr/include/c++/9/bits/random.tcc:1737:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.799s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::exponential_distribution<_RealType>[m[K’
+[2.799s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.800s]       |                      [01;36m[K^[m[K
+[2.800s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.800s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.800s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.800s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.800s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.801s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.801s] [01m[K/usr/include/c++/9/bits/random.tcc:2532:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::weibull_distribution<_RealType>&)[m[K’
+[2.801s]  2532 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.801s]       |     [01;36m[K^~~~~~~~[m[K
+[2.801s] [01m[K/usr/include/c++/9/bits/random.tcc:2532:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.801s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::weibull_distribution<_RealType>[m[K’
+[2.802s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.802s]       |                      [01;36m[K^[m[K
+[2.802s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.802s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.802s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.802s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.803s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.803s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.803s] [01m[K/usr/include/c++/9/bits/random.tcc:2608:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::extreme_value_distribution<_RealType>&)[m[K’
+[2.803s]  2608 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.803s]       |     [01;36m[K^~~~~~~~[m[K
+[2.803s] [01m[K/usr/include/c++/9/bits/random.tcc:2608:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.803s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::extreme_value_distribution<_RealType>[m[K’
+[2.804s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.804s]       |                      [01;36m[K^[m[K
+[2.804s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.804s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.805s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.805s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.805s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.805s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.805s] [01m[K/usr/include/c++/9/bits/random.tcc:154:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _UIntType, _UIntType __a, _UIntType __c, _UIntType __m, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::linear_congruential_engine<_UIntType, __a, __c, __m>&)[m[K’
+[2.805s]   154 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.806s]       |     [01;36m[K^~~~~~~~[m[K
+[2.806s] [01m[K/usr/include/c++/9/bits/random.tcc:154:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.806s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::linear_congruential_engine<_UIntType, __a, __c, __m>[m[K’
+[2.806s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.806s]       |                      [01;36m[K^[m[K
+[2.807s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.807s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.807s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.807s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.807s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.808s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.808s] [01m[K/usr/include/c++/9/bits/random.tcc:476:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _UIntType1, long unsigned int __w1, long unsigned int __n1, long unsigned int __m1, long unsigned int __r1, _UIntType1 __a1, long unsigned int __u1, _UIntType1 __d1, long unsigned int __s1, _UIntType1 __b1, long unsigned int __t1, _UIntType1 __c1, long unsigned int __l1, _UIntType1 __f1, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::mersenne_twister_engine<_UIntType, __w, __n, __m, __r, __a, __u, __d, __s, __b, __t, __c, __l, __f>&)[m[K’
+[2.808s]   476 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.808s]       |     [01;36m[K^~~~~~~~[m[K
+[2.808s] [01m[K/usr/include/c++/9/bits/random.tcc:476:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.809s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::mersenne_twister_engine<_UIntType, __w, __n, __m, __r, __a, __u, __d, __s, __b, __t, __c, __l, __f>[m[K’
+[2.809s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.809s]       |                      [01;36m[K^[m[K
+[2.809s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.809s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.809s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.810s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.810s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.810s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.810s] [01m[K/usr/include/c++/9/bits/random.tcc:632:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _UIntType, long unsigned int __w, long unsigned int __s, long unsigned int __r, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::subtract_with_carry_engine<_UIntType, __w, __s, __r>&)[m[K’
+[2.810s]   632 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.811s]       |     [01;36m[K^~~~~~~~[m[K
+[2.811s] [01m[K/usr/include/c++/9/bits/random.tcc:632:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.811s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::subtract_with_carry_engine<_UIntType, __w, __s, __r>[m[K’
+[2.811s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.812s]       |                      [01;36m[K^[m[K
+[2.812s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.812s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.812s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.813s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.814s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.814s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.814s] [01m[K/usr/include/c++/9/bits/random.tcc:702:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RandomNumberEngine, long unsigned int __p, long unsigned int __r, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::discard_block_engine<_RandomNumberEngine, __p, __r>&)[m[K’
+[2.814s]   702 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.815s]       |     [01;36m[K^~~~~~~~[m[K
+[2.815s] [01m[K/usr/include/c++/9/bits/random.tcc:702:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.815s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::discard_block_engine<_RandomNumberEngine, __p, __r>[m[K’
+[2.815s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.815s]       |                      [01;36m[K^[m[K
+[2.816s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.816s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.816s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.816s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.816s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.817s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.817s] [01m[K/usr/include/c++/9/bits/random.tcc:831:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RandomNumberEngine, long unsigned int __k, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::shuffle_order_engine<_RandomNumberEngine, __k>&)[m[K’
+[2.817s]   831 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.817s]       |     [01;36m[K^~~~~~~~[m[K
+[2.818s] [01m[K/usr/include/c++/9/bits/random.tcc:831:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.818s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::shuffle_order_engine<_RandomNumberEngine, __k>[m[K’
+[2.818s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.818s]       |                      [01;36m[K^[m[K
+[2.818s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.818s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.819s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.819s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.819s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.819s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.819s] [01m[K/usr/include/c++/9/bits/random.tcc:1195:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _IntType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::negative_binomial_distribution<_IntType>&)[m[K’
+[2.819s]  1195 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.819s]       |     [01;36m[K^~~~~~~~[m[K
+[2.819s] [01m[K/usr/include/c++/9/bits/random.tcc:1195:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.820s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::negative_binomial_distribution<_IntType>[m[K’
+[2.820s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.820s]       |                      [01;36m[K^[m[K
+[2.820s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.820s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.820s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.820s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.821s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.821s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.821s] [01m[K/usr/include/c++/9/bits/random.tcc:1406:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _IntType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::poisson_distribution<_IntType>&)[m[K’
+[2.821s]  1406 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.821s]       |     [01;36m[K^~~~~~~~[m[K
+[2.821s] [01m[K/usr/include/c++/9/bits/random.tcc:1406:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.822s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::poisson_distribution<_IntType>[m[K’
+[2.822s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.822s]       |                      [01;36m[K^[m[K
+[2.822s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.822s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.822s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.822s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.823s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.823s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.823s] [01m[K/usr/include/c++/9/bits/random.tcc:1673:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _IntType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::binomial_distribution<_IntType>&)[m[K’
+[2.823s]  1673 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.823s]       |     [01;36m[K^~~~~~~~[m[K
+[2.823s] [01m[K/usr/include/c++/9/bits/random.tcc:1673:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.823s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::binomial_distribution<_IntType>[m[K’
+[2.823s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.824s]       |                      [01;36m[K^[m[K
+[2.824s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.824s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.824s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.824s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.824s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.824s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.825s] [01m[K/usr/include/c++/9/bits/random.tcc:1904:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType1, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::normal_distribution<_RealType>&)[m[K’
+[2.825s]  1904 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.825s]       |     [01;36m[K^~~~~~~~[m[K
+[2.825s] [01m[K/usr/include/c++/9/bits/random.tcc:1904:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.825s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::normal_distribution<_RealType>[m[K’
+[2.826s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.826s]       |                      [01;36m[K^[m[K
+[2.826s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.826s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.826s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.826s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.827s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.827s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.827s] [01m[K/usr/include/c++/9/bits/random.tcc:1973:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::lognormal_distribution<_RealType>&)[m[K’
+[2.827s]  1973 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.827s]       |     [01;36m[K^~~~~~~~[m[K
+[2.827s] [01m[K/usr/include/c++/9/bits/random.tcc:1973:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.828s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::lognormal_distribution<_RealType>[m[K’
+[2.828s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.828s]       |                      [01;36m[K^[m[K
+[2.828s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.828s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.829s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.829s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.829s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.829s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.829s] [01m[K/usr/include/c++/9/bits/random.tcc:2046:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::chi_squared_distribution<_RealType>&)[m[K’
+[2.829s]  2046 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.830s]       |     [01;36m[K^~~~~~~~[m[K
+[2.830s] [01m[K/usr/include/c++/9/bits/random.tcc:2046:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.830s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::chi_squared_distribution<_RealType>[m[K’
+[2.830s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.830s]       |                      [01;36m[K^[m[K
+[2.830s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.831s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.831s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.831s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.831s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.831s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.832s] [01m[K/usr/include/c++/9/bits/random.tcc:2210:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::fisher_f_distribution<_RealType>&)[m[K’
+[2.832s]  2210 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.832s]       |     [01;36m[K^~~~~~~~[m[K
+[2.832s] [01m[K/usr/include/c++/9/bits/random.tcc:2210:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.832s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::fisher_f_distribution<_RealType>[m[K’
+[2.832s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.833s]       |                      [01;36m[K^[m[K
+[2.833s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.833s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.833s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.833s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.833s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.834s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.834s] [01m[K/usr/include/c++/9/bits/random.tcc:2285:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::student_t_distribution<_RealType>&)[m[K’
+[2.834s]  2285 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.834s]       |     [01;36m[K^~~~~~~~[m[K
+[2.834s] [01m[K/usr/include/c++/9/bits/random.tcc:2285:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.834s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::student_t_distribution<_RealType>[m[K’
+[2.835s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.835s]       |                      [01;36m[K^[m[K
+[2.835s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.835s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.835s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.836s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.836s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.836s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.836s] [01m[K/usr/include/c++/9/bits/random.tcc:2454:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType1, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::gamma_distribution<_RealType>&)[m[K’
+[2.836s]  2454 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.836s]       |     [01;36m[K^~~~~~~~[m[K
+[2.837s] [01m[K/usr/include/c++/9/bits/random.tcc:2454:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.837s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::gamma_distribution<_RealType>[m[K’
+[2.837s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.837s]       |                      [01;36m[K^[m[K
+[2.837s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.838s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.838s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.838s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.838s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.838s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.838s] [01m[K/usr/include/c++/9/bits/random.tcc:2744:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _IntType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::discrete_distribution<_IntType>&)[m[K’
+[2.839s]  2744 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.839s]       |     [01;36m[K^~~~~~~~[m[K
+[2.839s] [01m[K/usr/include/c++/9/bits/random.tcc:2744:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.839s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::discrete_distribution<_IntType>[m[K’
+[2.839s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.839s]       |                      [01;36m[K^[m[K
+[2.840s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.840s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.840s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.840s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.840s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.840s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.840s] [01m[K/usr/include/c++/9/bits/random.tcc:2967:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::piecewise_constant_distribution<_RealType>&)[m[K’
+[2.840s]  2967 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.841s]       |     [01;36m[K^~~~~~~~[m[K
+[2.841s] [01m[K/usr/include/c++/9/bits/random.tcc:2967:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.841s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::piecewise_constant_distribution<_RealType>[m[K’
+[2.841s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.841s]       |                      [01;36m[K^[m[K
+[2.841s] In file included from [01m[K/usr/include/c++/9/random:51[m[K,
+[2.841s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:19[m[K,
+[2.842s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.842s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.842s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.842s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.842s] [01m[K/usr/include/c++/9/bits/random.tcc:3174:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _RealType, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::piecewise_linear_distribution<_RealType>&)[m[K’
+[2.843s]  3174 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.843s]       |     [01;36m[K^~~~~~~~[m[K
+[2.843s] [01m[K/usr/include/c++/9/bits/random.tcc:3174:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.843s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::piecewise_linear_distribution<_RealType>[m[K’
+[2.843s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.843s]       |                      [01;36m[K^[m[K
+[2.844s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:24[m[K,
+[2.844s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.844s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.844s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.844s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.845s] [01m[K/usr/include/c++/9/bitset:1538:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _CharT, class _Traits, long unsigned int _Nb> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::bitset<_Nb>&)[m[K’
+[2.845s]  1538 |     [01;36m[Koperator[m[K<<(std::basic_ostream<_CharT, _Traits>& __os,
+[2.845s]       |     [01;36m[K^~~~~~~~[m[K
+[2.845s] [01m[K/usr/include/c++/9/bitset:1538:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.846s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::bitset<_Nb>[m[K’
+[2.846s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.846s]       |                      [01;36m[K^[m[K
+[2.846s] In file included from [01m[K/usr/include/c++/9/valarray:603[m[K,
+[2.846s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/type_utils.hpp:8[m[K,
+[2.846s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:25[m[K,
+[2.847s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.847s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.847s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.847s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.847s] [01m[K/usr/include/c++/9/bits/valarray_after.h:413:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Dom1, class _Dom2> std::_Expr<std::__detail::_BinClos<std::__shift_left, std::_Expr, std::_Expr, _Dom1, _Dom2>, typename std::__fun<std::__shift_left, typename _Dom1::value_type>::result_type> std::operator<<(const std::_Expr<_Dom1, typename _Dom1::value_type>&, const std::_Expr<_Dom2, typename _Dom2::value_type>&)[m[K’
+[2.848s]   413 |     [01;36m[K_DEFINE_EXPR_BINARY_OPERATOR[m[K(<<, __shift_left)
+[2.848s]       |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.848s] [01m[K/usr/include/c++/9/bits/valarray_after.h:413:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.848s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kstd::ostream[m[K’ {aka ‘[01m[Kstd::basic_ostream<char>[m[K’} is not derived from ‘[01m[Kconst std::_Expr<_Dom1, typename _Dom1::value_type>[m[K’
+[2.848s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.849s]       |                      [01;36m[K^[m[K
+[2.849s] In file included from [01m[K/usr/include/c++/9/valarray:603[m[K,
+[2.849s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/type_utils.hpp:8[m[K,
+[2.849s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:25[m[K,
+[2.849s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.850s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.850s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.850s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.850s] [01m[K/usr/include/c++/9/bits/valarray_after.h:413:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Dom> std::_Expr<std::__detail::_BinClos<std::__shift_left, std::_Expr, std::_Constant, _Dom, typename _Dom::value_type>, typename std::__fun<std::__shift_left, typename _Dom1::value_type>::result_type> std::operator<<(const std::_Expr<_Dom1, typename _Dom1::value_type>&, const typename _Dom::value_type&)[m[K’
+[2.850s]   413 |     [01;36m[K_DEFINE_EXPR_BINARY_OPERATOR[m[K(<<, __shift_left)
+[2.850s]       |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.851s] [01m[K/usr/include/c++/9/bits/valarray_after.h:413:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.851s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kstd::ostream[m[K’ {aka ‘[01m[Kstd::basic_ostream<char>[m[K’} is not derived from ‘[01m[Kconst std::_Expr<_Dom1, typename _Dom1::value_type>[m[K’
+[2.851s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.851s]       |                      [01;36m[K^[m[K
+[2.852s] In file included from [01m[K/usr/include/c++/9/valarray:603[m[K,
+[2.852s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/type_utils.hpp:8[m[K,
+[2.852s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:25[m[K,
+[2.852s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.852s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.852s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.853s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.853s] [01m[K/usr/include/c++/9/bits/valarray_after.h:413:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Dom> std::_Expr<std::__detail::_BinClos<std::__shift_left, std::_Constant, std::_Expr, typename _Dom::value_type, _Dom>, typename std::__fun<std::__shift_left, typename _Dom1::value_type>::result_type> std::operator<<(const typename _Dom::value_type&, const std::_Expr<_Dom1, typename _Dom1::value_type>&)[m[K’
+[2.853s]   413 |     [01;36m[K_DEFINE_EXPR_BINARY_OPERATOR[m[K(<<, __shift_left)
+[2.853s]       |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.853s] [01m[K/usr/include/c++/9/bits/valarray_after.h:413:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.854s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::_Expr<_Dom1, typename _Dom1::value_type>[m[K’
+[2.854s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.854s]       |                      [01;36m[K^[m[K
+[2.854s] In file included from [01m[K/usr/include/c++/9/valarray:603[m[K,
+[2.854s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/type_utils.hpp:8[m[K,
+[2.855s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:25[m[K,
+[2.855s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.855s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.855s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.855s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.856s] [01m[K/usr/include/c++/9/bits/valarray_after.h:413:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Dom> std::_Expr<std::__detail::_BinClos<std::__shift_left, std::_Expr, std::_ValArray, _Dom, typename _Dom::value_type>, typename std::__fun<std::__shift_left, typename _Dom1::value_type>::result_type> std::operator<<(const std::_Expr<_Dom1, typename _Dom1::value_type>&, const std::valarray<typename _Dom::value_type>&)[m[K’
+[2.856s]   413 |     [01;36m[K_DEFINE_EXPR_BINARY_OPERATOR[m[K(<<, __shift_left)
+[2.856s]       |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.856s] [01m[K/usr/include/c++/9/bits/valarray_after.h:413:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.856s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kstd::ostream[m[K’ {aka ‘[01m[Kstd::basic_ostream<char>[m[K’} is not derived from ‘[01m[Kconst std::_Expr<_Dom1, typename _Dom1::value_type>[m[K’
+[2.857s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.857s]       |                      [01;36m[K^[m[K
+[2.857s] In file included from [01m[K/usr/include/c++/9/valarray:603[m[K,
+[2.857s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/type_utils.hpp:8[m[K,
+[2.857s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:25[m[K,
+[2.857s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.857s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.857s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.858s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.858s] [01m[K/usr/include/c++/9/bits/valarray_after.h:413:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Dom> std::_Expr<std::__detail::_BinClos<std::__shift_left, std::_ValArray, std::_Expr, typename _Dom::value_type, _Dom>, typename std::__fun<std::__shift_left, typename _Dom1::value_type>::result_type> std::operator<<(const std::valarray<typename _Dom::value_type>&, const std::_Expr<_Dom1, typename _Dom1::value_type>&)[m[K’
+[2.858s]   413 |     [01;36m[K_DEFINE_EXPR_BINARY_OPERATOR[m[K(<<, __shift_left)
+[2.858s]       |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.859s] [01m[K/usr/include/c++/9/bits/valarray_after.h:413:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.859s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::_Expr<_Dom1, typename _Dom1::value_type>[m[K’
+[2.859s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.859s]       |                      [01;36m[K^[m[K
+[2.859s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/type_utils.hpp:8[m[K,
+[2.860s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:25[m[K,
+[2.860s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.860s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.860s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.860s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.860s] [01m[K/usr/include/c++/9/valarray:1193:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::_Expr<std::__detail::_BinClos<std::__shift_left, std::_ValArray, std::_ValArray, _Tp, _Tp>, typename std::__fun<std::__shift_left, _Tp>::result_type> std::operator<<(const std::valarray<_Tp>&, const std::valarray<_Tp>&)[m[K’
+[2.861s]  1193 | [01;36m[K_DEFINE_BINARY_OPERATOR[m[K(<<, __shift_left)
+[2.861s]       | [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.861s] [01m[K/usr/include/c++/9/valarray:1193:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.861s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kstd::ostream[m[K’ {aka ‘[01m[Kstd::basic_ostream<char>[m[K’} is not derived from ‘[01m[Kconst std::valarray<_Tp>[m[K’
+[2.861s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.862s]       |                      [01;36m[K^[m[K
+[2.862s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/type_utils.hpp:8[m[K,
+[2.862s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:25[m[K,
+[2.862s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.863s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.863s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.863s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.863s] [01m[K/usr/include/c++/9/valarray:1193:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::_Expr<std::__detail::_BinClos<std::__shift_left, std::_ValArray, std::_Constant, _Tp, _Tp>, typename std::__fun<std::__shift_left, _Tp>::result_type> std::operator<<(const std::valarray<_Tp>&, const typename std::valarray<_Tp>::value_type&)[m[K’
+[2.863s]  1193 | [01;36m[K_DEFINE_BINARY_OPERATOR[m[K(<<, __shift_left)
+[2.864s]       | [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.864s] [01m[K/usr/include/c++/9/valarray:1193:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.864s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Kstd::ostream[m[K’ {aka ‘[01m[Kstd::basic_ostream<char>[m[K’} is not derived from ‘[01m[Kconst std::valarray<_Tp>[m[K’
+[2.864s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.864s]       |                      [01;36m[K^[m[K
+[2.864s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/type_utils.hpp:8[m[K,
+[2.865s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/common_utils/Utils.hpp:25[m[K,
+[2.865s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:14[m[K,
+[2.865s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.865s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.865s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.865s] [01m[K/usr/include/c++/9/valarray:1193:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> std::_Expr<std::__detail::_BinClos<std::__shift_left, std::_Constant, std::_ValArray, _Tp, _Tp>, typename std::__fun<std::__shift_left, _Tp>::result_type> std::operator<<(const typename std::valarray<_Tp>::value_type&, const std::valarray<_Tp>&)[m[K’
+[2.866s]  1193 | [01;36m[K_DEFINE_BINARY_OPERATOR[m[K(<<, __shift_left)
+[2.866s]       | [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.866s] [01m[K/usr/include/c++/9/valarray:1193:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.866s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::valarray<_Tp>[m[K’
+[2.866s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.867s]       |                      [01;36m[K^[m[K
+[2.867s] In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/deps/eigen3/Eigen/Core:50[m[K,
+[2.867s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/deps/eigen3/Eigen/Dense:1[m[K,
+[2.867s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/VectorMath.hpp:14[m[K,
+[2.867s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/common/Common.hpp:16[m[K,
+[2.867s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/AirSim2/AirLib/include/vehicles/multirotor/api/MultirotorRpcLibClient.hpp:7[m[K,
+[2.867s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/include/airsim_settings_parser.h:9[m[K,
+[2.868s]                  from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:1[m[K:
+[2.868s] [01m[K/usr/include/c++/9/complex:552:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::complex<_Tp>&)[m[K’
+[2.868s]   552 |     [01;36m[Koperator[m[K<<(basic_ostream<_CharT, _Traits>& __os, const complex<_Tp>& __x)
+[2.868s]       |     [01;36m[K^~~~~~~~[m[K
+[2.868s] [01m[K/usr/include/c++/9/complex:552:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.868s] [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:25:22:[m[K [01;36m[Knote: [m[K  ‘[01m[Krpc::rpc_error[m[K’ is not derived from ‘[01m[Kconst std::complex<_Tp>[m[K’
+[2.869s]    25 |         std::cout << [01;36m[Ke[m[K << std::endl;
+[2.869s]       |                      [01;36m[K^[m[K
+[3.810s] make[2]: *** [CMakeFiles/airsim_settings_parser.dir/build.make:76: CMakeFiles/airsim_settings_parser.dir/src/airsim_settings_parser.cpp.o] Error 1
+[3.811s] make[1]: *** [CMakeFiles/Makefile2:293: CMakeFiles/airsim_settings_parser.dir/all] Error 2
+[3.811s] make: *** [Makefile:146: all] Error 2
+[3.817s] Invoked command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs' returned '2': CMAKE_PREFIX_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim:/opt/ros/foxy:/home/cthornton/Documents/vela/catkin_ws/devel:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs LD_LIBRARY_PATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib:/home/cthornton/Documents/vela/catkin_ws/devel/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_ros_pkgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/airsim_interfaces/lib/python3.8/site-packages:/home/cthornton/Documents/vela/catkin_ws/devel/lib/python2.7/dist-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim_interfaces/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages /home/cthornton/.local/bin/cmake --build /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/airsim_ros_pkgs -- -j12 -l12

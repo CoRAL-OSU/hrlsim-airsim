@@ -1,0 +1,6 @@
+[ 42%] Built target MavLinkCom
+[ 48%] Built target MavLinkTest
+[ 69%] Built target rpc
+[ 85%] Built target AirLib
+[ 88%] Built target pd_position_controller_simple
+[ 89%] [32mBuilding CXX object CMakeFiles/airsim_settings_parser.dir/src/airsim_settings_parser.cpp.o[0m

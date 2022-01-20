@@ -1,0 +1,6 @@
+source;share/hrlsim/hook/pythonpath.ps1
+source;share/hrlsim/hook/pythonpath.dsv
+source;share/hrlsim/hook/pythonpath.sh
+source;share/hrlsim/hook/ament_prefix_path.ps1
+source;share/hrlsim/hook/ament_prefix_path.dsv
+source;share/hrlsim/hook/ament_prefix_path.sh

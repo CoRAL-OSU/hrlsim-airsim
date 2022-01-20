@@ -1,0 +1,52 @@
+running egg_info
+writing ../../build/hrlsim/hrlsim.egg-info/PKG-INFO
+writing dependency_links to ../../build/hrlsim/hrlsim.egg-info/dependency_links.txt
+writing entry points to ../../build/hrlsim/hrlsim.egg-info/entry_points.txt
+writing requirements to ../../build/hrlsim/hrlsim.egg-info/requires.txt
+writing top-level names to ../../build/hrlsim/hrlsim.egg-info/top_level.txt
+package init file 'hrlsim/controller/__init__.py' not found (or not a regular file)
+reading manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+writing manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+running build
+running build_py
+copying hrlsim/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim
+copying hrlsim/airsim/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller
+copying hrlsim/controller/__init__ .py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone
+copying hrlsim/drone/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/opt
+copying hrlsim/opt/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/opt
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/traj
+copying hrlsim/traj/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/traj
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility
+copying hrlsim/utility/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility
+running install
+running install_lib
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim
+copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller
+copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller/__init__ .py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone
+copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/opt
+copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/opt/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/opt
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/traj
+copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/traj/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/traj
+creating /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility
+copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility
+copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim
+byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim/__init__.py to __init__.cpython-38.pyc
+byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller/__init__ .py to __init__ .cpython-38.pyc
+byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone/__init__.py to __init__.cpython-38.pyc
+byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/opt/__init__.py to __init__.cpython-38.pyc
+byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/traj/__init__.py to __init__.cpython-38.pyc
+byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/__init__.py to __init__.cpython-38.pyc
+byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/__init__.py to __init__.cpython-38.pyc
+running install_data
+running install_egg_info
+removing '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim-0.0.0-py3.8.egg-info' (and everything under it)
+Copying ../../build/hrlsim/hrlsim.egg-info to /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim-0.0.0-py3.8.egg-info
+running install_scripts
+writing list of installed files to '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log'

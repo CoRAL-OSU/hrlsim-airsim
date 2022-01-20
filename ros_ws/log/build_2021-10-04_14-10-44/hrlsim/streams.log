@@ -1,0 +1,95 @@
+[0.229s] Invoking command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/hrlsim': PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/hrlsim build --build-base /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build install --prefix /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim --record /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log --single-version-externally-managed
+[0.411s] running egg_info
+[0.412s] writing ../../build/hrlsim/hrlsim.egg-info/PKG-INFO
+[0.412s] writing dependency_links to ../../build/hrlsim/hrlsim.egg-info/dependency_links.txt
+[0.412s] writing entry points to ../../build/hrlsim/hrlsim.egg-info/entry_points.txt
+[0.412s] writing requirements to ../../build/hrlsim/hrlsim.egg-info/requires.txt
+[0.413s] writing top-level names to ../../build/hrlsim/hrlsim.egg-info/top_level.txt
+[0.442s] reading manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+[0.444s] writing manifest file '../../build/hrlsim/hrlsim.egg-info/SOURCES.txt'
+[0.444s] running build
+[0.445s] running build_py
+[0.445s] copying hrlsim/airsim/client.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim
+[0.445s] copying hrlsim/airsim/pfm.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim
+[0.446s] copying hrlsim/airsim/types.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim
+[0.446s] copying hrlsim/airsim/utils.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim
+[0.447s] copying hrlsim/airsim/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim
+[0.447s] copying hrlsim/controller/controller.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller
+[0.447s] copying hrlsim/controller/lqr.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller
+[0.448s] copying hrlsim/controller/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller
+[0.448s] copying hrlsim/drone/agent.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone
+[0.449s] copying hrlsim/drone/camera.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone
+[0.449s] copying hrlsim/drone/drone.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone
+[0.449s] copying hrlsim/drone/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone
+[0.450s] copying hrlsim/opt/optimization.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/opt
+[0.450s] copying hrlsim/opt/zoo.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/opt
+[0.451s] copying hrlsim/opt/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/opt
+[0.451s] copying hrlsim/traj/minimum_snap.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/traj
+[0.451s] copying hrlsim/traj/trajectory.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/traj
+[0.452s] copying hrlsim/traj/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/traj
+[0.452s] copying hrlsim/utility/plotter.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility
+[0.452s] copying hrlsim/utility/target.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility
+[0.453s] copying hrlsim/utility/team.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility
+[0.453s] copying hrlsim/utility/utility.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility
+[0.453s] copying hrlsim/utility/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility
+[0.454s] running install
+[0.455s] running install_lib
+[0.456s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim/client.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim
+[0.457s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim/pfm.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim
+[0.457s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim/types.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim
+[0.458s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim/utils.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim
+[0.458s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/airsim/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim
+[0.458s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller/controller.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller
+[0.459s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller/lqr.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller
+[0.459s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/controller/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller
+[0.460s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone/agent.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone
+[0.460s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone/camera.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone
+[0.460s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone/drone.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone
+[0.461s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/drone/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone
+[0.461s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/opt/optimization.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/opt
+[0.462s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/opt/zoo.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/opt
+[0.462s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/opt/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/opt
+[0.462s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/traj/minimum_snap.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/traj
+[0.463s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/traj/trajectory.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/traj
+[0.463s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/traj/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/traj
+[0.464s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility/plotter.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility
+[0.464s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility/target.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility
+[0.464s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility/team.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility
+[0.465s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility/utility.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility
+[0.465s] copying /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib/hrlsim/utility/__init__.py -> /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility
+[0.466s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim/client.py to client.cpython-38.pyc
+[0.470s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim/pfm.py to pfm.cpython-38.pyc
+[0.471s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim/types.py to types.cpython-38.pyc
+[0.474s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim/utils.py to utils.cpython-38.pyc
+[0.475s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/airsim/__init__.py to __init__.cpython-38.pyc
+[0.475s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller/controller.py to controller.cpython-38.pyc
+[0.476s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller/lqr.py to lqr.cpython-38.pyc
+[0.477s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/controller/__init__.py to __init__.cpython-38.pyc
+[0.477s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone/agent.py to agent.cpython-38.pyc
+[0.478s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone/camera.py to camera.cpython-38.pyc
+[0.479s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone/drone.py to drone.cpython-38.pyc
+[0.481s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/drone/__init__.py to __init__.cpython-38.pyc
+[0.482s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/opt/optimization.py to optimization.cpython-38.pyc
+[0.482s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/opt/zoo.py to zoo.cpython-38.pyc
+[0.483s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/opt/__init__.py to __init__.cpython-38.pyc
+[0.483s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/traj/minimum_snap.py to minimum_snap.cpython-38.pyc
+[0.484s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/traj/trajectory.py to trajectory.cpython-38.pyc
+[0.485s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/traj/__init__.py to __init__.cpython-38.pyc
+[0.485s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/plotter.py to plotter.cpython-38.pyc
+[0.487s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/target.py to target.cpython-38.pyc
+[0.488s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/team.py to team.cpython-38.pyc
+[0.490s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/utility.py to utility.cpython-38.pyc
+[0.491s] /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/utility.py:126: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+[0.491s]   assert(p.shape == (3,1) or p.shape == (3,), "Position vector must be (3x1) or(3,)")
+[0.492s] /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/utility.py:127: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+[0.492s]   assert(q.shape == (4,1) or q.shape == (4,), "Orientation vector must be (4x1) or (4,)")
+[0.492s] /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/utility.py:128: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+[0.492s]   assert(v.shape == (3,1) or v.shape == (3,), "Velocity vector must be (3x1) or(3,)")
+[0.492s] byte-compiling /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim/utility/__init__.py to __init__.cpython-38.pyc
+[0.493s] running install_data
+[0.493s] running install_egg_info
+[0.495s] removing '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim-0.0.0-py3.8.egg-info' (and everything under it)
+[0.495s] Copying ../../build/hrlsim/hrlsim.egg-info to /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages/hrlsim-0.0.0-py3.8.egg-info
+[0.498s] running install_scripts
+[0.516s] writing list of installed files to '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log'
+[0.533s] Invoked command in '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/hrlsim' returned '0': PYTHONPATH=/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/hrlsim build --build-base /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build install --prefix /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/install/hrlsim --record /home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/install.log --single-version-externally-managed

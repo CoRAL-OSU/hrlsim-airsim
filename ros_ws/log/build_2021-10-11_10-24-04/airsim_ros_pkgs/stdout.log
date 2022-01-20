@@ -1,0 +1,7 @@
+[ 42%] Built target MavLinkCom
+[ 48%] Built target MavLinkTest
+[ 69%] Built target rpc
+[ 85%] Built target AirLib
+[ 88%] Built target pd_position_controller_simple
+[ 91%] Built target airsim_settings_parser
+[ 92%] [32mBuilding CXX object CMakeFiles/airsim_ros.dir/src/airsim_ros_wrapper.cpp.o[0m

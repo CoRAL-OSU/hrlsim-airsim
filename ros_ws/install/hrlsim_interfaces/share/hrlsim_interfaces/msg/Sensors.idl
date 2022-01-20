@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from hrlsim_interfaces/msg/Sensors.msg
+// generated code does not contain a copyright notice
+
+#include "airsim_interfaces/msg/Altimeter.idl"
+#include "sensor_msgs/msg/Imu.idl"
+#include "sensor_msgs/msg/MagneticField.idl"
+#include "sensor_msgs/msg/NavSatFix.idl"
+
+module hrlsim_interfaces {
+  module msg {
+    struct Sensors {
+      sensor_msgs::msg::Imu imu;
+
+      sensor_msgs::msg::NavSatFix gps;
+
+      airsim_interfaces::msg::Altimeter altimeter;
+
+      sensor_msgs::msg::MagneticField magnetometer;
+    };
+  };
+};

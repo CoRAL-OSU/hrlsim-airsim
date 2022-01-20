@@ -1,0 +1,7 @@
+[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/src/airsim_ros_pkgs/src/airsim_settings_parser.cpp:3:10:[m[K [01;31m[Kfatal error: [m[Kstdio: No such file or directory
+    3 | #include [01;31m[K<stdio>[m[K
+      |          [01;31m[K^~~~~~~[m[K
+compilation terminated.
+make[2]: *** [CMakeFiles/airsim_settings_parser.dir/build.make:76: CMakeFiles/airsim_settings_parser.dir/src/airsim_settings_parser.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:293: CMakeFiles/airsim_settings_parser.dir/all] Error 2
+make: *** [Makefile:146: all] Error 2

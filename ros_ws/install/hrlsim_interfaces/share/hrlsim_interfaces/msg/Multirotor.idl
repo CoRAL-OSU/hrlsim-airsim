@@ -1,0 +1,24 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from hrlsim_interfaces/msg/Multirotor.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Pose.idl"
+#include "hrlsim_interfaces/msg/State.idl"
+#include "std_msgs/msg/Float32.idl"
+#include "std_msgs/msg/Header.idl"
+
+module hrlsim_interfaces {
+  module msg {
+    struct Multirotor {
+      std_msgs::msg::Header header;
+
+      hrlsim_interfaces::msg::State state;
+
+      @verbatim (language="comment", text=
+        "Sensors sensors")
+      geometry_msgs::msg::Pose odom;
+
+      std_msgs::msg::Float32 looptime;
+    };
+  };
+};

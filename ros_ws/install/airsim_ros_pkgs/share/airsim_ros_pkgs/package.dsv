@@ -1,0 +1,8 @@
+source;share/airsim_ros_pkgs/hook/cmake_prefix_path.ps1
+source;share/airsim_ros_pkgs/hook/cmake_prefix_path.dsv
+source;share/airsim_ros_pkgs/hook/cmake_prefix_path.sh
+source;share/airsim_ros_pkgs/local_setup.bash
+source;share/airsim_ros_pkgs/local_setup.dsv
+source;share/airsim_ros_pkgs/local_setup.ps1
+source;share/airsim_ros_pkgs/local_setup.sh
+source;share/airsim_ros_pkgs/local_setup.zsh

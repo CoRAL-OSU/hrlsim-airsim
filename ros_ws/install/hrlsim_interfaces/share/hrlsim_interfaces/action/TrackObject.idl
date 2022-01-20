@@ -1,0 +1,37 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from hrlsim_interfaces/action/TrackObject.action
+// generated code does not contain a copyright notice
+
+
+module hrlsim_interfaces {
+  module action {
+    typedef float float__3[3];
+    @verbatim (language="comment", text=
+      "goal definition")
+    struct TrackObject_Goal {
+      string object_name;
+
+      float timeout;
+
+      float__3 offset;
+    };
+    typedef float float__3[3];
+    struct TrackObject_Result {
+      @verbatim (language="comment", text=
+        "result definition" "\n"
+        " x, y, z")
+      float__3 dist;
+
+      float dist_mag;
+    };
+    typedef float float__3[3];
+    struct TrackObject_Feedback {
+      @verbatim (language="comment", text=
+        "feedback" "\n"
+        " x, y, z")
+      float__3 dist;
+
+      float dist_mag;
+    };
+  };
+};

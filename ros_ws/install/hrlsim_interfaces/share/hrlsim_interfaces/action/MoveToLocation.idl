@@ -1,0 +1,63 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from hrlsim_interfaces/action/MoveToLocation.action
+// generated code does not contain a copyright notice
+
+
+module hrlsim_interfaces {
+  module action {
+    typedef float float__3[3];
+    module MoveToLocation_Goal_Constants {
+      const int16 LOCAL_FRAME = 0;
+      const int16 GLOBAL_FRAME = 1;
+    };
+    struct MoveToLocation_Goal {
+      @verbatim (language="comment", text=
+        "goal definition")
+      float__3 target;
+
+      float timeout;
+
+      float tolerance;
+
+      float speed;
+
+      int16 position_frame;
+
+      @verbatim (language="comment", text=
+        " final velocity")
+      float__3 fvel;
+
+      @verbatim (language="comment", text=
+        " final acceleration")
+      float__3 facc;
+
+      @verbatim (language="comment", text=
+        " final jerk")
+      float__3 fjrk;
+
+      int16 yaw_frame;
+
+      float yaw;
+    };
+    typedef float float__3[3];
+    struct MoveToLocation_Result {
+      @verbatim (language="comment", text=
+        "result definition")
+      float__3 location;
+
+      float error;
+
+      float time_left;
+    };
+    typedef float float__3[3];
+    struct MoveToLocation_Feedback {
+      @verbatim (language="comment", text=
+        "feedback")
+      float__3 location;
+
+      float error;
+
+      float time_left;
+    };
+  };
+};

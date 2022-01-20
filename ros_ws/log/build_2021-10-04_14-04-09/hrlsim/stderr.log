@@ -1,0 +1,3 @@
+package init file 'hrlsim/__init__.py' not found (or not a regular file)
+warning: install_lib: '/home/cthornton/data/local/college/research/arl/code/sims/airsim/ros_ws/build/hrlsim/build/lib' does not exist -- no Python modules to install
+
