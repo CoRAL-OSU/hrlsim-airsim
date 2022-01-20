@@ -1,8 +1,0 @@
-In file included from [01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/src/airsim_ros_pkgs/src/airsim_ros_wrapper.cpp:1[m[K:
-[01m[K/home/cthornton/data/local/college/research/arl/code/sims/airsim/catkin_ws/src/airsim_ros_pkgs/include/airsim_ros_wrapper.h:123:2:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ after struct definition
- }
-  [01;31m[K^[m[K
-  [32m[K;[m[K
-make[2]: *** [CMakeFiles/airsim_ros.dir/build.make:76: CMakeFiles/airsim_ros.dir/src/airsim_ros_wrapper.cpp.o] Error 1
-make[1]: *** [CMakeFiles/Makefile2:2860: CMakeFiles/airsim_ros.dir/all] Error 2
-make: *** [Makefile:146: all] Error 2
